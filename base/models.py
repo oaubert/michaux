@@ -65,7 +65,7 @@ class Work(models.Model):
 
     certificate = models.IntegerField(_('certificat'),
                                       help_text=_("Certificat d'authenticité"),
-                                      unique=True, blank=True)
+                                      blank=True, null=True)
 
     note_references = models.TextField(_('notes sur les références'),
                                        help_text=_("Notes (privées) sur les références"),
@@ -101,11 +101,13 @@ class Work(models.Model):
 
     # hauteur : nombre entier (en mm)
     height = models.IntegerField(_("hauteur"),
-                                help_text=_("Hauteur (en mm)"))
+                                 help_text=_("Hauteur (en mm)"),
+                                 null=True)
 
     # largeur : nombre entier (en mm)
     width = models.IntegerField(_("largeur"),
-                                help_text=_("Largeur (en mm)"))
+                                help_text=_("Largeur (en mm)"),
+                                null=True)
 
     # Date de Création
     # source de la date : texte libre (Henri Michaux / catalogue / nom de l’expert / etc.)
@@ -123,12 +125,12 @@ class Work(models.Model):
     # début : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
     creation_date_start = models.IntegerField(_("année de début"),
                                              help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
-                                             null=True)
+                                             blank=True, null=True)
 
     # fin : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
     creation_date_end = models.IntegerField(_("année de fin"),
                                              help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
-                                             null=True)
+                                             blank=True, null=True)
 
     # notes : texte libre
     note_creation_date = models.TextField(_("notes sur la date"),
@@ -138,7 +140,7 @@ class Work(models.Model):
     # date alternative : la source de la date alternative est alors indiquée dans les notes
     creation_date_alternative = models.IntegerField(_("année alternative"),
                                                     help_text=_("Date alternative : la source de cette date alternative est alors indiquée dans les notes"),
-                                                    null=True)
+                                                    blank=True, null=True)
 
     # FIXME: pour les tags, on va utiliser
     # http://django-tagging.googlecode.com/svn/trunk/docs/overview.txt
@@ -286,7 +288,8 @@ class BibliographyReference(models.Model):
     publication_date = models.DateField(_("date de publication"),
                                         null=True)
     page_number = models.IntegerField(_("numéro de page"),
-                                      help_text=_("numéro de page de l’article contenu"))
+                                      help_text=_("numéro de page de l’article contenu"),
+                                      blank=True, null=True)
 
     comment = models.TextField(_("commentaire"),
                                help_text=_("Texte libre pouvant être affiché au public"),
@@ -329,19 +332,19 @@ class Exhibition(models.Model):
                                      help_text=_("Année de début"))
     start_month = models.IntegerField(_("Mois"),
                                       help_text=_("Mois de début - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu’on ne dispose pas de cette information. On ne prendra alors en compte que l’année - qui sera toujours spécifiée]"),
-                                      null=True)
+                                      blank=True, null=True)
     start_day = models.IntegerField(_("Jour"),
                                     help_text=_("Jour de début"),
-                                    null=True)
+                                    blank=True, null=True)
     end_year = models.IntegerField(_("Année"),
                                    help_text=_("Année de fin - peut être 0 si inconnu"),
-                                   null=True)
+                                   blank=True, null=True)
     end_month = models.IntegerField(_("Mois"),
                                       help_text=_("Mois de fin - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu’on ne dispose pas de cette information. On ne prendra alors en compte que l’année - qui sera toujours spécifiée]"),
-                                      null=True)
+                                      blank=True, null=True)
     end_day = models.IntegerField(_("Jour"),
                                     help_text=_("Jour de fin"),
-                                    null=True)
+                                    blank=True, null=True)
 
     curator = models.CharField(_("Commissaire"),
                              help_text=_("Commissaire d'exposition"),
@@ -397,7 +400,7 @@ class Reproduction(models.Model):
     reference = models.ForeignKey(BibliographyReference,
                                   verbose_name=_("référence bibliographique"))
     page = models.IntegerField(_("page"),
-                               null=True)
+                               blank=True, null=True)
     number = models.CharField(_("numéro"),
                               help_text=_("Numéro dans la page - ça sera le plus souvent un nombre, mais on peut avoir besoin d’y ajouter des précisions"),
                               max_length=16,
