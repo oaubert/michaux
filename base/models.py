@@ -1,0 +1,446 @@
+# -*- coding: utf-8 -*-
+
+from gettext import gettext as _
+from django.conf import settings
+from django.db import models
+from django.contrib.auth.models import User
+
+class Work(models.Model):
+    """Representation of a Work
+    """
+    EDITING_STATUS = 'editing'
+    PENDING_STATUS = 'pending'
+    AUTHENTICATED_STATUS = 'authenticated'
+    STATUS_CHOICES = (
+        (AUTHENTICATED_STATUS, _("Authentifié")),
+        (PENDING_STATUS, _("En attente")),
+        (EDITING_STATUS, _("En cours d'édition")),
+        )
+    class Meta:
+        verbose_name_plural = _("oeuvres")
+        verbose_name = _("oeuvre")
+        #ordering = ('status', 'created')
+        #get_latest_by = 'created'
+
+    creator = models.ForeignKey(User,
+                                verbose_name=_('créateur'),
+                                help_text=_('Créateur de la fiche'),
+                                editable=False,
+                                related_name='created')
+
+    created = models.DateTimeField(_('création'),
+                                   help_text=_('Date de création de la fiche'),
+                                   null=True, editable=False,
+                                   auto_now_add=True)
+
+    contributor = models.ForeignKey(User,
+                                    verbose_name=_('éditeur'),
+                                    help_text=_('Dernier éditeur de la fiche'),
+                                    editable=False,
+                                    related_name='modified')
+
+    modified = models.DateTimeField(_('dernière modification'),
+                                    help_text=_('Date de dernière modification de la fiche'),
+                                    null=True, editable=False)
+
+    status = models.CharField(_('statut'),
+                              help_text=_('Statut éditorial de la fiche'),
+                              max_length=64,
+                              choices=STATUS_CHOICES,
+                              default=EDITING_STATUS,
+                              editable=True)
+
+    cote = models.AutoField(_("cote"), primary_key=True, editable=False)
+
+    master_id = models.IntegerField(_("cote de référence"),
+                                    help_text=_("En cas de doublon identifié, indique la cote de la fiche de référence pour l’oeuvre. Les autres champs de cette fiche-ci peuvent être vidés/ignorés."))
+
+    # ancienne(s) références(s) : (kc000, ou mp000 ou cmp000, etc.) Contenu: [\w\d\s-/]+
+    old_references = models.CharField(_('anciennes références'),
+                                      help_text=_("Liste d'anciennes références, séparées par des virgules"),
+                                      max_length=256,
+                                      blank=True)
+
+    certificate = models.IntegerField(_('certificat'),
+                                      help_text=_("Certificat d'authenticité"),
+                                      unique=True, blank=True)
+
+    note_references = models.TextField(_('notes sur les références'),
+                                       help_text=_("Notes (privées) sur les références"),
+                                       blank=True)
+
+    # Technique et support
+
+    # titre de la série (mouvements, mescalinien)
+    serie = models.CharField(_("série"),
+                             help_text=_("Titre de la série dans l'oeuvre de Michaux"),
+                             max_length=256,
+                             blank=True)
+
+    # technique (technique) : choix parmi une énumération extensible (huile, huile et acrylique, aquarelle...)
+    medium = models.CharField(_("technique"),
+                                 help_text=_("Technique utilisée"),
+                                 max_length=256)
+
+    # support : choix parmi une énumération extensible (papier, toile, cartoil, papier toilé, japon, etc) - type générique
+    support = models.CharField(_("support"),
+                               help_text=_("Support utilisé, de type générique: papier, toile, cartoil, papier toilé, etc"),
+                               max_length=256)
+
+    #précisions de support : précisions sur le support (gamme - tramé, chiffon,, ou marque - arches, etc)
+    support_details = models.CharField(_("précisions de support"),
+                                       help_text=_("précisions sur le support (gamme - tramé, chiffon, ou marque - arches, etc)"),
+                                       max_length=256,
+                                       blank=True)
+
+    note_support = models.TextField(_("notes sur le support"),
+                                   help_text=_("Notes (privées) sur le support"),
+                                   blank=True)
+
+    # hauteur : nombre entier (en mm)
+    height = models.IntegerField(_("hauteur"),
+                                help_text=_("Hauteur (en mm)"))
+
+    # largeur : nombre entier (en mm)
+    width = models.IntegerField(_("largeur"),
+                                help_text=_("Largeur (en mm)"))
+
+    # Date de Création
+    # source de la date : texte libre (Henri Michaux / catalogue / nom de l’expert / etc.)
+    creation_date_source = models.CharField(_("source de la date"),
+                                           help_text=_("Origine de la datation: Henri Michaux, catalogue, nom de l'expert, etc"),
+                                           max_length=256,
+                                           blank=True)
+
+    # incertitude : texte libre
+    creation_date_uncertainty = models.CharField(_("incertitude sur la date"),
+                                                 help_text=_("Incertitude sur la date: avant, après, environ, etc"),
+                                                 max_length=64,
+                                                 blank=True)
+
+    # début : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
+    creation_date_start = models.IntegerField(_("année de début"),
+                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
+                                             null=True)
+
+    # fin : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
+    creation_date_end = models.IntegerField(_("année de fin"),
+                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
+                                             null=True)
+
+    # notes : texte libre
+    note_creation_date = models.TextField(_("notes sur la date"),
+                                   help_text=_("Notes (privées) sur le support"),
+                                   blank=True)
+
+    # date alternative : la source de la date alternative est alors indiquée dans les notes
+    creation_date_alternative = models.IntegerField(_("année alternative"),
+                                                    help_text=_("Date alternative : la source de cette date alternative est alors indiquée dans les notes"),
+                                                    null=True)
+
+    # FIXME: pour les tags, on va utiliser
+    # http://django-tagging.googlecode.com/svn/trunk/docs/overview.txt
+    #  http://www.napes.co.uk/blog/django-tagging/ - tutorial
+
+    # Tags: Liste de tags associés (on interdit les : dans les noms
+    # des tags de manière à permettre une éventuelle évolution vers
+    # les “tags machine” à la Flickr) permettre les tags comprenant un
+    # espace il faut préserver l’information d’origine (auteur) du tag
+    # notion de diffusion (privé / public) laisser la possibilité à
+    # chaque utilisateur de supprimer ses propres tags Notion de
+    # galerie/album : prévoir la possibilité de distinguer des
+    # albums/collections par rapport à des tags classiques (en terme
+    # d’affichage/point d’entrée ou de filtrage dans la liste des
+    # tags: on n’afficherait par défaut que les tags qui ne sont pas
+    # des albums). Ça peut être mis en oeuvre via un tag machine
+    # “album:nom de l’album” par exemple.  groupes “anonyme” : on peut
+    # vouloir définir une collection sans la nommer (dans un premier
+    # temps). On pourrait proposer un système de tags anonymes
+    # automatiques (avec un numéro par exemple anonymous:123) pour
+    # cela.
+
+    # commentaire : texte libre pouvant être affiché au public
+
+    comment = models.TextField(_("commentaire"),
+                               help_text=_("Texte libre pouvant être affiché au public"),
+                               blank=True)
+
+    revision = models.TextField(_("révisions"),
+                                help_text=_("Révisions à effectuer : texte libre, indiquant les révisions encore à faire sur la fiche. Des conventions de nommage peuvent être adoptées pour catégoriser ces révisions par exemple."),
+                                blank=True)
+
+class Inscription(models.Model):
+    class Meta:
+        verbose_name_plural = _("Inscriptions")
+
+    # Inscription: On veut pouvoir parfois entrer plusieurs inscriptions (par exemple au recto une signature, une date, et au verso, des annotations techniques)
+    work = models.ForeignKey(Work,
+                             verbose_name=_("Oeuvre"))
+
+    # type d’inscription : signature / date / dédicace / indications techniques / autre (date, note de michaux)
+    nature = models.CharField(_("type d'inscription"),
+                              help_text=_("signature / date / dédicace / indications techniques / autre (date, note de michaux) / etc"),
+                              max_length=256,
+                              blank=True)
+    # position : choix parmi une énumération extensible (recto, verso, bas droite, bas gauche, etc)
+    position = models.CharField(_("position de l'inscription"),
+                                help_text=_("Position: choix parmi une énumération extensible (recto, verso, bas droite, bas gauche, etc)"),
+                                max_length=256,
+                                blank=True)
+    notes = models.TextField(_("note"),
+                             help_text=_("Note: contenu, détails, etc"),
+                             blank=True)
+
+class Image(models.Model):
+    work = models.ForeignKey(Work,
+                             verbose_name=_("Oeuvre"))
+
+    photograph_name = models.CharField(_("nom du photographe"),
+                                       max_length=256,
+                                       blank=True)
+    reference = models.CharField(_("référence"),
+                                 help_text=_("Référence de la photo dans l’inventaire du photographe"),
+                                 max_length=256,
+                                 blank=True)
+    support = models.CharField(_("support"),
+                                 help_text=_("Type de photo : argentique / numérique / ektachrome, diapositive / scan de reproduction papier"),
+                                 max_length=256,
+                                 blank=True)
+
+    #nature de l’image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l’oeuvre en situation dans une revue ou une expo, ou une lettre)
+    nature = models.CharField(_("nature"),
+                                 help_text=_("nature de l’image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l’oeuvre en situation dans une revue ou une expo, ou une lettre)"),
+                                 max_length=256,
+                                 blank=True)
+
+    # Lors de l’upload de l’image en  haute résolution, la plate-forme convertira automatiquement l’image en des versions “web” (1600x1200 + vignette + 2048x1536 [ipad3])
+    url = models.ImageField(_("image"),
+                            upload_to=settings.MEDIA_ROOT,
+                            max_length=512,
+                            height_field='height',
+                            width_field='width')
+
+    creator = models.ForeignKey(User,
+                                verbose_name=_('créateur'),
+                                help_text=_("Personne ayant téléchargé l'image"),
+                                editable=False,
+                                related_name='created_image')
+
+    created = models.DateTimeField(_('création'),
+                                   help_text=_("Date de téléchargment de l'image"),
+                                   null=True, editable=False,
+                                   auto_now=True)
+
+    note = models.TextField(_('note'),
+                            help_text=_("Notes"),
+                            blank=True)
+
+class BibliographyReference(models.Model):
+    nature = models.CharField(_("type de référence"),
+                              help_text=_("catalogue, article de journal, monographie, livre, chapitre de livre..."),
+                              max_length=256,
+                              blank=True)
+    abbreviation = models.CharField(_("abréviation"),
+                                    help_text=_("nom, titre ou lieu d’exposition, année, (a, b, c quand il y en a plusieurs la même année)"),
+                                    max_length=256,
+                                    blank=True)
+
+    creator = models.CharField(_("auteur"),
+                              help_text=_("Auteur de l'article/ouvrage/essai"),
+                              max_length=256,
+                              blank=True)
+    title = models.CharField(_("titre"),
+                              help_text=_("Titre de l'article/ouvrage/essai"),
+                              max_length=512,
+                              blank=True)
+
+    # Dans le cas d’un article dans le cadre d’une oeuvre plus large (livre, revue, etc):
+    container_title = models.CharField(_("titre du contenant"),
+                                       help_text=_("Titre du livre/revue/etc contenant la référence"),
+                                       max_length=512,
+                                       blank=True)
+    container_creator = models.CharField(_("auteur du contenant"),
+                                         help_text=_("Auteur/éditeur de livre/revue"),
+                                         max_length=256,
+                                         blank=True)
+    container_others = models.TextField(_("textes de"),
+                                        help_text=_("textes de [texte libre] : prénom - nom - titre du texte"))
+
+    editor = models.CharField(_("édition"),
+                              help_text=_("Maison d'édition/lieu d'exposition"),
+                              max_length=512,
+                              blank=True)
+
+    city = models.CharField(_("ville"),
+                              help_text=_("Ville"),
+                              max_length=256,
+                              blank=True)
+
+    number = models.CharField(_("numéro"),
+                              help_text=_("Numéro du volume/de la revue"),
+                              max_length=256,
+                              blank=True)
+
+    publication_date = models.DateField(_("date de publication"),
+                                        null=True)
+    page_number = models.IntegerField(_("numéro de page"),
+                                      help_text=_("numéro de page de l’article contenu"))
+
+    comment = models.TextField(_("commentaire"),
+                               help_text=_("Texte libre pouvant être affiché au public"),
+                               blank=True)
+    note = models.TextField(_("notes"),
+                            help_text=_("Notes (privées)"),
+                            blank=True)
+
+class Exhibition(models.Model):
+    abbreviation  = models.CharField(_("abréviation"),
+                                     help_text=_("Sous la forme date (nombre entier, année) + nom du lieu d’exposition (texte libre)"),
+                                     max_length=512,
+                                     unique=True, blank=False)
+    title = models.CharField(_("titre"),
+                             help_text=_("Titre complet de l’exposition"),
+                             max_length=512,
+                             blank=True)
+    location = models.CharField(_("lieu"),
+                             help_text=_("Lieu de l'exposition"),
+                             max_length=512,
+                             blank=True)
+    nature = models.CharField(_("type d'exposition"),
+                              help_text=_("Type d'exposition"),
+                              max_length=32,
+                              choices=( ("solo", _("Solo")),
+                                        ("groupe", _("En groupe")) ),
+                              default="solo")
+    address = models.CharField(_("adresse"),
+                             help_text=_("Adresse de l'exposition"),
+                             max_length=512,
+                             blank=True)
+    city = models.CharField(_("ville"),
+                             help_text=_("Ville"),
+                             max_length=256)
+    country = models.CharField(_("pays"),
+                             help_text=_("Pays"),
+                             max_length=256)
+
+    start_year = models.IntegerField(_("Année"),
+                                     help_text=_("Année de début"))
+    start_month = models.IntegerField(_("Mois"),
+                                      help_text=_("Mois de début - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu’on ne dispose pas de cette information. On ne prendra alors en compte que l’année - qui sera toujours spécifiée]"),
+                                      null=True)
+    start_day = models.IntegerField(_("Jour"),
+                                    help_text=_("Jour de début"),
+                                    null=True)
+    end_year = models.IntegerField(_("Année"),
+                                   help_text=_("Année de fin - peut être 0 si inconnu"),
+                                   null=True)
+    end_month = models.IntegerField(_("Mois"),
+                                      help_text=_("Mois de fin - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu’on ne dispose pas de cette information. On ne prendra alors en compte que l’année - qui sera toujours spécifiée]"),
+                                      null=True)
+    end_day = models.IntegerField(_("Jour"),
+                                    help_text=_("Jour de fin"),
+                                    null=True)
+
+    curator = models.CharField(_("Commissaire"),
+                             help_text=_("Commissaire d'exposition"),
+                             max_length=512)
+
+    catalogue = models.ForeignKey(BibliographyReference,
+                                  verbose_name=_("catalogue d'exposition"))
+
+    original = models.ForeignKey('self',
+                                 verbose_name=_("exposition initiale"),
+                                 help_text=_("Exposition initiale (en cas de reprise)"))
+    comment = models.TextField(_("commentaire"),
+                               help_text=_("Commentaire : texte libre, pouvant être affiché au public"),
+                               blank=True)
+    note = models.TextField(_("notes"),
+                            help_text=_("Notes (privées)"),
+                            blank=True)
+
+class ExhibitionInstance(models.Model):
+    work = models.ForeignKey(Work,
+                             verbose_name=_("Oeuvre"))
+
+    exhibition = models.ForeignKey(Exhibition,
+                                   verbose_name=_("exposition"),
+                                   help_text=_("Exposition"))
+
+    reference = models.CharField(_("référence"),
+                                 help_text=_("Numéro de référence dans l’exposition"),
+                                 max_length=256,
+                                 blank=True)
+
+    illustration = models.BooleanField(_("illustration"),
+                                       help_text=_("Coché si une illustration était disponible dans le catalogue de l’exposition"))
+
+    illustration_description = models.TextField(_("description de l'illustration"))
+
+    note = models.TextField(_("note"),
+                            help_text=_("Note (privée)"))
+
+class Event(models.Model):
+    work = models.ForeignKey(Work,
+                             verbose_name=_("oeuvre"))
+    date = models.DateField(_("date"))
+    nature = models.CharField(_("type d'événement"),
+                              help_text=_("Type d’événement (vente publique, cession privée, restauration...) - énumération extensible"),
+                              max_length=64,
+                              blank=True)
+    description = models.TextField(_("description"))
+
+class Reproduction(models.Model):
+    work = models.ForeignKey(Work,
+                             verbose_name=_("oeuvre"))
+    reference = models.ForeignKey(BibliographyReference,
+                                  verbose_name=_("référence bibliographique"))
+    page = models.IntegerField(_("page"),
+                               null=True)
+    number = models.CharField(_("numéro"),
+                              help_text=_("Numéro dans la page - ça sera le plus souvent un nombre, mais on peut avoir besoin d’y ajouter des précisions"),
+                              max_length=16,
+                              blank=True)
+    comment = models.TextField(_("commentaire"),
+                               help_text=_("commentaire : texte libre, pouvant être affiché au public"),
+                               blank=True)
+
+class Owner(models.Model):
+    firstname = models.CharField(_("prénom"),
+                              help_text=_("Prénom"),
+                              max_length=256,
+                              blank=False)
+    name = models.CharField(_("nom"),
+                              help_text=_("Nom"),
+                              max_length=256,
+                              blank=False)
+    address = models.CharField(_("adresse"),
+                             help_text=_("Adresse de l'exposition"),
+                             max_length=512,
+                             blank=True)
+    city = models.CharField(_("ville"),
+                             help_text=_("Ville"),
+                             max_length=256)
+    country = models.CharField(_("pays"),
+                             help_text=_("Pays"),
+                             max_length=256)
+    note = models.TextField(_("notes"),
+                            help_text=_("Notes (privées)"),
+                            blank=True)
+
+class Acquisition(models.Model):
+    work = models.ForeignKey(Work,
+                             verbose_name=_("oeuvre"))
+    current_owner = models.BooleanField(_("current owner"))
+    # FIXME: est-ce que c'est vraiment relatif à l'acquisition ? Un
+    # même propriétaire pourrait avoir plusieurs collections de
+    # statuts différents
+    private = models.BooleanField(_("private collection"))
+    owner = models.ForeignKey(Owner,
+                              verbose_name=_("propriétaire"))
+    date = models.DateField(_("date d'acquisition"))
+    note = models.TextField(_("notes"),
+                            help_text=_("Notes (privées)"),
+                            blank=True)
+
+    # FIXME: use django-reversion or https://bitbucket.org/q/django-simple-history/src for history ?
+    # date + heure + commentaire sur les modifications: commentaire standard (tels champs modifiés) généré automatiquement + possibilité de corriger/ajouter des informations supplémentaires lors de la validation.
