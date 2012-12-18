@@ -83,6 +83,13 @@ class WorkAdmin(admin.ModelAdmin):
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     #list_display = ('question', 'pub_date', 'was_published_recently')
     search_fields = [ 'serie' ]
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.creator = request.user
+        obj.contributor = request.user
+        obj.save()
+
 admin.site.register(Work, WorkAdmin)
 
 # Inscription
