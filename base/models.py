@@ -235,6 +235,15 @@ class Image(models.Model):
                                    null=True, editable=False,
                                    auto_now=True)
 
+    height = models.IntegerField(_("hauteur"),
+                                 help_text=_("Hauteur (en pixels)"),
+                                 editable=False)
+
+
+    width = models.IntegerField(_("largeur"),
+                                help_text=_("Largeur (en pixels)"),
+                                editable=False)
+
     note = models.TextField(_('note'),
                             help_text=_("Notes"),
                             blank=True)
