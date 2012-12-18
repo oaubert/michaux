@@ -64,13 +64,14 @@ class ReproductionInline(admin.TabularInline):
 
 class WorkAdmin(admin.ModelAdmin):
 
+    class Media:
+        css = {"all": ("/static/css/michaux-editing.css",)}
+        # js = ( '/static/js/jquery.js', )
+
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '16'})},
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
-
-    class Media:
-        css = {"all": ("michaux-editing.css",)}
 
     fieldsets = [
         (None,               {'fields': [('status', 'serie')]}),
