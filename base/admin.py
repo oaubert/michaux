@@ -7,71 +7,52 @@ from django.db import models
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 from django.contrib import admin
 
-class EventInline(admin.TabularInline):
-    formfield_overrides = {
+FORMFIELD_OVERRIDES = {
         models.CharField: {'widget': TextInput(attrs={'size': '16'})},
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 
+class EventInline(admin.TabularInline):
     model = Event
     verbose_name = _("événement")
     extra = 1
-class ImageInline(admin.TabularInline):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
-    }
+    formfield_overrides = FORMFIELD_OVERRIDES
 
+class ImageInline(admin.TabularInline):
     model = Image
+    verbose_name = _("image")
     extra = 1
+    formfield_overrides = FORMFIELD_OVERRIDES
 
 class AcquisitionInline(admin.TabularInline):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
-    }
-
     model = Acquisition
-    verbose_name = _("propriétaire")
+    verbose_name = _("acquisition")
     extra = 1
-class ExhibitionInline(admin.StackedInline):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
-    }
+    formfield_overrides = FORMFIELD_OVERRIDES
 
+class ExhibitionInline(admin.StackedInline):
     model = ExhibitionInstance
     verbose_name = _("exposition")
     extra = 1
-class InscriptionInline(admin.TabularInline):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
-    }
+    formfield_overrides = FORMFIELD_OVERRIDES
 
+class InscriptionInline(admin.TabularInline):
     model = Inscription
     verbose_name = _("inscription")
     extra = 1
-class ReproductionInline(admin.TabularInline):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
-    }
+    formfield_overrides = FORMFIELD_OVERRIDES
 
+class ReproductionInline(admin.TabularInline):
     model = Reproduction
     verbose_name = _("reproduction")
     extra = 1
+    formfield_overrides = FORMFIELD_OVERRIDES
 
 class WorkAdmin(admin.ModelAdmin):
 
     class Media:
         css = {"all": ("/static/css/michaux-editing.css",)}
         # js = ( '/static/js/jquery.js', )
-
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
-    }
 
     fieldsets = [
         (None,               {'fields': [('status', 'serie')]}),
@@ -83,6 +64,8 @@ class WorkAdmin(admin.ModelAdmin):
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     #list_display = ('question', 'pub_date', 'was_published_recently')
     search_fields = [ 'serie' ]
+
+    formfield_overrides = FORMFIELD_OVERRIDES
 
     def save_model(self, request, obj, form, change):
         if not change:
