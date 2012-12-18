@@ -75,15 +75,14 @@ class WorkAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None,               {'fields': [('status', 'serie')]}),
-        (_("Références"),    {'fields': ['certificate', 'old_references', 'note_references'], 'classes': ['collapse'] }),
+        (_("Références"),    {'fields': [ ('master', 'certificate'), 'old_references', 'note_references'], 'classes': ['collapse'] }),
         (_("Technique/support"), {'fields': ['medium', ('support', 'support_details'), 'note_support', ('height', 'width')]}),
         (_("Création"),      {'fields': [ ('creation_date_start', 'creation_date_end', 'creation_date_uncertainty'), 'note_creation_date', 'creation_date_alternative']}),
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
-    inlines = [ InscriptionInline, ImageInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
+    inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     #list_display = ('question', 'pub_date', 'was_published_recently')
     search_fields = [ 'serie' ]
-    
 admin.site.register(Work, WorkAdmin)
 
 # Inscription
