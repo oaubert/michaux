@@ -52,8 +52,10 @@ class Work(models.Model):
 
     cote = models.AutoField(_("cote"), primary_key=True, editable=False)
 
-    master_id = models.IntegerField(_("cote de référence"),
-                                    help_text=_("En cas de doublon identifié, indique la cote de la fiche de référence pour l’oeuvre. Les autres champs de cette fiche-ci peuvent être vidés/ignorés."))
+    master = models.ForeignKey('self',
+                               verbose_name=_("cote de référence"),
+                               help_text=_("En cas de doublon identifié, indique la cote de la fiche de référence pour l’oeuvre. Les autres champs de cette fiche-ci peuvent être vidés/ignorés."),
+                               null=True, blank=True)
 
     # ancienne(s) références(s) : (kc000, ou mp000 ou cmp000, etc.) Contenu: [\w\d\s-/]+
     old_references = models.CharField(_('anciennes références'),
