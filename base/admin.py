@@ -8,25 +8,56 @@ from base.models import Inscription, Image, BibliographyReference, Exhibition, E
 from django.contrib import admin
 
 class EventInline(admin.TabularInline):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+
     model = Event
     verbose_name = _("événement")
     extra = 1
 class ImageInline(admin.TabularInline):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+
     model = Image
     extra = 1
+
 class AcquisitionInline(admin.TabularInline):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+
     model = Acquisition
     verbose_name = _("propriétaire")
     extra = 1
 class ExhibitionInline(admin.StackedInline):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+
     model = ExhibitionInstance
     verbose_name = _("exposition")
     extra = 1
 class InscriptionInline(admin.TabularInline):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+
     model = Inscription
     verbose_name = _("inscription")
     extra = 1
 class ReproductionInline(admin.TabularInline):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+
     model = Reproduction
     verbose_name = _("reproduction")
     extra = 1
