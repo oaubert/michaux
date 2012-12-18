@@ -173,6 +173,27 @@ class Work(models.Model):
                                 help_text=_("Révisions à effectuer : texte libre, indiquant les révisions encore à faire sur la fiche. Des conventions de nommage peuvent être adoptées pour catégoriser ces révisions par exemple."),
                                 blank=True)
 
+    @property
+    def printable_year(self):
+        if self.creation_date_start is not None:
+            if self.creation_date_end is None:
+                r = str(self.creation_date_start)
+            else:
+                r = "%d-%d" % (self.creation_date_start, self.creation_date_end)
+        elif self.creation_date_end is not None:
+            r = str(self.creation_date_end)
+        else:
+            return "N/C"
+        if self.creation_date_uncertainty:
+            return self.creation_date_uncertainty + " " + r
+        else:
+            return r
+
+    def __unicode__(self):
+        d = {'printable_year': self.printable_year}
+        d.update(self.__dict__)
+        return "%(medium)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
+
 class Inscription(models.Model):
     class Meta:
         verbose_name_plural = _("Inscriptions")
