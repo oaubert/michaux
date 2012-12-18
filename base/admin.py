@@ -63,7 +63,7 @@ class WorkAdmin(admin.ModelAdmin):
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     #list_display = ('question', 'pub_date', 'was_published_recently')
-    search_fields = [ 'serie' ]
+    search_fields = [ 'serie', 'note_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
 
     formfield_overrides = FORMFIELD_OVERRIDES
 
