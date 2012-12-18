@@ -15,12 +15,14 @@ FORMFIELD_OVERRIDES = {
 class EventInline(admin.TabularInline):
     model = Event
     verbose_name = _("événement")
+    verbose_name_plural = _("événements")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
 class ImageInline(admin.TabularInline):
     model = Image
     verbose_name = _("image")
+    verbose_name_plural = _("images")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
@@ -30,9 +32,10 @@ class AcquisitionInline(admin.TabularInline):
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
-class ExhibitionInline(admin.StackedInline):
+class ExhibitionInline(admin.TabularInline):
     model = ExhibitionInstance
     verbose_name = _("exposition")
+    verbose_name_plural = _("liste des expositions")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
@@ -62,8 +65,10 @@ class WorkAdmin(admin.ModelAdmin):
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
+    list_display = ( 'cote', 'medium', 'support', 'support_details', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
     #list_display = ('question', 'pub_date', 'was_published_recently')
     search_fields = [ 'serie', 'note_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
+    list_filter = ( 'serie', 'creation_date_start', 'medium', 'support' )
 
     formfield_overrides = FORMFIELD_OVERRIDES
 
