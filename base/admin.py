@@ -91,14 +91,3 @@ class WorkAdmin(admin.ModelAdmin):
         obj.save()
 
 admin.site.register(Work, WorkAdmin)
-
-# Inscription
-# Image
-# BibliographyReference
-# Exhibition
-# ExhibitionInstance
-# Event
-# Reproduction
-# Owner
-# Acquisition
-# Work
