@@ -224,12 +224,6 @@ class Image(models.Model):
                             height_field='height',
                             width_field='width')
 
-    creator = models.ForeignKey(User,
-                                verbose_name=_('créateur'),
-                                help_text=_("Personne ayant téléchargé l'image"),
-                                editable=False,
-                                related_name='created_image')
-
     created = models.DateTimeField(_('création'),
                                    help_text=_("Date de téléchargment de l'image"),
                                    null=True, editable=False,
