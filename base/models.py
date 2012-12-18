@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import re
+
 from gettext import gettext as _
 from django.conf import settings
 from django.db import models
@@ -193,6 +195,62 @@ class Work(models.Model):
         d = {'printable_year': self.printable_year}
         d.update(self.__dict__)
         return "%(medium)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
+
+    @staticmethod
+    def import_worksheet(filename):
+        """Import a google refine worksheet.
+        """
+        import xlrd
+        book = xlrd.open_workbook(filename)
+        s = book.sheet_by_index(0)
+        header = s.row_values(0)
+        for n in range(1, s.nrows - 1):
+            row = s.row_values(n)
+            data = dict(zip(header, row))
+            w = Work()
+            # FIXME: get appropriate value
+            w.creator_id = 1
+            w.contributor_id = 1
+            w.status = Work.AUTHENTICATED_STATUS
+            w.old_references = row[0]
+            if data['Certificat'] != '':
+                w.certificate = long(data['Certificat'])
+            tech = data['Technique']
+            for serie in ('mescalinien ', '"post-mescalinien"',
+                          '"mouvements"'):
+                if serie in tech:
+                    w.serie = serie
+                    tech.replace(serie, '')
+                    break
+            w.medium = tech
+            support = data['Papier'].split()
+            if support:
+                w.support = support[0]
+                w.note_support = " ".join(support[1:])
+            try:
+                w.height = long(data['Hauteur'])
+            except ValueError:
+                print "Missing height"
+            try:
+                w.width = long(data['Largeur'])
+            except ValueError:
+                print "Missing width"
+            if data[u'Année simplifiée'] != '':
+                w.creation_date_start = long(data[u'Année simplifiée'])
+            if data[u'Année simplifiée'] == '' or (str(long(data[u'Année simplifiée'])) != data[u'Année'].strip()):
+                w.note_creation_date = data[u'Année']
+            w.comment = "\n".join((data['Notice'], data['Remarques']))
+            w.save()
+            print "Saved", n, unicode(w).encode('utf-8')
+
+            if data['Signature'].startswith('oui'):
+                sig = Inscription()
+                sig.nature = 'signature'
+                pos = re.findall('\((.+)\)', data['Signature'])
+                if pos:
+                    sig.position = pos[0]
+                sig.work = w
+                sig.save()
 
 class Inscription(models.Model):
     class Meta:
