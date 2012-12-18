@@ -2,6 +2,8 @@
 
 from gettext import gettext as _
 
+from django.forms import TextInput, Textarea
+from django.db import models
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 from django.contrib import admin
 
@@ -30,18 +32,25 @@ class ReproductionInline(admin.TabularInline):
     extra = 1
 
 class WorkAdmin(admin.ModelAdmin):
-#    fields = ['pub_date', 'question']
+
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+
+    class Media:
+        css = {"all": ("michaux-editing.css",)}
+
     fieldsets = [
-        (None,               {'fields': ['status']}),
+        (None,               {'fields': [('status', 'serie')]}),
         (_("Références"),    {'fields': ['certificate', 'old_references', 'note_references'], 'classes': ['collapse'] }),
-        (_("Technique/support"), {'fields': ['serie', 'medium', ('support', 'support_details'), 'note_support', ('height', 'width')]}),
+        (_("Technique/support"), {'fields': ['medium', ('support', 'support_details'), 'note_support', ('height', 'width')]}),
         (_("Création"),      {'fields': [ ('creation_date_start', 'creation_date_end', 'creation_date_uncertainty'), 'note_creation_date', 'creation_date_alternative']}),
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
     inlines = [ InscriptionInline, ImageInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     #list_display = ('question', 'pub_date', 'was_published_recently')
     search_fields = [ 'serie' ]
-
     
 admin.site.register(Work, WorkAdmin)
 
