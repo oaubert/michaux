@@ -1,0 +1,10 @@
+{% load admin_urls %}
+{% load url from future %}
+<html><head></head>
+<body>
+<h1>{{ work }}</h1>
+<ul>
+  <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
+</ul>
+</body>
+</html>

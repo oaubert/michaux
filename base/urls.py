@@ -3,4 +3,6 @@ from django.conf.urls import patterns, url, include
 #from tmg import views
 
 urlpatterns = patterns('',
+                       url(r'^$', 'base.views.root'),
+                       url(r'^work/(?P<cote>\d+)/$', 'base.views.work'),
                        )

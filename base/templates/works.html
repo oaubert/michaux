@@ -1,0 +1,12 @@
+{% load admin_urls %}
+{% load url from future %}
+<html><head>Liste des oeuvres</head>
+<body>
+<h1>Liste des oeuvres</h1>
+<ul>
+{% for work in works %}
+  <li><a href="{% url meta|admin_urlname:'change' work.cote %}">{{ work }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>
