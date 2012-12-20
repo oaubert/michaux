@@ -5,7 +5,7 @@
 <h1>Liste des oeuvres</h1>
 <ul>
 {% for work in works %}
-  <li><a href="{% url meta|admin_urlname:'change' work.cote %}">{{ work }}</a></li>
+  <li><a href="work/{{ work.pk }}"><img alt="" src="{{ work.thumbnail.url }}" width="{{ work.thumbnail.width }}" height="{{ work.thumbnail.height }}">{{ work }}</a> (<a href="{% url meta|admin_urlname:'change' work.cote %}">Edit</a>)</li>
 {% endfor %}
 </ul>
 </body>

@@ -1,10 +1,26 @@
 {% load admin_urls %}
 {% load url from future %}
-<html><head></head>
+{% load tagger_extras %}
+<html><head>
+<link href="{{ STATIC_URL }}css/michaux-single.css" rel="stylesheet" type="text/css" media="screen" /
+</head>
 <body>
-<h1>{{ work }}</h1>
-<ul>
-  <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
-</ul>
+
+<div id="header">
+  <h1>{{ work }}</h1>
+</div>
+
+<div id="content">
+  <div id="margin">
+    <ul>
+      <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
+      <li>{{ work.tags }}</li>
+    </ul>
+  </div>
+  <div id="image">
+    <img class="display" alt="" src="{{ work.image.url }}" width="{{ work.image.width }}" height="{{ work.image.height }}">
+  </div>
+</div>
+
 </body>
 </html>
