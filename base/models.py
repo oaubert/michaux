@@ -306,12 +306,12 @@ class Image(models.Model):
                                        width_field='width')
 
     image = ImageSpecField([ResizeToFit(1600, 1200)],
-                           image_field='image',
+                           image_field='original_image',
                            format='JPEG',
                            options={'quality': 90})
 
     thumbnail = ImageSpecField([ResizeToFit(50, 50)],
-                               image_field='image',
+                               image_field='original_image',
                                format='JPEG',
                                options={'quality': 90})
 
