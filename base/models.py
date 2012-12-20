@@ -303,7 +303,7 @@ class Image(models.Model):
 
     # Lors de l’upload de l’image en  haute résolution, la plate-forme convertira automatiquement l’image en des versions “web” (1600x1200 + vignette + 2048x1536 [ipad3])
     original_image = models.ImageField(_("image"),
-                                       upload_to=settings.MEDIA_ROOT,
+                                       upload_to='images',
                                        max_length=512,
                                        height_field='height',
                                        width_field='width')
