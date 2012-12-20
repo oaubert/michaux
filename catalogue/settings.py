@@ -4,7 +4,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-APPROOT = os.path.dirname(os.path.dirname(__file__))
+APPROOT = os.path.dirname(os.path.dirname(__file__)) + os.sep
 
 ADMINS = (
  ('Olivier Aubert', 'contact@olivieraubert.net'),
