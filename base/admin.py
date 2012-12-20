@@ -6,7 +6,7 @@ from django.forms import TextInput, Textarea
 from django.db import models
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 from django.contrib import admin
-from imagekit.admin import AdminThumbnail
+from base.forms import ImageModelForm
 
 FORMFIELD_OVERRIDES = {
         models.CharField: {'widget': TextInput(attrs={'size': '16'})},
@@ -22,6 +22,7 @@ class EventInline(admin.TabularInline):
 
 class ImageInline(admin.TabularInline):
     model = Image
+    form = ImageModelForm
     verbose_name = _("image")
     verbose_name_plural = _("images")
     extra = 1
@@ -66,14 +67,22 @@ class WorkAdmin(admin.ModelAdmin):
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
-    list_display = ( 'cote', 'admin_thumbnail', 'medium', 'support', 'support_details', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
-    #list_display = ('question', 'pub_date', 'was_published_recently')
+    list_display = ( 'cote', 'work_thumbnail', 'medium', 'support', 'support_details', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
     search_fields = [ 'serie', 'note_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
     list_filter = ( 'serie', 'creation_date_start', 'medium', 'support' )
 
     formfield_overrides = FORMFIELD_OVERRIDES
 
-    admin_thumbnail = AdminThumbnail(image_field='thumbnail')
+    def work_thumbnail(self, obj):
+        t = obj.thumbnail
+        if t is not None:
+            return '<img alt="" width="%(width)d" height="%(height)d" src="%(url)s" />' % { 'width': t.width,
+                                                                                            'height': t.height,
+                                                                                            'url': t.url }
+        else:
+            return ""
+    work_thumbnail.allow_tags = True
+    work_thumbnail.short_description = _("Vignette")
 
     def save_model(self, request, obj, form, change):
         if not change:
