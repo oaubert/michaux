@@ -6,6 +6,8 @@ from gettext import gettext as _
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 
 class Work(models.Model):
     """Representation of a Work
@@ -297,11 +299,21 @@ class Image(models.Model):
                                  blank=True)
 
     # Lors de l’upload de l’image en  haute résolution, la plate-forme convertira automatiquement l’image en des versions “web” (1600x1200 + vignette + 2048x1536 [ipad3])
-    url = models.ImageField(_("image"),
-                            upload_to=settings.MEDIA_ROOT,
-                            max_length=512,
-                            height_field='height',
-                            width_field='width')
+    original_image = models.ImageField(_("image"),
+                                       upload_to=settings.MEDIA_ROOT,
+                                       max_length=512,
+                                       height_field='height',
+                                       width_field='width')
+
+    image = ImageSpecField([ResizeToFit(1600, 1200)],
+                           image_field='image',
+                           format='JPEG',
+                           options={'quality': 90})
+
+    thumbnail = ImageSpecField([ResizeToFit(50, 50)],
+                               image_field='image',
+                               format='JPEG',
+                               options={'quality': 90})
 
     created = models.DateTimeField(_('création'),
                                    help_text=_("Date de téléchargment de l'image"),

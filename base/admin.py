@@ -6,6 +6,7 @@ from django.forms import TextInput, Textarea
 from django.db import models
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 from django.contrib import admin
+from imagekit.admin import AdminThumbnail
 
 FORMFIELD_OVERRIDES = {
         models.CharField: {'widget': TextInput(attrs={'size': '16'})},
@@ -65,12 +66,14 @@ class WorkAdmin(admin.ModelAdmin):
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
-    list_display = ( 'cote', 'medium', 'support', 'support_details', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
+    list_display = ( 'cote', 'admin_thumbnail', 'medium', 'support', 'support_details', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
     #list_display = ('question', 'pub_date', 'was_published_recently')
     search_fields = [ 'serie', 'note_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
     list_filter = ( 'serie', 'creation_date_start', 'medium', 'support' )
 
     formfield_overrides = FORMFIELD_OVERRIDES
+
+    admin_thumbnail = AdminThumbnail(image_field='thumbnail')
 
     def save_model(self, request, obj, form, change):
         if not change:
