@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import re
+import os
 
 from gettext import gettext as _
+from django.core.files import File
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
@@ -267,6 +269,17 @@ class Work(models.Model):
             w.comment = "\n".join((data['Notice'], data['Remarques']))
             w.save()
             print "Saved", n, unicode(w).encode('utf-8')
+            pic = '/home/oaubert/tmp/michaux/%s.jpg' % row[0].upper().replace(' ', '_')
+            if os.path.exists(pic):
+                print "Copying image"
+                i = Image()
+                i.work = w
+                i.photograph_name = 'Franck Leibovici'
+                i.support = 'numérique'
+                i.nature = 'référence'
+                with open(pic, 'rb') as f:
+                    i.original_image.save(os.path.basename(pic), File(f))
+                i.save()
 
             if data['Signature'].startswith('oui'):
                 sig = Inscription()
