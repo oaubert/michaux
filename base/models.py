@@ -8,6 +8,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
+from coop_tag.managers import TaggableManager
 
 class Work(models.Model):
     """Representation of a Work
@@ -145,6 +146,8 @@ class Work(models.Model):
     creation_date_alternative = models.IntegerField(_("année alternative"),
                                                     help_text=_("Date alternative : la source de cette date alternative est alors indiquée dans les notes"),
                                                     blank=True, null=True)
+
+    tags = TaggableManager(help_text=_("Tags associés"), blank=True,)
 
     # FIXME: pour les tags, on va utiliser
     # http://django-tagging.googlecode.com/svn/trunk/docs/overview.txt
