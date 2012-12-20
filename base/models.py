@@ -206,6 +206,16 @@ class Work(models.Model):
         else:
             return None
 
+    @property
+    def image(self):
+        if self.image_set.count():
+            # More than 1 image. We can find an image
+            # FIXME: use self.image_set.filter(nature_eq='reproduction')
+            i = self.image_set.iterator().next()
+            return i.image
+        else:
+            return None
+
     def __unicode__(self):
         d = {'printable_year': self.printable_year}
         d.update(self.__dict__)
