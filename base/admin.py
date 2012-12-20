@@ -59,7 +59,7 @@ class WorkAdmin(admin.ModelAdmin):
         # js = ( '/static/js/jquery.js', )
 
     fieldsets = [
-        (None,               {'fields': [('status', 'serie')]}),
+        (None,               {'fields': [ ('status', 'serie'), 'tags']}),
         (_("Références"),    {'fields': [ ('master', 'certificate'), 'old_references', 'note_references'], 'classes': ['collapse'] }),
         (_("Technique/support"), {'fields': ['medium', ('support', 'support_details'), 'note_support', ('height', 'width')]}),
         (_("Création"),      {'fields': [ ('creation_date_start', 'creation_date_end', 'creation_date_uncertainty'), 'note_creation_date', 'creation_date_alternative']}),
