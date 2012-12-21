@@ -1,0 +1,25 @@
+body {
+    font-family: helvetica sans-serif;
+    background-color: black;
+    color: #eeeeee;
+}
+
+#header {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+#content {
+    margin-left: 300px;
+    margin-top: 50px;
+}
+
+#margin {
+    position: fixed;
+    top: 50;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    float: left;
+}

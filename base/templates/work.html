@@ -1,26 +1,33 @@
 {% load admin_urls %}
 {% load url from future %}
 {% load tagger_extras %}
-<html><head>
-<link href="{{ STATIC_URL }}css/michaux-single.css" rel="stylesheet" type="text/css" media="screen" /
-</head>
-<body>
-
-<div id="header">
-  <h1>{{ work }}</h1>
-</div>
-
-<div id="content">
-  <div id="margin">
-    <ul>
-      <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
-      <li>{{ work.tags }}</li>
-    </ul>
-  </div>
-  <div id="image">
-    <img class="display" alt="" src="{{ work.image.url }}" width="{{ work.image.width }}" height="{{ work.image.height }}">
-  </div>
-</div>
-
-</body>
+<html>
+  <head>
+    <title>{{ work }}</title>    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+    <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux-single.css" rel="stylesheet" type="text/css" media="screen" />
+  </head>
+  <body>
+    
+    <div id="header">
+      <h1>{{ work }}</h1>
+    </div>
+    
+    <div id="content">
+      <div id="margin">
+        <ul>
+          <li>Les differents champs...</li>          
+          <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
+          <li>{% for tag in work.tags.value %}
+{{ tag }}
+{% endfor %}</li>
+        </ul>
+      </div>
+      <div id="image">
+        <img class="display" alt="" src="{{ work.image.url }}" width="{{ work.image.width }}" height="{{ work.image.height }}">
+      </div>
+    </div>
+    
+  </body>
 </html>
