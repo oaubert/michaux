@@ -2,11 +2,22 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from base.models import Work
+from .models import Work
+from .utils import get_query
 
 def root(request, *p):
-    return render_to_response('works.html', {
-            'works': Work.objects.all(),
+    query_string = ""
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_string = request.GET['q']
+        query = get_query(query_string, [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ])
+        print "Query: ", query
+        works = Work.objects.filter(query).order_by('creation_date_start')
+    else:
+        works = Work.objects.all()
+
+    return render_to_response('grid.html', {
+            'query_string': query_string,
+            'works': works,
             'meta': Work._meta
         }, context_instance=RequestContext(request))
 
