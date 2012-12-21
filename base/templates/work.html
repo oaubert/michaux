@@ -3,21 +3,24 @@
 {% load tagger_extras %}
 <html>
   <head>
-    <title>{{ work }}</title>    
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+    <title>{{ work }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    </script>
     <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/michaux-single.css" rel="stylesheet" type="text/css" media="screen" />
   </head>
   <body>
-    
+
     <div id="header">
       <h1>{{ work }}</h1>
     </div>
-    
+
     <div id="content">
       <div id="margin">
+        <a href="javascript:history.back()">Retour</a>
         <ul>
-          <li>Les differents champs...</li>          
+          <li>Les differents champs...</li>
           <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
           <li>{% for tag in work.tags.value %}
 {{ tag }}
@@ -25,9 +28,11 @@
         </ul>
       </div>
       <div id="image">
-        <img class="display" alt="" src="{{ work.image.url }}">
+        {% with i=work.image %}
+          <img class="display {% if i.width > i.height %}landscape{% else %}portrait{% endif %}" alt="" src="{{ i.url }}">
+        {% endwith %}
       </div>
     </div>
-    
+
   </body>
 </html>

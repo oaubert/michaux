@@ -9,6 +9,7 @@
     {% else %}
       {{ "Liste des oeuvres" }}
     {% endif %}</title>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/michaux-grid.css" rel="stylesheet" type="text/css" media="screen" />
@@ -30,7 +31,9 @@
 
       <div id="grid">
         {% for work in works %}
-          <div class="work"><a href="work/{{ work.pk }}"><img alt="" title="{{ work }}" src="{{ work.thumbnail.url }}" width="{{ work.thumbnail.width }}" height="{{ work.thumbnail.height }}"></a></div>
+          {% with thumb=work.thumbnail %}
+            <div class="work"><a href="{{ work.pk }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}" alt="" title="{{ work }}" src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a></div>
+          {% endwith %}
         {% endfor %}
       </div>
     </div>
