@@ -2,6 +2,7 @@
 {% load url from future %}
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{% if query_string %}
         {% with total=works|length %}
          {{ total }} oeuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
@@ -9,10 +10,46 @@
     {% else %}
       {{ "Liste des oeuvres" }}
     {% endif %}</title>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/michaux-grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <script type="text/javascript">
+      $(function() {
+          var range = $("[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } )
+          var min = Math.min.apply(Math, range);
+          var max = Math.max.apply(Math, range);
+
+          $( "#slider-range" ).slider({
+              range: true,
+              min: min,
+              max: max,
+              values: [ min, max ],
+              slide: function( event, ui ) {
+                  $( "#date" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+              },
+              stop: function(event, ui) {
+                  var count = 0;
+                  var shown = 0;
+                  $("[data-start]").each( function () {
+                      count += 1;
+                      var d = parseInt($(this).attr('data-start'));
+                      if (d < ui.values[0] || d > ui.values[1]) {
+                          $(this).hide();
+                      } else {
+                          $(this).show();
+                          shown += 1;
+                      }
+                  });
+                  $("#shown").text(shown + " / " + count + " éléments affichés");
+              }
+          });
+
+          $( "#date" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+                              " - " + $( "#slider-range" ).slider( "values", 1 ) );
+      });
+    </script>
   </head>
   <body>
     <div id="header">
@@ -23,16 +60,24 @@
 
       <div id="margin">
         {% with total=works|length %}
-        <p>{{ total }} oeuvre{{ total|pluralize }} affichée{{ total|pluralize }}</p>
+        <p>{{ total }} oeuvre{{ total|pluralize }} sélectionnée{{ total|pluralize }}</p>
         {% endwith %}
         <form><input type="text" name="q" value="{{ query_string }}" /></form>
+
+        <p>
+          <label for="date">Date de création</label>
+          <input type="text" id="date" style="border: 0" />
+        </p>
+        <div id="slider-range"></div>
+        <div id="shown"></div>        
+
         <p>Des facettes de sélection ici...</p>
       </div>
 
       <div id="grid">
         {% for work in works %}
           {% with thumb=work.thumbnail %}
-            <div class="work"><a href="{{ work.pk }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}" alt="" title="{{ work }}" src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a></div>
+            <div class="work" data-start="{{ work.creation_date_start }}"><a href="{{ work.pk }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}" alt="" title="{{ work }}" src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a></div>
           {% endwith %}
         {% endfor %}
       </div>
