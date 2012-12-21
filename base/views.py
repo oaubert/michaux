@@ -10,7 +10,6 @@ def root(request, *p):
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
         query = get_query(query_string, [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ])
-        print "Query: ", query
         works = Work.objects.filter(query).order_by('creation_date_start')
     else:
         works = Work.objects.all()
@@ -23,6 +22,11 @@ def root(request, *p):
 
 def work(request, cote):
     w = get_object_or_404(Work, pk=cote)
+    if w.master is not None:
+        # Redirect to master
+        # FIXME: use a correct reverse call here
+        return HttpResponseRedirect(str(w.master.cote))
+
     return render_to_response('work.html', {
             'work': w,
             'meta': Work._meta
