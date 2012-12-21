@@ -20,7 +20,16 @@
       <div id="margin">
         <a href="javascript:history.back()">Retour</a>
         <ul>
-          <li>Les differents champs...</li>
+          <li>{{ work }}</li>
+          <li>{{ work.height }} x {{ work.width }}</li>
+          <li>Cote {{ work.cote }} ({{ work.old_references }})</li>
+          <li>{{ work.note_references }}</li>
+          <li>Technique: {{ work.medium }}</li>
+          <li>Support: {{ work.support }} {{ work.support_details }}</li>
+          <li><strong>Notes</strong></li>
+          <li>{{ work.note_support }}</li>
+          <li>{{ work.comment }}</li>
+          <li>{{ work.revision }}</li>
           <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
           <li>{% for tag in work.tags.value %}
 {{ tag }}
