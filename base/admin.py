@@ -68,8 +68,10 @@ class WorkAdmin(admin.ModelAdmin):
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     list_display = ( 'cote', 'work_thumbnail', 'old_references', 'medium', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
+    list_display_links = ( 'cote', 'work_thumbnail' )
     search_fields = [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
     list_filter = ( 'serie', 'creation_date_start', 'medium', 'support' )
+    save_on_top = True
 
     formfield_overrides = FORMFIELD_OVERRIDES
 
