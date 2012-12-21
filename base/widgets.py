@@ -9,7 +9,6 @@ class AdminImageWidget(forms.widgets.ClearableFileInput):
 
     def render(self, name, value, attrs=None):
         output = []
-        print "Render", name, value, attrs
         if value is not None and hasattr(value, "url"):
             output.append(('<a target="_blank" href="%s">'
                            '<img src="%s" style="height: 40px;" /></a> '
