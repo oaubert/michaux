@@ -365,6 +365,13 @@ class Image(models.Model):
                             help_text=_("Notes"),
                             blank=True)
 
+    @property
+    def orientation(self):
+        if self.width >= self.height:
+            return "landscape"
+        else:
+            return "portrait"
+
 class BibliographyReference(models.Model):
     nature = models.CharField(_("type de référence"),
                               help_text=_("catalogue, article de journal, monographie, livre, chapitre de livre..."),
