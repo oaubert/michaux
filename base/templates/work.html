@@ -33,7 +33,7 @@
           <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
           <li></li>
           <li><strong>Tags</strong></li>
-          <li>{% for tag in work.tags.value %}
+          <li>{% for tag in work.tags.all %}
 {{ tag }}
 {% endfor %}</li>
 
