@@ -1,3 +1,11 @@
+#header {
+    height: 0px;
+}
+
+#content {
+    margin-top: 0px;
+}
+
 #margin ul {
     list-style: none inside none;
 }
