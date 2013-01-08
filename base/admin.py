@@ -9,7 +9,7 @@ from django.contrib import admin
 from base.forms import ImageModelForm
 
 FORMFIELD_OVERRIDES = {
-        models.CharField: {'widget': TextInput(attrs={'size': '16'})},
+        models.CharField: {'widget': TextInput(attrs={'size': '24'})},
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 
