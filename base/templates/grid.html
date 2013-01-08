@@ -16,6 +16,12 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
     <script type="text/javascript">
+      resetFilter = function () {
+          f = $("#filter")[0];
+          f.value = "";
+          f.form.submit()
+      }
+
       $(function() {
           var range = $("[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } )
           var min = Math.min.apply(Math, range);
@@ -62,7 +68,11 @@
         {% with total=works|length %}
         <p>{{ total }} oeuvre{{ total|pluralize }} sélectionnée{{ total|pluralize }}</p>
         {% endwith %}
-        <form><input type="text" name="q" value="{{ query_string }}" /></form>
+        <form>
+          <label for="filter">Filtre</label>
+          <input id="filter" type="text" name="q" value="{{ query_string }}" />
+          <a href="javascript:resetFilter()"><img alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}reset.png" /></a>
+        </form>
 
         <p>
           <label for="date">Date de création</label>
