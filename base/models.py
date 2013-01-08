@@ -151,10 +151,6 @@ class Work(models.Model):
 
     tags = TaggableManager(help_text=_("Tags associés"), blank=True,)
 
-    # FIXME: pour les tags, on va utiliser
-    # http://django-tagging.googlecode.com/svn/trunk/docs/overview.txt
-    #  http://www.napes.co.uk/blog/django-tagging/ - tutorial
-
     # Tags: Liste de tags associés (on interdit les : dans les noms
     # des tags de manière à permettre une éventuelle évolution vers
     # les “tags machine” à la Flickr) permettre les tags comprenant un
@@ -202,7 +198,7 @@ class Work(models.Model):
     def thumbnail(self):
         if self.image_set.count():
             # More than 1 image. We can find a thumbnail
-            # FIXME: use self.image_set.filter(nature_eq='reproduction')
+            # FIXME: use self.image_set.filter(nature__eq='reproduction')
             i = self.image_set.iterator().next()
             return i.thumbnail
         else:
@@ -212,7 +208,7 @@ class Work(models.Model):
     def image(self):
         if self.image_set.count():
             # More than 1 image. We can find an image
-            # FIXME: use self.image_set.filter(nature_eq='reproduction')
+            # FIXME: use self.image_set.filter(nature__eq='reproduction')
             i = self.image_set.iterator().next()
             return i.image
         else:
