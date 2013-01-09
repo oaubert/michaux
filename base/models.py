@@ -377,6 +377,9 @@ class Image(models.Model):
             return "portrait"
 
 class BibliographyReference(models.Model):
+    work = models.ForeignKey(Work,
+                             verbose_name=_("Oeuvre"))
+
     nature = models.CharField(_("type de référence"),
                               help_text=_("catalogue, article de journal, monographie, livre, chapitre de livre..."),
                               max_length=256,
