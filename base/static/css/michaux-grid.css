@@ -11,6 +11,10 @@ div.work {
     padding: 5px;
 }
 
+div.work a {
+    margin: auto;
+}
+
 .work img {
     max-width: 200;
     max-height: 200;
