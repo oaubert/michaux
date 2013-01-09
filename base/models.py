@@ -217,7 +217,7 @@ class Work(models.Model):
     def __unicode__(self):
         d = {'printable_year': self.printable_year}
         d.update(self.__dict__)
-        return "%(medium)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
+        return "#%(cote)d - %(medium)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
 
     @staticmethod
     def import_worksheet(filename):
