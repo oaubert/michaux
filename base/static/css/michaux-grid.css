@@ -9,6 +9,7 @@ div.work {
     height: 200;
     float: left;
     padding: 5px;
+    position: relative;
 }
 
 div.work a {
@@ -28,4 +29,46 @@ div.work a {
 .portrait {
     width: auto;
     height: 100%;
+}
+
+ul.toolbar{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 104px;
+    height: 52px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #fff;
+    border-bottom: 2px solid #ccc;
+    list-style-type: none;
+    opacity: 0.0;
+}
+
+ul.toolbar:hover {
+    opacity: 0.5;
+}
+
+ul.toolbar li {
+    display:inline;
+}
+
+ul.toolbar li a {
+    float: left;
+    cursor: pointer;
+    width: 52px;
+    height: 52px;
+    opacity: 0.6;
+}
+
+ul.toolbar li a:hover{
+    opacity: 1.0;
+}
+
+a.edit{
+    background:#fff url(../icons/edit.png) no-repeat center center;
+}
+
+a.details{
+    background:#fff url(../icons/details.png) no-repeat center center;
 }
