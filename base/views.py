@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from coop_tag.settings import TAGGER_CLOUD_MAX, TAGGER_CLOUD_MIN
+from haystack.query import SearchQuerySet
 from .models import Work
 from .utils import get_query
 
@@ -15,8 +16,10 @@ def works(request, *p):
     query_string = ""
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
-        query = get_query(query_string, [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ])
-        works = Work.objects.filter(query).order_by('creation_date_start')
+        #query = get_query(query_string, [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ])
+        #works = Work.objects.filter(query).order_by('creation_date_start')
+        res = SearchQuerySet().auto_query(query_string)
+        works = [ r.object for r in res ]
     elif 'tag' in request.GET and request.GET['tag'].strip():
         # FIXME: replace by a tag:foo syntax in standard query string
         tag = request.GET['tag']

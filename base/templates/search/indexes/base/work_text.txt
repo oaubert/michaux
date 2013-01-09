@@ -1,0 +1,23 @@
+{{ object.cote }}
+{{ object.old_references }}
+{{ object.certificate }}
+{{ object.note_references }}
+{{ object.serie }}
+{{ object.medium }}
+{{ object.support }}
+{{ object.support_details }}
+{{ object.note_support }}
+{{ object.creation_date_source }}
+{{ object.creation_date_uncertainty }}
+{{ object.creation_date_start }}
+{{ object.creation_date_end }}
+{{ object.note_creation_date }}}
+{{ object.comment }}
+{{ object.revision }}
+{% for tag in object.tags.all %}{{ tag.name }} {% endfor %}
+{% for insc in object.inscription_set.all %}{{ insc.notes }} {% endfor %}
+{% for img in object.image_set.all %}{{ img.note }} {% endfor %}
+{% for bib in object.bibliographyreference_set.all %}{{ bib.title }}{{ bib.container_title }} {{ bib.container_creator }} {{ bib.comment }} {{ bib.note }} {% endfor %}
+{% for ex in object.exhibitioninstance_set.all %}{{ ex.exhibition.title }} {{ ex.note }} {% endfor %}
+{% for ev in object.event_set.all %}{{ ev.description }} {% endfor %}
+{% for repr in object.reproduction_set.all %}{{ repr.comment }} {% endfor %}

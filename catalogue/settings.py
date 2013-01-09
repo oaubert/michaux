@@ -113,6 +113,10 @@ TEMPLATE_DIRS = (
     #'/home/oaubert/src/michaux/catalogue/templates',
 )
 
+HAYSTACK_SITECONF = 'catalogue.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'solr'
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,6 +126,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'haystack',
     'imagekit',
     'coop_tag',
 
