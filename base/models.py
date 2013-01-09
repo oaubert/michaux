@@ -232,9 +232,9 @@ class Work(models.Model):
         s = book.sheet_by_index(0)
         header = s.row_values(0)
         for n in range(1, s.nrows - 1):
-            if n < 380:
+            if n < 408:
                 continue
-            if n > 500:
+            if n > 600:
                 break
             row = s.row_values(n)
             data = dict(zip(header, row))
