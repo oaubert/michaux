@@ -85,7 +85,7 @@
 
         <div class="tagcloud">
           {% for tag in tagcloud_data %}
-          <font size="{{tag.weight|floatformat:0}}"><a class="tag" href="?tag={{tag}}">{{tag}}</a></font>
+          <font size="{{ tag.weight|floatformat:0 }}"><a class="tag" href="?tag={{ tag }}">{{ tag }}</a></font>
           {% endfor %}
         </div>
 
