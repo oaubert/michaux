@@ -5,6 +5,7 @@ import os
 
 from gettext import gettext as _
 from django.core.files import File
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
@@ -213,6 +214,9 @@ class Work(models.Model):
             return i.image
         else:
             return None
+
+    def get_absolute_url(self):
+        return reverse('base.views.work', args=[str(self.cote)])
 
     def __unicode__(self):
         d = {'printable_year': self.printable_year}
