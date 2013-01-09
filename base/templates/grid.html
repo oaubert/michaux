@@ -61,13 +61,7 @@
     </script>
 {% endblock %}
 
-{% block header %}<h1>{% if query_string %}
-   {% with total=works|length %}
-   {{ total }} oeuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
-   {% endwith %}
-   {% else %}
-   {{ "Liste des oeuvres" }}
-   {% endif %}</h1>
+{% block header %}<h1>{% with total=works|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
 {% endblock %}
 
 {% block margin %}
