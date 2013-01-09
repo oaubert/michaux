@@ -308,7 +308,7 @@ class Inscription(models.Model):
                                 help_text=_("Position: choix parmi une énumération extensible (recto, verso, bas droite, bas gauche, etc)"),
                                 max_length=256,
                                 blank=True)
-    notes = models.TextField(_("note"),
+    note = models.TextField(_("note"),
                              help_text=_("Note: contenu, détails, etc"),
                              blank=True)
 
