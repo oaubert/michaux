@@ -1,22 +1,19 @@
+{% extends "base.html" %}
+
 {% load admin_urls %}
 {% load url from future %}
-{% load tagger_extras %}
-<html>
-  <head>
-    <title>{{ work }}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
-    </script>
-    <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{ STATIC_URL }}css/michaux-single.css" rel="stylesheet" type="text/css" media="screen" />
-  </head>
-  <body>
 
-    <div id="header">
-    </div>
+{% block title %}{{ work }}{% endblock %}
+{% block extra_header %}
+   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+   <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+   <link href="{{ STATIC_URL }}css/michaux-single.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
 
-    <div id="content">
-      <div id="margin">
+{% block header %}
+{% endblock %}
+
+{% block margin %}
         <h1>{{ work }}</h1>
         <a href="javascript:history.back()">Retour</a>
         <ul>
@@ -38,13 +35,12 @@
 {% endfor %}</li>
 
         </ul>
-      </div>
+{% endblock %}
+
+{% block content %}
       <div id="image">
         {% with i=work.image %}
           <img class="display {% if i.width > i.height %}landscape{% else %}portrait{% endif %}" alt="" src="{{ i.url }}">
         {% endwith %}
       </div>
-    </div>
-
-  </body>
-</html>
+{% endblock %}
