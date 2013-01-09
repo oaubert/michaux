@@ -38,7 +38,7 @@ def works(request, *p):
 
     counter = Counter(tag for w in works for tag in w.tags.all())
     weight_fun = get_weight_fun(TAGGER_CLOUD_MIN, TAGGER_CLOUD_MAX, min(counter.itervalues()), max(counter.itervalues()))
-    for tag, c in counter.most_common():
+    for tag, c in counter.iteritems():
         tag.weight = weight_fun(c)
     return render_to_response('grid.html', {
         'query_string': query_string,
