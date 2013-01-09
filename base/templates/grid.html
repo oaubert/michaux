@@ -25,37 +25,39 @@
 
       $(function() {
           var range = $("[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } )
-          var min = Math.min.apply(Math, range);
-          var max = Math.max.apply(Math, range);
+          if (range.length > 0) {
+              var min = Math.min.apply(Math, range);
+              var max = Math.max.apply(Math, range);
 
-          $( "#slider-range" ).slider({
-              range: true,
-              min: min,
-              max: max,
-              values: [ min, max ],
-              slide: function( event, ui ) {
-                  $( "#date" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-              },
-              stop: function(event, ui) {
-                  var count = 0;
-                  var shown = 0;
-                  $("[data-start]").each( function () {
-                      count += 1;
-                      var d = parseInt($(this).attr('data-start'));
-                      if (d < ui.values[0] || d > ui.values[1]) {
-                          $(this).hide();
-                      } else {
-                          $(this).show();
-                          shown += 1;
-                      }
-                  });
-                  $("#shown").text(shown + " / " + count + " éléments affichés");
-                  // FIXME: use navigation history to push filter into history
-              }
-          });
-
-          $( "#date" ).val( $( "#slider-range" ).slider( "values", 0 ) +
-                              " - " + $( "#slider-range" ).slider( "values", 1 ) );
+              $( "#slider-range" ).slider({
+                  range: true,
+                  min: min,
+                  max: max,
+                  values: [ min, max ],
+                  slide: function( event, ui ) {
+                      $( "#date" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                  },
+                  stop: function(event, ui) {
+                      var count = 0;
+                      var shown = 0;
+                      $("[data-start]").each( function () {
+                          count += 1;
+                          var d = parseInt($(this).attr('data-start'));
+                          if (d < ui.values[0] || d > ui.values[1]) {
+                              $(this).hide();
+                          } else {
+                              $(this).show();
+                              shown += 1;
+                          }
+                      });
+                      $("#shown").text(shown + " / " + count + " éléments affichés");
+                      // FIXME: use navigation history to push filter into history
+                  }
+              });
+              
+              $( "#date" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+                                " - " + $( "#slider-range" ).slider( "values", 1 ) );
+          }
       });
     </script>
   </head>
