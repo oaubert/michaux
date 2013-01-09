@@ -251,7 +251,7 @@ class Work(models.Model):
                           '"mouvements"'):
                 if serie in tech:
                     w.serie = serie
-                    tech.replace(serie, '')
+                    tech = tech.replace(serie, '')
                     break
             w.medium = tech
             support = data['Papier'].split()
