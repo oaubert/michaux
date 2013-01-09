@@ -22,7 +22,7 @@
           f.form.submit()
       }
 
-      $(function() {
+      jQuery(document).ready(function($) {
           var range = $("[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } )
           if (range.length > 0) {
               var min = Math.min.apply(Math, range);
@@ -57,7 +57,43 @@
               $( "#date" ).val( $( "#slider-range" ).slider( "values", 0 ) +
                                 " - " + $( "#slider-range" ).slider( "values", 1 ) );
           }
+
+          $('.vignette').click(function(e) {
+              //prevent default action (hyperlink)
+              e.preventDefault();
+              //Get clicked link href
+              var image_href = $(this).attr("href");
+              /*
+                If the lightbox window HTML already exists in document,
+                change the img src to to match the href of whatever link was clicked
+                If the lightbox window HTML doesn't exists, create it and insert it.
+                (This will only happen the first time around)
+              */
+              if ($('#lightbox').length > 0) { // #lightbox exists
+                  //place href as img src value
+                  $('#lightbox_content').html('<img src="' + image_href + '" />');
+                  //show lightbox window - you could use .show('fast') for a transition
+                  $('#lightbox').show();
+              }
+              else { //#lightbox does not exist - create and insert (runs 1st time only)
+                  //create HTML markup for lightbox window
+                  var lightbox =
+                      '<div id="lightbox">' +
+                      '<p>Click to close</p>' +
+                      '<div id="lightbox_content">' + //insert clicked link's href into img src
+                      '<img src="' + image_href +'" />' +
+                      '</div>' +
+                      '</div>';
+                  //insert lightbox HTML into page
+                  $('body').append(lightbox);
+              }
+          });
+          //Click anywhere on the page to get rid of lightbox window
+          $('#lightbox').live('click', function() { //must use live, as the lightbox element is inserted into the DOM
+              $('#lightbox').hide();
+          });
       });
+
     </script>
 {% endblock %}
 
@@ -95,7 +131,7 @@
         {% for work in works %}
           {% with thumb=work.thumbnail %}
             <div class="work" data-start="{{ work.creation_date_start }}">
-              <a href="{{ work.get_absolute_url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
+              <a class="vignette" href="{{ work.image.url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
                                          alt="" title="{{ work }}"
                                          src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
               <ul class="toolbar"><li><a href="{% url meta|admin_urlname:'change' work.cote %}" class="edit"></a></li><li><a href="{{ work.get_absolute_url }}" class="details"></a></li></ul>
