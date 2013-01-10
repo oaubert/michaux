@@ -4,6 +4,7 @@ from haystack import site
 
 class WorkIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True, use_template=True)
+    tags = indexes.MultiValueField(null=True, faceted=True)
     creator = indexes.CharField(model_attr='creator', faceted=True)
     creation_date_start = indexes.IntegerField(model_attr='creation_date_start', faceted=True, null=True)
     creation_date_end = indexes.IntegerField(model_attr='creation_date_end', faceted=True, null=True)
@@ -19,5 +20,8 @@ class WorkIndex(indexes.SearchIndex):
     def index_queryset(self):
         """Used when the entire index for model is updated."""
         return self.get_model().objects.filter(master__isnull=True)
+
+    def prepare_tags(self, work):
+        return [ unicode(t) for t in work.tags.all() ]
 
 site.register(Work, WorkIndex)
