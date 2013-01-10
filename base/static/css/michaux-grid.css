@@ -8,6 +8,10 @@
     width: 90%;
 }
 
+#filter_reset_icon {
+    vertical-align: bottom;
+}
+
 div.work {
     width: 200;
     height: 200;

@@ -29,7 +29,7 @@
         <form>
           <label for="filter">Filtre</label>
           <input id="filter" type="text" name="q" value="{{ query_string }}" />
-          <a href="javascript:resetFilter()"><img alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a>
+          <a href="javascript:resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a>
         </form>
 
         <p>
