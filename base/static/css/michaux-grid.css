@@ -4,6 +4,10 @@
     text-align: center;
 }
 
+#slider-range {
+    width: 90%;
+}
+
 div.work {
     width: 200;
     height: 200;
