@@ -125,10 +125,10 @@ INSTALLED_APPS = (
     #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'haystack',
     'imagekit',
     'coop_tag',
 
     'base',
+    'django.contrib.admin',
 )
