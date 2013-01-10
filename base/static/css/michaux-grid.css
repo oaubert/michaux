@@ -117,3 +117,9 @@ dl.facet dt {
 dl.facet dd {
     margin-left: 10px;
 }
+
+a.active-facet {
+    decoration: none;
+    background: #fff url(../icons/reset.png) no-repeat center center;
+    width: 26;
+}

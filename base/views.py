@@ -60,7 +60,7 @@ def works(request, *p):
         'tagcloud_data': counter.keys(),
         'sqs': sqs,
         'facets': sqs.facet_counts(),
-        'selected_facets': request.GET.getlist('selected_facets'),
+        'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('selected_facets') ],
         'current_url': current,
         }, context_instance=RequestContext(request))
 

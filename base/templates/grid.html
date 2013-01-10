@@ -56,7 +56,9 @@
             {% if facets.fields.medium %}
             <dt>Support</dt>
             {% for medium in facets.fields.medium|slice:":10" %}
-            <dd><a href="{{ current_url }}&amp;selected_facets=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})</dd>
+            <dd><a href="{{ current_url }}&amp;selected_facets=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})
+              {% if medium.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+            </dd>
             {% endfor %}
             {% else %}
             <p>Pas de support.</p>
@@ -67,7 +69,9 @@
             {% if facets.fields.serie %}
             <dt>Série</dt>
             {% for serie in facets.fields.serie|slice:":10" %}
-            <dd><a href="{{ current_url }}&amp;selected_facets=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})</dd>
+            <dd><a href="{{ current_url }}&amp;selected_facets=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})
+              {% if serie.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+            </dd>
             {% endfor %}
             {% else %}
             <p>Pas de série.</p>
@@ -78,7 +82,9 @@
             {% if facets.fields.creation_date_start %}
             <dt>Date de création (début)</dt>
             {% for date in facets.fields.creation_date_start|slice:":10" %}
-            <dd><a href="{{ current_url }}&amp;selected_facets=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})</dd>
+            <dd><a href="{{ current_url }}&amp;selected_facets=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})
+              {% if date.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+            </dd>
             {% endfor %}
             {% else %}
             <p>Pas de date.</p>
