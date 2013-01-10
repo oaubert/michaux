@@ -96,3 +96,16 @@ a.details{
     max-width: 940px;
     margin: auto;
 }
+
+dl.facet {
+    border: 1px solid #cccccc;
+    margin: 5px;
+}
+
+dl.facet dt {
+    background-color: #ccccff;
+}
+
+dl.facet dd {
+    margin-left: 10px;
+}

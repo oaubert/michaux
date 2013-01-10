@@ -4,7 +4,7 @@
 {% load url from future %}
 
 {% block title %}{% if query_string %}
-   {% with total=works|length %}
+   {% with total=sqs|length %}
    {{ total }} oeuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
    {% endwith %}
    {% else %}
@@ -58,6 +58,7 @@
                                 " - " + $( "#slider-range" ).slider( "values", 1 ) );
           }
 
+          // Homemade lightbox
           $('.vignette').click(function(e) {
               //prevent default action (hyperlink)
               e.preventDefault();
@@ -97,11 +98,11 @@
     </script>
 {% endblock %}
 
-{% block header %}<h1>{% with total=works|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
+{% block header %}<h1>{% with total=sqs|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
 {% endblock %}
 
 {% block margin %}
-        {% with total=works|length %}
+        {% with total=sqs|length %}
         <p>{{ total }} oeuvre{{ total|pluralize }} sélectionnée{{ total|pluralize }}</p>
         {% endwith %}
         <form>
@@ -117,7 +118,53 @@
         <div id="slider-range"></div>
         <div id="shown"></div>
 
-        <p>Des facettes de sélection ici...</p>
+        <div class="facets">
+          <dl class="facet">
+            {% if facets.fields.creator %}
+            <dt>Créateur</dt>
+            {# Provide only the top 5 creators #}
+            {% for creator in facets.fields.creator|slice:":5" %}
+            <dd><a href="{{ request.get_full_path }}?selected_facets=creator_exact:{{ creator.0|urlencode }}">{{ creator.0 }}</a> ({{ creator.1 }})</dd>
+            {% endfor %}
+            {% else %}
+            <p>Pas de créateur.</p>
+            {% endif %}
+          </dl>
+
+          <dl class="facet">
+            {% if facets.fields.medium %}
+            <dt>Support</dt>
+            {% for medium in facets.fields.medium|slice:":10" %}
+            <dd><a href="{{ request.get_full_path }}?selected_facets=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})</dd>
+            {% endfor %}
+            {% else %}
+            <p>Pas de support.</p>
+            {% endif %}
+          </dl>
+
+          <dl class="facet">
+            {% if facets.fields.serie %}
+            <dt>Série</dt>
+            {% for serie in facets.fields.serie|slice:":10" %}
+            <dd><a href="{{ request.get_full_path }}?selected_facets=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})</dd>
+            {% endfor %}
+            {% else %}
+            <p>Pas de série.</p>
+            {% endif %}
+          </dl>
+
+          <dl class="facet">
+            {% if facets.fields.creation_date_start %}
+            <dt>Date de création (début)</dt>
+            {% for date in facets.fields.creation_date_start|slice:":10" %}
+            <dd><a href="{{ request.get_full_path }}?selected_facets=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})</dd>
+            {% endfor %}
+            {% else %}
+            <p>Pas de date.</p>
+            {% endif %}
+          </dl>
+
+        </div>
 
         <div class="tagcloud">
           {% for tag in tagcloud_data %}
@@ -125,18 +172,22 @@
           {% endfor %}
         </div>
 
+
+
 {% endblock %}
 
 {% block content %}
-        {% for work in works %}
-          {% with thumb=work.thumbnail %}
-            <div class="work" data-start="{{ work.creation_date_start }}">
-              <a class="vignette" href="{{ work.image.url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
-                                         alt="" title="{{ work }}"
-                                         src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
-              <ul class="toolbar"><li><a target="_blank" href="{% url meta|admin_urlname:'change' work.cote %}" class="edit"></a></li><li><a target="_blank" href="{{ work.get_absolute_url }}" class="details"></a></li></ul>
+        {% for res in sqs %}
+        {% with work=res.object %}
+        {% with thumb=work.thumbnail %}
+        <div class="work" data-start="{{ work.creation_date_start }}">
+          <a class="vignette" href="{{ work.image.url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
+                                                               alt="" title="{{ work }}"
+                                                               src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
+          <ul class="toolbar"><li><a target="_blank" href="{% url meta|admin_urlname:'change' work.cote %}" class="edit"></a></li><li><a target="_blank" href="{{ work.get_absolute_url }}" class="details"></a></li></ul>
             </div>
-          {% endwith %}
+        {% endwith %}
+        {% endwith %}
         {% endfor %}
       </div>
 {% endblock %}

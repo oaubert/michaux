@@ -10,22 +10,27 @@ from .models import Work
 from .utils import get_query
 
 def root(request, *p):
-    return HttpResponseRedirect('work/')
+    return HttpResponseRedirect('work/?')
 
 def works(request, *p):
     query_string = ""
+    basesqs = SearchQuerySet().facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('medium').facet('support').facet('width').facet('height')
+
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
-        #query = get_query(query_string, [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ])
-        #works = Work.objects.filter(query).order_by('creation_date_start')
-        res = SearchQuerySet().auto_query(query_string)
-        works = [ r.object for r in res ]
+        sqs = basesqs.auto_query(query_string).order_by('creation_date_start')
     elif 'tag' in request.GET and request.GET['tag'].strip():
         # FIXME: replace by a tag:foo syntax in standard query string
         tag = request.GET['tag']
-        works = Work.objects.filter(tags__name__in=[tag]).order_by('creation_date_start')
+        sqs = basesqs.filter(tags__name__in=[tag]).order_by('creation_date_start')
     else:
-        works = Work.objects.all()
+        sqs = basesqs
+
+    if 'selected_facets' in request.GET:
+        for facet in request.GET.getlist('selected_facets'):
+            field, value = facet.split(":", 1)
+            if value:
+                sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
     def get_weight_fun(t_min, t_max, f_min, f_max):
         def weight_fun(f_i, t_min=t_min, t_max=t_max, f_min=f_min, f_max=f_max):
@@ -39,16 +44,18 @@ def works(request, *p):
             return t_max - (f_max - f_i) * mult_fac
         return weight_fun
 
-    counter = Counter(tag for w in works for tag in w.tags.all())
+    counter = Counter(tag for w in sqs.all() for tag in w.object.tags.all())
     if len(counter):
         weight_fun = get_weight_fun(TAGGER_CLOUD_MIN, TAGGER_CLOUD_MAX, min(counter.itervalues()), max(counter.itervalues()))
         for tag, c in counter.iteritems():
             tag.weight = weight_fun(c)
     return render_to_response('grid.html', {
         'query_string': query_string,
-        'works': works,
         'meta': Work._meta,
         'tagcloud_data': counter.keys(),
+        'sqs': sqs,
+        'facets': sqs.facet_counts(),
+        'request': request,
         }, context_instance=RequestContext(request))
 
 def work(request, cote):
