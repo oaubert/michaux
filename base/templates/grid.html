@@ -99,6 +99,7 @@
 {% endblock %}
 
 {% block header %}<h1>{% with total=sqs|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
+    <div>| {% for facet in selected_facets %} {{ facet }} |{% endfor %}</div>
 {% endblock %}
 
 {% block margin %}
@@ -124,7 +125,7 @@
             <dt>Créateur</dt>
             {# Provide only the top 5 creators #}
             {% for creator in facets.fields.creator|slice:":5" %}
-            <dd><a href="{{ request.get_full_path }}?selected_facets=creator_exact:{{ creator.0|urlencode }}">{{ creator.0 }}</a> ({{ creator.1 }})</dd>
+            <dd><a href="{{ current_url }}&amp;selected_facets=creator_exact:{{ creator.0|urlencode }}">{{ creator.0 }}</a> ({{ creator.1 }})</dd>
             {% endfor %}
             {% else %}
             <p>Pas de créateur.</p>
@@ -135,7 +136,7 @@
             {% if facets.fields.medium %}
             <dt>Support</dt>
             {% for medium in facets.fields.medium|slice:":10" %}
-            <dd><a href="{{ request.get_full_path }}?selected_facets=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})</dd>
+            <dd><a href="{{ current_url }}&amp;selected_facets=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})</dd>
             {% endfor %}
             {% else %}
             <p>Pas de support.</p>
@@ -146,7 +147,7 @@
             {% if facets.fields.serie %}
             <dt>Série</dt>
             {% for serie in facets.fields.serie|slice:":10" %}
-            <dd><a href="{{ request.get_full_path }}?selected_facets=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})</dd>
+            <dd><a href="{{ current_url }}&amp;selected_facets=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})</dd>
             {% endfor %}
             {% else %}
             <p>Pas de série.</p>
@@ -157,10 +158,21 @@
             {% if facets.fields.creation_date_start %}
             <dt>Date de création (début)</dt>
             {% for date in facets.fields.creation_date_start|slice:":10" %}
-            <dd><a href="{{ request.get_full_path }}?selected_facets=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})</dd>
+            <dd><a href="{{ current_url }}&amp;selected_facets=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})</dd>
             {% endfor %}
             {% else %}
             <p>Pas de date.</p>
+            {% endif %}
+          </dl>
+
+          <dl class="facet">
+            {% if facets.fields.tags %}
+            <dt>Tags</dt>
+            {% for tag in facets.fields.tag|slice:":10" %}
+            <dd><a href="{{ current_url }}&amp;selected_facets=tags_exact:{{ tag.0|urlencode }}">{{ tag.0 }}</a> ({{ tag.1 }})</dd>
+            {% endfor %}
+            {% else %}
+            <p>Pas de tag.</p>
             {% endif %}
           </dl>
 

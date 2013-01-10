@@ -49,13 +49,19 @@ def works(request, *p):
         weight_fun = get_weight_fun(TAGGER_CLOUD_MIN, TAGGER_CLOUD_MAX, min(counter.itervalues()), max(counter.itervalues()))
         for tag, c in counter.iteritems():
             tag.weight = weight_fun(c)
+    # Add a ? at the end of current_url so that we can simply add
+    # &facet=foo in the template to drill down along facets
+    current = request.get_full_path()
+    if not '?' in current:
+        current = current + '?'
     return render_to_response('grid.html', {
         'query_string': query_string,
         'meta': Work._meta,
         'tagcloud_data': counter.keys(),
         'sqs': sqs,
         'facets': sqs.facet_counts(),
-        'request': request,
+        'selected_facets': request.GET.getlist('selected_facets'),
+        'current_url': current,
         }, context_instance=RequestContext(request))
 
 def work(request, cote):
