@@ -32,8 +32,18 @@ jQuery(document).ready(
                                                                                 shown += 1;
                                                                             }
                                                                         });
-                                                $("#shown").text(shown + " / " + count + " ÈlÈments affichÈs");
-                                                // FIXME: use navigation history to push filter into history
+                                                var plural = "";
+                                                if (shown > 1)
+                                                    plural = "s";
+                                                $("#shown").text(shown + " / " + count + " √©l√©ment" + plural + " affich√©" + plural);
+                                                // FIXME: this should
+                                                // call the facet code
+                                                // (so that it works
+                                                // even with
+                                                // pagination) and it
+                                                // will also allow to
+                                                // keep the filter in
+                                                // navigation history
                                             }
                                         });
 
