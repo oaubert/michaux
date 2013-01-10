@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% load admin_urls %}
+{% load url from future %}
+
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux-grid.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
 {% block content %}
     <h2>Search</h2>
 
@@ -18,9 +25,16 @@
             <h3>Results</h3>
 
             {% for result in page.object_list %}
-                <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object }}</a>
-                </p>
+            {% with work=result.object  %}
+            {% with thumb=work.thumbnail %}
+            <div class="work" data-start="{{ work.creation_date_start }}">
+              <a class="vignette" href="{{ work.image.url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
+                                         alt="" title="{{ work }}"
+                                         src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
+              <ul class="toolbar"><li><a target="_blank" class="edit"></a></li><li><a target="_blank" href="{{ work.get_absolute_url }}" class="details"></a></li></ul>
+            </div>
+            {% endwith %}
+            {% endwith %}
             {% empty %}
                 <p>No results found.</p>
             {% endfor %}
