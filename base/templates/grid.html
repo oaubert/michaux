@@ -2,6 +2,7 @@
 
 {% load admin_urls %}
 {% load url from future %}
+{% load michaux %}
 
 {% block title %}{% if query_string %}
    {% with total=sqs|length %}
@@ -59,7 +60,7 @@
             <ul>
             {% for medium in facets.fields.medium|slice:":50" %}
             <li><a href="{{ current_url }}&amp;f=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})
-              {% if medium.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+              {% if medium.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:medium }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
             </ul>
@@ -70,7 +71,7 @@
             <ul>
             {% for support in facets.fields.support|slice:":50" %}
             <li><a href="{{ current_url }}&amp;f=support_exact:{{ support.0|urlencode }}">{{ support.0 }}</a> ({{ support.1 }})
-              {% if support.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+              {% if support.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:support }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
             </ul>
@@ -81,7 +82,7 @@
             <ul>
             {% for serie in facets.fields.serie|slice:":50" %}
             <li><a href="{{ current_url }}&amp;f=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})
-              {% if serie.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+              {% if serie.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:serie }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
             </ul>
@@ -92,7 +93,7 @@
             <ul>
             {% for date in facets.fields.creation_date_start|slice:":50" %}
             <li><a href="{{ current_url }}&amp;f=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})
-              {% if date.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+              {% if date.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:date }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
             </ul>
@@ -102,7 +103,9 @@
             <p class="facettitle">Tags ({{ facets.fields.tags|length }})</p>
             <ul>
               {% for tag in facets.fields.tags|slice:":50" %}
-              <li><a href="{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}">{{ tag.0 }}</a> ({{ tag.1 }})</li>
+              <li><a href="{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}">{{ tag.0 }}</a> ({{ tag.1 }})
+                {% if tag.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:tag }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+              </li>
               {% endfor %}
             </ul>
           </div>
