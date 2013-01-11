@@ -46,16 +46,6 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Créateur ({{ facets.fields.creator|length }})</p>
-            <ul>
-            {# Provide only the top 5 creators #}
-            {% for creator in facets.fields.creator|slice:":50" %}
-            <li><a href="{{ current_url }}&amp;f=creator_exact:{{ creator.0|urlencode }}">{{ creator.0 }}</a> ({{ creator.1 }})</li>
-            {% endfor %}
-            </ul>
-          </div>
-
-          <div class="facetbox">
             <p class="facettitle">Technique ({{ facets.fields.medium|length }})</p>
             <ul>
             {% for medium in facets.fields.medium|slice:":50" %}
