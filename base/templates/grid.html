@@ -66,6 +66,19 @@
           </dl>
 
           <dl class="facet">
+            {% if facets.fields.support %}
+            <dt>Support ({{ facets.fields.support|length }})</dt>
+            {% for support in facets.fields.support|slice:":50" %}
+            <dd><a href="{{ current_url }}&amp;f=support_exact:{{ support.0|urlencode }}">{{ support.0 }}</a> ({{ support.1 }})
+              {% if support.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+            </dd>
+            {% endfor %}
+            {% else %}
+            <p>Pas de support.</p>
+            {% endif %}
+          </dl>
+
+          <dl class="facet">
             {% if facets.fields.serie %}
             <dt>Série ({{ facets.fields.serie|length }})</dt>
             {% for serie in facets.fields.serie|slice:":50" %}
