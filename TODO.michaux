@@ -1,0 +1,21 @@
+* Grille
+** Facette date: intégrer au moteur SOLR
+** Affichage facette date: sous forme histogramme + sélection de "range"
+** Facettes: ne pas afficher facettes si count == 0 : 
+** Formulaire d'ajout de tag + autocomplétion
+** Ajouter un axe de tri
+* Fiche oeuvre
+** ajouter dans la fiche des liens vers les facettes correspondantes
+** Export des fiches PDF -> définir un format spécifique ?
+** Rendre éditable facilement ?
+* Formulaire admin:
+** autocomplétion
+** utiliser des onglets pour les catégories ?
+** Afficher la liste complète des tags existants
+* Table admin
+** Table admin: éditable?
+
+** Action table admin: "ajouter exposition"
+* Interaction
+** Vue canevas 2D pour classification (cf kineticjs)
+** Intégration de pivotviewer?
