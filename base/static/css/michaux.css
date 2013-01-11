@@ -38,10 +38,6 @@ body {
     overflow: auto;
 }
 
-#margin p {
-    margin-top: 7px;
-}
-
 /* navbar */
 
 ul.navbar {

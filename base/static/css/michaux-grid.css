@@ -109,27 +109,26 @@ a.details{
     margin: auto;
 }
 
-dl.facet {
+div.facetbox {
     border: 1px solid #cccccc;
-    margin: 5px;
+    margin: 0px 5px 5px 2px;
     overflow: auto;
-    max-height: 120px;
-    min-height: 40px;
+    max-height: 140px;
+    min-height: 1.2em;
 }
 
-dl.facet dt {
+.facettitle {
+    margin: 0;
     background-color: #ccccff;
     position: absolute;
-    width: 80%;
+    width: 85%;
     height: 1.2em;
 }
 
-dl.facet dd {
-    margin-left: 10px;
-}
-
-dl.facet dd:first-of-type {
+div.facetbox ul {
     margin-top: 1.3em;
+    margin-left: 10px;
+    list-style: none;
 }
 
 a.active-facet {

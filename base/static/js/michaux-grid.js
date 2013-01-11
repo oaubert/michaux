@@ -67,7 +67,7 @@ jQuery(document).ready(
                                      //place href as img src value
                                      $('#lightbox_content').html('<img src="' + image_href + '" />');
                                      //show lightbox window - you could use .show('fast') for a transition
-                                     $('#lightbox').show();
+                                     $('#lightbox').show('fast');
                                  }
                                  else { //#lightbox does not exist - create and insert (runs 1st time only)
                                      //create HTML markup for lightbox window
@@ -86,5 +86,9 @@ jQuery(document).ready(
         $('#lightbox').live('click', function() { //must use live, as the lightbox element is inserted into the DOM
                                 $('#lightbox').hide();
                             });
+
+        $(".facettitle").click(function() {
+                                   $(this).next().slideToggle("fast");
+                               });
     });
 
