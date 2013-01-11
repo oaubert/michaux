@@ -9,7 +9,10 @@
   <body>
     <div id="home">
       {% block home %}
-      <a href="/base/work/">Accueil</a>
+      <ul class="navbar">
+        <li><a href="/base/work/">Accueil</a></li>
+        <li><a href="javascript:history.back()">Retour</a></li>
+      </ul>
       {% endblock %}
     </div>
 

@@ -60,3 +60,27 @@ body {
     background-color: #3E6D8E;
     color: #E0EAF1;
 }
+
+ul.navbar {
+    margin: 0px;
+    padding: 0px;
+    background-color: #fff;
+    list-style-type: none;
+}
+
+ul.navbar li {
+    display: inline-block;
+    width: 60px;
+    margin: 0px 10px;
+}
+
+ul.navbar li a {
+    float: left;
+    cursor: pointer;
+    background-color: #ccccff;
+    opacity: 0.6;
+}
+
+ul.navbar li a:hover{
+    opacity: 1.0;
+}
