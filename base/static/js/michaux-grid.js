@@ -1,12 +1,8 @@
-resetFilter = function () {
-    f = $("#filter")[0];
-    f.value = "";
-    f.form.submit()
-}
+var michaux = {}
 
 jQuery(document).ready(
     function($) {
-        var range = $("[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } )
+        var range = $("[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } );
         if (range.length > 0) {
             var min = Math.min.apply(Math, range);
             var max = Math.max.apply(Math, range);
@@ -90,5 +86,21 @@ jQuery(document).ready(
         $(".facettitle").click(function() {
                                    $(this).next().slideToggle("fast");
                                });
-    });
 
+        michaux.openFacets = function () {
+                 $("div.facetbox ul").show("fast");
+        };
+
+        michaux.closeFacets = function () {
+                 $("div.facetbox ul").hide("fast");
+        };
+
+        michaux.resetFilter = function () {
+            f = $("#filter")[0];
+            f.value = "";
+            f.form.submit()
+        };
+
+
+
+    });

@@ -29,7 +29,7 @@
         <form>
           <label for="filter">Filtre</label>
           <input id="filter" type="text" name="q" value="{{ query_string }}" />
-          <a href="javascript:resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a>
+          <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a>
         </form>
 
         <p>
@@ -40,6 +40,10 @@
         <div id="shown"></div>
 
         <div class="facets">
+
+          <div class="facetcontrols"><a href="javascript:michaux.openFacets()" title="Ouvrir toutes les facettes" />Ouvrir tout</a> <a href="javascript:michaux.closeFacets()" title="Fermer toutes les facettes">Fermer tout</a>
+          </div>
+
           <div class="facetbox">
             {% if facets.fields.creator %}
             <p class="facettitle">Créateur ({{ facets.fields.creator|length }})</p>

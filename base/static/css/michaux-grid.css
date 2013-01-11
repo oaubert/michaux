@@ -121,8 +121,12 @@ div.facetbox {
     margin: 0;
     background-color: #ccccff;
     position: absolute;
-    width: 85%;
+    width: 292px;
     height: 1.2em;
+}
+
+.facetcontrols {
+    text-align: right;
 }
 
 div.facetbox ul {
