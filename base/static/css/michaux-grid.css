@@ -18,6 +18,9 @@ div.work {
     float: left;
     padding: 5px;
     position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
 }
 
 div.work a {
