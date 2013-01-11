@@ -2,6 +2,7 @@
 
 {% load admin_urls %}
 {% load url from future %}
+{% load michaux %}
 
 {% block title %}{{ work }}{% endblock %}
 {% block extra_header %}
@@ -14,11 +15,10 @@
 {% endblock %}
 
 {% block margin %}
-        <h2>{{ work }}</h2>
+        <h2>{{ work|autolink }}</h2>
         <a id="edit-icon" href="{% url meta|admin_urlname:'change' work.cote %}"><img title="Editer la fiche" alt="Edit" src="{{ STATIC_URL }}icons/edit.png" /></a>
 
         <ul>
-          <li>{{ work }}</li>
           <li>{{ work.height }} x {{ work.width }}</li>
           <li>Ref {{ work.old_references }} {% if work.note_references %}({{ work.note_references }}){% endif %}</li>
           <li>Technique: {{ work.medium }}</li>
@@ -27,13 +27,13 @@
           <li>Série: {{ work.serie }}</li>
           {% endif %}
           <li><strong>Notes</strong></li>
-          <li>{{ work.note_support }}</li>
-          <li>{{ work.comment }}</li>
-          <li>{{ work.revision }}</li>
+          <li>{{ work.note_support|autolink }}</li>
+          <li>{{ work.comment|autolink }}</li>
+          <li>{{ work.revision|autolink }}</li>
 {% if work.inscription_set.count %}
           <li><strong>Inscriptions</strong>
             <ul>
-              {% for insc in work.inscription_set.all %}<li>{{ insc.notes }}</li>{% endfor %}
+              {% for insc in work.inscription_set.all %}<li>{{ insc.notes|autolink }}</li>{% endfor %}
             </ul>
           </li>
 {% endif %}
