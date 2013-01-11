@@ -110,14 +110,22 @@ dl.facet {
     margin: 5px;
     overflow: auto;
     max-height: 120px;
+    min-height: 40px;
 }
 
 dl.facet dt {
     background-color: #ccccff;
+    position: absolute;
+    width: 80%;
+    height: 1.2em;
 }
 
 dl.facet dd {
     margin-left: 10px;
+}
+
+dl.facet dd:first-of-type {
+    margin-top: 1.3em;
 }
 
 a.active-facet {
