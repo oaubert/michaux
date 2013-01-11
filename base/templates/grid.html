@@ -42,7 +42,7 @@
         <div class="facets">
           <dl class="facet">
             {% if facets.fields.creator %}
-            <dt>Créateur</dt>
+            <dt>Créateur ({{ facets.fields.creator|length }})</dt>
             {# Provide only the top 5 creators #}
             {% for creator in facets.fields.creator|slice:":50" %}
             <dd><a href="{{ current_url }}&amp;selected_facets=creator_exact:{{ creator.0|urlencode }}">{{ creator.0 }}</a> ({{ creator.1 }})</dd>
@@ -54,7 +54,7 @@
 
           <dl class="facet">
             {% if facets.fields.medium %}
-            <dt>Support</dt>
+            <dt>Support ({{ facets.fields.medium|length }})</dt>
             {% for medium in facets.fields.medium|slice:":50" %}
             <dd><a href="{{ current_url }}&amp;selected_facets=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})
               {% if medium.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
@@ -67,7 +67,7 @@
 
           <dl class="facet">
             {% if facets.fields.serie %}
-            <dt>Série</dt>
+            <dt>Série ({{ facets.fields.serie|length }})</dt>
             {% for serie in facets.fields.serie|slice:":50" %}
             <dd><a href="{{ current_url }}&amp;selected_facets=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})
               {% if serie.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
@@ -80,7 +80,7 @@
 
           <dl class="facet">
             {% if facets.fields.creation_date_start %}
-            <dt>Date de création (début)</dt>
+            <dt>Création [début]  ({{ facets.fields.creation_date_start|length }})</dt>
             {% for date in facets.fields.creation_date_start|slice:":50" %}
             <dd><a href="{{ current_url }}&amp;selected_facets=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})
               {% if date.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
@@ -93,8 +93,8 @@
 
           <dl class="facet">
             {% if facets.fields.tags %}
-            <dt>Tags</dt>
-            {% for tag in facets.fields.tag|slice:":50" %}
+            <dt>Tags ({{ facets.fields.tags|length }})</dt>
+            {% for tag in facets.fields.tags|slice:":50" %}
             <dd><a href="{{ current_url }}&amp;selected_facets=tags_exact:{{ tag.0|urlencode }}">{{ tag.0 }}</a> ({{ tag.1 }})</dd>
             {% endfor %}
             {% else %}
