@@ -50,13 +50,19 @@ ul.navbar {
 ul.navbar li {
     display: inline-block;
     width: 60px;
-    margin: 0px 10px;
+    border: 1px solid #ccf;
+}
+
+ul.navbar li:hover {
+    background-color: #ccf;
+    color: #fff;
 }
 
 ul.navbar li a {
+    text-decoration: none;
     float: left;
+    margin: auto;
     cursor: pointer;
-    background-color: #ccccff;
     opacity: 0.6;
 }
 
