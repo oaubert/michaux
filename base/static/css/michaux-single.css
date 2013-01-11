@@ -24,3 +24,9 @@
     width: auto;
     height: 90%;
 }
+
+#edit-icon {
+    position: fixed;
+    top: 0px;
+    left: 240px;
+}

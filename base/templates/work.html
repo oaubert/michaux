@@ -14,25 +14,69 @@
 {% endblock %}
 
 {% block margin %}
-        <h1>{{ work }}</h1>
-        <a href="javascript:history.back()">Retour</a>
+        <h2>{{ work }}</h2>
+        <a id="edit-icon" href="{% url meta|admin_urlname:'change' work.cote %}"><img title="Editer la fiche" alt="Edit" src="{{ STATIC_URL }}icons/edit.png" /></a>
+
         <ul>
           <li>{{ work }}</li>
           <li>{{ work.height }} x {{ work.width }}</li>
-          <li>Cote {{ work.cote }} ({{ work.old_references }})</li>
-          <li>{{ work.note_references }}</li>
+          <li>Ref {{ work.old_references }} {% if work.note_references %}({{ work.note_references }}){% endif %}</li>
           <li>Technique: {{ work.medium }}</li>
-          <li>Support: {{ work.support }} {{ work.support_details }}</li>
+          <li>Support: {{ work.support }} {% if work.support_details %}{{ work.support_details }}{% endif %}</li>
+          {% if work.serie %}
+          <li>Série: {{ work.serie }}</li>
+          {% endif %}
           <li><strong>Notes</strong></li>
           <li>{{ work.note_support }}</li>
           <li>{{ work.comment }}</li>
           <li>{{ work.revision }}</li>
-          <li><a href="{% url meta|admin_urlname:'change' work.cote %}">Edit work</a></li>
+{% if work.inscription_set.count %}
+          <li><strong>Inscriptions</strong>
+            <ul>
+              {% for insc in work.inscription_set.all %}<li>{{ insc.notes }}</li>{% endfor %}
+            </ul>
+          </li>
+{% endif %}
+{% if work.image_set.count %}
+          <li><strong>Images</strong>
+          {% for img in work.image_set.all %}<a href="{{ img.image.url }}"><img src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
+          </li>
+{% endif %}
+{% if work.bibliographyreference_set.count %}
+          <li><strong>Références</strong>
+            <ul>
+              {% for bib in work.bibliographyreference_set.all %}<li>{{ bib }}</li>{% endfor %}
+            </ul>
+          </li>
+{% endif %}
+{% if work.exhibitioninstance_set.count %}
+          <li><strong>Expositions</strong>
+            <ul>
+              {% for ex in work.exhibitioninstance_set.all %}<li>{{ ex.title }} : {{ ex.note }}</li> {% endfor %}
+            </ul>
+          </li>
+{% endif %}
+{% if work.reproduction_set.count %}
+          <li><strong>Reproductions</strong>
+            <ul>
+              {% for ex in work.reproduction_set.all %}<li>{{ repr }} : {{ repr.comment }}</li> {% endfor %}
+            </ul>
+          </li>
+{% endif %}
+{% if work.event_set.count %}
+          <li><strong>Événements</strong>
+            <ul>
+              {% for ev in work.event_set.all %}<li>{{ ev }}</li>{% endfor %}
+            </ul>
+          </li>
+{% endif %}
+
           <li></li>
+
           <li><strong>Tags</strong></li>
           <li>{% for tag in work.tags.all %}
-{{ tag }}
-{% endfor %}</li>
+            <a class="tag" href="../?tag={{ tag }}">{{ tag }}</a>
+            {% endfor %}</li>
 
         </ul>
 {% endblock %}
