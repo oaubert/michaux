@@ -4,6 +4,7 @@ import urllib
 from django.template.defaultfilters import stringfilter
 from django import template
 from django.utils.safestring import mark_safe
+from django.core.urlresolvers import reverse
 
 register = template.Library()
 
@@ -24,3 +25,8 @@ def url_remove_facet(url, facet_value):
     """
     """
     return re.sub('(f=\w+:%s(&|$))' % urllib.quote(facet_value[0]), "", url)
+
+@register.filter
+@stringfilter
+def facet_url(value, field):
+    return "%s?f=%s_exact:%s" % (reverse('base.views.works'), field, urllib.quote(value))
