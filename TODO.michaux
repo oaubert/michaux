@@ -2,11 +2,14 @@
 ** Facette date: intégrer au moteur SOLR
 ** Affichage facette date: sous forme histogramme + sélection de "range"
 ** Formulaire d'ajout de tag + autocomplétion
-** Ajouter un axe de tri
+** Ajouter un axe d'affichage
+** Centrer verticalement les images
+** Facette: allow to remove a facet selection
 * Fiche oeuvre
 ** ajouter dans la fiche des liens vers les facettes correspondantes
 ** Export des fiches PDF -> définir un format spécifique ?
 ** Rendre éditable facilement ?
+** édition de tags
 * Formulaire admin:
 ** autocomplétion
 ** utiliser des onglets pour les catégories ?
