@@ -26,8 +26,8 @@ def works(request, *p):
     else:
         sqs = basesqs
 
-    if 'selected_facets' in request.GET:
-        for facet in request.GET.getlist('selected_facets'):
+    if 'f' in request.GET:
+        for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
             if value:
                 sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
@@ -60,7 +60,7 @@ def works(request, *p):
         'tagcloud_data': counter.keys(),
         'sqs': sqs,
         'facets': sqs.facet_counts(),
-        'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('selected_facets') ],
+        'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('f') ],
         'current_url': current,
         }, context_instance=RequestContext(request))
 
