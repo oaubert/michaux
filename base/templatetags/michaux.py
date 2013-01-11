@@ -3,6 +3,7 @@ import urllib
 
 from django.template.defaultfilters import stringfilter
 from django import template
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -15,7 +16,7 @@ def autolink(source):
     """
     # FIXME: use correct reverse function
     source = re.sub('#(\d+)', r'<a href="/base/work/\g<1>">\g<0></a>', source)
-    return source
+    return mark_safe(source)
 
 @register.filter
 @stringfilter
