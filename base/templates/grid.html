@@ -45,21 +45,16 @@
           </div>
 
           <div class="facetbox">
-            {% if facets.fields.creator %}
             <p class="facettitle">Créateur ({{ facets.fields.creator|length }})</p>
             <ul>
             {# Provide only the top 5 creators #}
             {% for creator in facets.fields.creator|slice:":50" %}
             <li><a href="{{ current_url }}&amp;f=creator_exact:{{ creator.0|urlencode }}">{{ creator.0 }}</a> ({{ creator.1 }})</li>
             {% endfor %}
-            {% else %}
-            <li>Pas de créateur.</li>
-            {% endif %}
             </ul>
           </div>
 
           <div class="facetbox">
-            {% if facets.fields.medium %}
             <p class="facettitle">Technique ({{ facets.fields.medium|length }})</p>
             <ul>
             {% for medium in facets.fields.medium|slice:":50" %}
@@ -67,14 +62,10 @@
               {% if medium.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
-            {% else %}
-            <li>Pas de technique.</li>
-            {% endif %}
             </ul>
           </div>
 
           <div class="facetbox">
-            {% if facets.fields.support %}
             <p class="facettitle">Support ({{ facets.fields.support|length }})</p>
             <ul>
             {% for support in facets.fields.support|slice:":50" %}
@@ -82,14 +73,10 @@
               {% if support.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
-            {% else %}
-            <li>Pas de support.</li>
-            {% endif %}
             </ul>
           </div>
 
           <div class="facetbox">
-            {% if facets.fields.serie %}
             <p class="facettitle">Série ({{ facets.fields.serie|length }})</p>
             <ul>
             {% for serie in facets.fields.serie|slice:":50" %}
@@ -97,14 +84,10 @@
               {% if serie.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
-            {% else %}
-            <li>Pas de série.</li>
-            {% endif %}
             </ul>
           </div>
 
           <div class="facetbox">
-            {% if facets.fields.creation_date_start %}
             <p class="facettitle">Création [début]  ({{ facets.fields.creation_date_start|length }})</p>
             <ul>
             {% for date in facets.fields.creation_date_start|slice:":50" %}
@@ -112,22 +95,15 @@
               {% if date.0 in selected_facets %}<a class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
-            {% else %}
-            <li>Pas de date.</li>
-            {% endif %}
             </ul>
           </div>
 
           <div class="facetbox">
-            {% if facets.fields.tags %}
             <p class="facettitle">Tags ({{ facets.fields.tags|length }})</p>
             <ul>
               {% for tag in facets.fields.tags|slice:":50" %}
               <li><a href="{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}">{{ tag.0 }}</a> ({{ tag.1 }})</li>
               {% endfor %}
-              {% else %}
-              <p>Pas de tag.</p>
-              {% endif %}
             </ul>
           </div>
 
