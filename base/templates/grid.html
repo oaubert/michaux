@@ -17,6 +17,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/michaux-grid.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/d3.v2.min.js"></script>
 {% endblock %}
 
 {% block header %}<h1>{% with total=sqs|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
@@ -82,11 +83,16 @@
             <p class="facettitle">Création [début]  ({{ facets.fields.creation_date_start|length }})</p>
             <ul>
             {% for date in facets.fields.creation_date_start|slice:":50" %}
-            <li><a href="{{ current_url }}&amp;f=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})
+            <li><a data-year="{{ date.0 }}" data-count="{{ date.1 }}" href="{{ current_url }}&amp;f=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})
               {% if date.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:date }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
             </ul>
+          </div>
+
+          <div class="facetbox">
+            <p class="facettitle">Histogramme ({{ facets.fields.creation_date_start|length }})</p>
+            <div id="creationHistogram"></div>
           </div>
 
           <div class="facetbox">

@@ -2,7 +2,7 @@ var michaux = {}
 
 jQuery(document).ready(
     function($) {
-        var range = $("[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } );
+        var range = $(".work[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } );
         if (range.length > 0) {
             var min = Math.min.apply(Math, range);
             var max = Math.max.apply(Math, range);
@@ -18,16 +18,16 @@ jQuery(document).ready(
                                             stop: function(event, ui) {
                                                 var count = 0;
                                                 var shown = 0;
-                                                $("[data-start]").each( function () {
-                                                                            count += 1;
-                                                                            var d = parseInt($(this).attr('data-start'));
-                                                                            if (d < ui.values[0] || d > ui.values[1]) {
-                                                                                $(this).hide();
-                                                                            } else {
-                                                                                $(this).show();
-                                                                                shown += 1;
-                                                                            }
-                                                                        });
+                                                $(".work[data-start]").each( function () {
+                                                                                 count += 1;
+                                                                                 var d = parseInt($(this).attr('data-start'));
+                                                                                 if (d < ui.values[0] || d > ui.values[1]) {
+                                                                                     $(this).hide();
+                                                                                 } else {
+                                                                                     $(this).show();
+                                                                                     shown += 1;
+                                                                                 }
+                                                                             });
                                                 var plural = "";
                                                 if (shown > 1)
                                                     plural = "s";
@@ -45,7 +45,51 @@ jQuery(document).ready(
 
             $( "#date" ).val( $( "#slider-range" ).slider( "values", 0 ) +
                               " - " + $( "#slider-range" ).slider( "values", 1 ) );
+
         }
+
+        // Build histogram
+        var data = $("a[data-year]").map( function() { return { "year": parseInt($(this).attr('data-year')),
+                                                                "count": parseInt($(this).attr('data-count')) };
+                                                     });
+        data.sort(function (a, b) { return a.year - b.year; });
+        var years = data.map(function(i, d) { return d.year; });
+        var minYear = Math.min.apply(Math, years);
+        var maxYear = Math.max.apply(Math, years);
+
+        // add the canvas to the DOM
+        var width = $("#creationHistogram").width();
+        var height = 120;
+
+        var histo = d3.select("#creationHistogram").
+            append("svg:svg").
+            attr("width", width).
+            attr("height", height);
+
+        var barWidth = width / (maxYear - minYear);
+
+        var x = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]);
+        var y = d3.scale.linear().domain([0, d3.max(data, function(d) { return d.count; })]).range([0, height]);
+
+        histo.selectAll("rect").
+            data(data).
+            enter().
+            append("svg:rect").
+            attr("x", function(d, index) { return x(d.year); }).
+            attr("y", function(d) { return height - y(d.count); }).
+            attr("height", function(d) { return y(d.count); }).
+            attr("width", barWidth);
+
+        /*
+        histo.selectAll(".rule")
+            .data(x.ticks(10))
+            .enter().append("text")
+            .attr("x", x)
+            .attr("y", 50)
+            .attr("dy", 0)
+            .attr("text-anchor", "middle")
+            .text(String);
+         */
 
         // Homemade lightbox
         $('.vignette').click(function(e) {

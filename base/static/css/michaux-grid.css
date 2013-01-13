@@ -140,3 +140,8 @@ a.active-facet {
     background: #fff url(../icons/reset.png) no-repeat center center;
     width: 26;
 }
+
+#creationHistogram rect {
+   stroke: white;
+   fill: steelblue;
+}
