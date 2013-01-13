@@ -1,0 +1,29 @@
+Install instructions
+--------------------
+
+* Install Solr + (jetty or tomcast) ``aptitude install solr``
+* Install ``/etc/solr/conf/schema.xml`` from catalogue (built with ``manage.py build_solr_schema``)
+- Configure Solr: in ``/etc/solr/conf/solrconfig.xml``, add the line::
+
+       <int name="facet.mincount">1</int>
+
+in default params for search handler::
+
+  <requestHandler name="/select" class="solr.SearchHandler">
+    <!-- default values for query parameters can be specified, these
+         will be overridden by parameters in the request
+      -->
+     <lst name="defaults">
+
+See https://groups.google.com/forum/#!msg/django-haystack/nQ50mwStsmo/BQ5V3VyJuYIJ for details
+
+* If there is a bug in jetty, check that 
+``/usr/share/jetty/webapps/solr`` is valid (some packages have a wrong link)
+
+* pip requirements
+coop-tag
+django-imagekit
+django-haystack
+
+* After install: do not forget to ``./manage.py update_index`` to
+  index solr database
