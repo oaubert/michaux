@@ -38,6 +38,10 @@ body {
     overflow: auto;
 }
 
+#filler {
+    height: 50px;
+}
+
 /* navbar */
 
 ul.navbar {
