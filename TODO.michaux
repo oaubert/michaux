@@ -9,11 +9,18 @@ Utiliser http://square.github.com/crossfilter/ qui apporte aussi range selection
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
 ** Rendre éditable facilement ?
-** édition de tags
+** édition de tags: trouver les hooks pour définir selectionAdded/selectionRemoved pour faire une MAJ tout de suite sur le serveur
+ http://stackoverflow.com/questions/4727983/jquery-autocomplete-need-to-initiate-only-when-a-special-character-is-typed
 * Formulaire admin:
 ** autocomplétion
+http://django-haystack.readthedocs.org/en/v1.2.7/autocomplete.html
+https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/KU7aRHzNJaU
+https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/59xiMeUYXNc
+https://github.com/jeffkistler/django-fancy-autocomplete
+
 ** utiliser des onglets pour les catégories ?
 ** Afficher la liste complète des tags existants
+
 * Table admin
 ** Table admin: éditable?
 
