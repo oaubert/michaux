@@ -1,9 +1,11 @@
 * Grille
-** Facette date: intégrer au moteur SOLR
-** Affichage facette date: sous forme histogramme + sélection de "range"
+** Facette date: intégrer au moteur SOLR (+range)
+** Affichage facette date: barchart + range selection
+Utiliser http://square.github.com/crossfilter/ qui apporte aussi range selection
 ** Formulaire d'ajout de tag + autocomplétion
-** Ajouter un axe d'affichage
+** Ajouter un axe d'affichage/groupement
 ** Centrer verticalement les images
+** Version REST/JSON
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
 ** Rendre éditable facilement ?
