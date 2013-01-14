@@ -12,7 +12,7 @@ jQuery(document).ready(
             var maxCount = d3.max(data, function(d) { return d.count; });
 
             // add the canvas to the DOM
-            var width = $("#creationHistogram").width();
+            var width = $("#creationHistogram").width() - 16;
             // FIXME: determine dynamically
             var height = 120 - 30; // div height - title height
 
