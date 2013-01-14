@@ -5,6 +5,8 @@ from django.views.generic import RedirectView
 admin.autodiscover()
 
 urlpatterns = patterns('',
+                       url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
+                       url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
                        url(r'^$', RedirectView.as_view(url='/base/')),
                        url(r'^base/', include('base.urls')),
                        url(r'^admin/', include(admin.site.urls)),
