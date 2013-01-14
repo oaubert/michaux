@@ -46,12 +46,13 @@ jQuery(document).ready(
                 .attr("height", height)
                 .style("fill", "#ccc")
                 .style("opacity", 0.5);
+
             barchart.overlay.setRange = function (start, end) {
                 barchart.overlay.attr("x", x(start));
                 barchart.overlay.attr("width", x(end + 1) - x(start));
             };
 
-            g.selectAll("rect")
+            g.selectAll(".bar")
                 .data(data)
                 .enter()
                 .append("svg:rect")
