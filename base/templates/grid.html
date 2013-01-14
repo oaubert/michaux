@@ -17,7 +17,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/michaux-grid.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/d3.v2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/d3.v3.min.js"></script>
 {% endblock %}
 
 {% block header %}<h1>{% with total=sqs|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
