@@ -73,16 +73,6 @@ jQuery(document).ready(
         var x = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]);
         var y = d3.scale.linear().domain([0, d3.max(data, function(d) { return d.count; })]).range([0, height - 5]);
 
-        g.selectAll("rect").
-            data(data).
-            enter().
-            append("svg:rect").
-            attr("x", function(d, index) { return x(d.year); }).
-            attr("y", function(d) { return 0; }).
-            attr("svg:title", function(d) { return d.year }).
-            attr("height", function(d) { return y(d.count); }).
-            attr("width", barWidth);
-
         g.selectAll("line")
             .data(y.ticks(5))
             .enter().append("line")
@@ -92,17 +82,16 @@ jQuery(document).ready(
             .attr("y2", y)
             .style("stroke", "#ccc");
 
-        /*
-        histo.selectAll(".rule")
-            .data(x.ticks(10))
-            .enter().append("text")
-            .attr("x", x)
-            .attr("y", 50)
-            .attr("dy", 0)
-            .attr("text-anchor", "middle")
-            .text(String);
-         */
-
+        g.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("svg:rect")
+            .attr("class", "bar")
+            .attr("x", function(d, index) { return x(d.year); })
+            .attr("y", function(d) { return 0; })
+            .attr("svg:title", function(d) { return d.year + ' (' + d.count + ')'; })
+            .attr("height", function(d) { return y(d.count); })
+            .attr("width", barWidth);
         // Homemade lightbox
         $('.vignette').click(function(e) {
                                  //prevent default action (hyperlink)
