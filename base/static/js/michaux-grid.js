@@ -178,6 +178,10 @@ jQuery(document).ready(
             f.form.submit()
         };
 
+        michaux.setGroupAxis = function () {
+            f = $("#grouper :selected").attr('value');
+            document.location = document.location + '&axis=' + f
+        };
 
 
     });
