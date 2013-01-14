@@ -151,6 +151,5 @@ a.active-facet {
 }
 
 #creationHistogram rect.bar:hover {
-   stroke: white;
    fill: steelblue;
 }
