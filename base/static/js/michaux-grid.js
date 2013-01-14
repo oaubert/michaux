@@ -2,6 +2,80 @@ var michaux = {}
 
 jQuery(document).ready(
     function($) {
+        var barchart = function () {
+            // Build histogram
+            var data = $("a[data-year]").map( function() { return { "year": parseInt($(this).attr('data-year')),
+                                                                    "count": parseInt($(this).attr('data-count')) };
+                                                         });
+            var minYear = parseInt($("#creationHistogram").attr("data-min"));
+            var maxYear = parseInt($("#creationHistogram").attr("data-max"));
+            var maxCount = d3.max(data, function(d) { return d.count; });
+
+            // add the canvas to the DOM
+            var width = $("#creationHistogram").width();
+            // FIXME: determine dynamically
+            var height = 120 - 30; // div height - title height
+
+            var barchart = d3.select("#creationHistogram")
+                .append("svg:svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            var g = barchart.append("g")
+                .attr("transform", "scale(1, -1) translate(0, -" + height + ")");
+
+            var barWidth = width / (maxYear - minYear);
+
+            var x = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]);
+            var y = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
+
+            g.selectAll("line")
+                .data(y.ticks(5))
+                .enter().append("line")
+                .attr("x1", 0)
+                .attr("x2", width)
+                .attr("y1", y)
+                .attr("y2", y)
+                .style("stroke", "#ccc");
+
+            barchart.overlay = g.append("svg:rect")
+                .attr("class", "overlay")
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("width", 0)
+                .attr("height", height)
+                .style("fill", "#ccc")
+                .style("opacity", 0.5);
+            barchart.overlay.setRange = function (start, end) {
+                barchart.overlay.attr("x", x(start));
+                barchart.overlay.attr("width", x(end + 1) - x(start));
+            };
+
+            g.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("svg:rect")
+                .attr("class", "bar")
+                .attr("x", function(d, index) { return x(d.year); })
+                .attr("y", function(d) { return 0; })
+                .attr("svg:title", function(d) { return d.year + ' (' + d.count + ')'; })
+                .attr("height", function(d) { return y(d.count); })
+                .attr("width", barWidth)
+                .on("mouseup", function (d) {
+                            document.location = document.location + "&f=creation_date_start_exact:" + d.year;
+                    });
+
+            barchart.x = x;
+            barchart.y = y;
+
+            $('svg rect.bar').tipsy({
+                                        gravity: 'sw',
+                                        html: false,
+                                    });
+            return barchart;
+        }();
+        document.barchart = barchart;
+
         var range = $(".work[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } );
         if (range.length > 0) {
             var min = Math.min.apply(Math, range);
@@ -32,6 +106,7 @@ jQuery(document).ready(
                                                 if (shown > 1)
                                                     plural = "s";
                                                 $("#shown").text(shown + " / " + count + " élément" + plural + " affiché" + plural);
+                                                barchart.overlay.setRange(ui.values[0], ui.values[1]);
                                                 // FIXME: this should
                                                 // call the facet code
                                                 // (so that it works
@@ -48,58 +123,6 @@ jQuery(document).ready(
 
         }
 
-        // Build histogram
-        var data = $("a[data-year]").map( function() { return { "year": parseInt($(this).attr('data-year')),
-                                                                "count": parseInt($(this).attr('data-count')) };
-                                                     });
-        var minYear = parseInt($("#creationHistogram").attr("data-min"));
-        var maxYear = parseInt($("#creationHistogram").attr("data-max"));
-
-        // add the canvas to the DOM
-        var width = $("#creationHistogram").width();
-        // FIXME: determine dynamically
-        var height = 120 - 30; // div height - title height
-
-        var histo = d3.select("#creationHistogram")
-            .append("svg:svg")
-            .attr("width", width)
-            .attr("height", height);
-
-        var g = histo.append("g")
-            .attr("transform", "scale(1, -1) translate(0, -" + height + ")");
-
-        var barWidth = width / (maxYear - minYear);
-
-        var x = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]);
-        var y = d3.scale.linear().domain([0, d3.max(data, function(d) { return d.count; })]).range([0, height - 5]);
-
-        g.selectAll("line")
-            .data(y.ticks(5))
-            .enter().append("line")
-            .attr("x1", 0)
-            .attr("x2", width)
-            .attr("y1", y)
-            .attr("y2", y)
-            .style("stroke", "#ccc");
-
-        g.selectAll("rect")
-            .data(data)
-            .enter()
-            .append("svg:rect")
-            .attr("class", "bar")
-            .attr("x", function(d, index) { return x(d.year); })
-            .attr("y", function(d) { return 0; })
-            .attr("svg:title", function(d) { return d.year + ' (' + d.count + ')'; })
-            .attr("height", function(d) { return y(d.count); })
-            .attr("width", barWidth)
-            .on("mouseup", function (d) {
-                        document.location = document.location + "&f=creation_date_start_exact:" + d.year;
-                });
-
-        $('svg rect.bar').tipsy({
-                                    gravity: 'sw',
-                                    html: false,
-                                });
         // Homemade lightbox
         $('.vignette').click(function(e) {
                                  //prevent default action (hyperlink)
