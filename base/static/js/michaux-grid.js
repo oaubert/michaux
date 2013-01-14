@@ -91,7 +91,10 @@ jQuery(document).ready(
             .attr("y", function(d) { return 0; })
             .attr("svg:title", function(d) { return d.year + ' (' + d.count + ')'; })
             .attr("height", function(d) { return y(d.count); })
-            .attr("width", barWidth);
+            .attr("width", barWidth)
+            .on("mouseup", function (d) {
+                        document.location = document.location + "&f=creation_date_start_exact:" + d.year;
+                });
 
         $('svg rect.bar').tipsy({
                                     gravity: 'sw',
