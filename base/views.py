@@ -1,6 +1,7 @@
 from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.db.models import Min, Max
 from django.shortcuts import render_to_response, get_object_or_404
@@ -10,10 +11,12 @@ from haystack.query import SearchQuerySet
 from .models import Work
 from .utils import get_query
 
+@login_required
 def root(request, *p):
-    return HttpResponseRedirect('work/?')
+    return HttpResponseRedirect(reverse('base.views.works'))
 
-def works(request, *p):
+@login_required
+def works(request, *p, **kw):
     query_string = ""
     basesqs = SearchQuerySet().facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('medium').facet('support').facet('width').facet('height')
 
@@ -67,7 +70,8 @@ def works(request, *p):
         'date_range': date_range,
         }, context_instance=RequestContext(request))
 
-def work(request, cote):
+@login_required
+def work(request, cote, *p, **kw):
     w = get_object_or_404(Work, pk=cote)
     if w.master is not None:
         # Redirect to master
