@@ -145,7 +145,12 @@ a.active-facet {
     margin-top: 1.3em;
 }
 
-#creationHistogram rect {
+#creationHistogram rect.bar {
+   stroke: steelblue;
+   fill: #aaccff;
+}
+
+#creationHistogram rect.bar:hover {
    stroke: white;
    fill: steelblue;
 }
