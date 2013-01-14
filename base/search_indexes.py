@@ -2,7 +2,7 @@ from .models import Work
 from haystack import indexes
 from haystack import site
 
-class WorkIndex(indexes.SearchIndex):
+class WorkIndex(indexes.RealTimeSearchIndex):
     text = indexes.CharField(document=True, use_template=True)
     tags = indexes.MultiValueField(null=True, faceted=True)
     creator = indexes.CharField(model_attr='creator', faceted=True)
