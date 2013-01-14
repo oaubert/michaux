@@ -1,3 +1,4 @@
+from itertools import groupby
 from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -21,21 +22,24 @@ def works(request, *p, **kw):
     query_string = ""
     basesqs = SearchQuerySet().facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('medium').facet('support').facet('width').facet('height')
 
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        sqs = basesqs.auto_query(query_string).order_by('creation_date_start')
-    elif 'tag' in request.GET and request.GET['tag'].strip():
+    axis = request.GET.get('axis', "")
+    query_string = request.GET.get('q', "").strip()
+    if query_string:
+        sqs = basesqs.auto_query(query_string)
+    elif request.GET.get('tag', None):
         # FIXME: replace by a tag:foo syntax in standard query string
-        tag = request.GET['tag']
-        sqs = basesqs.filter(tags__name__in=[tag]).order_by('creation_date_start')
+        tag = request.GET.get('tag')
+        sqs = basesqs.filter(tags__name__in=[tag])
     else:
-        sqs = basesqs.order_by('creation_date_start')
+        sqs = basesqs
 
     if 'f' in request.GET:
         for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
             if value:
                 sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
+
+    sqs = sqs.order_by(axis or 'creation_date_start')
 
     def get_weight_fun(t_min, t_max, f_min, f_max):
         def weight_fun(f_i, t_min=t_min, t_max=t_max, f_min=f_min, f_max=f_max):
@@ -69,6 +73,8 @@ def works(request, *p, **kw):
         'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('f') ],
         'current_url': current,
         'date_range': date_range,
+        'axis': axis,
+        'groups': [ (m, list(e)) for (m, e) in groupby(sorted(sqs, key=lambda w: getattr(w, axis)), lambda w: getattr(w, axis)) ] if axis else [],
         }, context_instance=RequestContext(request))
 
 @login_required
