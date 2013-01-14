@@ -60,13 +60,13 @@ jQuery(document).ready(
         // FIXME: determine dynamically
         var height = 120 - 30; // div height - title height
 
-        var histo = d3.select("#creationHistogram").
-            append("svg:svg").
-            attr("width", width).
-            attr("height", height);
+        var histo = d3.select("#creationHistogram")
+            .append("svg:svg")
+            .attr("width", width)
+            .attr("height", height);
 
-        var g = histo.append("g").
-            attr("transform", "scale(1, -1) translate(0, -" + height + ")");
+        var g = histo.append("g")
+            .attr("transform", "scale(1, -1) translate(0, -" + height + ")");
 
         var barWidth = width / (maxYear - minYear);
 
