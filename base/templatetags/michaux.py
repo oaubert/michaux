@@ -24,7 +24,7 @@ def autolink(source):
 def url_remove_facet(url, facet_value):
     """
     """
-    return re.sub('(f=\w+:%s(&|$))' % urllib.quote(facet_value[0]), "", url)
+    return re.sub('(f=\w+:%s(&|$))' % urllib.quote(facet_value[0].encode('utf-8')), "", url)
 
 @register.filter
 @stringfilter
