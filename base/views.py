@@ -9,6 +9,7 @@ from django.template import RequestContext
 from coop_tag.settings import TAGGER_CLOUD_MAX, TAGGER_CLOUD_MIN
 from haystack.query import SearchQuerySet
 from .models import Work
+from .forms import EditTagsForm
 from .utils import get_query
 
 @login_required
@@ -80,6 +81,7 @@ def work(request, cote, *p, **kw):
 
     return render_to_response('work.html', {
             'work': w,
-            'meta': Work._meta
+            'meta': Work._meta,
+            'tagform': EditTagsForm(instance=w)
         }, context_instance=RequestContext(request))
 
