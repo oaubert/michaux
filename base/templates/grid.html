@@ -91,8 +91,8 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Histogramme ({{ facets.fields.creation_date_start|length }})</p>
-            <div id="creationHistogram"></div>
+            <p class="facettitle"><span id="histogramRange">{{ date_range.creation_date_start__min }} - {{ date_range.creation_date_start__max }}</span> ({{ facets.fields.creation_date_start|length }})</p>
+            <div data-min="{{ date_range.creation_date_start__min }}" data-max="{{ date_range.creation_date_start__max }}" id="creationHistogram"></div>
           </div>
 
           <div class="facetbox">

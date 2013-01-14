@@ -52,33 +52,45 @@ jQuery(document).ready(
         var data = $("a[data-year]").map( function() { return { "year": parseInt($(this).attr('data-year')),
                                                                 "count": parseInt($(this).attr('data-count')) };
                                                      });
-        data.sort(function (a, b) { return a.year - b.year; });
-        var years = data.map(function(i, d) { return d.year; });
-        var minYear = Math.min.apply(Math, years);
-        var maxYear = Math.max.apply(Math, years);
+        var minYear = parseInt($("#creationHistogram").attr("data-min"));
+        var maxYear = parseInt($("#creationHistogram").attr("data-max"));
 
         // add the canvas to the DOM
         var width = $("#creationHistogram").width();
-        var height = 120;
+        // FIXME: determine dynamically
+        var height = 120 - 30; // div height - title height
 
         var histo = d3.select("#creationHistogram").
             append("svg:svg").
             attr("width", width).
             attr("height", height);
 
+        var g = histo.append("g").
+            attr("transform", "scale(1, -1) translate(0, -" + height + ")");
+
         var barWidth = width / (maxYear - minYear);
 
         var x = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]);
-        var y = d3.scale.linear().domain([0, d3.max(data, function(d) { return d.count; })]).range([0, height]);
+        var y = d3.scale.linear().domain([0, d3.max(data, function(d) { return d.count; })]).range([0, height - 5]);
 
-        histo.selectAll("rect").
+        g.selectAll("rect").
             data(data).
             enter().
             append("svg:rect").
             attr("x", function(d, index) { return x(d.year); }).
-            attr("y", function(d) { return height - y(d.count); }).
+            attr("y", function(d) { return 0; }).
+            attr("svg:title", function(d) { return d.year }).
             attr("height", function(d) { return y(d.count); }).
             attr("width", barWidth);
+
+        g.selectAll("line")
+            .data(y.ticks(5))
+            .enter().append("line")
+            .attr("x1", 0)
+            .attr("x2", width)
+            .attr("y1", y)
+            .attr("y2", y)
+            .style("stroke", "#ccc");
 
         /*
         histo.selectAll(".rule")

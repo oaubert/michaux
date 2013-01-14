@@ -2,6 +2,7 @@ from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Min, Max
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from coop_tag.settings import TAGGER_CLOUD_MAX, TAGGER_CLOUD_MIN
@@ -49,6 +50,7 @@ def works(request, *p):
         weight_fun = get_weight_fun(TAGGER_CLOUD_MIN, TAGGER_CLOUD_MAX, min(counter.itervalues()), max(counter.itervalues()))
         for tag, c in counter.iteritems():
             tag.weight = weight_fun(c)
+    date_range = Work.objects.all().aggregate(Min('creation_date_start'), Max('creation_date_start'))
     # Add a ? at the end of current_url so that we can simply add
     # &facet=foo in the template to drill down along facets
     current = request.get_full_path()
@@ -62,6 +64,7 @@ def works(request, *p):
         'facets': sqs.facet_counts(),
         'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('f') ],
         'current_url': current,
+        'date_range': date_range,
         }, context_instance=RequestContext(request))
 
 def work(request, cote):

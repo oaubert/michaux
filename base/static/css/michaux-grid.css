@@ -141,6 +141,10 @@ a.active-facet {
     width: 26;
 }
 
+#creationHistogram {
+    margin-top: 1.3em;
+}
+
 #creationHistogram rect {
    stroke: white;
    fill: steelblue;
