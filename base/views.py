@@ -29,7 +29,7 @@ def works(request, *p, **kw):
         tag = request.GET['tag']
         sqs = basesqs.filter(tags__name__in=[tag]).order_by('creation_date_start')
     else:
-        sqs = basesqs
+        sqs = basesqs.order_by('creation_date_start')
 
     if 'f' in request.GET:
         for facet in request.GET.getlist('f'):
