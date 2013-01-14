@@ -68,6 +68,7 @@ ul.navbar li a {
     margin: auto;
     cursor: pointer;
     opacity: 0.6;
+    color: #33c;
 }
 
 ul.navbar li a:hover{
