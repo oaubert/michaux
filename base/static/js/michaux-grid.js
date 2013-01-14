@@ -92,6 +92,11 @@ jQuery(document).ready(
             .attr("svg:title", function(d) { return d.year + ' (' + d.count + ')'; })
             .attr("height", function(d) { return y(d.count); })
             .attr("width", barWidth);
+
+        $('svg rect.bar').tipsy({
+                                    gravity: 'sw',
+                                    html: false,
+                                });
         // Homemade lightbox
         $('.vignette').click(function(e) {
                                  //prevent default action (hyperlink)
