@@ -1,0 +1,11 @@
+{% load admin_urls %}
+{% load url from future %}
+
+{% with thumb=work.thumbnail %}
+<div class="work" data-start="{{ work.creation_date_start }}">
+  <a class="vignette" href="{{ work.image.url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
+                                                       alt="" title="{{ work }}"
+                                                       src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
+  <ul class="toolbar"><li><a target="_blank" href="{% url meta|admin_urlname:'change' work.cote %}" class="edit"></a></li><li><a target="_blank" href="{{ work.get_absolute_url }}" class="details"></a></li></ul>
+</div>
+{% endwith %}
