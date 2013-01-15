@@ -5,6 +5,7 @@ from django.views.generic import RedirectView
 admin.autodiscover()
 
 urlpatterns = patterns('',
+                       url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/icons/favicon.ico'}),
                        url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
                        url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
                        url(r'^$', RedirectView.as_view(url='/base/')),
