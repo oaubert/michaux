@@ -97,6 +97,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django_requestlogging.middleware.LogSetupMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -112,6 +113,60 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     #'/home/oaubert/src/michaux/catalogue/templates',
 )
+
+LOGGING = {
+    'version': 1,
+    'filters': {
+        # Add an unbound RequestFilter.
+        'request': {
+            '()': 'django_requestlogging.logging_filters.RequestFilter',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '[%(asctime)s] %(module)s %(levelname)s %(message)s'
+        },
+        'request_format': {
+            'format': '%(remote_addr)s [%(asctime)s] %(username)s "%(request_method)s '
+            '%(path_info)s %(server_protocol)s" %(http_user_agent)s '
+            '%(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'filters': ['request'],
+            'formatter': 'request_format',
+            #'formatter': 'simple'
+            },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filters': ['request'],
+            'filename': APPROOT + 'log/access.log',
+            'formatter': 'request_format'
+            },
+        },
+    'loggers': {
+        'base': {
+            'filters': ['request'],
+            },
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+            },
+        'django.request': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+            },
+        }
+    }
 
 HAYSTACK_SITECONF = 'catalogue.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'solr'
@@ -131,4 +186,5 @@ INSTALLED_APPS = (
 
     'base',
     'django.contrib.admin',
+    'django_requestlogging',
 )
