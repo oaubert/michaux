@@ -63,7 +63,10 @@ jQuery(document).ready(
                 .attr("height", function(d) { return y(d.count); })
                 .attr("width", barWidth)
                 .on("mouseup", function (d) {
-                            document.location = document.location + "&f=creation_date_start_exact:" + d.year;
+                        var sep = '&';
+                        if (document.location.toString().indexOf('?') < 0)
+                            sep = '?';
+                        document.location = document.location + sep + "f=creation_date_start_exact:" + d.year;
                     });
 
             barchart.x = x;
@@ -173,14 +176,17 @@ jQuery(document).ready(
         };
 
         michaux.resetFilter = function () {
-            f = $("#filter")[0];
+            var f = $("#filter")[0];
             f.value = "";
-            f.form.submit()
+            f.form.submit();
         };
 
         michaux.setGroupAxis = function () {
-            f = $("#grouper :selected").attr('value');
-            document.location = document.location + '&axis=' + f
+            var f = $("#grouper :selected").attr('value');
+            var sep = '&';
+            if (document.location.toString().indexOf('?') < 0)
+                sep = '?';
+            document.location = document.location + sep + 'axis=' + f;
         };
 
 
