@@ -3,7 +3,6 @@
 ** Affichage facette date: barchart + range selection
 Utiliser http://square.github.com/crossfilter/ qui apporte aussi range selection
 ** Formulaire d'ajout de tag + autocomplétion
-** Ajouter un axe d'affichage/groupement
 ** Centrer verticalement les images
 ** Version REST/JSON
 * Fiche oeuvre
