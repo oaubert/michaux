@@ -29,4 +29,4 @@ def url_remove_facet(url, facet_value):
 @register.filter
 @stringfilter
 def facet_url(value, field):
-    return "%s?f=%s_exact:%s" % (reverse('base.views.works'), field, urllib.quote(value))
+    return "%s?f=%s_exact:%s" % (reverse('base.views.works'), field, urllib.quote(value.encode('utf-8')))
