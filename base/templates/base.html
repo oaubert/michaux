@@ -11,8 +11,9 @@
       {% block home %}
       <ul class="navbar">
         <li><a href="/base/work/">Accueil</a></li>
+{% if user.is_active and user.is_staff %}
         <li><a href="/admin/base/work/">Admin</a></li>
-        <li><a href="javascript:history.back()">Retour</a></li>
+{% endif %}
         <li><a title="Connecté en tant que {{ user }}" href="/accounts/logout">Logout</a></li>
       </ul>
       {% endblock %}
