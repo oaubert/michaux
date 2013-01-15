@@ -68,6 +68,7 @@ class WorkAdmin(admin.ModelAdmin):
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     list_display = ( 'cote', 'work_thumbnail', 'old_references', 'medium', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
+    list_editable = ( 'medium', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
     list_display_links = ( 'cote', 'work_thumbnail' )
     search_fields = [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
     list_filter = ( 'serie', 'creation_date_start', 'medium', 'support' )
@@ -78,9 +79,9 @@ class WorkAdmin(admin.ModelAdmin):
     def work_thumbnail(self, obj):
         t = obj.thumbnail
         if t is not None:
-            return '<img alt="" width="%(width)d" height="%(height)d" src="%(url)s" />' % { 'width': t.width,
-                                                                                            'height': t.height,
-                                                                                            'url': t.url }
+            return '<img class="thumbnail" alt="" width="%(width)d" height="%(height)d" src="%(url)s" />' % { 'width': t.width,
+                                                                                                              'height': t.height,
+                                                                                                              'url': t.url }
         else:
             return ""
     work_thumbnail.allow_tags = True
