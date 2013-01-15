@@ -1,4 +1,4 @@
-var michaux = {}
+var michaux = {};
 
 jQuery(document).ready(
     function($) {
@@ -186,8 +186,12 @@ jQuery(document).ready(
             var sep = '&';
             if (document.location.toString().indexOf('?') < 0)
                 sep = '?';
-            document.location = document.location + sep + 'axis=' + f;
+
+            if (document.location.search.search(/\baxis=/) > 0) {
+                // There is already an axis. Replace its value
+                document.location.search = document.location.search.replace(/axis=\w+/, "axis=" + f);
+            } else {
+                document.location = document.location + sep + 'axis=' + f;
+            }
         };
-
-
     });
