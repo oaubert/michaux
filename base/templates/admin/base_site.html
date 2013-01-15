@@ -3,8 +3,18 @@
 
 {% block title %}{{ title }} | {% trans 'Archives Michaux - admin' %}{% endblock %}
 
-{% block branding %}
-<h1 id="site-name">Archives Michaux - interface d'administration - <a href="/">Retour à l'accueil</a></h1>
+{% block extrahead %}
+    <link href="{{ STATIC_URL }}css/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/admin.css" rel="stylesheet" type="text/css" media="screen" />
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block branding %}
+<h1 id="site-name">Archives Michaux - interface d'administration</h1>
+{% endblock %}
+
+{% block nav-global %}      <ul class="navbar">
+        <li><a href="/base/work/">Accueil</a></li>
+        <li><a href="/admin/base/work/">Admin</a></li>
+        <li><a title="Connecté en tant que {{ user }}" href="/accounts/logout">Logout</a></li>
+      </ul>
+{% endblock %}

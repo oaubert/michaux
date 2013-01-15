@@ -1,0 +1,20 @@
+#header {
+    height: 6em;
+}
+
+#header a:link, #header a:visited, #header a:hover {
+    text-decoration: none;
+    color: #33c;
+}
+
+#content {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#changelist-filter ul {
+    padding-left: 0;
+    margin-left: 10px;
+    max-height: 200px;
+    overflow: auto;
+}
