@@ -2,6 +2,7 @@ from itertools import groupby
 from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+import django.core.management
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.db.models import Min, Max
@@ -91,3 +92,7 @@ def work(request, cote, *p, **kw):
             'tagform': EditTagsForm(instance=w)
         }, context_instance=RequestContext(request))
 
+@login_required
+def reindex(request, *p, **kw):
+    django.core.management.call_command("update_index")
+    return HttpResponse(status=204)
