@@ -68,7 +68,7 @@ class Work(models.Model):
     # ancienne(s) références(s) : (kc000, ou mp000 ou cmp000, etc.) Contenu: [\w\d\s-/]+
     old_references = models.CharField(_('anciennes références'),
                                       help_text=_("Liste d'anciennes références, séparées par des virgules"),
-                                      max_length=256,
+                                      max_length=255,
                                       blank=True)
 
     certificate = models.IntegerField(_('certificat'),
@@ -84,23 +84,23 @@ class Work(models.Model):
     # titre de la série (mouvements, mescalinien)
     serie = models.CharField(_("série"),
                              help_text=_("Titre de la série dans l'oeuvre de Michaux"),
-                             max_length=256,
+                             max_length=255,
                              blank=True)
 
     # technique (technique) : choix parmi une énumération extensible (huile, huile et acrylique, aquarelle...)
     medium = models.CharField(_("technique"),
                                  help_text=_("Technique utilisée"),
-                                 max_length=256)
+                                 max_length=255)
 
     # support : choix parmi une énumération extensible (papier, toile, cartoil, papier toilé, japon, etc) - type générique
     support = models.CharField(_("support"),
                                help_text=_("Support utilisé, de type générique: papier, toile, cartoil, papier toilé, etc"),
-                               max_length=256)
+                               max_length=255)
 
     #précisions de support : précisions sur le support (gamme - tramé, chiffon,, ou marque - arches, etc)
     support_details = models.CharField(_("précisions de support"),
                                        help_text=_("précisions sur le support (gamme - tramé, chiffon, ou marque - arches, etc)"),
-                                       max_length=256,
+                                       max_length=255,
                                        blank=True)
 
     note_support = models.TextField(_("notes sur le support"),
@@ -121,7 +121,7 @@ class Work(models.Model):
     # source de la date : texte libre (Henri Michaux / catalogue / nom de l’expert / etc.)
     creation_date_source = models.CharField(_("source de la date"),
                                            help_text=_("Origine de la datation: Henri Michaux, catalogue, nom de l'expert, etc"),
-                                           max_length=256,
+                                           max_length=255,
                                            blank=True)
 
     # incertitude : texte libre
@@ -305,12 +305,12 @@ class Inscription(models.Model):
     # type d’inscription : signature / date / dédicace / indications techniques / autre (date, note de michaux)
     nature = models.CharField(_("type d'inscription"),
                               help_text=_("signature / date / dédicace / indications techniques / autre (date, note de michaux) / etc"),
-                              max_length=256,
+                              max_length=255,
                               blank=True)
     # position : choix parmi une énumération extensible (recto, verso, bas droite, bas gauche, etc)
     position = models.CharField(_("position de l'inscription"),
                                 help_text=_("Position: choix parmi une énumération extensible (recto, verso, bas droite, bas gauche, etc)"),
-                                max_length=256,
+                                max_length=255,
                                 blank=True)
     note = models.TextField(_("note"),
                              help_text=_("Note: contenu, détails, etc"),
@@ -321,21 +321,21 @@ class Image(models.Model):
                              verbose_name=_("Oeuvre"))
 
     photograph_name = models.CharField(_("nom du photographe"),
-                                       max_length=256,
+                                       max_length=255,
                                        blank=True)
     reference = models.CharField(_("référence"),
                                  help_text=_("Référence de la photo dans l’inventaire du photographe"),
-                                 max_length=256,
+                                 max_length=255,
                                  blank=True)
     support = models.CharField(_("support"),
                                  help_text=_("Type de photo : argentique / numérique / ektachrome, diapositive / scan de reproduction papier"),
-                                 max_length=256,
+                                 max_length=255,
                                  blank=True)
 
     #nature de l’image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l’oeuvre en situation dans une revue ou une expo, ou une lettre)
     nature = models.CharField(_("nature"),
                                  help_text=_("nature de l’image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l’oeuvre en situation dans une revue ou une expo, ou une lettre)"),
-                                 max_length=256,
+                                 max_length=255,
                                  blank=True)
 
     # Lors de l’upload de l’image en  haute résolution, la plate-forme convertira automatiquement l’image en des versions “web” (1600x1200 + vignette + 2048x1536 [ipad3])
@@ -386,16 +386,16 @@ class BibliographyReference(models.Model):
 
     nature = models.CharField(_("type de référence"),
                               help_text=_("catalogue, article de journal, monographie, livre, chapitre de livre..."),
-                              max_length=256,
+                              max_length=255,
                               blank=True)
     abbreviation = models.CharField(_("abréviation"),
                                     help_text=_("nom, titre ou lieu d’exposition, année, (a, b, c quand il y en a plusieurs la même année)"),
-                                    max_length=256,
+                                    max_length=255,
                                     blank=True)
 
     creator = models.CharField(_("auteur"),
                               help_text=_("Auteur de l'article/ouvrage/essai"),
-                              max_length=256,
+                              max_length=255,
                               blank=True)
     title = models.CharField(_("titre"),
                               help_text=_("Titre de l'article/ouvrage/essai"),
@@ -409,7 +409,7 @@ class BibliographyReference(models.Model):
                                        blank=True)
     container_creator = models.CharField(_("auteur du contenant"),
                                          help_text=_("Auteur/éditeur de livre/revue"),
-                                         max_length=256,
+                                         max_length=255,
                                          blank=True)
     container_others = models.TextField(_("textes de"),
                                         help_text=_("textes de [texte libre] : prénom - nom - titre du texte"))
@@ -421,12 +421,12 @@ class BibliographyReference(models.Model):
 
     city = models.CharField(_("ville"),
                               help_text=_("Ville"),
-                              max_length=256,
+                              max_length=255,
                               blank=True)
 
     number = models.CharField(_("numéro"),
                               help_text=_("Numéro du volume/de la revue"),
-                              max_length=256,
+                              max_length=255,
                               blank=True)
 
     publication_date = models.DateField(_("date de publication"),
@@ -445,7 +445,7 @@ class BibliographyReference(models.Model):
 class Exhibition(models.Model):
     abbreviation  = models.CharField(_("abréviation"),
                                      help_text=_("Sous la forme date (nombre entier, année) + nom du lieu d’exposition (texte libre)"),
-                                     max_length=512,
+                                     max_length=255,
                                      unique=True, blank=False)
     title = models.CharField(_("titre"),
                              help_text=_("Titre complet de l’exposition"),
@@ -467,10 +467,10 @@ class Exhibition(models.Model):
                              blank=True)
     city = models.CharField(_("ville"),
                              help_text=_("Ville"),
-                             max_length=256)
+                             max_length=255)
     country = models.CharField(_("pays"),
                              help_text=_("Pays"),
-                             max_length=256)
+                             max_length=255)
 
     start_year = models.IntegerField(_("Année"),
                                      help_text=_("Année de début"))
@@ -517,7 +517,7 @@ class ExhibitionInstance(models.Model):
 
     reference = models.CharField(_("référence"),
                                  help_text=_("Numéro de référence dans l’exposition"),
-                                 max_length=256,
+                                 max_length=255,
                                  blank=True)
 
     illustration = models.BooleanField(_("illustration"),
@@ -556,11 +556,11 @@ class Reproduction(models.Model):
 class Owner(models.Model):
     firstname = models.CharField(_("prénom"),
                               help_text=_("Prénom"),
-                              max_length=256,
+                              max_length=255,
                               blank=False)
     name = models.CharField(_("nom"),
                               help_text=_("Nom"),
-                              max_length=256,
+                              max_length=255,
                               blank=False)
     address = models.CharField(_("adresse"),
                              help_text=_("Adresse de l'exposition"),
@@ -568,10 +568,10 @@ class Owner(models.Model):
                              blank=True)
     city = models.CharField(_("ville"),
                              help_text=_("Ville"),
-                             max_length=256)
+                             max_length=255)
     country = models.CharField(_("pays"),
                              help_text=_("Pays"),
-                             max_length=256)
+                             max_length=255)
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
