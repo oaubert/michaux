@@ -141,14 +141,6 @@ LOGGING = {
             'level': 'DEBUG',
             'filters': ['request'],
             'formatter': 'request_format',
-            #'formatter': 'simple'
-            },
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filters': ['request'],
-            'filename': APPROOT + 'log/access.log',
-            'formatter': 'request_format'
             },
         },
     'loggers': {
@@ -156,12 +148,12 @@ LOGGING = {
             'filters': ['request'],
             },
         'django': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
             },
         'django.request': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
             },
