@@ -17,6 +17,7 @@ def autolink(source):
     """
     # FIXME: use correct reverse function
     source = re.sub('#(\d+)', r'<a href="/base/work/\g<1>">\g<0></a>', source)
+    source = re.sub('(MP|KC)\s(\d+)', r'<a href="/base/work/?q=\g<1>%20\g<2>">\g<0></a>', source)
     return mark_safe(source)
 
 @register.filter
