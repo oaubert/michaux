@@ -24,4 +24,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     def prepare_tags(self, work):
         return [ unicode(t) for t in work.tags.all() ]
 
+    def get_updated_field(self):
+        return "modified"
+
 site.register(Work, WorkIndex)
