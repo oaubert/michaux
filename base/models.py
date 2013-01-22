@@ -267,10 +267,12 @@ class Work(models.Model):
                 w.height = long(data['Hauteur'])
             except ValueError:
                 print "Missing height"
+                w.height = 0
             try:
                 w.width = long(data['Largeur'])
             except ValueError:
                 print "Missing width"
+                w.width = 0
             if data[u'Année simplifiée'] != '':
                 w.creation_date_start = long(data[u'Année simplifiée'])
             if data[u'Année simplifiée'] == '' or (str(long(data[u'Année simplifiée'])) != data[u'Année'].strip()):
@@ -279,7 +281,7 @@ class Work(models.Model):
             w.save()
             print "Saved", n, unicode(w).encode('utf-8')
             pic = '/home/oaubert/tmp/michaux/%s.jpg' % row[0].upper().replace(' ', '_')
-            if os.path.exists(pic):
+            if os.path.exists(pic.encode('utf-8')):
                 print "Copying image"
                 i = Image()
                 i.work = w
