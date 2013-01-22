@@ -63,3 +63,8 @@ def unaccent(value):
     """
     return "".join((c if extended_valid_re.match(c) else unaccent_char(c))
                    for c in value)
+
+@register.filter
+@stringfilter
+def dzi(url):
+    return url.replace('.jpg', '.dzi').replace('images/', 'cache/pivot/')
