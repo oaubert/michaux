@@ -19,7 +19,7 @@ def root(request, *p):
 @login_required
 def works(request, *p, **kw):
     query_string = ""
-    basesqs = SearchQuerySet().facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('medium').facet('support').facet('width').facet('height')
+    basesqs = SearchQuerySet()
 
     axis = request.GET.get('axis', "")
     query_string = request.GET.get('q', "").strip()
@@ -32,6 +32,7 @@ def works(request, *p, **kw):
     else:
         sqs = basesqs
 
+    sqs = sqs.facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('medium').facet('support').facet('width').facet('height')
     if 'f' in request.GET:
         for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
