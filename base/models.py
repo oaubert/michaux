@@ -196,22 +196,27 @@ class Work(models.Model):
             return r
 
     @property
-    def thumbnail(self):
+    def picture(self):
         if self.image_set.count():
             # More than 1 image. We can find a thumbnail
             # FIXME: use self.image_set.filter(nature__eq='reproduction')
-            i = self.image_set.iterator().next()
-            return i.thumbnail
+            return self.image_set.iterator().next()
+        else:
+            return None
+
+    @property
+    def thumbnail(self):
+        p = self.picture
+        if p:
+            return p.thumbnail
         else:
             return None
 
     @property
     def image(self):
-        if self.image_set.count():
-            # More than 1 image. We can find an image
-            # FIXME: use self.image_set.filter(nature__eq='reproduction')
-            i = self.image_set.iterator().next()
-            return i.image
+        p = self.picture
+        if p:
+            return p.image
         else:
             return None
 
