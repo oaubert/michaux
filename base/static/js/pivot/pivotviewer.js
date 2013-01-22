@@ -914,7 +914,7 @@ PivotViewer.Views.GridView = PivotViewer.Views.TileBasedView.subClass({
 
         //Sort
         this.tiles = this.tiles.sort(this.SortBy(sortFacet, false, function (a) {
-            return $.isNumeric(a) ? a : a.toUpperCase();
+            return ($.isNumeric(a) || isNaN(a)) ? a : a.toUpperCase();
         }));
         this.currentFilter = currentFilter;
 
@@ -1374,7 +1374,7 @@ PivotViewer.Views.GraphView = PivotViewer.Views.TileBasedView.subClass({
 
         //Sort
         this.tiles = dzTiles.sort(this.SortBy(this.sortFacet, false, function (a) {
-            return $.isNumeric(a) ? a : a.toUpperCase();
+            return ($.isNumeric(a) || isNaN(a)) ? a : a.toUpperCase();
         }));
         this.currentFilter = currentFilter;
 
