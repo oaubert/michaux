@@ -27,3 +27,8 @@ django-haystack
 
 * After install: do not forget to ``./manage.py update_index`` to
   index solr database
+
+* Note: when migrating (from sqlite3 to mysql for instance), use
+  dumpdata/loaddata to move data. 
+  ./manage.py dumpdata -e contenttypes -e auth.Permission > base.json
+  ./manage.py loaddata base.json
