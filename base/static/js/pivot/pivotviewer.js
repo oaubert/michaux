@@ -1773,9 +1773,9 @@ PivotViewer.Views.DeepZoomImageController = PivotViewer.Views.IImageController.s
                         var itemId = $(items[i]).attr('Id');
                         var dzN = $(items[i]).attr('N');
                         var dzId = dziSource.substring(dziSource.lastIndexOf("/") + 1).replace(/\.xml/gi, "").replace(/\.dzi/gi, "");
-                         var basePath = dziSource.substring(0, dziSource.lastIndexOf("/"));
-                         if (basePath.length > 0)
-                             basePath = basePath + '/';
+                        var basePath = dziSource.substring(0, dziSource.lastIndexOf("/"));
+                        if (basePath.length > 0)
+                            basePath = basePath + '/';
                         that._items.push(new PivotViewer.Views.DeepZoomItem(itemId, dzId, dzN, basePath, that._ratio, width, height, maxLevel));
                         if (width > that.MaxWidth)
                             that.MaxWidth = width;
