@@ -187,3 +187,9 @@ a.active-facet {
 #creationHistogram rect.bar:hover {
    fill: steelblue;
 }
+
+.pagination {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+}
