@@ -10,10 +10,10 @@
     <FacetCategory Name="Technique" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
     </FacetCategory>
     <FacetCategory Name="Support" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
-    <FacetCategory Name="Serie" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
-    </FacetCategory>
-    <FacetCategory Name="Annee" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
-    </FacetCategory>
+    <FacetCategory Name="Serie" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Annee" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Hauteur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Largeur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
   </FacetCategories>
   <Items ImgBase="dzimages">
     {% for o in sqs %}
@@ -38,6 +38,12 @@
         </Facet>
         <Facet Name="Annee">
           <Number Value="{{ w.creation_date_start }}"/>
+        </Facet>
+        <Facet Name="Hauteur">
+          <Number Value="{{ w.height }}"/>
+        </Facet>
+        <Facet Name="Largeur">
+          <Number Value="{{ w.width }}"/>
         </Facet>
       </Facets>
     </Item>
