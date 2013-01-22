@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Collection MaxLevel="4" TileSize="64" Format="png" NextItemId="219" ServerFormat="Default" xmlns="http://schemas.microsoft.com/deepzoom/2009">
+  <Items>
+{% for w in sqs %}
+    <I Id="{{ w.object.cote }}" N="{{ w.object.cote }}" Source="base/pivot/image/{{ w.object.cote }}.xml">
+      <Size Width="120" Height="120" />
+    </I>
+{% endfor %}
+  </Items>
+</Collection>

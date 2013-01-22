@@ -4,7 +4,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 import django.core.management
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.db.models import Min, Max
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -12,7 +11,6 @@ from coop_tag.settings import TAGGER_CLOUD_MAX, TAGGER_CLOUD_MIN
 from haystack.query import SearchQuerySet
 from .models import Work
 from .forms import EditTagsForm
-from .utils import get_query
 
 @login_required
 def root(request, *p):
@@ -96,3 +94,37 @@ def work(request, cote, *p, **kw):
 def reindex(request, *p, **kw):
     django.core.management.call_command("update_index")
     return HttpResponse(status=204)
+
+def pivot(request, *p, **kw):
+    return render_to_response('pivot.html', {
+            }, context_instance=RequestContext(request))
+
+def pivotcollection(request, *p, **kw):
+    sqs = SearchQuerySet()
+    return render_to_response('collection.xml', {
+        'sqs': sqs,
+        },
+                              mimetype = "application/xhtml+xml",
+                              context_instance = RequestContext(request))
+
+def pivotdzimages(request, *p, **kw):
+    sqs = SearchQuerySet()
+    return render_to_response('dzimages.xml', {
+        'sqs': sqs,
+        },
+                              mimetype = "application/xhtml+xml",
+                              context_instance = RequestContext(request))
+
+def pivotimage(request, cote=None, **kw):
+    w = get_object_or_404(Work, pk=cote)
+    return render_to_response('image.xml', {
+        'work': w,
+        },
+                              mimetype = "application/xhtml+xml",
+                              context_instance = RequestContext(request))
+
+def pivotdzimage(request, cote=None, level=None, name=None, **kw):
+    if cote == '33':
+        print "IMAGE ", cote, level, name
+    w = get_object_or_404(Work, pk=cote)
+    return HttpResponseRedirect(str(w.thumbnail.url) if w.thumbnail else '/static/unknown_thumbnail.png')

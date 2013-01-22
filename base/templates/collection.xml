@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% load michaux %}
+<Collection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            Name="Catalogue Michaux" SchemaVersion="1" xmlns:P="http://schemas.microsoft.com/livelabs/pivot/collection/2009" P:BrandImage="/favicon.ico" xmlns="http://schemas.microsoft.com/collection/metadata/2009">
+  <FacetCategories>
+    <FacetCategory Name="Cote" Type="String" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
+    <FacetCategory Name="FileName" Type="String" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
+    <FacetCategory Name="Fiche" Type="Link" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Technique" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
+    </FacetCategory>
+    <FacetCategory Name="Support" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Serie" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
+    </FacetCategory>
+    <FacetCategory Name="Annee" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
+    </FacetCategory>
+  </FacetCategories>
+  <Items ImgBase="dzimages">
+    {% for o in sqs %}
+    {% with w=o.object %}
+    <Item Img="#{{ w.cote }}" Id="{{ w.cote }}" Name="{{ w }}">
+      <Description>FIXME: insert the same data as /base/work here ?</Description>
+      <Facets>
+        <Facet Name="Cote">
+          <String Value="{{ w.cote }}"/>
+        </Facet>
+        <Facet Name="Technique">
+          <String Value="{{ w.medium|unaccent }}"/>
+        </Facet>
+        <Facet Name="Support">
+          <String Value="{{ w.support|unaccent }}"/>
+        </Facet>
+        <Facet Name="Serie">
+          <String Value="{{ w.serie|unaccent }}"/>
+        </Facet>
+        <Facet Name="Fiche">
+          <Link Name="Fiche" Href="/base/work/{{ w.cote }}"/>
+        </Facet>
+        <Facet Name="Annee">
+          <Number Value="{{ w.creation_date_start }}"/>
+        </Facet>
+      </Facets>
+    </Item>
+    {% endwith %}
+    {% endfor %}
+  </Items>
+</Collection>
