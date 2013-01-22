@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block margin %}
-        <h2>{{ work|autolink }}</h2>
+        <h2>{{ work }}</h2>
         <a id="edit-icon" href="{% url meta|admin_urlname:'change' work.cote %}"><img title="Editer la fiche" alt="Edit" src="{{ STATIC_URL }}icons/edit.png" /></a>
 
         <ul>
