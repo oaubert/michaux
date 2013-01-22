@@ -47,7 +47,7 @@
           </li>
 {% endif %}
 {% if work.image_set.count %}
-          <li><strong>Images</strong>
+          <li>
           {% for img in work.image_set.all %}<a href="{{ img.image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
           </li>
 {% endif %}
