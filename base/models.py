@@ -6,7 +6,6 @@ import os
 from gettext import gettext as _
 from django.core.files import File
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from imagekit.models import ImageSpecField
@@ -49,7 +48,8 @@ class Work(models.Model):
 
     modified = models.DateTimeField(_('dernière modification'),
                                     help_text=_('Date de dernière modification de la fiche'),
-                                    null=True, editable=False)
+                                    null=True, editable=False,
+                                    auto_now=True)
 
     status = models.CharField(_('statut'),
                               help_text=_('Statut éditorial de la fiche'),
