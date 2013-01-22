@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Min, Max
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from coop_tag.settings import TAGGER_CLOUD_MAX, TAGGER_CLOUD_MIN
 from haystack.query import SearchQuerySet
 from .models import Work
@@ -59,6 +60,19 @@ def works(request, *p, **kw):
         for tag, c in counter.iteritems():
             tag.weight = weight_fun(c)
     date_range = Work.objects.all().aggregate(Min('creation_date_start'), Max('creation_date_start'))
+
+    paginator = Paginator(sqs.all(), 100)
+
+    pagenum = request.GET.get('page', 1)
+    try:
+        page = paginator.page(pagenum)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        page = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        page = paginator.page(paginator.num_pages)
+
     # Add a ? at the end of current_url so that we can simply add
     # &facet=foo in the template to drill down along facets
     current = request.get_full_path()
@@ -74,6 +88,7 @@ def works(request, *p, **kw):
         'current_url': current,
         'date_range': date_range,
         'axis': axis,
+        'page': page,
         'groups': [ (m, list(e)) for (m, e) in groupby(sorted(sqs, key=lambda w: getattr(w, axis)), lambda w: getattr(w, axis)) ] if axis else [],
         }, context_instance=RequestContext(request))
 

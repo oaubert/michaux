@@ -141,7 +141,19 @@
 
         {% empty %}
 
-        {% for res in sqs %}
+        <div class="pagination">
+          <span class="step-links">
+            {% if page.has_previous %}
+            <a id="previous_page" href="?page={{ page.previous_page_number }}">&lt;&lt;&lt;</a>
+            {% endif %}
+            <span id="current_age">Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
+            {% if page.has_next %}
+            <a id="next_page" href="?page={{ page.next_page_number }}">&gt;&gt;&gt;</a>
+            {% endif %}
+          </span>
+        </div>
+
+        {% for res in page %}
         {% include "griditem.html" with work=res.object %}
         {% endfor %}
 
