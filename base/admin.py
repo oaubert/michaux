@@ -102,14 +102,14 @@ class WorkAdmin(admin.ModelAdmin):
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
-    list_display = ( 'cote', 'work_thumbnail', 'old_references', 'medium', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
-    list_editable = ( 'medium', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
+    list_display = ( 'status', 'cote', 'work_thumbnail', 'old_references', 'medium', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
+    list_editable = ( 'status', 'medium', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
     list_display_links = ( 'cote', 'work_thumbnail' )
     search_fields = [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
-    list_filter = ( 'serie', 'creation_date_start', 'medium', 'support' )
+    list_filter = ( 'status', 'serie', 'creation_date_start', 'medium', 'support' )
     save_on_top = True
     actions = ( export_model_as_csv, )
-    #exportable_fields = (, )
+    exportable_fields = ( 'cote', 'old_references', 'note_references', 'certificate', 'modified', 'status', 'medium', 'support', 'support_details', 'note_support', 'serie', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty', 'creation_date_alternative', 'note_creation_date', 'height', 'width', 'comment', 'revision')
 
     formfield_overrides = FORMFIELD_OVERRIDES
 
