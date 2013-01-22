@@ -1,5 +1,6 @@
 import re
 import urllib
+import unicodedata
 
 from django.template.defaultfilters import stringfilter
 from django import template
@@ -31,3 +32,34 @@ def url_remove_facet(url, facet_value):
 @stringfilter
 def facet_url(value, field):
     return "%s?f=%s_exact:%s" % (reverse('base.views.works'), field, urllib.quote(value.encode('utf-8')))
+
+def memoize(func):
+    cache = {}
+    def wrap(*args):
+        if args in cache:
+            return cache[args]
+        else:
+            v = cache[args] = func(*args)
+            return v
+    return wrap
+
+normalized_re = re.compile(r'LATIN (SMALL|CAPITAL) LETTER (\w)')
+extended_valid_re = re.compile(r'[-a-zA-Z0-9_]')
+
+@memoize
+def unaccent_char(c):
+    ret = '_'
+    m = normalized_re.search(unicodedata.name(c, ' '))
+    if m:
+        ret = m.group(2)
+        if m.group(1) == 'SMALL':
+            ret = ret.lower()
+    return ret
+
+@register.filter
+@stringfilter
+def unaccent(value):
+    """Remove accents from a string.
+    """
+    return "".join((c if extended_valid_re.match(c) else unaccent_char(c))
+                   for c in value)
