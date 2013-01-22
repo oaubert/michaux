@@ -356,7 +356,7 @@ class Image(models.Model):
                                options={'quality': 90})
 
     created = models.DateTimeField(_('création'),
-                                   help_text=_("Date de téléchargment de l'image"),
+                                   help_text=_("Date de téléchargement de l'image"),
                                    null=True, editable=False,
                                    auto_now=True)
 
