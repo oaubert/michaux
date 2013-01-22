@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import unicodecsv as csv
+import datetime
+
 from gettext import gettext as _
 
 from django.forms import TextInput, Textarea
@@ -7,6 +10,8 @@ from django.db import models
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 from django.contrib import admin
 from base.forms import ImageModelForm
+from django.contrib.admin import util as admin_util
+from django.http import HttpResponse
 
 FORMFIELD_OVERRIDES = {
         models.CharField: {'widget': TextInput(attrs={'size': '24'})},
@@ -53,6 +58,36 @@ class ReproductionInline(admin.TabularInline):
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
+def export_model_as_csv(modeladmin, request, queryset):
+    if hasattr(modeladmin, 'exportable_fields'):
+        field_list = modeladmin.exportable_fields
+    else:
+        # Copy modeladmin.list_display to remove action_checkbox
+        field_list = list(modeladmin.list_display)
+
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=%s-%s-export-%s.csv' % (
+        __package__.lower(),
+        queryset.model.__name__.lower(),
+        datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S'),
+    )
+
+    writer = csv.writer(response)
+    writer.writerow(
+        [admin_util.label_for_field(f, queryset.model, modeladmin) for f in field_list],
+    )
+
+    for obj in queryset:
+        csv_line_values = []
+        for field in field_list:
+            field_obj, attr, value = admin_util.lookup_field(field, obj, modeladmin)
+            csv_line_values.append(value)
+
+        writer.writerow(csv_line_values)
+
+    return response
+export_model_as_csv.short_description = _('Export to CSV')
+
 class WorkAdmin(admin.ModelAdmin):
 
     class Media:
@@ -73,6 +108,8 @@ class WorkAdmin(admin.ModelAdmin):
     search_fields = [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
     list_filter = ( 'serie', 'creation_date_start', 'medium', 'support' )
     save_on_top = True
+    actions = ( export_model_as_csv, )
+    #exportable_fields = (, )
 
     formfield_overrides = FORMFIELD_OVERRIDES
 
