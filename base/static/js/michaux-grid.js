@@ -74,7 +74,7 @@ jQuery(document).ready(
 
             $('svg rect.bar').tipsy({
                                         gravity: 'sw',
-                                        html: false,
+                                        html: false
                                     });
             return barchart;
         }();
