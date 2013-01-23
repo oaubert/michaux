@@ -96,3 +96,7 @@ ul.navbar li a:hover{
     background-color: #3E6D8E;
     color: #E0EAF1;
 }
+
+.helptext {
+    display: none;
+}
