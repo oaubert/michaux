@@ -125,6 +125,16 @@ jQuery(document).ready(
             $( "#date" ).val( $( "#slider-range" ).slider( "values", 0 ) +
                               " - " + $( "#slider-range" ).slider( "values", 1 ) );
 
+            $( "#zoomslider" ).slider({
+                                          range: false,
+                                          min: 1,
+                                          max: 200,
+                                          value: 100 * $("#grid").css('zoom'),
+                                          slide: function(event, ui) {
+                                              $("#grid").css('zoom', ui.value / 100);
+                                            }
+                                      })
+                .click( function () { $('#zoomslider').value(100.0); });
         }
 
         // Homemade lightbox

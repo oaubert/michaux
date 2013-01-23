@@ -187,3 +187,14 @@ a.active-facet {
 #creationHistogram rect.bar:hover {
    fill: steelblue;
 }
+
+#zoom {
+    position: fixed;
+    top: 5px;
+    right: 10px;
+    width: 120px;
+}
+
+#zoomslider {
+    width: 100%;
+}

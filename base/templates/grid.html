@@ -24,6 +24,7 @@
 
 {% block header %}<h1>{% with total=sqs|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
     <div>{% if selected_facets %}| {% for facet in selected_facets %} {{ facet }} |{% endfor %}{% endif %}</div>
+    <div id="zoom"><div id="zoomslider"></div></div>
 {% endblock %}
 
 {% block margin %}
