@@ -198,3 +198,7 @@ a.active-facet {
 #zoomslider {
     width: 100%;
 }
+
+#grid {
+    -moz-transform-origin: 0 0;
+}

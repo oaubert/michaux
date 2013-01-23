@@ -129,12 +129,13 @@ jQuery(document).ready(
                                           range: false,
                                           min: 1,
                                           max: 200,
-                                          value: 100 * $("#grid").css('zoom'),
+                                          value: 100 * ($("#grid").css('zoom') || 1),
                                           slide: function(event, ui) {
-                                              $("#grid").css('zoom', ui.value / 100);
+                                              var z = ui.value / 100.0;
+                                              $("#grid").css( { zoom: z, "-moz-transform": "scale(" + z + ")" } );
+                                              return false;
                                             }
-                                      })
-                .click( function () { $('#zoomslider').value(100.0); });
+                                      });
         }
 
         // Homemade lightbox
