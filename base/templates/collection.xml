@@ -6,20 +6,24 @@
   <FacetCategories>
     <FacetCategory Name="Cote" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="FileName" Type="String" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
-    <FacetCategory Name="Fiche" Type="Link" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Fiche" Type="Link" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Technique" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
     </FacetCategory>
     <FacetCategory Name="Support" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
-    <FacetCategory Name="Serie" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Serie" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Annee" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
-    <FacetCategory Name="Hauteur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
-    <FacetCategory Name="Largeur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Hauteur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
+    <FacetCategory Name="Largeur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
   </FacetCategories>
   <Items ImgBase="dzimages">
     {% for o in sqs %}
     {% with w=o.object %}
     <Item Img="#{{ w.cote }}" Id="{{ w.cote }}" Name="{{ w }}">
-      <Description>FIXME: insert the same data as /base/work here ?</Description>
+      <Description>
+{% filter force_escape %}
+{% include "workinfo.html" with work=w %}
+{% endfilter %}
+      </Description>
       <Facets>
         <Facet Name="Cote">
           <String Value="{{ w.cote }}"/>

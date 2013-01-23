@@ -24,74 +24,9 @@
         <h2>{{ work }}</h2>
         <a id="edit-icon" href="{% url meta|admin_urlname:'change' work.cote %}"><img title="Editer la fiche" alt="Edit" src="{{ STATIC_URL }}icons/edit.png" /></a>
 
-        <ul>
-          <li>Date de création: {% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
-            {% if work.creation_date_start %}<a class="facetvalue" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
-            {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}</li>
-          <li>{{ work.height }} x {{ work.width }}</li>
-          <li>Ref {{ work.old_references }} {% if work.note_references %}({{ work.note_references }}){% endif %}</li>
-          <li>Technique: <a class="facetvalue" href="{{ work.medium|facet_url:"medium" }}">{{ work.medium }}</a></li>
-          <li>Support: <a class="facetvalue" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}</li>
-          {% if work.serie %}
-          <li>Série: <a class="facetvalue" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
-          {% endif %}
-          <li><strong>Notes</strong></li>
-          <li>{{ work.note_support|autolink }}</li>
-          <li>{{ work.comment|autolink }}</li>
-          <li>{{ work.revision|autolink }}</li>
-{% if work.inscription_set.count %}
-          <li><strong>Inscriptions</strong>
-            <ul>
-              {% for insc in work.inscription_set.all %}<li>{{ insc.notes|autolink }}</li>{% endfor %}
-            </ul>
-          </li>
-{% endif %}
-{% if work.image_set.count %}
-          <li>
-          {% for img in work.image_set.all %}<a href="{{ img.image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
-          </li>
-{% endif %}
-{% if work.bibliographyreference_set.count %}
-          <li><strong>Références</strong>
-            <ul>
-              {% for bib in work.bibliographyreference_set.all %}<li>{{ bib }}</li>{% endfor %}
-            </ul>
-          </li>
-{% endif %}
-{% if work.exhibitioninstance_set.count %}
-          <li><strong>Expositions</strong>
-            <ul>
-              {% for ex in work.exhibitioninstance_set.all %}<li>{{ ex.title }} : {{ ex.note }}</li> {% endfor %}
-            </ul>
-          </li>
-{% endif %}
-{% if work.reproduction_set.count %}
-          <li><strong>Reproductions</strong>
-            <ul>
-              {% for ex in work.reproduction_set.all %}<li>{{ repr }} : {{ repr.comment }}</li> {% endfor %}
-            </ul>
-          </li>
-{% endif %}
-{% if work.event_set.count %}
-          <li><strong>Événements</strong>
-            <ul>
-              {% for ev in work.event_set.all %}<li>{{ ev }}</li>{% endfor %}
-            </ul>
-          </li>
-{% endif %}
+        {% include "workinfo.html" with work=work %}
 
-          <li></li>
-
-          <li id="tags"></li>
-          <!--
-          <li>{% for tag in work.tags.all %}
-            <a class="tag" href="../?tag={{ tag }}">{{ tag }}</a>
-            {% endfor %}</li>
-          -->
-
-          {{ tagform.as_ul }}
-
-        </ul>
+        {{ tagform.as_ul }}
 {% endblock %}
 
 {% block content %}
