@@ -6,10 +6,10 @@
 
 {% block title %}{% if query_string %}
    {% with total=sqs|length %}
-   {{ total }} oeuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
+   {{ total }} œuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
    {% endwith %}
    {% else %}
-   {{ "Liste des oeuvres" }}
+   {{ "Liste des œuvres" }}
    {% endif %}{% endblock %}
 {% block extra_header %}
     <link href="{{ STATIC_URL }}css/michaux-grid.css" rel="stylesheet" type="text/css" media="screen" />
@@ -22,14 +22,14 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
 {% endblock %}
 
-{% block header %}<h1>{% with total=sqs|length %}{{ total }} oeuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
+{% block header %}<h1>{% with total=sqs|length %}{{ total }} œuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
     <div>{% if selected_facets %}| {% for facet in selected_facets %} {{ facet }} |{% endfor %}{% endif %}</div>
     <div id="zoom"><div id="zoomslider"></div></div>
 {% endblock %}
 
 {% block margin %}
         {% with total=sqs|length %}
-        <p>{{ total }} oeuvre{{ total|pluralize }} sélectionnée{{ total|pluralize }}</p>
+        <p>{{ total }} œuvre{{ total|pluralize }} sélectionnée{{ total|pluralize }}</p>
         {% endwith %}
 
         {% if not groups %}
