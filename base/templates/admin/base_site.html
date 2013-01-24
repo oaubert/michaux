@@ -12,9 +12,14 @@
 <h1 id="site-name">Archives Michaux - interface d'administration</h1>
 {% endblock %}
 
-{% block nav-global %}      <ul class="navbar">
+{% block nav-global %}
+      <ul class="navbar">
         <li><a href="/base/work/">Accueil</a></li>
+{% if user.is_active and user.is_staff %}
         <li><a href="/admin/base/work/">Admin</a></li>
-        <li><a title="ConnectÃ© en tant que {{ user }}" href="/accounts/logout">Logout</a></li>
+        <li><a href="/base/pivot">Pivot</a></li>
+        <li><a href="/base/reindex">Reindex</a></li>
+{% endif %}
+        <li><a title="Connecté en tant que {{ user }}" href="/accounts/logout">Logout</a></li>
       </ul>
 {% endblock %}
