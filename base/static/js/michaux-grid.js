@@ -133,7 +133,6 @@ jQuery(document).ready(
                                           slide: function(event, ui) {
                                               var z = ui.value / 100.0;
                                               $("#grid").css( { zoom: z, "-moz-transform": "scale(" + z + ")" } );
-                                              return false;
                                             }
                                       });
         }
