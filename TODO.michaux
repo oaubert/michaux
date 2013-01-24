@@ -1,10 +1,19 @@
+* Génération dzi
+for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i:r}.dzi ../cache/images/${i:r}_image.jpg; done
+
+update_index -> cron
+
 * Grille
 ** Facette date: intégrer au moteur SOLR (+range)
+** Facettes: sélection dynamique des facettes affichées (à la Refine)
+** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette)
 ** Affichage facette date: barchart + range selection
 Utiliser http://square.github.com/crossfilter/ qui apporte aussi range selection
 ** Formulaire d'ajout de tag + autocomplétion
 ** Centrer verticalement les images
 ** Version REST/JSON
+** Sélection d'un sous-ensemble d'oeuvres (checkbox en popup) + action (tag, export, etc)
+** Filtrage par statut
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
 ** Rendre éditable facilement ?
@@ -21,9 +30,11 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 ** Afficher la liste complète des tags existants
 
 * Table admin
-** Table admin: éditable?
-
 ** Action table admin: "ajouter exposition"
 * Interaction
 ** Vue canevas 2D pour classification (cf kineticjs)
-** Intégration de pivotviewer?
+
+* Pivotviewer
+- deepzoom generation: normalize sizes to square + pow(2)
+- pass query string to pivot from navbar
+- integrate into base.html
