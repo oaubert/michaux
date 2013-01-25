@@ -212,6 +212,6 @@ jQuery(document).ready(
         };
 
         michaux.getSelection = function () {
-            return $("div.work.selected").map( function () { return Number($(this).attr('data-cote')); } );
+            return $("div.work.selected").map( function () { $(this).attr('data-cote'); } );
         };
     });
