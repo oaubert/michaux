@@ -26,116 +26,89 @@ jQuery(document).ready(
 
             var barWidth = width / (maxYear - minYear);
 
-            var x = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]);
-            var y = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
+            var x_scale = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]).interpolate(d3.interpolateRound).clamp(true);
+            var y_scale = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
+
+            var brush = d3.svg.brush()
+                .x(x_scale)
+                .on("brush", function () {
+                        var b = brush.empty() ? x_scale.domain() : brush.extent();
+                        console.log(b);
+                        $("#histogramRange").text(Math.floor(b[0]) + " - " + Math.floor(b[1]));
+                    })
+                .on("brushend", function () {
+                        var sep = "&";
+                        var repl = "";
+                        if (! brush.empty()) {
+                            var b = brush.extent();
+                            var start = Math.floor(b[0]);
+                            var end = Math.floor(b[1]);
+                            repl = "f=creation_date_start__range:" + start + "-" + end;
+                        }
+
+                        if (! document.location.search)
+                            sep = "";
+                        var re = /f=creation_date_start__range:\d+-\d+/;
+                        m = document.location.search.match(re);
+                        if (m !== null) {
+                            // There is already a date facet. Replace its value, or cancel it
+                            document.location.search = document.location.search.replace(re, repl);
+                        } else {
+                            document.location.search = document.location.search + sep + repl;
+                        }
+                    });
 
             g.selectAll("line")
-                .data(y.ticks(5))
+                .data(y_scale.ticks(5))
                 .enter().append("line")
                 .attr("x1", 0)
                 .attr("x2", width)
-                .attr("y1", y)
-                .attr("y2", y)
+                .attr("y1", y_scale)
+                .attr("y2", y_scale)
                 .style("stroke", "#ccc");
 
-            barchart.overlay = g.append("svg:rect")
-                .attr("class", "overlay")
-                .attr("x", 0)
+            var g_brush = g.append("g")
+                .attr("class", "x brush")
+                .call(brush)
+                .selectAll("rect")
                 .attr("y", 0)
-                .attr("width", 0)
-                .attr("height", height)
-                .style("fill", "#ccc")
-                .style("opacity", 0.5);
-
-            barchart.overlay.setRange = function (start, end) {
-                barchart.overlay.attr("x", x(start));
-                barchart.overlay.attr("width", x(end + 1) - x(start));
-            };
+                .attr("height", height);
 
             g.selectAll(".bar")
                 .data(data)
                 .enter()
                 .append("svg:rect")
                 .attr("class", "bar")
-                .attr("x", function(d, index) { return x(d.year); })
+                .attr("x", function(d, index) { return x_scale(d.year); })
                 .attr("y", function(d) { return 0; })
                 .attr("svg:title", function(d) { return d.year + ' (' + d.count + ')'; })
-                .attr("height", function(d) { return y(d.count); })
+                .attr("height", function(d) { return y_scale(d.count); })
                 .attr("width", barWidth)
                 .on("mouseup", function (d) {
-                        var sep = '&';
-                        if (document.location.toString().indexOf('?') < 0)
-                            sep = '?';
-                        document.location = document.location + sep + "f=creation_date_start_exact:" + d.year;
                     });
 
-            barchart.x = x;
-            barchart.y = y;
+
+            barchart.x = x_scale;
+            barchart.y = y_scale;
 
             $('svg rect.bar').tipsy({
                                         gravity: 'sw',
                                         html: false
                                     });
-            return barchart;
+            return d3.rebind(barchart, brush, "on");
         }();
         document.barchart = barchart;
 
-        var range = $(".work[data-start]").map( function () { var a = $(this).attr("data-start"); if (a != "None") return parseInt(a); } );
-        if (range.length > 0) {
-            var min = Math.min.apply(Math, range);
-            var max = Math.max.apply(Math, range);
-
-            $( "#slider-range" ).slider({
-                                            range: true,
-                                            min: min,
-                                            max: max,
-                                            values: [ min, max ],
-                                            slide: function( event, ui ) {
-                                                $( "#date" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-                                            },
-                                            stop: function(event, ui) {
-                                                var count = 0;
-                                                var shown = 0;
-                                                $(".work[data-start]").each( function () {
-                                                                                 count += 1;
-                                                                                 var d = parseInt($(this).attr('data-start'));
-                                                                                 if (d < ui.values[0] || d > ui.values[1]) {
-                                                                                     $(this).hide();
-                                                                                 } else {
-                                                                                     $(this).show();
-                                                                                     shown += 1;
-                                                                                 }
-                                                                             });
-                                                var plural = "";
-                                                if (shown > 1)
-                                                    plural = "s";
-                                                $("#shown").text(shown + " / " + count + " élément" + plural + " affiché" + plural);
-                                                barchart.overlay.setRange(ui.values[0], ui.values[1]);
-                                                // FIXME: this should
-                                                // call the facet code
-                                                // (so that it works
-                                                // even with
-                                                // pagination) and it
-                                                // will also allow to
-                                                // keep the filter in
-                                                // navigation history
-                                            }
-                                        });
-
-            $( "#date" ).val( $( "#slider-range" ).slider( "values", 0 ) +
-                              " - " + $( "#slider-range" ).slider( "values", 1 ) );
-
-            $( "#zoomslider" ).slider({
-                                          range: false,
-                                          min: 1,
-                                          max: 200,
-                                          value: 100 * ($("#grid").css('zoom') || 1),
-                                          slide: function(event, ui) {
-                                              var z = ui.value / 100.0;
-                                              $("#grid").css( { zoom: z, "-moz-transform": "scale(" + z + ")" } );
-                                            }
+        $( "#zoomslider" ).slider({
+                                      range: false,
+                                      min: 1,
+                                      max: 200,
+                                      value: 100 * ($("#grid").css('zoom') || 1),
+                                      slide: function(event, ui) {
+                                          var z = ui.value / 100.0;
+                                          $("#grid").css( { zoom: z, "-moz-transform": "scale(" + z + ")" } );
+                                      }
                                       });
-        }
 
         // Homemade lightbox
         $('.vignette').click(function(e) {

@@ -214,3 +214,8 @@ a.active-facet {
 #grid {
     -moz-transform-origin: 0 0;
 }
+
+.brush rect.extent {
+  fill: steelblue;
+  fill-opacity: .125;
+}

@@ -38,7 +38,11 @@ def works(request, *p, **kw):
         for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
             if value:
-                sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
+                if field == 'creation_date_start__range':
+                    b, e = value.split("-")
+                    sqs = sqs.filter(creation_date_start__range=[int(b), int(e)])
+                else:
+                    sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
     sqs = sqs.order_by(axis or 'creation_date_start')
 
