@@ -165,22 +165,20 @@ jQuery(document).ready(
         };
 
         michaux.resetFilter = function () {
-            var f = $("#filter")[0];
-            f.value = "";
-            f.form.submit();
+            document.location.search = "";
         };
 
         michaux.setGroupAxis = function () {
             var f = $("#grouper :selected").attr('value');
             var sep = '&';
-            if (document.location.toString().indexOf('?') < 0)
-                sep = '?';
+            if (! document.location.search)
+                sep = "";
 
             if (document.location.search.search(/\baxis=/) > 0) {
                 // There is already an axis. Replace its value
                 document.location.search = document.location.search.replace(/axis=\w*/, "axis=" + f);
             } else {
-                document.location = document.location + sep + 'axis=' + f;
+                document.location.search = document.location.search + sep + 'axis=' + f;
             }
         };
 
