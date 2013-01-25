@@ -117,6 +117,18 @@ a.details{
     background:#fff url(../icons/details.png) no-repeat center center;
 }
 
+div.work a.selection {
+    background:#fff url(../icons/unselected.png) no-repeat center center;
+}
+
+div.work.selected a.selection {
+    background:#fff url(../icons/selected.png) no-repeat center center;
+}
+
+div.work.selected {
+    background-color: #eee;
+}
+
 #lightbox {
     position: fixed; /* keeps the lightbox window in the current viewport */
     top: 0;

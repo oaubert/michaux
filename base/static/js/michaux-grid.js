@@ -173,6 +173,12 @@ jQuery(document).ready(
                                 $('#lightbox').hide();
                             });
 
+        // Select/unselect items
+        $("a.selection").click(function () {
+                                   $(this).parents("div.work").toggleClass("selected");
+                               });
+
+        // Hide/show facets
         $(".facettitle").click(function() {
                                    $(this).next().slideToggle("fast");
                                });
@@ -203,5 +209,9 @@ jQuery(document).ready(
             } else {
                 document.location = document.location + sep + 'axis=' + f;
             }
+        };
+
+        michaux.getSelection = function () {
+            return $("div.work.selected").map( function () { return Number($(this).attr('data-cote')); } );
         };
     });

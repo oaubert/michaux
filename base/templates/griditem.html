@@ -2,7 +2,7 @@
 {% load url from future %}
 
 {% with thumb=work.thumbnail %}
-<div class="work" data-start="{{ work.creation_date_start }}">
+<div class="work" data-cote="{{ work.cote }}" data-start="{{ work.creation_date_start }}">
   <a class="vignette" href="{{ work.image.url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
                                                        alt=""
                                                        title="{{ work }}
@@ -10,6 +10,6 @@
                                                        src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
   <ul class="toolbar">{% if user.is_active and user.is_staff %}
 <li><a target="_blank" href="{% url meta|admin_urlname:'change' work.cote %}" class="edit"></a></li>
-{% endif %}<li><a target="_blank" href="{{ work.get_absolute_url }}" class="details"></a></li></ul>
+{% endif %}<li><a target="_blank" href="{{ work.get_absolute_url }}" class="details"></a></li><li><a class="selection"></a></li></ul>
 </div>
 {% endwith %}
