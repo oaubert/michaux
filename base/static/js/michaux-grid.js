@@ -116,6 +116,7 @@ jQuery(document).ready(
                                  e.preventDefault();
                                  //Get clicked link href
                                  var image_href = $(this).attr("href");
+                                 var cote = $(this).parents("div.work").attr('data-cote');
                                  /*
                                   If the lightbox window HTML already exists in document,
                                   change the img src to to match the href of whatever link was clicked
@@ -133,6 +134,7 @@ jQuery(document).ready(
                                      var lightbox =
                                          '<div id="lightbox">' +
                                          '<p>Click to close</p>' +
+                                         '<div id="lightbox_info"></div>' +
                                          '<div id="lightbox_content">' + //insert clicked link's href into img src
                                          '<img src="' + image_href +'" />' +
                                          '</div>' +
@@ -140,6 +142,11 @@ jQuery(document).ready(
                                      //insert lightbox HTML into page
                                      $('body').append(lightbox);
                                  }
+                                 // AJAX callback to insert the lightbox_info
+                                 console.log('/base/work/' + cote + '/info');
+                                 $.get(cote + '/info', function (data) {
+                                           $('#lightbox_info').html(data);
+                                       });
                              });
         //Click anywhere on the page to get rid of lightbox window
         $('#lightbox').live('click', function() { //must use live, as the lightbox element is inserted into the DOM

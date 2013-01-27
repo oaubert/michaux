@@ -155,6 +155,29 @@ div.work.selected {
     margin: auto;
 }
 
+#lightbox_content {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    width: 80%;
+}
+
+#lightbox_info {
+    position: fixed;
+    height: 100%;
+    top: 5px;
+    left: 5px;
+    width: 20%;
+    z-index: 2;
+    opacity: .7;
+    background-color: #fff;
+}
+
+ul.workinfo {
+    list-style: none;
+    text-align: left;
+}
+
 div.facetbox {
     border: 1px solid #cccccc;
     margin: 0px 5px 5px 2px;
