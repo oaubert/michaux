@@ -1,5 +1,5 @@
 {% load michaux %}
-        <ul>
+        <ul class="workinfo">
           <li>Date de création: {% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
             {% if work.creation_date_start %}<a class="facetvalue" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
             {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}</li>
