@@ -5,6 +5,7 @@
 
 body {
     font-family: helvetica, sans-serif;
+    font-size: 9pt;
     no-background-color: black;
     no-color: #eeeeee;
 }
@@ -22,7 +23,7 @@ body {
 }
 
 #content {
-    margin-left: 320px;
+    margin-left: 220px;
     margin-top: 50px;
 }
 
@@ -31,9 +32,9 @@ body {
     top: 50;
     left: 0;
     height: 100%;
-    width: 300px;
+    width: 200px;
     float: left;
-    padding: 5px;
+    padding: 2px;
     margin-right: 20px;
     overflow: auto;
 }
