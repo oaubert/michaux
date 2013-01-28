@@ -67,10 +67,10 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Statut ({{ facets.fields.status|length }})</p>
+            <p class="facettitle">Statut <span class="facetcount">{{ facets.fields.status|length }}</span></p>
             <ul>
             {% for status in facets.fields.status %}
-            <li><a href="{{ current_url }}&amp;f=status_exact:{{ status.0|urlencode }}">{{ status.0 }}</a> ({{ status.1 }})
+            <li><a href="{{ current_url }}&amp;f=status_exact:{{ status.0|urlencode }}">{{ status.0 }}</a> <span class="facetitemcount">{{ status.1 }}</span>
               {% if status.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:status }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
@@ -78,10 +78,10 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Technique ({{ facets.fields.medium|length }})</p>
+            <p class="facettitle">Technique <span class="facetcount">{{ facets.fields.medium|length }}</span></p>
             <ul>
             {% for medium in facets.fields.medium %}
-            <li><a href="{{ current_url }}&amp;f=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> ({{ medium.1 }})
+            <li><a href="{{ current_url }}&amp;f=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> <span class="facetitemcount">{{ medium.1 }}</span>
               {% if medium.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:medium }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
@@ -89,10 +89,10 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Support ({{ facets.fields.support|length }})</p>
+            <p class="facettitle">Support <span class="facetcount">{{ facets.fields.support|length }}</span></p>
             <ul>
             {% for support in facets.fields.support %}
-            <li><a href="{{ current_url }}&amp;f=support_exact:{{ support.0|urlencode }}">{{ support.0 }}</a> ({{ support.1 }})
+            <li><a href="{{ current_url }}&amp;f=support_exact:{{ support.0|urlencode }}">{{ support.0 }}</a> <span class="facetitemcount">{{ support.1 }}</span>
               {% if support.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:support }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
@@ -100,10 +100,10 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Série ({{ facets.fields.serie|length }})</p>
+            <p class="facettitle">Série <span class="facetcount">{{ facets.fields.serie|length }}</span>/p>
             <ul>
             {% for serie in facets.fields.serie %}
-            <li><a href="{{ current_url }}&amp;f=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> ({{ serie.1 }})
+            <li><a href="{{ current_url }}&amp;f=serie_exact:{{ serie.0|urlencode }}">{{ serie.0 }}</a> <span class="facetitemcount">{{ serie.1 }}</span>
               {% if serie.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:serie }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
@@ -111,10 +111,10 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Création [début]  ({{ facets.fields.creation_date_start|length }})</p>
+            <p class="facettitle">Création [début]  <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span></p>
             <ul>
             {% for date in facets.fields.creation_date_start %}
-            <li><a data-year="{{ date.0 }}" data-count="{{ date.1 }}" href="{{ current_url }}&amp;f=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> ({{ date.1 }})
+            <li><a data-year="{{ date.0 }}" data-count="{{ date.1 }}" href="{{ current_url }}&amp;f=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> <span class="facetitemcount">{{ date.1 }}</span>
               {% if date.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:date }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
@@ -130,7 +130,7 @@
             <p class="facettitle">Tags ({{ facets.fields.tags|length }})</p>
             <ul>
               {% for tag in facets.fields.tags %}
-              <li><a href="{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}">{{ tag.0 }}</a> ({{ tag.1 }})
+              <li><a href="{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}">{{ tag.0 }}</a> <span class="facetitemcount">{{ tag.1 }}</span>
                 {% if tag.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:tag }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
               </li>
               {% endfor %}

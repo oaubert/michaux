@@ -190,8 +190,14 @@ div.facetbox {
     margin: 0;
     background-color: #fff;
     position: absolute;
-    width: 292px;
+    width: 192px;
     height: 1.2em;
+}
+
+.facetcount, .facetitemcount {
+    color: #a8a9aa;
+    position: absolute;
+    right: 32px;
 }
 
 .facetcontrols {
@@ -200,14 +206,16 @@ div.facetbox {
 
 div.facetbox ul {
     margin-top: 1.3em;
-    margin-left: 10px;
+    margin-left: 16px;
     list-style: none;
 }
 
 a.active-facet {
     text-decoration: none;
     background: #fff url(../../icons/reset.png) no-repeat center center;
-    width: 26;
+    width: 8px;
+    position: absolute;
+    left: 8px;
 }
 
 #creationHistogram {
