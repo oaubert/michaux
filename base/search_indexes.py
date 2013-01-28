@@ -10,7 +10,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     creation_date_start = indexes.IntegerField(model_attr='creation_date_start', faceted=True, null=True)
     creation_date_end = indexes.IntegerField(model_attr='creation_date_end', faceted=True, null=True)
     serie = indexes.CharField(model_attr='serie', faceted=True, null=True)
-    medium = indexes.CharField(model_attr='medium', faceted=True)
+    technique = indexes.CharField(model_attr='technique', faceted=True)
     support = indexes.CharField(model_attr='support', faceted=True)
     height = indexes.IntegerField(model_attr='height', faceted=True)
     width = indexes.IntegerField(model_attr='width', faceted=True)

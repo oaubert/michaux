@@ -6,7 +6,7 @@
             {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}</li>
           <li>{{ work.height }} x {{ work.width }}</li>
           <li>Ref {{ work.old_references }} {% if work.note_references %}({{ work.note_references }}){% endif %}</li>
-          <li>Technique: <a class="facetvalue" href="{{ work.medium|facet_url:"medium" }}">{{ work.medium }}</a></li>
+          <li>Technique: <a class="facetvalue" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique }}</a></li>
           <li>Support: <a class="facetvalue" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}</li>
           {% if work.serie %}
           <li>Série: <a class="facetvalue" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>

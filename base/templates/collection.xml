@@ -29,7 +29,7 @@
           <String Value="{{ w.cote }}"/>
         </Facet>
         <Facet Name="Technique">
-          <String Value="{{ w.medium|unaccent }}"/>
+          <String Value="{{ w.technique|unaccent }}"/>
         </Facet>
         <Facet Name="Support">
           <String Value="{{ w.support|unaccent }}"/>

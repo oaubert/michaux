@@ -64,11 +64,11 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Technique <span class="facetcount">{{ facets.fields.medium|length }}</span></p>
+            <p class="facettitle">Technique <span class="facetcount">{{ facets.fields.technique|length }}</span></p>
             <ul>
-            {% for medium in facets.fields.medium %}
-            <li><a class="facetitemlabel" href="{{ current_url }}&amp;f=medium_exact:{{ medium.0|urlencode }}">{{ medium.0 }}</a> <span class="facetitemcount">{{ medium.1 }}</span>
-              {% if medium.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:medium }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+            {% for technique in facets.fields.technique %}
+            <li><a class="facetitemlabel" href="{{ current_url }}&amp;f=technique_exact:{{ technique.0|urlencode }}">{{ technique.0 }}</a> <span class="facetitemcount">{{ technique.1 }}</span>
+              {% if technique.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:technique }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
             </li>
             {% endfor %}
             </ul>

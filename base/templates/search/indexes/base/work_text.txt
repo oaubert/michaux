@@ -3,7 +3,8 @@
 {{ object.certificate }}
 {{ object.note_references }}
 {{ object.serie }}
-{{ object.medium }}
+{{ object.technique }}
+{{ object.note_technique }}
 {{ object.support }}
 {{ object.support_details }}
 {{ object.note_support }}

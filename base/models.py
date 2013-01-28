@@ -88,7 +88,7 @@ class Work(models.Model):
                              blank=True)
 
     # technique (technique) : choix parmi une énumération extensible (huile, huile et acrylique, aquarelle...)
-    medium = models.CharField(_("technique"),
+    technique = models.CharField(_("technique"),
                                  help_text=_("Technique utilisée"),
                                  max_length=255)
 
@@ -230,7 +230,7 @@ class Work(models.Model):
     def __unicode__(self):
         d = {'printable_year': self.printable_year}
         d.update(self.__dict__)
-        return "#%(cote)d - %(medium)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
+        return "#%(cote)d - %(technique)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
 
     @staticmethod
     def import_worksheet(filename):
@@ -262,7 +262,7 @@ class Work(models.Model):
                     w.serie = serie
                     tech = tech.replace(serie, '')
                     break
-            w.medium = tech
+            w.technique = tech
             support = data['Papier'].split()
             if support:
                 w.support = support[0]
