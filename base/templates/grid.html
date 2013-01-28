@@ -42,8 +42,7 @@
         <form>
           <ul>
 
-            <li><input id="filter" type="text" name="q" value="{{ query_string }}" />
-              <input id="submitbutton" type="submit" value="Filtrer" />
+            <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ query_string }}" />
               <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
         </form>
 
