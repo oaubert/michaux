@@ -1,0 +1,33 @@
+@media print { 
+  @page{
+      size: A4 landscape;
+      margin-left: 0.0cm;
+      margin-right: 0.0cm;
+  }
+}
+
+#edit-icon, .navbar, .helptext, #tags {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+#margin ul {
+    list-style: none inside none;
+}
+
+#margin {
+    width: 7cm;
+    float: left;
+}
+
+#content {
+    width: 20cm;
+}
+
+.display {
+    max-height: 16cm;
+    max-width: 18cm;
+}
