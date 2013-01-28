@@ -10,12 +10,14 @@ update_index -> cron
 ** Centrer verticalement les images
 ** Version REST/JSON
 ** Sélection d'un sous-ensemble d'oeuvres (checkbox en popup) + action (tag, export, etc)
-** Filtrage par statut
+
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
 ** Rendre éditable facilement ?
 ** édition de tags: trouver les hooks pour définir selectionAdded/selectionRemoved pour faire une MAJ tout de suite sur le serveur
+http://code.drewwilson.com/entry/autosuggest-jquery-plugin
  http://stackoverflow.com/questions/4727983/jquery-autocomplete-need-to-initiate-only-when-a-special-character-is-typed
+
 * Formulaire admin:
 ** autocomplétion
 http://django-haystack.readthedocs.org/en/v1.2.7/autocomplete.html
@@ -35,3 +37,4 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 - deepzoom generation: normalize sizes to square + pow(2)
 - pass query string to pivot from navbar
 - integrate into base.html
+- integrate deepzoom generation
