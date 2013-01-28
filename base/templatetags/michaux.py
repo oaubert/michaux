@@ -16,9 +16,10 @@ def autolink(source):
     #NNN -> link to work
     facet value -> link to facetted search
     """
-    # FIXME: use correct reverse function
-    source = re.sub('#(\d+)', r'<a href="/base/work/\g<1>">\g<0></a>', source)
-    source = re.sub('(MP|KC)\s(\d+)', r'<a href="/base/work/?q=\g<1>%20\g<2>">\g<0></a>', source)
+    source = re.sub('#(\d+)', (lambda m: '<a href="%s">%s</a>' % (reverse('base.views.work', kwargs={'cote': m.group(1)}),
+                                                                  m.group(0))), source)
+    gridbase = reverse('base.views.works')
+    source = re.sub('(MP|KC)\s?(\d+)', r'<a href="%s?q=\g<1>%%20\g<2>">\g<0></a>' % gridbase, source, flags=re.IGNORECASE)
     return mark_safe(source)
 
 @register.filter
