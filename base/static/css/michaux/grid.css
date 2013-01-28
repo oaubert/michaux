@@ -194,12 +194,6 @@ div.facetbox {
     height: 1.2em;
 }
 
-.facetcount, .facetitemcount {
-    color: #a8a9aa;
-    position: absolute;
-    right: 32px;
-}
-
 .facetcontrols {
     text-align: right;
 }
@@ -210,12 +204,36 @@ div.facetbox ul {
     list-style: none;
 }
 
+div.facetbox li {
+    width: 100%;
+    position: relative;
+}
+
+div.facetbox li:hover {
+    background-color: #dddddd;
+}
+
 a.active-facet {
     text-decoration: none;
     background: #fff url(../../icons/reset.png) no-repeat center center;
     width: 8px;
     position: absolute;
-    left: 8px;
+    left: -10px;
+}
+
+.facetitemlabel {
+    text-decoration: none;
+    color: black;
+}
+
+.facetcount, .facetitemcount {
+    color: #a8a9aa;
+    position: absolute;
+    right: 4px;
+}
+
+.facetcount {
+    right: 40px;
 }
 
 #creationHistogram {
