@@ -139,14 +139,6 @@ jQuery(document).ready(
                                    $(this).next().slideToggle("fast");
                                });
 
-        michaux.openFacets = function () {
-                 $("div.facetbox ul").show("fast");
-        };
-
-        michaux.closeFacets = function () {
-                 $("div.facetbox ul").hide("fast");
-        };
-
         michaux.resetFilter = function () {
             document.location.search = "";
         };
