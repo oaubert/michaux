@@ -22,8 +22,8 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
 {% endblock %}
 
-{% block header %}<h1>{% with total=sqs|length %}{{ total }} œuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
-    <div id="zoom"><div id="zoomslider"></div></div>
+{% block header %}
+<div id="zoom"><div id="zoomslider"></div></div>
 {% endblock %}
 
 {% block margin %}
