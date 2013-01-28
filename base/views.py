@@ -97,7 +97,20 @@ def works(request, *p, **kw):
         }, context_instance=RequestContext(request))
 
 @login_required
-def work(request, cote=None, type_=None, **kw):
+def work(request, cote=None, **kw):
+    w = get_object_or_404(Work, pk=cote)
+    if w.master is not None:
+        # Redirect to master
+        # FIXME: use a correct reverse call here
+        return HttpResponseRedirect(str(w.master.cote))
+    return render_to_response('work.html', {
+            'work': w,
+            'meta': Work._meta,
+            'tagform': EditTagsForm(instance=w)
+            }, context_instance=RequestContext(request))
+
+@login_required
+def workextended(request, cote=None, type_=None, **kw):
     w = get_object_or_404(Work, pk=cote)
     if w.master is not None:
         # Redirect to master
