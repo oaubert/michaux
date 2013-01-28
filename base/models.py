@@ -92,6 +92,10 @@ class Work(models.Model):
                                  help_text=_("Technique utilisée"),
                                  max_length=255)
 
+    note_technique = models.CharField(_("notes sur la technique"),
+                                      help_text=_("Notes sur la technique utilisée"),
+                                      max_length=255, blank=True)
+
     # support : choix parmi une énumération extensible (papier, toile, cartoil, papier toilé, japon, etc) - type générique
     support = models.CharField(_("support"),
                                help_text=_("Support utilisé, de type générique: papier, toile, cartoil, papier toilé, etc"),
