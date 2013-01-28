@@ -1,10 +1,14 @@
+#branding h1 {
+    color: #ccc;
+}
+
 #header {
     height: 6em;
 }
 
 #header a:link, #header a:visited, #header a:hover {
     text-decoration: none;
-    color: #33c;
+    color: #888;
 }
 
 #content {
