@@ -122,7 +122,7 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle"><span id="histogramRange">{{ date_range.creation_date_start__min }} - {{ date_range.creation_date_start__max }}</span> ({{ facets.fields.creation_date_start|length }})</p>
+            <p class="facettitle"><span id="histogramRange">{{ date_range.creation_date_start__min }} - {{ date_range.creation_date_start__max }}</span> ({{ facets.fields.creation_date_start|length }}) {% if "creation_date_start__range" in current_url %}<a href="{{ current_url|clear_date_range }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}</p>
             <div data-min="{{ date_range.creation_date_start__min }}" data-max="{{ date_range.creation_date_start__max }}" id="creationHistogram"></div>
           </div>
 
