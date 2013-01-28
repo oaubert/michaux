@@ -163,7 +163,5 @@ def pivotimage(request, cote=None, **kw):
                               context_instance = RequestContext(request))
 
 def pivotdzimage(request, cote=None, level=None, name=None, **kw):
-    if cote == '33':
-        print "IMAGE ", cote, level, name
     w = get_object_or_404(Work, pk=cote)
     return HttpResponseRedirect(str(w.thumbnail.url) if w.thumbnail else '/static/unknown_thumbnail.png')
