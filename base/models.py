@@ -481,14 +481,17 @@ class Exhibition(models.Model):
                              max_length=512,
                              blank=True)
     city = models.CharField(_("ville"),
-                             help_text=_("Ville"),
-                             max_length=255)
+                            help_text=_("Ville"),
+                            max_length=255,
+                            blank=True)
     country = models.CharField(_("pays"),
-                             help_text=_("Pays"),
-                             max_length=255)
+                               help_text=_("Pays"),
+                               max_length=255,
+                               blank=True)
 
     start_year = models.IntegerField(_("Année"),
-                                     help_text=_("Année de début"))
+                                     help_text=_("Année de début"),
+                                     blank=True)
     start_month = models.IntegerField(_("Mois"),
                                       help_text=_("Mois de début - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu’on ne dispose pas de cette information. On ne prendra alors en compte que l’année - qui sera toujours spécifiée]"),
                                       blank=True, null=True)
@@ -506,15 +509,18 @@ class Exhibition(models.Model):
                                     blank=True, null=True)
 
     curator = models.CharField(_("Commissaire"),
-                             help_text=_("Commissaire d'exposition"),
-                             max_length=512)
+                               help_text=_("Commissaire d'exposition"),
+                               max_length=512,
+                               blank=True)
 
     catalogue = models.ForeignKey(BibliographyReference,
-                                  verbose_name=_("catalogue d'exposition"))
+                                  verbose_name=_("catalogue d'exposition"),
+                                  null=True)
 
     original = models.ForeignKey('self',
                                  verbose_name=_("exposition initiale"),
-                                 help_text=_("Exposition initiale (en cas de reprise)"))
+                                 help_text=_("Exposition initiale (en cas de reprise)"),
+                                 null=True)
     comment = models.TextField(_("commentaire"),
                                help_text=_("Commentaire : texte libre, pouvant être affiché au public"),
                                blank=True)
@@ -536,12 +542,15 @@ class ExhibitionInstance(models.Model):
                                  blank=True)
 
     illustration = models.BooleanField(_("illustration"),
-                                       help_text=_("Coché si une illustration était disponible dans le catalogue de l’exposition"))
+                                       help_text=_("Coché si une illustration était disponible dans le catalogue de l’exposition"),
+                                       blank=True)
 
-    illustration_description = models.TextField(_("description de l'illustration"))
+    illustration_description = models.TextField(_("description de l'illustration"),
+                                                blank=True)
 
     note = models.TextField(_("note"),
-                            help_text=_("Note (privée)"))
+                            help_text=_("Note (privée)"),
+                            blank=True)
 
 class Event(models.Model):
     class Meta:
@@ -579,23 +588,25 @@ class Owner(models.Model):
         verbose_name = _("propriétaire")
 
     firstname = models.CharField(_("prénom"),
-                              help_text=_("Prénom"),
-                              max_length=255,
-                              blank=False)
+                                 help_text=_("Prénom"),
+                                 max_length=255,
+                                 blank=False)
     name = models.CharField(_("nom"),
-                              help_text=_("Nom"),
-                              max_length=255,
-                              blank=False)
+                            help_text=_("Nom"),
+                            max_length=255,
+                            blank=False)
     address = models.CharField(_("adresse"),
-                             help_text=_("Adresse de l'exposition"),
-                             max_length=512,
-                             blank=True)
+                               help_text=_("Adresse de l'exposition"),
+                               max_length=512,
+                               blank=True)
     city = models.CharField(_("ville"),
-                             help_text=_("Ville"),
-                             max_length=255)
+                            help_text=_("Ville"),
+                            max_length=255,
+                            blank=True)
     country = models.CharField(_("pays"),
-                             help_text=_("Pays"),
-                             max_length=255)
+                               help_text=_("Pays"),
+                               max_length=255,
+                               blank=True)
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
@@ -610,7 +621,8 @@ class Acquisition(models.Model):
     private = models.BooleanField(_("private collection"))
     owner = models.ForeignKey(Owner,
                               verbose_name=_("propriétaire"))
-    date = models.DateField(_("date d'acquisition"))
+    date = models.DateField(_("date d'acquisition"),
+                            blank=True)
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
