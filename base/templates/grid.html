@@ -23,15 +23,10 @@
 {% endblock %}
 
 {% block header %}<h1>{% with total=sqs|length %}{{ total }} œuvre{{ total|pluralize }}{% if query_string %} correspondant à "{{ query_string }}"{% endif %}{% endwith %}</h1>
-    <div>{% if selected_facets %}| {% for facet in selected_facets %} {{ facet }} |{% endfor %}{% endif %}</div>
     <div id="zoom"><div id="zoomslider"></div></div>
 {% endblock %}
 
 {% block margin %}
-        {% with total=sqs|length %}
-        <p>{{ total }} œuvre{{ total|pluralize }} sélectionnée{{ total|pluralize }}</p>
-        {% endwith %}
-
         <div class="pagination">
           <span class="step-links">
             {% if page.has_previous %}
@@ -47,7 +42,7 @@
         <form>
           <ul>
 
-            <li><label for="filter">Filtre</label><input id="filter" type="text" name="q" value="{{ query_string }}" />
+            <li><input id="filter" type="text" name="q" value="{{ query_string }}" />
               <input id="submitbutton" type="submit" value="Filtrer" />
               <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
         </form>
