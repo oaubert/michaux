@@ -11,13 +11,13 @@
     <div id="home">
       {% block home %}
       <ul class="navbar">
-        <li><a href="/base/work/">Accueil</a></li>
+        <li><a id="menu_grid" href="/base/work/">Accueil</a></li>
 {% if user.is_active and user.is_staff %}
-        <li><a href="/admin/base/work/">Admin</a></li>
-        <li><a href="/base/pivot">Pivot</a></li>
+        <li><a id="menu_admin" href="/admin/base/work/">Admin</a></li>
+        <li><a id="menu_pivot" href="/base/pivot">Pivot</a></li>
         <li><a href="/base/reindex">Reindex</a></li>
 {% endif %}
-        <li><a title="Connecté en tant que {{ user }}" href="/accounts/logout">Logout</a></li>
+        <li><a id="menu_logout" title="Connecté en tant que {{ user }}" href="/accounts/logout">Logout</a></li>
       </ul>
       {% endblock %}
     </div>
