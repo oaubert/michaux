@@ -143,6 +143,7 @@ jQuery(document).ready(
                                      $('body').append(lightbox);
                                  }
                                  // AJAX callback to insert the lightbox_info
+                                 // FIXME: hardcoded URL. Should fix this.
                                  console.log('/base/work/' + cote + '/info');
                                  $.get(cote + '/info', function (data) {
                                            $('#lightbox_info').html(data);
