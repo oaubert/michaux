@@ -5,6 +5,7 @@ from haystack import site
 class WorkIndex(indexes.RealTimeSearchIndex):
     text = indexes.CharField(document=True, use_template=True)
     tags = indexes.MultiValueField(null=True, faceted=True)
+    status = indexes.CharField(model_attr='status', null=True, faceted=True)
     creator = indexes.CharField(model_attr='creator', faceted=True)
     creation_date_start = indexes.IntegerField(model_attr='creation_date_start', faceted=True, null=True)
     creation_date_end = indexes.IntegerField(model_attr='creation_date_end', faceted=True, null=True)

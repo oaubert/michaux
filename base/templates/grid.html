@@ -67,6 +67,17 @@
           </div>
 
           <div class="facetbox">
+            <p class="facettitle">Statut ({{ facets.fields.status|length }})</p>
+            <ul>
+            {% for status in facets.fields.status %}
+            <li><a href="{{ current_url }}&amp;f=status_exact:{{ status.0|urlencode }}">{{ status.0 }}</a> ({{ status.1 }})
+              {% if status.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:status }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+          </div>
+
+          <div class="facetbox">
             <p class="facettitle">Technique ({{ facets.fields.medium|length }})</p>
             <ul>
             {% for medium in facets.fields.medium|slice:":50" %}
