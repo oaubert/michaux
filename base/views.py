@@ -1,4 +1,3 @@
-from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 import django.core.management
@@ -7,7 +6,6 @@ from django.db.models import Min, Max
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from coop_tag.settings import TAGGER_CLOUD_MAX, TAGGER_CLOUD_MIN
 from haystack.query import SearchQuerySet
 from .models import Work
 from .forms import EditTagsForm
@@ -21,7 +19,6 @@ def works(request, *p, **kw):
     query_string = ""
     basesqs = SearchQuerySet()
 
-    axis = request.GET.get('axis', "")
     query_string = request.GET.get('q', "").strip()
     if query_string:
         sqs = basesqs.auto_query(query_string)
@@ -43,25 +40,9 @@ def works(request, *p, **kw):
                 else:
                     sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
-    sqs = sqs.order_by(axis or 'creation_date_start')
+    sqs = sqs.order_by('creation_date_start')
 
-    def get_weight_fun(t_min, t_max, f_min, f_max):
-        def weight_fun(f_i, t_min=t_min, t_max=t_max, f_min=f_min, f_max=f_max):
-            # Prevent a division by zero here, found to occur under some
-            # pathological but nevertheless actually occurring circumstances.
-            if f_max == f_min:
-                mult_fac = 1.0
-            else:
-                mult_fac = float(t_max - t_min) / float(f_max - f_min)
-
-            return t_max - (f_max - f_i) * mult_fac
-        return weight_fun
-
-    counter = Counter(tag for w in sqs.all() for tag in w.object.tags.all())
-    if len(counter):
-        weight_fun = get_weight_fun(TAGGER_CLOUD_MIN, TAGGER_CLOUD_MAX, min(counter.itervalues()), max(counter.itervalues()))
-        for tag, c in counter.iteritems():
-            tag.weight = weight_fun(c)
+    # FIXME: maybe cache this information?
     date_range = Work.objects.all().aggregate(Min('creation_date_start'), Max('creation_date_start'))
 
     paginator = Paginator(sqs.all(), 100)
@@ -84,13 +65,11 @@ def works(request, *p, **kw):
     return render_to_response('grid.html', {
         'query_string': query_string,
         'meta': Work._meta,
-        'tagcloud_data': counter.keys(),
         'sqs': sqs,
         'facets': sqs.facet_counts(),
         'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('f') ],
         'current_url': current,
         'date_range': date_range,
-        'axis': axis,
         'page': page,
         }, context_instance=RequestContext(request))
 
