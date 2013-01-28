@@ -176,20 +176,6 @@ jQuery(document).ready(
             document.location.search = "";
         };
 
-        michaux.setGroupAxis = function () {
-            var f = $("#grouper :selected").attr('value');
-            var sep = '&';
-            if (! document.location.search)
-                sep = "";
-
-            if (document.location.search.search(/\baxis=/) > 0) {
-                // There is already an axis. Replace its value
-                document.location.search = document.location.search.replace(/axis=\w*/, "axis=" + f);
-            } else {
-                document.location.search = document.location.search + sep + 'axis=' + f;
-            }
-        };
-
         michaux.getSelection = function () {
             return $("div.work.selected").map( function () { $(this).attr('data-cote'); } );
         };

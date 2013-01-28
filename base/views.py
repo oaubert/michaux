@@ -1,4 +1,3 @@
-from itertools import groupby
 from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -93,7 +92,6 @@ def works(request, *p, **kw):
         'date_range': date_range,
         'axis': axis,
         'page': page,
-        'groups': [ (m, list(e)) for (m, e) in groupby(sorted(sqs, key=lambda w: getattr(w, axis)), lambda w: getattr(w, axis)) ] if axis else [],
         }, context_instance=RequestContext(request))
 
 @login_required
