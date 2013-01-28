@@ -454,6 +454,10 @@ class BibliographyReference(models.Model):
                             blank=True)
 
 class Exhibition(models.Model):
+    class Meta:
+        verbose_name_plural = _("expositions")
+        verbose_name = _("exposition")
+
     abbreviation  = models.CharField(_("abréviation"),
                                      help_text=_("Sous la forme date (nombre entier, année) + nom du lieu d’exposition (texte libre)"),
                                      max_length=255,
@@ -540,6 +544,9 @@ class ExhibitionInstance(models.Model):
                             help_text=_("Note (privée)"))
 
 class Event(models.Model):
+    class Meta:
+        verbose_name = _("événement")
+
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))
     date = models.DateField(_("date"))
@@ -550,6 +557,9 @@ class Event(models.Model):
     description = models.TextField(_("description"))
 
 class Reproduction(models.Model):
+    class Meta:
+        verbose_name = _("reproduction")
+
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))
     reference = models.ForeignKey(BibliographyReference,
@@ -565,6 +575,9 @@ class Reproduction(models.Model):
                                blank=True)
 
 class Owner(models.Model):
+    class Meta:
+        verbose_name = _("propriétaire")
+
     firstname = models.CharField(_("prénom"),
                               help_text=_("Prénom"),
                               max_length=255,
