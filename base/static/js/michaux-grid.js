@@ -140,6 +140,18 @@ jQuery(document).ready(
                       $('#content').css("padding-right", "200px");
                       $('#info_panel').html(navbar() + data);
                       $('#info_panel').show('fast');
+                      $("[rel=lightbox]").colorbox( {
+                                                        preloading: false,
+                                                        opacity: 0.01,
+                                                        photo: true,
+                                                        width: $(window).width() - 200,
+                                                        height: document.body.offsetHeight - 50,
+                                                        maxWidth: $(window).width() - 250,
+                                                        maxHeight: document.body.offsetHeight - 50,
+                                                        fixed: true,
+                                                        onOpen: function () { console.log($(window).height(), document.body.offsetHeight); },
+                                                        onComplete: function() { $('.cboxPhoto').wheelzoom(); }
+                                                    });
                   });
         }
 
