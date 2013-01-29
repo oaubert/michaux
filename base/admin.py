@@ -86,7 +86,7 @@ def export_model_as_csv(modeladmin, request, queryset):
         writer.writerow(csv_line_values)
 
     return response
-export_model_as_csv.short_description = _('Export to CSV')
+export_model_as_csv.short_description = _('Exporter au format CSV')
 
 class WorkAdmin(admin.ModelAdmin):
 
@@ -131,3 +131,61 @@ class WorkAdmin(admin.ModelAdmin):
         obj.save()
 
 admin.site.register(Work, WorkAdmin)
+
+class ExhibitionAdmin(admin.ModelAdmin):
+    model = Exhibition
+    verbose_name = _("exposition")
+    verbose_name_plural = _("expositions")
+    extra = 1
+    formfield_overrides = FORMFIELD_OVERRIDES
+
+    list_display = ('abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator', 'catalogue')
+    list_editable = ('title', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
+    list_display_links = ('abbreviation', )
+    search_fields = [ 'abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator' ]
+    list_filter = ( 'city', 'country', 'start_year', 'curator' )
+    save_on_top = True
+
+    actions = ( export_model_as_csv, )
+    exportable_fields = ('abbreviation', 'title', 'location', 'nature', 'address', 'city', 'country', 'start_year', 'start_month', 'start_day', 'end_year', 'end_month', 'end_day', 'curator', 'catalogue', 'original', 'comment', 'note')
+
+
+admin.site.register(Exhibition, ExhibitionAdmin)
+
+class BibliographyReferenceAdmin(admin.ModelAdmin):
+    model = BibliographyReference
+    verbose_name = _("référence bibliographique")
+    verbose_name_plural = _("références bibliographiques")
+    extra = 1
+    formfield_overrides = FORMFIELD_OVERRIDES
+    save_on_top = True
+
+    list_display = ('abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number', 'comment', 'note')
+    list_editable = ('nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number')
+    list_display_links = ('abbreviation', )
+    search_fields = [ 'abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number', 'comment', 'note' ]
+    list_filter = ( 'nature', 'creator', 'city' )
+    save_on_top = True
+
+    actions = ( export_model_as_csv, )
+    exportable_fields = ('abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number', 'comment', 'note')
+
+admin.site.register(BibliographyReference, BibliographyReferenceAdmin)
+
+class OwnerAdmin(admin.ModelAdmin):
+    model = Owner
+    verbose_name = _("propriétaire")
+    extra = 1
+    formfield_overrides = FORMFIELD_OVERRIDES
+    save_on_top = True
+
+    list_display = ('firstname', 'name', 'address', 'city', 'country', 'note')
+    list_editable = ('address', 'city', 'country', 'note')
+    list_display_links = ( 'firstname', 'name' )
+    search_fields = [ 'firstname', 'name', 'address', 'city', 'country', 'note' ]
+    list_filter = ( 'city', 'country' )
+    save_on_top = True
+    actions = ( export_model_as_csv, )
+    exportable_fields = ('firstname', 'name', 'address', 'city', 'country', 'note')
+
+admin.site.register(Owner, OwnerAdmin)
