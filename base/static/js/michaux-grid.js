@@ -95,27 +95,30 @@ jQuery(document).ready(
 
         document.datechart = draw_barchart("#creationHistogram",
                                            "creation_date_start",
-                                           $("a[data-year]").map( function() { return { "value": parseInt($(this).attr('data-year')),
-                                                                                        "count": parseInt($(this).attr('data-count')) };
-                                                                             }),
+                                           $("#creationHistogram [data-year]").map(
+                                               function() { return { "value": parseInt($(this).attr('data-year')),
+                                                                     "count": parseInt($(this).attr('data-count')) };
+                                                          }),
                                            parseInt($("#creationHistogram").attr("data-min")),
                                            parseInt($("#creationHistogram").attr("data-max")),
                                            "#histogramRange");
 
         document.heightchart = draw_barchart("#heightHistogram",
                                              "height",
-                                             $("#heightHistogram [data-height]").map( function() { return { "value": parseInt($(this).attr('data-height')),
-                                                                                                            "count": parseInt($(this).attr('data-count')) };
-                                                                                                 }),
+                                             $("#heightHistogram [data-height]").map(
+                                                 function() { return { "value": parseInt($(this).attr('data-height')),
+                                                                       "count": parseInt($(this).attr('data-count')) };
+                                                            }),
                                              parseInt($("#heightHistogram").attr("data-min")),
                                              parseInt($("#heightHistogram").attr("data-max")),
                                              "#heightRange");
 
         document.widthchart = draw_barchart("#widthHistogram",
                                              "width",
-                                            $("#widthHistogram [data-width]").map( function() { return { "value": parseInt($(this).attr('data-width')),
-                                                                                                         "count": parseInt($(this).attr('data-count')) };
-                                                                                              }),
+                                            $("#widthHistogram [data-width]").map(
+                                                function() { return { "value": parseInt($(this).attr('data-width')),
+                                                                      "count": parseInt($(this).attr('data-count')) };
+                                                           }),
                                             parseInt($("#widthHistogram").attr("data-min")),
                                             parseInt($("#widthHistogram").attr("data-max")),
                                             "#widthRange");

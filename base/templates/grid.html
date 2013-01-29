@@ -98,19 +98,12 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle">Création [début]  <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span></p>
-            <ul>
-            {% for date in facets.fields.creation_date_start %}
-            <li><a class="facetitemlabel" data-year="{{ date.0 }}" data-count="{{ date.1 }}" href="{{ current_url }}&amp;f=creation_date_start_exact:{{ date.0|urlencode }}">{{ date.0 }}</a> <span class="facetitemcount">{{ date.1 }}</span>
-              {% if date.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:date }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}
-            </li>
-            {% endfor %}
-            </ul>
-          </div>
-
-          <div class="facetbox">
-            <p class="facettitle"><span id="histogramRange">{{ range.creation_date_start.creation_date_start__min }} - {{ range.creation_date_start.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span> {% if "creation_date_start__range" in current_url %}<a href="{{ current_url|clear_range:'creation_date_start' }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}</p>
-            <div data-min="{{ range.creation_date_start.creation_date_start__min }}" data-max="{{ range.creation_date_start.creation_date_start__max }}" id="creationHistogram"></div>
+            <p class="facettitle">Création <span id="histogramRange">{{ range.creation_date_start.creation_date_start__min }} - {{ range.creation_date_start.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span> {% if "creation_date_start__range" in current_url %}<a href="{{ current_url|clear_range:'creation_date_start' }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}</p>
+            <div data-min="{{ range.creation_date_start.creation_date_start__min }}" data-max="{{ range.creation_date_start.creation_date_start__max }}" id="creationHistogram">
+              {% for h in facets.fields.creation_date_start %}
+              <span class="facetdata" data-year="{{ h.0 }}" data-count="{{ h.1 }}"></span>
+              {% endfor %}
+            </div>
           </div>
 
           <div class="facetbox">
