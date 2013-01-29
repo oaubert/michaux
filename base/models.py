@@ -399,9 +399,6 @@ class BibliographyReference(models.Model):
         verbose_name = _("référence bibliographique")
         verbose_name_plural = _("références bibliographiques")
 
-    work = models.ForeignKey(Work,
-                             verbose_name=_("Oeuvre"))
-
     nature = models.CharField(_("type de référence"),
                               help_text=_("catalogue, article de journal, monographie, livre, chapitre de livre..."),
                               max_length=255,
