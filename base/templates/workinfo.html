@@ -1,5 +1,5 @@
 {% load michaux %}
-        <ul class="workinfo">
+        <ul class="workinfo" data-cote="{{ work.cote }}">
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span></li>
           <li>Date de création: {% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
             {% if work.creation_date_start %}<a class="facetvalue" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
