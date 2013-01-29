@@ -230,7 +230,7 @@ class Work(models.Model):
     def __unicode__(self):
         d = {'printable_year': self.printable_year}
         d.update(self.__dict__)
-        return "#%(cote)d - %(technique)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
+        return u"#%(cote)d - %(technique)s sur %(support)s %(support_details)s (%(printable_year)s)" % d
 
     @staticmethod
     def import_worksheet(filename):
@@ -385,7 +385,7 @@ class Image(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return "%(nature)s (%(width)sx%(height)s) par %(photograph_name)s - %(note)s" % self.__dict__
+        return u"%(nature)s (%(width)sx%(height)s) par %(photograph_name)s - %(note)s" % self.__dict__
 
     @property
     def orientation(self):
@@ -395,6 +395,10 @@ class Image(models.Model):
             return "portrait"
 
 class BibliographyReference(models.Model):
+    class Meta:
+        verbose_name = _("référence bibliographique")
+        verbose_name_plural = _("références bibliographiques")
+
     work = models.ForeignKey(Work,
                              verbose_name=_("Oeuvre"))
 
@@ -426,7 +430,8 @@ class BibliographyReference(models.Model):
                                          max_length=255,
                                          blank=True)
     container_others = models.TextField(_("textes de"),
-                                        help_text=_("textes de [texte libre] : prénom - nom - titre du texte"))
+                                        help_text=_("textes de [texte libre] : prénom - nom - titre du texte"),
+                                        blank=True)
 
     editor = models.CharField(_("édition"),
                               help_text=_("Maison d'édition/lieu d'exposition"),
@@ -444,7 +449,7 @@ class BibliographyReference(models.Model):
                               blank=True)
 
     publication_date = models.DateField(_("date de publication"),
-                                        null=True)
+                                        blank=True, null=True)
     page_number = models.IntegerField(_("numéro de page"),
                                       help_text=_("numéro de page de l’article contenu"),
                                       blank=True, null=True)
@@ -455,6 +460,9 @@ class BibliographyReference(models.Model):
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
+
+    def __unicode__(self):
+        return u"Réf. bib. %(title)s (%(creator)s)" % self.__dict__
 
 class Exhibition(models.Model):
     class Meta:
@@ -518,12 +526,12 @@ class Exhibition(models.Model):
 
     catalogue = models.ForeignKey(BibliographyReference,
                                   verbose_name=_("catalogue d'exposition"),
-                                  null=True)
+                                  blank=True, null=True)
 
     original = models.ForeignKey('self',
                                  verbose_name=_("exposition initiale"),
                                  help_text=_("Exposition initiale (en cas de reprise)"),
-                                 null=True)
+                                 blank=True, null=True)
     comment = models.TextField(_("commentaire"),
                                help_text=_("Commentaire : texte libre, pouvant être affiché au public"),
                                blank=True)
@@ -531,7 +539,7 @@ class Exhibition(models.Model):
                             help_text=_("Notes (privées)"),
                             blank=True)
     def __unicode__(self):
-        return "Exposition %(abbreviation)s" % self.__dict__
+        return u"Exposition %(abbreviation)s" % self.__dict__
 
 class ExhibitionInstance(models.Model):
     work = models.ForeignKey(Work,
@@ -571,7 +579,7 @@ class Event(models.Model):
     description = models.TextField(_("description"))
 
     def __unicode__(self):
-        return "Événement %(nature)s - %(date)s" % self.__dict__
+        return u"Événement %(nature)s - %(date)s" % self.__dict__
 
 class Reproduction(models.Model):
     class Meta:
@@ -592,7 +600,7 @@ class Reproduction(models.Model):
                                blank=True)
 
     def __unicode__(self):
-        return "Reproduction de %(work)s" % self.__dict__
+        return u"Reproduction de %(work)s" % self.__dict__
 
 class Owner(models.Model):
     class Meta:
@@ -623,7 +631,7 @@ class Owner(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return "%(firstname)s %(name)s (%(city)s %(country)s)" % self.__dict__
+        return u"%(firstname)s %(name)s (%(city)s %(country)s)" % self.__dict__
 
 class Acquisition(models.Model):
     work = models.ForeignKey(Work,
