@@ -1,7 +1,6 @@
 from django.forms import ModelForm
 from .models import Work, Image
-from .widgets import AdminImageWidget
-from coop_tag.widgets import TagAutoSuggest
+from .widgets import AdminImageWidget, TagAutoSuggest
 
 class ImageModelForm(ModelForm):
     class Meta:
