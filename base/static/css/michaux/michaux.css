@@ -22,7 +22,7 @@ body {
 
 #content {
     margin-left: 220px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 #margin {
@@ -33,6 +33,7 @@ body {
     margin-right: 20px;
     padding: 2px;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 200px;
     z-index: 2;
     opacity: .9;
