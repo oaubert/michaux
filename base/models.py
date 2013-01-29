@@ -573,7 +573,8 @@ class Event(models.Model):
                               help_text=_("Type d’événement (vente publique, cession privée, restauration...) - énumération extensible"),
                               max_length=64,
                               blank=True)
-    description = models.TextField(_("description"))
+    description = models.TextField(_("description"),
+                                   blank=True)
 
     def __unicode__(self):
         return u"Événement %(nature)s - %(date)s" % self.__dict__
