@@ -530,6 +530,8 @@ class Exhibition(models.Model):
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
+    def __unicode__(self):
+        return "Exposition %(abbreviation)s" % self.__dict__
 
 class ExhibitionInstance(models.Model):
     work = models.ForeignKey(Work,
@@ -568,6 +570,9 @@ class Event(models.Model):
                               blank=True)
     description = models.TextField(_("description"))
 
+    def __unicode__(self):
+        return "Événement %(nature)s - %(date)s" % self.__dict__
+
 class Reproduction(models.Model):
     class Meta:
         verbose_name = _("reproduction")
@@ -585,6 +590,9 @@ class Reproduction(models.Model):
     comment = models.TextField(_("commentaire"),
                                help_text=_("commentaire : texte libre, pouvant être affiché au public"),
                                blank=True)
+
+    def __unicode__(self):
+        return "Reproduction de %(work)s" % self.__dict__
 
 class Owner(models.Model):
     class Meta:
@@ -613,6 +621,9 @@ class Owner(models.Model):
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
+
+    def __unicode__(self):
+        return "%(firstname)s %(name)s (%(city)s %(country)s)" % self.__dict__
 
 class Acquisition(models.Model):
     work = models.ForeignKey(Work,
