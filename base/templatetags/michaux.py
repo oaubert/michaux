@@ -31,10 +31,10 @@ def url_remove_facet(url, facet_value):
 
 @register.filter
 @stringfilter
-def clear_date_range(url):
+def clear_range(url, field):
     """
     """
-    return re.sub('(f=creation_date_start__range:[\d-]+(&|$))', "", url)
+    return re.sub('(f=%s__range:[\d-]+(&|$))' % field, "", url)
 
 @register.filter
 @stringfilter

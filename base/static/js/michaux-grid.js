@@ -2,102 +2,123 @@ var michaux = {};
 
 jQuery(document).ready(
     function($) {
-        var barchart = function () {
-            // Build histogram
-            var data = $("a[data-year]").map( function() { return { "year": parseInt($(this).attr('data-year')),
-                                                                    "count": parseInt($(this).attr('data-count')) };
-                                                         });
-            var minYear = parseInt($("#creationHistogram").attr("data-min"));
-            var maxYear = parseInt($("#creationHistogram").attr("data-max"));
-            var maxCount = d3.max(data, function(d) { return d.count; });
+            function draw_barchart (selector, fieldname, data, minValue, maxValue, titleselector) {
+                var maxCount = d3.max(data, function(d) { return d.count; });
 
-            // add the canvas to the DOM
-            var width = $("#creationHistogram").width() - 16;
-            // FIXME: determine dynamically
-            var height = 120 - 30; // div height - title height
+                // add the canvas to the DOM
+                var width = $(selector).width() - 16;
+                // FIXME: determine dynamically
+                var height = 120 - 30; // div height - title height
 
-            var barchart = d3.select("#creationHistogram")
-                .append("svg:svg")
-                .attr("width", width)
-                .attr("height", height);
+                var barchart = d3.select(selector)
+                    .append("svg:svg")
+                    .attr("width", width)
+                    .attr("height", height);
 
-            var g = barchart.append("g")
-                .attr("transform", "scale(1, -1) translate(0, -" + height + ")");
+                var g = barchart.append("g")
+                    .attr("transform", "scale(1, -1) translate(0, -" + height + ")");
 
-            var barWidth = width / (maxYear - minYear);
+                var barWidth = Math.max(width / (maxValue - minValue), 2);
 
-            var x_scale = d3.scale.linear().domain([minYear, maxYear]).range([0, width - barWidth ]).interpolate(d3.interpolateRound).clamp(true);
-            var y_scale = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
+                var x_scale = d3.scale.linear().domain([minValue, maxValue]).range([0, width - barWidth ]).interpolate(d3.interpolateRound).clamp(true);
+                var y_scale = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
 
-            var brush = d3.svg.brush()
-                .x(x_scale)
-                .on("brush", function () {
-                        var b = brush.empty() ? x_scale.domain() : brush.extent();
-                        console.log(b);
-                        $("#histogramRange").text(Math.floor(b[0]) + " - " + Math.floor(b[1]));
+                var brush = d3.svg.brush()
+                    .x(x_scale)
+                    .on("brush", function () {
+                            var b = brush.empty() ? x_scale.domain() : brush.extent();
+                            $(titleselector).text(Math.floor(b[0]) + " - " + Math.floor(b[1]));
                     })
-                .on("brushend", function () {
-                        var sep = "&";
-                        var repl = "";
-                        if (! brush.empty()) {
-                            var b = brush.extent();
-                            var start = Math.floor(b[0]);
-                            var end = Math.floor(b[1]);
-                            repl = "f=creation_date_start__range:" + start + "-" + end;
-                        }
+                    .on("brushend", function () {
+                            var sep = "&";
+                            var repl = "";
+                            if (! brush.empty()) {
+                                var b = brush.extent();
+                                var start = Math.floor(b[0]);
+                                var end = Math.floor(b[1]);
+                                repl = "f=" + fieldname + "__range:" + start + "-" + end;
+                            }
 
-                        if (! document.location.search)
-                            sep = "";
-                        var re = /f=creation_date_start__range:\d+-\d+/;
-                        m = document.location.search.match(re);
-                        if (m !== null) {
-                            // There is already a date facet. Replace its value, or cancel it
-                            document.location.search = document.location.search.replace(re, repl);
-                        } else {
+                            if (! document.location.search)
+                                sep = "";
+                            var re = new RegExp("f=" + fieldname + "__range:\d+-\d+");
+                            m = document.location.search.match(re);
+                            if (m !== null) {
+                                // There is already a date facet. Replace its value, or cancel it
+                                document.location.search = document.location.search.replace(re, repl);
+                            } else {
                             document.location.search = document.location.search + sep + repl;
-                        }
-                    });
+                            }
+                        });
 
-            g.selectAll("line")
-                .data(y_scale.ticks(5))
-                .enter().append("line")
-                .attr("x1", 0)
-                .attr("x2", width)
-                .attr("y1", y_scale)
-                .attr("y2", y_scale)
-                .style("stroke", "#ccc");
+                g.selectAll("line")
+                    .data(y_scale.ticks(5))
+                    .enter().append("line")
+                    .attr("x1", 0)
+                    .attr("x2", width)
+                    .attr("y1", y_scale)
+                    .attr("y2", y_scale)
+                    .style("stroke", "#ccc");
 
-            var g_brush = g.append("g")
-                .attr("class", "x brush")
-                .call(brush)
-                .selectAll("rect")
-                .attr("y", 0)
-                .attr("height", height);
+                var g_brush = g.append("g")
+                    .attr("class", "x brush")
+                    .call(brush)
+                    .selectAll("rect")
+                    .attr("y", 0)
+                    .attr("height", height);
 
-            g.selectAll(".bar")
-                .data(data)
-                .enter()
-                .append("svg:rect")
-                .attr("class", "bar")
-                .attr("x", function(d, index) { return x_scale(d.year); })
-                .attr("y", function(d) { return 0; })
-                .attr("svg:title", function(d) { return d.year + ' (' + d.count + ')'; })
-                .attr("height", function(d) { return y_scale(d.count); })
-                .attr("width", barWidth)
-                .on("mouseup", function (d) {
-                    });
+                g.selectAll(".bar")
+                    .data(data)
+                    .enter()
+                    .append("svg:rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d, index) { return x_scale(d.value); })
+                    .attr("y", function(d) { return 0; })
+                    .attr("svg:title", function(d) { return d.value + ' (' + d.count + ')'; })
+                    .attr("height", function(d) { return y_scale(d.count); })
+                    .attr("width", barWidth)
+                    .on("mouseup", function (d) {
+                        });
 
 
-            barchart.x = x_scale;
-            barchart.y = y_scale;
+                barchart.x = x_scale;
+                barchart.y = y_scale;
 
-            $('svg rect.bar').tipsy({
-                                        gravity: 'sw',
-                                        html: false
-                                    });
-            return d3.rebind(barchart, brush, "on");
-        }();
-        document.barchart = barchart;
+                $('svg rect.bar').tipsy({
+                                            gravity: 'sw',
+                                            html: false
+                                        });
+                d3.rebind(barchart, brush, "on");
+                return barchart;
+            };
+
+
+        document.datechart = draw_barchart("#creationHistogram",
+                                           "creation_date_start",
+                                           $("a[data-year]").map( function() { return { "value": parseInt($(this).attr('data-year')),
+                                                                                        "count": parseInt($(this).attr('data-count')) };
+                                                                             }),
+                                           parseInt($("#creationHistogram").attr("data-min")),
+                                           parseInt($("#creationHistogram").attr("data-max")),
+                                           "#histogramRange");
+
+        document.heightchart = draw_barchart("#heightHistogram",
+                                             "height",
+                                             $("#heightHistogram [data-height]").map( function() { return { "value": parseInt($(this).attr('data-height')),
+                                                                                                            "count": parseInt($(this).attr('data-count')) };
+                                                                                                 }),
+                                             parseInt($("#heightHistogram").attr("data-min")),
+                                             parseInt($("#heightHistogram").attr("data-max")),
+                                             "#heightRange");
+
+        document.widthchart = draw_barchart("#widthHistogram",
+                                             "width",
+                                            $("#widthHistogram [data-width]").map( function() { return { "value": parseInt($(this).attr('data-width')),
+                                                                                                         "count": parseInt($(this).attr('data-count')) };
+                                                                                              }),
+                                            parseInt($("#widthHistogram").attr("data-min")),
+                                            parseInt($("#widthHistogram").attr("data-max")),
+                                            "#widthRange");
 
         $( "#zoomslider" ).slider({
                                       range: false,

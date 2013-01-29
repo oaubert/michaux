@@ -109,8 +109,26 @@
           </div>
 
           <div class="facetbox">
-            <p class="facettitle"><span id="histogramRange">{{ date_range.creation_date_start__min }} - {{ date_range.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span> {% if "creation_date_start__range" in current_url %}<a href="{{ current_url|clear_date_range }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}</p>
-            <div data-min="{{ date_range.creation_date_start__min }}" data-max="{{ date_range.creation_date_start__max }}" id="creationHistogram"></div>
+            <p class="facettitle"><span id="histogramRange">{{ range.creation_date_start.creation_date_start__min }} - {{ range.creation_date_start.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span> {% if "creation_date_start__range" in current_url %}<a href="{{ current_url|clear_range:'creation_date_start' }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}</p>
+            <div data-min="{{ range.creation_date_start.creation_date_start__min }}" data-max="{{ range.creation_date_start.creation_date_start__max }}" id="creationHistogram"></div>
+          </div>
+
+          <div class="facetbox">
+            <p class="facettitle">Hauteur <span id="heightRange">{{ range.height.height__min }} - {{ range.height.height__max }}</span> <span class="facetcount">{{ facets.fields.height|length }}</span> {% if "height__range" in current_url %}<a href="{{ current_url|clear_range:'height' }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}</p>
+            <div data-min="{{ range.height.height__min }}" data-max="{{ range.height.height__max }}" id="heightHistogram">
+              {% for h in facets.fields.height %}
+              <span class="facetdata" data-height="{{ h.0 }}" data-count="{{ h.1 }}"></span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="facetbox">
+            <p class="facettitle">Largeur <span id="widthRange">{{ range.width.width__min }} - {{ range.width.width__max }}</span> <span class="facetcount">{{ facets.fields.width|length }}</span> {% if "width__range" in current_url %}<a href="{{ current_url|clear_range:'width' }}" class="active-facet">&nbsp;&nbsp;&nbsp;</a>{% endif %}</p>
+            <div data-min="{{ range.width.width__min }}" data-max="{{ range.width.width__max }}" id="widthHistogram">
+              {% for h in facets.fields.width %}
+              <span class="facetdata" data-width="{{ h.0 }}" data-count="{{ h.1 }}"></span>
+              {% endfor %}
+            </div>
           </div>
 
           <div class="facetbox">

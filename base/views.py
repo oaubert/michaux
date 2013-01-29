@@ -34,16 +34,19 @@ def works(request, *p, **kw):
         for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
             if value:
-                if field == 'creation_date_start__range':
+                if field in ('creation_date_start__range', 'height__range', 'width__range'):
                     b, e = value.split("-")
-                    sqs = sqs.filter(creation_date_start__range=[int(b), int(e)])
+                    args = { field: [int(b), int(e)] }
+                    sqs = sqs.filter(**args)
                 else:
                     sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
     sqs = sqs.order_by('creation_date_start')
 
     # FIXME: maybe cache this information?
-    date_range = Work.objects.all().aggregate(Min('creation_date_start'), Max('creation_date_start'))
+    range_ = {}
+    for i in ('creation_date_start', 'width', 'height'):
+        range_[i] = Work.objects.all().aggregate(Min(i), Max(i))
 
     paginator = Paginator(sqs.all(), 100)
 
@@ -69,7 +72,7 @@ def works(request, *p, **kw):
         'facets': sqs.facet_counts(),
         'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('f') ],
         'current_url': current,
-        'date_range': date_range,
+        'range': range_,
         'page': page,
         }, context_instance=RequestContext(request))
 

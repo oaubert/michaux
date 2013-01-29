@@ -209,6 +209,10 @@ a.active-facet {
     right: 40px;
 }
 
+.facetdata {
+    display: none;
+}
+
 #creationHistogram {
     margin-top: 1.3em;
 }
