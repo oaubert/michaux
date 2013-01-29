@@ -227,6 +227,9 @@ a.active-facet {
     top: 5px;
     right: 10px;
     width: 120px;
+    background-color: white;
+    z-index: 10;
+    opacity: .9;
 }
 
 #zoomslider {
