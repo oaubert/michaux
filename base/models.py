@@ -384,6 +384,9 @@ class Image(models.Model):
                             help_text=_("Notes"),
                             blank=True)
 
+    def __unicode__(self):
+        return "%(nature)s (%(width)sx%(height)s) par %(photograph_name)s - %(note)s" % self.__dict__
+
     @property
     def orientation(self):
         if self.width >= self.height:
