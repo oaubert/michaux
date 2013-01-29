@@ -145,3 +145,35 @@ def pivotimage(request, cote=None, **kw):
 def pivotdzimage(request, cote=None, level=None, name=None, **kw):
     w = get_object_or_404(Work, pk=cote)
     return HttpResponseRedirect(str(w.thumbnail.url) if w.thumbnail else '/static/unknown_thumbnail.png')
+
+def selection_tag(request):
+    # Add a tag. The tag name and the selected elements must be
+    # passed as 'name' and 'selection' parameters.
+    # The 'selection' is passed as a comma-separated list of cotes
+    name = request.REQUEST.get('name', None)
+    selection = request.REQUEST.get('selection', None)
+    if name is None or selection is None:
+        return HttpResponse(status=412, content="Missing parameters")
+    # FIXME: handle errors:
+    items = [ Work.objects.get(pk=int(cote)) for cote in selection.split(',') ]
+    for i in items:
+        i.tags.add(name)
+        # FIXME: Handle errors ?
+    # FIXME: rebuild haystack index ?
+    return HttpResponse(status=204)
+
+def selection_untag(request):
+    # Remove a tag. The tag name and the selected elements must be
+    # passed as 'name' and 'selection' parameters.
+    # The 'selection' is passed as a comma-separated list of cotes
+    name = request.REQUEST.get('name', None)
+    selection = request.REQUEST.get('selection', None)
+    if name is None or selection is None:
+        return HttpResponse(status=412, content="Missing parameters")
+    # FIXME: handle errors:
+    items = [ Work.objects.get(pk=int(cote)) for cote in selection.split(',') ]
+    for i in items:
+        i.tags.remove(name)
+        # FIXME: Handle errors ?
+    # FIXME: rebuild haystack index ?
+    return HttpResponse(status=204)
