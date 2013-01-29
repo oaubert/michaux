@@ -46,7 +46,7 @@ ul.toolbar{
     position: absolute;
     top: 0;
     right: 0;
-    height: 52px;
+    height: 20px;
     margin: 0px;
     padding: 0px;
     background-color: #fff;
@@ -66,8 +66,8 @@ ul.toolbar li {
 ul.toolbar li a {
     float: left;
     cursor: pointer;
-    width: 52px;
-    height: 52px;
+    width: 20px;
+    height: 20px;
     opacity: 0.6;
 }
 
@@ -75,11 +75,11 @@ ul.toolbar li a:hover{
     opacity: 1.0;
 }
 
-a.edit{
+a.edit {
     background:#fff url(../../icons/edit.png) no-repeat center center;
 }
 
-a.details{
+a.details {
     background:#fff url(../../icons/details.png) no-repeat center center;
 }
 
