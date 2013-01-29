@@ -27,8 +27,9 @@
 
 #edit-icon {
     position: fixed;
-    top: 0px;
-    left: 240px;
+    top: 20px;
+    left: 5px;
+}
 
 .worktitle {
     display: none;
