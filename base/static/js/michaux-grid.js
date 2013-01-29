@@ -110,19 +110,44 @@ jQuery(document).ready(
                                       }
                                       });
 
+        // Display infopanel about a work
+        // It can be given either a .vignette anchor or a div.work element
+        function display_infopanel(self) {
+            var work;
+            var vignette;
+            if (typeof self === "string" || typeof self === "number") {
+                work = $("[data-cote=" + self + "]");
+                vignette = $(work).find(".vignette");
+            } else if ($(self).hasClass("work")) {
+                vignette = $(self).find(".vignette");
+                work = self;
+            } else if ($(self).hasClass("vignette")) {
+                vignette = self;
+                work = $(self).parents("div.work");
+            }
+
+            //Get clicked link href
+            var image_href = $(vignette).attr("href");
+            var cote = $(work).attr('data-cote');
+            // AJAX callback to insert the lightbox_info
+            function navbar() {
+                var prev = $(work).prev().attr('data-cote');
+                var next = $(work).next().attr('data-cote');
+                return '<div id="infopanel_navbar"><a id="infopanel_prev" class="' + (prev === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + prev + ')"') + '>&nbsp;</a> | <a id="infopanel_next" class="' + (next === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + next + ')"') + '>&nbsp;</a> <a id="infopanel_close" href="javascript:michaux.hide_infopanel();">&nbsp;</a></div>';
+            }
+            // FIXME: hardcoded URL. Should fix this.
+            $.get(cote + '/info', function (data) {
+                      $('#content').css("padding-right", "200px");
+                      $('#info_panel').html(navbar() + data);
+                      $('#info_panel').show('fast');
+                  });
+        }
+
         // Homemade lightbox
         $('.vignette').click(function(e) {
                                  //prevent default action (hyperlink)
                                  e.preventDefault();
-                                 //Get clicked link href
-                                 var image_href = $(this).attr("href");
-                                 var cote = $(this).parents("div.work").attr('data-cote');
-                                 // AJAX callback to insert the lightbox_info
-                                 // FIXME: hardcoded URL. Should fix this.
-                                 $.get(cote + '/info', function (data) {
-                                           $('#info_panel').html(data);
-                                           $('#info_panel').show('fast');
-                                       });
+                                 michaux.display_infopanel(this);
                              });
         //Click anywhere on the page to get rid of lightbox window
         $('#lightbox').live('click', function() { //must use live, as the lightbox element is inserted into the DOM
@@ -138,6 +163,13 @@ jQuery(document).ready(
         $(".facettitle").click(function() {
                                    $(this).next().slideToggle("fast");
                                });
+
+        michaux.display_infopanel = display_infopanel;
+
+        michaux.hide_infopanel = function () {
+            $('#content').css("padding-right", "5px");
+            $('#info_panel').hide('fast');
+        };
 
         michaux.resetFilter = function () {
             document.location.search = "";

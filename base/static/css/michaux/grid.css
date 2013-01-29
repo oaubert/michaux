@@ -147,6 +147,33 @@ div.work.selected {
     box-shadow: 0 0 2px 2px #D7D9DA;
 }
 
+#infopanel_navbar {
+    width: 100%;
+    color: #537182;
+    position: relative;
+}
+
+#infopanel_navbar a {
+    padding: 0 12px 0 0;
+    text-decoration: none;
+}
+
+.disabled {
+    opacity: .3;
+}
+
+#infopanel_prev {
+    background: #fff url(../../icons/prev.png) no-repeat center center;
+}
+#infopanel_next {
+    background: #fff url(../../icons/next.png) no-repeat center center;
+}
+#infopanel_close {
+    background: #fff url(../../icons/close.png) no-repeat center center;
+    position: absolute;
+    right: 5px;
+}
+
 span.worktitle {
     font-size: 12px;
     font-weight: bold;
