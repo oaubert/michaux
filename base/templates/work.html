@@ -15,6 +15,7 @@
    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux-work.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.wheelzoom.js"></script>
 {{ tagform.media }}
 {% endblock %}
 
@@ -23,7 +24,7 @@
 
 {% block margin %}
         <h2>{{ work }}</h2>
-        <a id="edit-icon" href="{% url meta|admin_urlname:'change' work.cote %}"><img title="Editer la fiche" alt="Edit" src="{{ STATIC_URL }}icons/edit.png" /></a>
+        <a id="edit-icon" title="Editer la fiche" href="{% url meta|admin_urlname:'change' work.cote %}"><img alt="Edit" src="{{ STATIC_URL }}icons/edit.png" /></a>
 
         {% include "workinfo.html" with work=work %}
 
