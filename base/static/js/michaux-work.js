@@ -5,6 +5,9 @@ jQuery(document).ready(
         // Make tags clickable
         $(".as-selection-item").contents(':not(a)').click( function () { document.location = "/base/work?f=tags_exact:" + encodeURIComponent($(this).text()); });
 
+        // Add wheelzoom to image
+        $(".display").wheelzoom();
+
         michaux.tag_selection = function (tagname) {
             var cote = $(".workinfo").attr('data-cote');
             console.log("Tagging ", cote, " with ", tagname);
