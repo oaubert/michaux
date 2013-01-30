@@ -171,7 +171,7 @@ div.facetbox.barchartbox {
 .facettitle {
     margin: 0;
     background-color: #fff;
-    position: absolute;
+    position: relative;
     width: 192px;
     height: 1.2em;
     z-index: 1;
@@ -227,6 +227,10 @@ a.active-facet {
     width: 8px;
     position: absolute;
     left: -10px;
+}
+
+.barchartbox .active-facet {
+    left: 166px;
 }
 
 .facetitemlabel {
