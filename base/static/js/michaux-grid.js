@@ -4,11 +4,14 @@ jQuery(document).ready(
     function($) {
             function draw_barchart (selector, fieldname, data, minValue, maxValue, titleselector) {
                 var maxCount = d3.max(data, function(d) { return d.count; });
+                var currentMin = d3.min(data, function(d) { return d.value; });
+                var currentMax = d3.max(data, function(d) { return d.value; });
+                $(titleselector).text(currentMin + " - " + currentMax);
 
                 // add the canvas to the DOM
                 var width = $(selector).width() - 16;
                 // FIXME: determine dynamically
-                var height = 120 - 30; // div height - title height
+                var height = 120 - 30; // div height - title height - slider height
 
                 var barchart = d3.select(selector)
                     .append("svg:svg")
@@ -23,6 +26,24 @@ jQuery(document).ready(
                 var x_scale = d3.scale.linear().domain([minValue, maxValue]).range([0, width - barWidth ]).interpolate(d3.interpolateRound).clamp(true);
                 var y_scale = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
 
+                function select_range(start, end) {
+                    var sep = "&";
+                    var repl = "";
+                    if (start !== undefined && end !== undefined)
+                        repl = "f=" + fieldname + "__range:" + start + "-" + end;
+
+                    if (! document.location.search)
+                        sep = "";
+                    var re = new RegExp("f=" + fieldname + "__range:\\d+-\\d+");
+                    m = document.location.search.match(re);
+                    if (m !== null) {
+                        // There is already a date facet. Replace its value, or cancel it
+                        document.location.search = document.location.search.replace(re, repl);
+                    } else {
+                        document.location.search = document.location.search + sep + repl;
+                    }
+                };
+
                 var brush = d3.svg.brush()
                     .x(x_scale)
                     .on("brush", function () {
@@ -30,24 +51,11 @@ jQuery(document).ready(
                             $(titleselector).text(Math.floor(b[0]) + " - " + Math.floor(b[1]));
                     })
                     .on("brushend", function () {
-                            var sep = "&";
-                            var repl = "";
                             if (! brush.empty()) {
                                 var b = brush.extent();
-                                var start = Math.floor(b[0]);
-                                var end = Math.floor(b[1]);
-                                repl = "f=" + fieldname + "__range:" + start + "-" + end;
-                            }
-
-                            if (! document.location.search)
-                                sep = "";
-                            var re = new RegExp("f=" + fieldname + "__range:\d+-\d+");
-                            m = document.location.search.match(re);
-                            if (m !== null) {
-                                // There is already a date facet. Replace its value, or cancel it
-                                document.location.search = document.location.search.replace(re, repl);
+                                select_range(Math.floor(b[0]), Math.floor(b[1]));
                             } else {
-                            document.location.search = document.location.search + sep + repl;
+                                select_range();
                             }
                         });
 
@@ -89,6 +97,25 @@ jQuery(document).ready(
                                             html: false
                                         });
                 d3.rebind(barchart, brush, "on");
+
+                // Add slider
+                var slidername = fieldname + '_range_slider';
+                $(selector).after('<div class="facetslider" id="' + slidername + '"></div>');
+                $('#' + slidername).slider({
+                                range: true,
+                                min: minValue,
+                                max: maxValue,
+                                values: [ currentMin, currentMax ],
+                                slide: function(event, ui) {
+                                    var range = ui.values;
+                                    $(titleselector).text(range[0] + " - " + range[1]);
+                                },
+                                stop: function(event, ui) {
+                                    var range = ui.values;
+                                    select_range(range[0], range[1]);
+                                }
+                            });
+
                 return barchart;
             };
 
