@@ -85,7 +85,8 @@ jQuery(document).ready(
                     .attr("svg:title", function(d) { return d.value + ' (' + d.count + ')'; })
                     .attr("height", function(d) { return y_scale(d.count); })
                     .attr("width", barWidth)
-                    .on("mouseup", function (d) {
+                    .on("mousedown", function (d) {
+                            select_range(d.value, d.value);
                         });
 
 
