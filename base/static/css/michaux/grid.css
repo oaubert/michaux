@@ -172,7 +172,7 @@ div.facetbox.barchartbox {
     margin: 0;
     background-color: #fff;
     position: relative;
-    width: 192px;
+    width: 160px;
     height: 1.2em;
     z-index: 1;
 }
@@ -208,7 +208,7 @@ div.facetbox.barchartbox {
 
 div.facetbox ul {
     margin-top: 1.3em;
-    margin-left: 16px;
+    margin-left: 10px;
     list-style: none;
 }
 
@@ -246,7 +246,7 @@ a.active-facet {
 }
 
 .facetcount {
-    right: 40px;
+    right: 20px;
 }
 
 .facetdata {
