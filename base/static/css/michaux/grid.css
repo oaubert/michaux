@@ -171,7 +171,7 @@ div.facetbox.barchartbox {
 .facettitle {
     margin: 0;
     background-color: #fff;
-    position: relative;
+    position: absolute;
     width: 160px;
     height: 1.2em;
     z-index: 1;
