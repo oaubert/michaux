@@ -224,7 +224,7 @@ div.facetbox li:hover {
 a.active-facet {
     text-decoration: none;
     padding: 14px 0 0 0;
-    background: #fff url(../../icons/reset.png) no-repeat center center;
+    background: #fff url(../../icons/close.png) no-repeat center center;
     width: 8px;
     position: absolute;
     left: -10px;
