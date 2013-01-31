@@ -196,7 +196,6 @@ div.facetbox.barchartbox {
 .facetslider {
     height: 8px;
     width: 172px;
-    margin-left: 3px;
 }
 
 .facetslider.ui-slider {
@@ -215,7 +214,6 @@ div.facetbox.barchartbox {
     width: 8px !important;
     height: 8px !important;
     cursor: default;
-    background-color: red !important;
 }
 
 .facetcontrols {
