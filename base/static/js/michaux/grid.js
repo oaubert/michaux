@@ -224,8 +224,13 @@ jQuery(document).ready(
                                });
 
         // Hide/show facets
+        $(".facetcontent").hide("fast", function () {
+                                    $(".active-facet").parents(".facetcontent").show();
+                                    $(".barchartbox .active-facet").parent().next().show();
+                                });
         $(".facettitle").click(function() {
-                                   $(this).next().slideToggle("fast");
+                                   $(".facetcontent").hide("fast");
+                                   $(this).next().show("fast");
                                });
 
         michaux.display_infopanel = display_infopanel;
