@@ -14,8 +14,11 @@
           <li><strong>Notes</strong></li>
           <li>{{ work.note_support|autolink }}</li>
           <li>{{ work.comment|autolink }}</li>
+          {% if work.revision %}
+          <li><strong>Révisions</strong></li>
           <li>{{ work.revision|autolink }}</li>
-{% if work.inscription_set.count %}
+          {% endif %}
+          {% if work.inscription_set.count %}
           <li><strong>Inscriptions</strong>
             <ul>
               {% for insc in work.inscription_set.all %}<li>{{ insc.nature }} ({{ insc.position }}) {{ insc.notes|autolink }}</li>{% endfor %}
