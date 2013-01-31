@@ -4,13 +4,15 @@
 {% load url from future %}
 {% load michaux %}
 
-{% block title %}{% if query_string %}
-   {% with total=sqs|length %}
-   {{ total }} œuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
-   {% endwith %}
-   {% else %}
-   {{ "Liste des œuvres" }}
-   {% endif %}{% endblock %}
+{% block title %} Catalogue raisonné Henri Michaux -
+{% with total=sqs|length %}
+{% if query_string %}
+{{ total }} œuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
+{% else %}
+{{ total }} œuvre{{ total|pluralize }}
+{% endif %}
+{% endwith %}
+{% endblock %}
 {% block extra_header %}
     <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
