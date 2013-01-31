@@ -189,9 +189,13 @@ jQuery(document).ready(
             }
             // FIXME: hardcoded URL. Should fix this.
             $.get(cote + '/info', function (data) {
-                      $('#content').css("padding-right", "200px");
                       $('#info_panel').html(navbar() + data);
-                      $('#info_panel').show('fast');
+                      $('#info_panel').show('fast', function () {
+                                                $('#content').css("margin-right", "200px");
+                                                // Reset zoom for all images
+                                                $("div.work").css('zoom', 1);
+                                                $('#hm' + cote).animate({zoom: 2})[0].scrollIntoView();
+                                            });
                       $("[rel=lightbox]").colorbox( {
                                                         preloading: false,
                                                         opacity: 0.01,
@@ -236,7 +240,8 @@ jQuery(document).ready(
         michaux.display_infopanel = display_infopanel;
 
         michaux.hide_infopanel = function () {
-            $('#content').css("padding-right", "5px");
+            $("div.work").css('zoom', 1);
+            $('#content').css("margin-right", "5px");
             $('#info_panel').hide('fast');
         };
 
