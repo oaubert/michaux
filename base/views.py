@@ -17,7 +17,15 @@ def root(request, *p):
 @login_required
 def works(request, *p, **kw):
     query_string = ""
+    options = { 'with_image': "", 'with_revision': "" }
     basesqs = SearchQuerySet()
+
+    if request.GET.get('with_image', None):
+        basesqs = basesqs.filter(with_image=True)
+        options['with_image'] = "on"
+    if request.GET.get('with_revision', None):
+        basesqs = basesqs.filter(with_revision=True)
+        options['with_revision'] = "on"
 
     query_string = request.GET.get('q', "").strip()
     if query_string:
@@ -74,6 +82,7 @@ def works(request, *p, **kw):
         'current_url': current,
         'range': range_,
         'page': page,
+        'options': options,
         }, context_instance=RequestContext(request))
 
 @login_required

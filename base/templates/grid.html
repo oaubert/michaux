@@ -46,11 +46,12 @@
           </span>
         </div>
 
-        <form>
+        <form id="form_filter" name="form_filter">
           <ul>
 
             <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ query_string }}" />
               <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
+            <li><label for="checkbox_images">I</label><input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Uniquement œuvres avec image"/> <label for="checkbox_revision">R</label><input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Uniquement œuvres avec champ révision non vide"/></li>
         </form>
 
         <div class="facets">
