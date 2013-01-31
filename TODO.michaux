@@ -10,6 +10,7 @@ update_index -> cron
 ** Centrer verticalement les images
 ** Version REST/JSON
 ** Sélection d'un sous-ensemble d'oeuvres (checkbox en popup) + action (tag, export, etc)
+** Wheelzoom: add frame in thumbnail display option
 
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
