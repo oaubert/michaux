@@ -19,6 +19,9 @@
     <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/colorbox.css" rel="stylesheet" type="text/css" media="screen" />
 
+   <!-- The admin jquery.js is in the django namespace -->
+   <script type="text/javascript" src="/static/admin/js/jquery.mina.js"></script>
+   <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/grid.js"></script>
@@ -27,6 +30,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.colorbox.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.wheelzoom.js"></script>
 
+{{ tagform.media }}
 {% endblock %}
 
 {% block header %}
@@ -36,13 +40,9 @@
 {% block margin %}
         <div class="pagination">
           <span class="step-links">
-            {% if page.has_previous %}
-            <a id="previous_page" title="Page précédente" href="?page={{ page.previous_page_number }}">&lt;&lt;&lt;</a>
-            {% endif %}
+            <a id="previous_page" {% if page.has_previous %}title="Page précédente" href="?page={{ page.previous_page_number }}"{% else %}title="Première page" class="disabled"{% endif %}></a>
             <span id="current_age">Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
-            {% if page.has_next %}
-            <a id="next_page" title="Page suivante" href="?page={{ page.next_page_number }}">&gt;&gt;&gt;</a>
-            {% endif %}
+            <a id="next_page" {% if page.has_next %}title="Page suivante" href="?page={{ page.next_page_number }}"{% else %}title="Dernière page" class="disabled"{% endif %}></a>
           </span>
         </div>
 

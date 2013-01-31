@@ -95,6 +95,22 @@ div.work.selected {
     background-color: #eee;
 }
 
+.pagination {
+    width: 100%;
+    text-align: center;
+}
+
+.pagination a {
+    padding: 0 12px 0 0;
+}
+
+#previous_page {
+    background: #fff url(../../icons/prev.png) no-repeat center center;
+}
+#next_page {
+    background: #fff url(../../icons/next.png) no-repeat center center;
+}
+
 #info_panel {
     position: fixed;
     height: 90%;
