@@ -14,6 +14,8 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     support = indexes.CharField(model_attr='support', faceted=True)
     height = indexes.IntegerField(model_attr='height', faceted=True)
     width = indexes.IntegerField(model_attr='width', faceted=True)
+    with_revision = indexes.BooleanField(null=True)
+    with_image = indexes.BooleanField(null=True)
 
     def get_model(self):
         return Work
@@ -24,6 +26,12 @@ class WorkIndex(indexes.RealTimeSearchIndex):
 
     def prepare_tags(self, work):
         return [ unicode(t) for t in work.tags.all() ]
+
+    def prepare_with_image(self, work):
+        return work.image_set.count() > 0
+
+    def prepare_with_revision(self, work):
+        return not not work.revision
 
     def get_updated_field(self):
         return "modified"
