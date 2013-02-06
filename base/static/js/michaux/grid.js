@@ -1,4 +1,5 @@
 var michaux = {};
+"use strict";
 
 jQuery(document).ready(
     function($) {
