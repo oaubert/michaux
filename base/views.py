@@ -20,6 +20,12 @@ def works(request, *p, **kw):
     options = { 'with_image': "", 'with_revision': "" }
     basesqs = SearchQuerySet()
 
+    sel = request.GET.get('selection', None)
+    if sel:
+        options['selection'] = sel
+        l = options['selectionset'] = sel.split(',')
+        basesqs = basesqs.filter(cote__in=l)
+
     if request.GET.get('with_image', None):
         basesqs = basesqs.filter(with_image=True)
         options['with_image'] = "on"

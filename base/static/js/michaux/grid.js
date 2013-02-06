@@ -162,6 +162,16 @@ jQuery(document).ready(
                                       }
                                       });
 
+        $("#selection_open").click( function () {
+                                        var selection = michaux.getSelection();
+                                        document.location.search = document.location.search + '&selection=' + selection.join(",");
+                                    } );
+        $("#selection_compare").click( function () {
+                                           var selection = michaux.getSelection();
+                                           if (selection.length < 2)
+                                               return;
+                                           document.location.pathname = document.location.pathname + '../compare/' + selection[0] + '?with=' + selection[1];
+                                       } );
         // Display infopanel about a work
         // It can be given either a .vignette anchor or a div.work element
         function display_infopanel(self) {

@@ -52,8 +52,13 @@
 
             <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ query_string }}" />
               <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
-            <li><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" />{% with selcount=options.selection|length %}<a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>{% endwith %}
-</li>
+            <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" />{% with selcount=options.selectionset|length %}<a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>{% endwith %}
+              <ul id="selection_popup">
+                <li><a id="selection_compare">Comparer</a></li>
+                <li><a id="selection_open">Afficher</a></li>
+                <!-- <li><a id="selection_tag">Tagguer</a></li> -->
+              </ul>
+            </li>
             <li><label for="checkbox_images">Images</label><input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Uniquement œuvres avec image"/> <label for="checkbox_revision">Révisions</label><input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Uniquement œuvres avec champ révision non vide"/></li>
         </form>
 

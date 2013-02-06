@@ -302,3 +302,34 @@ a.active-facet {
   fill: steelblue;
   fill-opacity: .125;
 }
+
+#selection_menuitem {
+    position: relative;
+}
+
+#selection_menuitem:hover {
+    border: 1px solid #ccc;
+}
+
+#selection_menuitem:hover > #selection_popup
+{
+    display: inline;
+}
+
+#selection_popup {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    z-index: 5;
+    width: 5em;
+    display: none;
+    background-color: #fff;
+    opacity: 0.8;
+    border: 1px solid #ccc;
+}
+
+#selection_popup li {
+    list-style: none;
+    display: inline;
+    width: 12em;
+}
