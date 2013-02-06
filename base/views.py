@@ -192,3 +192,13 @@ def selection_untag(request):
         # FIXME: Handle errors ?
     # FIXME: rebuild haystack index ?
     return HttpResponse(status=204)
+
+@login_required
+def compare(request, cote1=None, cote2=None, **kw):
+    w1 = get_object_or_404(Work, pk=cote1)
+    w2 = get_object_or_404(Work, pk=cote2)
+    return render_to_response('compare.html', {
+            'work1': w1,
+            'work2': w2,
+            'meta': Work._meta,
+            }, context_instance=RequestContext(request))

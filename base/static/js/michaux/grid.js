@@ -171,7 +171,7 @@ jQuery(document).ready(
                                            var selection = michaux.getSelection();
                                            if (selection.length < 2)
                                                return;
-                                           document.location.pathname = document.location.pathname + '../compare/' + selection[0] + '?with=' + selection[1];
+                                           document.location.pathname = document.location.pathname + '../compare/' + selection[0] + '/' + selection[1];
                                        } );
         // Display infopanel about a work
         // It can be given either a .vignette anchor or a div.work element

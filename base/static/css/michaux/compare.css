@@ -1,0 +1,37 @@
+#content {
+    position: relative;
+    margin: 0px;
+}
+
+#margin {
+    display: none;
+}
+
+.work {
+    position: absolute;
+    width: 40%;
+}
+
+.work img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+img.landscape {
+    width: 100%;
+    height: auto;
+}
+
+img.portrait {
+    width: auto;
+    height: 100%;
+}
+
+
+#work1 {
+    left: 0;
+}
+
+#work2 {
+    right: 0;
+}
