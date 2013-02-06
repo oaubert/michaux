@@ -197,6 +197,24 @@ jQuery(document).ready(
                 var next = $(work).next().attr('data-cote');
                 return '<div id="infopanel_navbar"><a id="infopanel_prev" class="' + (prev === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + prev + ')"') + '>&nbsp;</a> | <a id="infopanel_next" class="' + (next === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + next + ')"') + '>&nbsp;</a> <a id="infopanel_close" href="javascript:michaux.hide_infopanel();">&nbsp;</a></div>';
             }
+
+            function draw_frame(vignette) {
+                var rubber = $(vignette).find(".rubber_band");
+                var thumbnail = $(vignette).find("img");
+                var width = 1.0 * $(thumbnail).width();
+                var height = 1.0 * $(thumbnail).height();
+                // Generate a callback function to display a zoomed rectangle over the thumbnail
+                return function(x, y, w, h) {
+                    rubber.css({
+                                   left: Math.floor(x * width) + 'px',
+                                   top: Math.floor(y * height) + 'px',
+                                   width: Math.floor(w * width) + 'px',
+                                   height: Math.floor(h * height) + 'px',
+                                   display: 'block'
+                               });
+                    return false;
+                };
+            }
             // FIXME: hardcoded URL. Should fix this.
             $.get(cote + '/info', function (data) {
                       $('#info_panel').html(navbar() + data);
@@ -215,8 +233,23 @@ jQuery(document).ready(
                                                         maxWidth: $(window).width() - 240,
                                                         maxHeight: document.body.offsetHeight - 10,
                                                         fixed: true,
-                                                        onOpen: function () { console.log($(window).height(), document.body.offsetHeight); },
-                                                        onComplete: function() { $('.cboxPhoto').wheelzoom(); }
+                                                        onOpen: function () {
+                                                            $(this).append($("<div/>")
+                                                                           .addClass('rubber_band')
+                                                                           .css({
+                                                                                    position: "absolute",
+                                                                                    display: "none",
+                                                                                    width: "0px",
+                                                                                    height: "0px",
+                                                                                    border: "2px solid red"
+                                                                                }));
+                                                        },
+                                                        onComplete: function() {
+                                                            $('.cboxPhoto').wheelzoom({callback: draw_frame($(this)) });
+                                                        },
+                                                        onClosed: function() {
+                                                            $(this).find(".rubber_band").delete();
+                                                        }
                                                     });
                   });
         }

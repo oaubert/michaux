@@ -333,3 +333,11 @@ a.active-facet {
     display: inline;
     width: 12em;
 }
+
+.cboxElement {
+    position: relative;
+}
+
+.cboxElement .vignette {
+    position: absolute;
+}
