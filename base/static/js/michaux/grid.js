@@ -225,6 +225,9 @@ jQuery(document).ready(
         // Select/unselect items
         $("a.selection").click(function () {
                                    $(this).parents("div.work").toggleClass("selected");
+                                   var selection = michaux.getSelection();
+                                   $('#selection_menu').text(selection.length + (selection.length > 1 ? " éléments sélectionnés" : " élément sélectionné"));
+                                   $('#selection').attr('value', selection.join(","));
                                });
 
         // Hide/show facets
