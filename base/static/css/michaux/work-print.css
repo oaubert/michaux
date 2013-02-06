@@ -6,7 +6,7 @@
   }
 }
 
-#edit-icon, .navbar, .helptext, #tags {
+#edit-icon, .navbar, .helptext, #tags, .worktitle {
     display: none;
 }
 
@@ -19,6 +19,7 @@ a {
 }
 
 #margin {
+    display: block;
     width: 7cm;
     float: left;
 }
@@ -28,6 +29,8 @@ a {
 }
 
 .display {
+    height: 100%;
+    width: 100%;
     max-height: 16cm;
     max-width: 18cm;
 }
