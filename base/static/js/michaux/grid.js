@@ -218,40 +218,49 @@ jQuery(document).ready(
             }
             // FIXME: hardcoded URL. Should fix this.
             $.get(cote + '/info', function (data) {
-                      $('#info_panel').html(navbar() + data);
-                      $('#info_panel').show('fast', function () {
-                                                $('#content').css("margin-right", "200px");
-                                                // Reset zoom for all images
-                                                $("div.work").css('zoom', 1);
-                                                $('#hm' + cote).animate({zoom: 2})[0].scrollIntoView();
-                                            });
-                      $("[rel=lightbox]").colorbox( {
-                                                        preloading: false,
-                                                        opacity: 0.01,
-                                                        photo: true,
-                                                        width: $(window).width() - 240,
-                                                        height: document.body.offsetHeight - 10,
-                                                        maxWidth: $(window).width() - 240,
-                                                        maxHeight: document.body.offsetHeight - 10,
-                                                        fixed: true,
-                                                        onOpen: function () {
-                                                            $(this).append($("<div/>")
-                                                                           .addClass('rubber_band')
-                                                                           .css({
-                                                                                    position: "absolute",
-                                                                                    display: "none",
-                                                                                    width: "0px",
-                                                                                    height: "0px",
-                                                                                    border: "2px solid red"
-                                                                                }));
-                                                        },
-                                                        onComplete: function() {
-                                                            $('.cboxPhoto').wheelzoom({callback: draw_frame($(this)) });
-                                                        },
-                                                        onClosed: function() {
-                                                            $(this).find(".rubber_band").delete();
-                                                        }
-                                                    });
+                      if ($('#info_panel').attr('data-current') == cote)
+                      {
+                          // Already displaying the infopanel
+                          // Just trigger the first colorbox
+                          $("[rel=lightbox]").colorbox({open: true});
+                      } else {
+                          $('#info_panel').html(navbar() + data)
+                              .attr('data-current', cote);
+
+                          $('#info_panel').show('fast', function () {
+                                                    $('#content').css("margin-right", "200px");
+                                                    // Reset zoom for all images
+                                                    $("div.work").css('zoom', 1);
+                                                    $('#hm' + cote).animate({zoom: 2})[0].scrollIntoView();
+                                                });
+                          $("[rel=lightbox]").colorbox( {
+                                                            preloading: false,
+                                                            opacity: 0.01,
+                                                            photo: true,
+                                                            width: $(window).width() - 240,
+                                                            height: document.body.offsetHeight - 10,
+                                                            maxWidth: $(window).width() - 240,
+                                                            maxHeight: document.body.offsetHeight - 10,
+                                                            fixed: true,
+                                                            onOpen: function () {
+                                                                $(this).append($("<div/>")
+                                                                               .addClass('rubber_band')
+                                                                               .css({
+                                                                                        position: "absolute",
+                                                                                        display: "none",
+                                                                                        width: "0px",
+                                                                                        height: "0px",
+                                                                                        border: "2px solid red"
+                                                                                    }));
+                                                            },
+                                                            onComplete: function() {
+                                                                $('.cboxPhoto').wheelzoom({callback: draw_frame($(this)) });
+                                                            },
+                                                            onClosed: function() {
+                                                                $(this).find(".rubber_band").delete();
+                                                            }
+                                                        });
+                      }
                   });
         }
 
