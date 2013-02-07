@@ -90,7 +90,7 @@ ul.navbar li a:hover{
 .submenu {
     display: none;
     position: absolute;
-    z-index: 5;
+    z-index: 90;
     top: 1.2em;
     left: 0;
     background-color: #fff;
