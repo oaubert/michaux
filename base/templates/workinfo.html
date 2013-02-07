@@ -65,3 +65,4 @@
           {% for img in work.image_set.all %}<a rel="lightbox" title="{{ img }} " href="{{ img.original_image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
           </li>
 {% endif %}
+        </ul>
