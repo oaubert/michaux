@@ -13,13 +13,5 @@
 {% endblock %}
 
 {% block nav-global %}
-      <ul class="navbar">
-        <li><a href="/base/work/">Accueil</a></li>
-{% if user.is_active and user.is_staff %}
-        <li><a href="/admin/base/work/">Admin</a></li>
-        <li><a href="/base/pivot">Pivot</a></li>
-        <li><a href="/base/reindex">Reindex</a></li>
-{% endif %}
-        <li><a title="Connecté en tant que {{ user }}" href="/accounts/logout">Logout</a></li>
-      </ul>
+{% include "navbar.html" %}
 {% endblock %}
