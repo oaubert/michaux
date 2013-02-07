@@ -19,7 +19,7 @@ def autolink(source):
     source = re.sub('#(\d+)', (lambda m: '<a href="%s">%s</a>' % (reverse('base.views.work', kwargs={'cote': m.group(1)}),
                                                                   m.group(0))), source)
     gridbase = reverse('base.views.works')
-    source = re.sub('(MP|KC)\s?(\d+)', r'<a href="%s?q=%%22\g<1>%%20\g<2>%%22">\g<0></a>' % gridbase, source, flags=re.IGNORECASE)
+    source = re.sub('(MP|KC)\s*(\d+)', r'<a href="%s?q=%%22\g<1>%%20\g<2>%%22">\g<0></a>' % gridbase, source, flags=re.IGNORECASE)
     return mark_safe(source)
 
 @register.filter
