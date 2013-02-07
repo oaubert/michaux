@@ -261,7 +261,7 @@ jQuery(document).ready(
                                                                 $('.cboxPhoto').wheelzoom({callback: draw_frame($(this)) });
                                                             },
                                                             onClosed: function() {
-                                                                $(this).find(".rubber_band").delete();
+                                                                $(this).find(".rubber_band").remove();
                                                             }
                                                         });
                       }
