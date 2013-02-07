@@ -25,11 +25,6 @@
             </ul>
           </li>
 {% endif %}
-{% if work.image_set.count %}
-          <li>
-          {% for img in work.image_set.all %}<a rel="lightbox" title="{{ img }} " href="{{ img.original_image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
-          </li>
-{% endif %}
 {% if work.bibliographyreference_set.count %}
           <li><strong>Références</strong>
             <ul>
@@ -63,5 +58,9 @@
             <ul>
               {% for tag in work.tags.all %}<li>{{ tag.name }}</li>{% endfor %}
             </ul>
+{% endif %}
+{% if work.image_set.count %}
+          <li>
+          {% for img in work.image_set.all %}<a rel="lightbox" title="{{ img }} " href="{{ img.original_image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
           </li>
 {% endif %}
