@@ -59,6 +59,15 @@
               {% for tag in work.tags.all %}<a href="/base/work/?f=tags_exact:{{ tag.name|urlencode }}">{{ tag.name }}</a> {% endfor %}
             </p>
           </li>
+          {% if work.tags.similar_objects %}
+          <li class="similar"><strong>Oeuvres similaires</strong>
+            <ul>
+              {% for w in work.tags.similar_objects %}
+              <li><a href="/base/work/{{ w.cote }}">{{ w }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endif %}
 {% endif %}
 {% if work.image_set.count %}
           <li>
