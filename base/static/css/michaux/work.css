@@ -31,6 +31,6 @@
     left: 190px;
 }
 
-.worktitle {
+.worktitle, .taglist {
     display: none;
 }
