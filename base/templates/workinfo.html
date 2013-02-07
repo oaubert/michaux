@@ -55,9 +55,10 @@
 {% endif %}
 {% if work.tags.count %}
           <li class="taglist"><strong>Tags</strong>
-            <ul>
-              {% for tag in work.tags.all %}<li>{{ tag.name }}</li>{% endfor %}
-            </ul>
+            <p>
+              {% for tag in work.tags.all %}<a href="/base/work/?f=tags_exact:{{ tag.name|urlencode }}">{{ tag.name }}</a> {% endfor %}
+            </p>
+          </li>
 {% endif %}
 {% if work.image_set.count %}
           <li>
