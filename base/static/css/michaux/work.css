@@ -10,6 +10,7 @@
     list-style: none inside none;
 }
 
+
 .display {
     max-width: 100%;
     max-height: 100%;
@@ -33,4 +34,19 @@
 
 .worktitle, .taglist {
     display: none;
+}
+
+a[rel=lightbox] {
+    position: relative;
+}
+
+a[rel=lightbox] img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#tags {
+    position: absolute;
+    bottom: 20px;
 }
