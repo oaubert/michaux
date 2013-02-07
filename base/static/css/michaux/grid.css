@@ -161,7 +161,7 @@ span.worktitle {
     font-weight: bold;
 }
 
-ul.workinfo {
+ul.workinfo, ul.workinfo ul {
     list-style: none;
     text-align: left;
 }
