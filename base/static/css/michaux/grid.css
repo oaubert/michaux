@@ -334,6 +334,11 @@ a.active-facet {
     width: 12em;
 }
 
+#selection_popup li:hover {
+    background-color: #ddd;
+    color: #444;
+}
+
 .cboxElement {
     position: relative;
 }
