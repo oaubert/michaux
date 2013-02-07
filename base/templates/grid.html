@@ -154,7 +154,7 @@
             <div class="facetcontent">
               <ul>
                 {% for tag in facets.fields.tags %}
-                <li><a class="facetitemlabel" href="{% if tag.0 in selected_facets %}{{ current_url|url_remove_facet:tag }}{% else %}{{ current_url }}&amp;f=tag_exact:{{ tag.0|urlencode }}{% endif %}">{{ tag.0 }}</a> <span class="facetitemcount">{{ tag.1 }}</span>
+                <li><a class="facetitemlabel" href="{% if tag.0 in selected_facets %}{{ current_url|url_remove_facet:tag }}{% else %}{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}{% endif %}">{{ tag.0 }}</a> <span class="facetitemcount">{{ tag.1 }}</span>
                   {% if tag.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:tag }}" class="active-facet"></a>{% endif %}
                 </li>
               {% endfor %}
