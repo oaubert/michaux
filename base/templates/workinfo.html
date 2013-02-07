@@ -58,3 +58,10 @@
             </ul>
           </li>
 {% endif %}
+{% if work.tags.count %}
+          <li class="taglist"><strong>Tags</strong>
+            <ul>
+              {% for tag in work.tags.all %}<li>{{ tag.name }}</li>{% endfor %}
+            </ul>
+          </li>
+{% endif %}
