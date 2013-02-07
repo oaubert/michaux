@@ -7,7 +7,11 @@ jQuery(document).ready(
                 var maxCount = d3.max(data, function(d) { return d.count; });
                 var currentMin = d3.min(data, function(d) { return d.value; });
                 var currentMax = d3.max(data, function(d) { return d.value; });
-                $(titleselector).text(currentMin + " - " + currentMax);
+                if (currentMin === undefined || currentMax === undefined) {
+                    $(titleselector).text("N/C");
+                } else {
+                    $(titleselector).text(currentMin + " - " + currentMax);
+                }
 
                 // add the canvas to the DOM
                 var width = $(selector).width() - 16;
