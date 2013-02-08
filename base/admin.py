@@ -8,10 +8,12 @@ from gettext import gettext as _
 from django.forms import TextInput, Textarea
 from django.db import models
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
+from django.conf import settings
 from django.contrib import admin
 from base.forms import ImageModelForm
 from django.contrib.admin import util as admin_util
 from django.http import HttpResponse
+import coop_tag
 
 FORMFIELD_OVERRIDES = {
         models.CharField: {'widget': TextInput(attrs={'size': '24'})},
@@ -91,12 +93,11 @@ export_model_as_csv.short_description = _('Exporter au format CSV')
 class WorkAdmin(admin.ModelAdmin):
 
     class Media:
-        # FIXME: use settings.STATIC_URL
-        css = {"all": ("/static/css/jquery-ui.css",
-                       "/static/css/michaux/admin.css",)}
-        js = ( '/static/js/jquery.js',
-               '/static/js/jquery-ui.js',
-               '/static/js/michaux/admin.js', )
+        css = {"all": (settings.STATIC_URL + "/css/jquery-ui.css",
+                       settings.STATIC_URL + "/css/michaux/admin.css",)}
+        js = ( settings.STATIC_URL + '/js/jquery.js',
+               settings.STATIC_URL + '/js/jquery-ui.js',
+               settings.STATIC_URL + '/js/michaux/admin.js', )
 
     fieldsets = [
         (None,               {'fields': [ ('status', 'serie'), 'tags']}),

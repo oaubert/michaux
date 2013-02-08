@@ -1,4 +1,5 @@
 from django.views.generic import RedirectView
+from django.conf import settings
 from django.conf.urls import patterns, url, include
 
 urlpatterns = patterns('',
@@ -16,5 +17,5 @@ urlpatterns = patterns('',
                        url(r'^pivot/dzimages$', 'base.views.pivotdzimages'),
                        url(r'^pivot/image/(?P<cote>\d+)$', 'base.views.pivotimage'),
                        url(r'^pivot/image/(?P<cote>\d+)_files/(?P<level>\d+)/(?P<name>.+).png$', 'base.views.pivotdzimage'),
-                       url(r'^pivot/Content/images/(?P<path>.*)', RedirectView.as_view(url='/static/icons/pivot/%(path)s', permanent=True)),
+                       url(r'^pivot/Content/images/(?P<path>.*)', RedirectView.as_view(url=settings.STATIC_URL + 'icons/pivot/%(path)s', permanent=True)),
                        )

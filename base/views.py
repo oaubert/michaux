@@ -2,6 +2,7 @@ import json
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 import django.core.management
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import Min, Max
 from django.shortcuts import render_to_response, get_object_or_404
@@ -160,7 +161,7 @@ def pivotimage(request, cote=None, **kw):
 
 def pivotdzimage(request, cote=None, level=None, name=None, **kw):
     w = get_object_or_404(Work, pk=cote)
-    return HttpResponseRedirect(str(w.thumbnail.url) if w.thumbnail else '/static/unknown_thumbnail.png')
+    return HttpResponseRedirect(str(w.thumbnail.url) if w.thumbnail else settings.STATIC_URL + 'unknown_thumbnail.png')
 
 def selection_tag(request):
     # Add a tag. The tag name and the selected elements must be
