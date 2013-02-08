@@ -1,3 +1,4 @@
+import re
 from .models import Work
 from haystack import indexes
 from haystack import site
@@ -12,7 +13,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     creation_date_end = indexes.IntegerField(model_attr='creation_date_end', faceted=True, null=True)
     serie = indexes.CharField(model_attr='serie', faceted=True, null=True)
     serie_auto = indexes.EdgeNgramField(model_attr='serie')
-    technique = indexes.CharField(model_attr='technique', faceted=True)
+    technique = indexes.MultiValueField(faceted=True)
     technique_auto = indexes.EdgeNgramField(model_attr='technique')
     support = indexes.CharField(model_attr='support', faceted=True)
     support_auto = indexes.EdgeNgramField(model_attr='support')
@@ -30,6 +31,9 @@ class WorkIndex(indexes.RealTimeSearchIndex):
 
     def prepare_tags(self, work):
         return [ unicode(t) for t in work.tags.all() ]
+
+    def prepare_technique(self, work):
+        return [ unicode(t) for w in re.split('\s+et\s+', work.technique) for t in re.split('\s*,\s*', w)  ]
 
     def prepare_with_image(self, work):
         return work.image_set.count() > 0

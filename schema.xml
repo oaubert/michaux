@@ -118,13 +118,13 @@
 
     <field name="support" type="text" indexed="true" stored="true" multiValued="false" />
 
-    <field name="technique" type="text" indexed="true" stored="true" multiValued="false" />
+    <field name="technique" type="text" indexed="true" stored="true" multiValued="true" />
 
     <field name="creation_date_start_exact" type="slong" indexed="true" stored="true" multiValued="false" />
 
     <field name="width" type="slong" indexed="true" stored="true" multiValued="false" />
 
-    <field name="technique_exact" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="technique_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="support_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 

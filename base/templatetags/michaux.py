@@ -39,7 +39,11 @@ def clear_range(url, field):
 @register.filter
 @stringfilter
 def facet_url(value, field):
-    return "%s?f=%s_exact:%s" % (reverse('base.views.works'), field, urllib.quote(value.encode('utf-8')))
+    if field == "technique":
+        return ("%s?" % reverse('base.views.works')) + "&".join("f=%s_exact:%s" % (field, urllib.quote(val.encode('utf-8')))
+                                                                for w in re.split('\s+et\s+', value) for val in re.split('\s*,\s*', w))
+    else:
+        return "%s?f=%s_exact:%s" % (reverse('base.views.works'), field, urllib.quote(value.encode('utf-8')))
 
 def memoize(func):
     cache = {}
