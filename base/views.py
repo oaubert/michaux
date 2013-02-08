@@ -210,7 +210,9 @@ def complete(request, field=None, **kw):
     if not field in ('serie', 'technique', 'support'):
         return HttpResponse(status=412)
     sqs = SearchQuerySet()
-    kw = { field + '_auto': request.REQUEST.get('term', "") }
+    term = request.REQUEST.get('term', "")
+    kw = { field + '_auto':  term }
     completions = set(item[0] for item in sqs.autocomplete(**kw).values_list(field))
-    return HttpResponse(json.dumps([{'value': item} for item in completions]),
+    s = sorted(i for i in completions if i.startswith(term)) + sorted(i for i in completions if not i.startswith(term))
+    return HttpResponse(json.dumps([{'value': item} for item in s]),
                         content_type="application/json")
