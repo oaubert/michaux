@@ -91,8 +91,12 @@ export_model_as_csv.short_description = _('Exporter au format CSV')
 class WorkAdmin(admin.ModelAdmin):
 
     class Media:
-        css = {"all": ("/static/css/michaux-editing.css",)}
-        # js = ( '/static/js/jquery.js', )
+        # FIXME: use settings.STATIC_URL
+        css = {"all": ("/static/css/jquery-ui.css",
+                       "/static/css/michaux/admin.css",)}
+        js = ( '/static/js/jquery.js',
+               '/static/js/jquery-ui.js',
+               '/static/js/michaux/admin.js', )
 
     fieldsets = [
         (None,               {'fields': [ ('status', 'serie'), 'tags']}),

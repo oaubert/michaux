@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 import django.core.management
@@ -202,3 +203,13 @@ def compare(request, cote1=None, cote2=None, **kw):
             'work2': w2,
             'meta': Work._meta,
             }, context_instance=RequestContext(request))
+
+@login_required
+def complete(request, field=None, **kw):
+    if not field in ('serie', 'technique', 'support'):
+        return HttpResponse(status=412)
+    sqs = SearchQuerySet()
+    kw = { field + '_auto': request.REQUEST.get('term', "") }
+    completions = set(item[0] for item in sqs.autocomplete(**kw).values_list(field))
+    return HttpResponse(json.dumps([{'value': item} for item in completions]),
+                        content_type="application/json")
