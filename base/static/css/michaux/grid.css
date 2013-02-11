@@ -191,6 +191,7 @@ div.facetbox.barchartbox {
     width: 160px;
     height: 1.2em;
     z-index: 1;
+    color: #22f;
 }
 
 .facetslider {
