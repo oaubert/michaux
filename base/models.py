@@ -136,12 +136,12 @@ class Work(models.Model):
 
     # début : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
     creation_date_start = models.IntegerField(_("année de début"),
-                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
+                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’une oeuvre a été réalisée après une date: on ne remplit alors que le champ début)."),
                                              blank=True, null=True)
 
     # fin : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
     creation_date_end = models.IntegerField(_("année de fin"),
-                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
+                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’une oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
                                              blank=True, null=True)
 
     # notes : texte libre
