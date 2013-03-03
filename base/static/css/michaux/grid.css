@@ -182,6 +182,7 @@ div.facetbox.barchartbox {
 
 .barchart {
     margin-left: 6px;
+    padding-bottom: 4px;
 }
 
 .facettitle {
