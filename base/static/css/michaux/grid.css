@@ -362,3 +362,12 @@ a.active-facet {
     text-align: center;
     z-index: 4;
 }
+
+#lightbox .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 48px 48px 0 0;
+    background: url(../../icons/loading.gif) no-repeat center center;
+    z-index: 3;
+}

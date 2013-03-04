@@ -225,10 +225,12 @@ jQuery(document).ready(
                 //#lightbox does not exist - create and insert it
                 //create HTML markup for lightbox window
                 //insert lightbox HTML into page
-                $('body').append($('<div id="lightbox">'));
+                $('body').append($('<div id="lightbox">').append($('<img class="loading">')));
                 michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 300, zoom_min: 25 })
                     .bind("ivieweronafterzoom", update_rubber)
-                    .bind("ivieweronstopdrag", update_rubber);
+                    .bind("ivieweronstopdrag", update_rubber)
+                    .bind("ivieweronstartload", function () { $(".loading").show(); })
+                    .bind("ivieweronfinishload", function () { $(".loading").hide(); update_rubber() });
             };
 
             // FIXME: add Loading info, it may take a while to load/update image
