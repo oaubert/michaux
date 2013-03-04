@@ -279,8 +279,8 @@ jQuery(document).ready(
                           $('#info_panel').show('fast', function () {
                                                     $('#content').css("margin-right", "200px");
                                                     // Reset zoom for all images
-                                                    $("div.work").css('zoom', 1);
-                                                    $('#hm' + cote).animate({zoom: 2})[0].scrollIntoView();
+                                                    $("div.work").css({ zoom: 1, "-moz-transform": "scale(1)" });
+                                                    $('#hm' + cote).animate({zoom: 1.3, "-moz-transform": "scale(1.3)"})[0].scrollIntoView();
                                                 });
 
                           $("[rel=lightbox]").on("click", function (e) {
@@ -323,7 +323,7 @@ jQuery(document).ready(
         michaux.display_infopanel = display_infopanel;
 
         michaux.hide_infopanel = function () {
-            $("div.work").css('zoom', 1);
+            $("div.work").css({zoom: 1, "-moz-transform": "scale(1)"});
             $('#content').css("margin-right", "5px");
             $('#info_panel').hide('fast');
             $('#lightbox').hide();
