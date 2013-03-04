@@ -177,6 +177,36 @@ jQuery(document).ready(
                                                return;
                                            document.location.pathname = document.location.pathname + '../compare/' + selection[0] + '/' + selection[1];
                                        } );
+
+        // Display a custom, basic lightbox component
+        function lightbox(url) {
+            /*
+             If the lightbox window HTML already exists in document,
+             change the img src to to match the href of whatever link was clicked
+             If the lightbox window HTML doesn't exist, create it and insert it.
+             (This will only happen the first time).
+             */
+            // If lightbox is visible and already displaying url -> hide it
+            if ($('#lightbox:visible').attr('data-url') == url) {
+                    $('#lightbox').hide();
+                    return;
+                }
+
+            if (! $('#lightbox').length) {
+                //#lightbox does not exist - create and insert it
+                //create HTML markup for lightbox window
+                //insert lightbox HTML into page
+                $('body').append($('<div id="lightbox">'));
+                michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 300, zoom_min: 25 });
+            };
+
+            // FIXME: add Loading info, it may take a while to load/update image
+            $('#lightbox').css('width', $(window).width() - 225)
+                .attr('data-url', url)
+                .show('fast');
+            michaux.iviewer.iviewer('loadImage', url);
+      }
+
         // Display infopanel about a work
         // It can be given either a .vignette anchor or a div.work element
         function display_infopanel(self) {
@@ -196,37 +226,20 @@ jQuery(document).ready(
             //Get clicked link href
             var image_href = $(vignette).attr("href");
             var cote = $(work).attr('data-cote');
-            // AJAX callback to insert the lightbox_info
+
             function navbar() {
                 var prev = $(work).prev().attr('data-cote');
                 var next = $(work).next().attr('data-cote');
                 return '<div id="infopanel_navbar"><a id="infopanel_prev" class="' + (prev === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + prev + ')"') + '>&nbsp;</a> | <a id="infopanel_next" class="' + (next === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + next + ')"') + '>&nbsp;</a> <a id="infopanel_close" href="javascript:michaux.hide_infopanel();">&nbsp;</a></div>';
             }
 
-            function draw_frame(vignette) {
-                var rubber = $(vignette).find(".rubber_band");
-                var thumbnail = $(vignette).find("img");
-                var width = 1.0 * $(thumbnail).width();
-                var height = 1.0 * $(thumbnail).height();
-                // Generate a callback function to display a zoomed rectangle over the thumbnail
-                return function(x, y, w, h) {
-                    rubber.css({
-                                   left: Math.floor(x * width) + 'px',
-                                   top: Math.floor(y * height) + 'px',
-                                   width: Math.floor(w * width) + 'px',
-                                   height: Math.floor(h * height) + 'px',
-                                   display: 'block'
-                               });
-                    return false;
-                };
-            }
             // FIXME: hardcoded URL. Should fix this.
             $.get(cote + '/info', function (data) {
-                      if ($('#info_panel').attr('data-current') == cote)
+                      if ($('#info_panel:visible').attr('data-current') == cote)
                       {
                           // Already displaying the infopanel
-                          // Just trigger the first colorbox
-                          $("[rel=lightbox]").colorbox({open: true});
+                          // Display the first image
+                          $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href') ); } );
                       } else {
                           $('#info_panel').html(navbar() + data)
                               .attr('data-current', cote);
@@ -237,47 +250,25 @@ jQuery(document).ready(
                                                     $("div.work").css('zoom', 1);
                                                     $('#hm' + cote).animate({zoom: 2})[0].scrollIntoView();
                                                 });
-                          $("[rel=lightbox]").colorbox( {
-                                                            preloading: false,
-                                                            opacity: 0.01,
-                                                            photo: true,
-                                                            width: $(window).width() - 240,
-                                                            height: document.body.offsetHeight - 10,
-                                                            maxWidth: $(window).width() - 240,
-                                                            maxHeight: document.body.offsetHeight - 10,
-                                                            fixed: true,
-                                                            onOpen: function () {
-                                                                $(this).append($("<div/>")
-                                                                               .addClass('rubber_band')
-                                                                               .css({
-                                                                                        position: "absolute",
-                                                                                        display: "none",
-                                                                                        width: "0px",
-                                                                                        height: "0px",
-                                                                                        border: "2px solid red"
-                                                                                    }));
-                                                            },
-                                                            onComplete: function() {
-                                                                $('.cboxPhoto').wheelzoom({callback: draw_frame($(this)) });
-                                                            },
-                                                            onClosed: function() {
-                                                                $(this).find(".rubber_band").remove();
-                                                            }
-                                                        });
+
+                          $("[rel=lightbox]").on("click", function (e) {
+                                                     e.preventDefault();
+                                                     lightbox($(this).attr('href'));
+                                                 });
+                          if ($("#lightbox:visible").length > 0) {
+                              // Display first image, if available, in existing lightbox. Else, close inbox.
+                              if ($("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href') ); } ).length == 0)
+                                  $('#lightbox').hide();
+                          }
                       }
                   });
-        }
+        };
 
-        // Homemade lightbox
         $('.vignette').click(function(e) {
                                  //prevent default action (hyperlink)
                                  e.preventDefault();
                                  michaux.display_infopanel(this);
                              });
-        //Click anywhere on the page to get rid of lightbox window
-        $('#lightbox').live('click', function() { //must use live, as the lightbox element is inserted into the DOM
-                                $('#lightbox').hide();
-                            });
 
         // Select/unselect items
         $("a.selection").click(function () {
@@ -303,6 +294,7 @@ jQuery(document).ready(
             $("div.work").css('zoom', 1);
             $('#content').css("margin-right", "5px");
             $('#info_panel').hide('fast');
+            $('#lightbox').hide();
         };
 
         michaux.resetFilter = function () {

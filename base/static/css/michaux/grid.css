@@ -348,3 +348,15 @@ a.active-facet {
 .cboxElement .vignette {
     position: absolute;
 }
+
+#lightbox {
+    position: fixed; /* keeps the lightbox window in the current viewport */
+    top: 0;
+    left: 0;
+    height: 100%;
+    /* width will be overriden at display time to 100%-240px */
+    width: 80%;
+    background-color: #fff;
+    text-align: center;
+    z-index: 4;
+}
