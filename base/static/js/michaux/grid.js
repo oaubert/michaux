@@ -180,6 +180,16 @@ jQuery(document).ready(
 
         // Display a custom, basic lightbox component
         function lightbox(url, thumbnail) {
+            // Add a rubber band div
+            $(thumbnail).append($("<div/>")
+                           .addClass('rubber_band')
+                           .css({
+                                    position: "absolute",
+                                    display: "none",
+                                    width: "0px",
+                                    height: "0px",
+                                    border: "2px solid red"
+                                }));
 
             function clamp(val, min, max) {
                 return val < min ? min : ( val > max ? max : val );
@@ -261,7 +271,7 @@ jQuery(document).ready(
                       {
                           // Already displaying the infopanel
                           // Display the first image
-                          $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href') ); } );
+                          $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } );
                       } else {
                           $('#info_panel').html(navbar() + data)
                               .attr('data-current', cote);
@@ -275,20 +285,11 @@ jQuery(document).ready(
 
                           $("[rel=lightbox]").on("click", function (e) {
                                                      e.preventDefault();
-                                                     $(this).append($("<div/>")
-                                                                    .addClass('rubber_band')
-                                                                    .css({
-                                                                             position: "absolute",
-                                                                             display: "none",
-                                                                             width: "0px",
-                                                                             height: "0px",
-                                                                             border: "2px solid red"
-                                                                         }));
                                                      lightbox($(this).attr('href'), this);
                                                  });
                           if ($("#lightbox:visible").length > 0) {
                               // Display first image, if available, in existing lightbox. Else, close inbox.
-                              if ($("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href') ); } ).length == 0)
+                              if ($("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } ).length == 0)
                                   $('#lightbox').hide();
                           }
                       }
