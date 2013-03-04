@@ -71,7 +71,7 @@
 {% endif %}
 {% if work.image_set.count %}
           <li>
-          {% for img in work.image_set.all %}<a rel="lightbox" title="{{ img }} " href="{{ img.original_image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
+          {% for img in work.image_set.all %}<a class="image_reference" rel="lightbox" title="{{ img }}" href="{{ img.original_image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
           </li>
 {% endif %}
         </ul>

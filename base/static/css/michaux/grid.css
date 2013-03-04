@@ -341,12 +341,14 @@ a.active-facet {
     color: #444;
 }
 
-.cboxElement {
+.image_reference {
     position: relative;
 }
 
-.cboxElement .vignette {
+.image_reference img {
     position: absolute;
+    top: 0;
+    left: 0;
 }
 
 #lightbox {

@@ -179,7 +179,26 @@ jQuery(document).ready(
                                        } );
 
         // Display a custom, basic lightbox component
-        function lightbox(url) {
+        function lightbox(url, thumbnail) {
+
+            function clamp(val, min, max) {
+                return val < min ? min : ( val > max ? max : val );
+            }
+            function update_rubber() {
+                var rubber = $(michaux.iviewer_thumbnail).find(".rubber_band");
+                var img = $(michaux.iviewer_thumbnail).find("img");
+                var width = 1.0 * $(img).width();
+                var height = 1.0 * $(img).height();
+                var f = $(michaux.iviewer).iviewer('info', 'frame');
+                rubber.css({
+                               left: Math.floor(clamp(f.x, 0, 1) * width) + 'px',
+                               top: Math.floor(clamp(f.y, 0, 1) * height) + 'px',
+                               width: Math.floor(clamp(f.w, 0, 1) * width) + 'px',
+                               height: Math.floor(clamp(f.h, 0, 1) * height) + 'px',
+                               display: 'block'
+                           });
+            }
+
             /*
              If the lightbox window HTML already exists in document,
              change the img src to to match the href of whatever link was clicked
@@ -197,7 +216,9 @@ jQuery(document).ready(
                 //create HTML markup for lightbox window
                 //insert lightbox HTML into page
                 $('body').append($('<div id="lightbox">'));
-                michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 300, zoom_min: 25 });
+                michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 300, zoom_min: 25 })
+                    .bind("ivieweronafterzoom", update_rubber)
+                    .bind("ivieweronstopdrag", update_rubber);
             };
 
             // FIXME: add Loading info, it may take a while to load/update image
@@ -205,6 +226,7 @@ jQuery(document).ready(
                 .attr('data-url', url)
                 .show('fast');
             michaux.iviewer.iviewer('loadImage', url);
+            michaux.iviewer_thumbnail = thumbnail;
       }
 
         // Display infopanel about a work
@@ -253,7 +275,16 @@ jQuery(document).ready(
 
                           $("[rel=lightbox]").on("click", function (e) {
                                                      e.preventDefault();
-                                                     lightbox($(this).attr('href'));
+                                                     $(this).append($("<div/>")
+                                                                    .addClass('rubber_band')
+                                                                    .css({
+                                                                             position: "absolute",
+                                                                             display: "none",
+                                                                             width: "0px",
+                                                                             height: "0px",
+                                                                             border: "2px solid red"
+                                                                         }));
+                                                     lightbox($(this).attr('href'), this);
                                                  });
                           if ($("#lightbox:visible").length > 0) {
                               // Display first image, if available, in existing lightbox. Else, close inbox.
