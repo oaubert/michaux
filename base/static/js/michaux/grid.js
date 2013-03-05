@@ -200,7 +200,7 @@ jQuery(document).ready(
                 var width = 1.0 * $(img).width();
                 var height = 1.0 * $(img).height();
                 var f = $(michaux.iviewer).iviewer('info', 'frame');
-                frame.css({
+                $(michaux.iviewer_frame).css({
                                left: Math.floor(clamp(f.x, 0, 1) * width) + 'px',
                                top: Math.floor(clamp(f.y, 0, 1) * height) + 'px',
                                width: Math.floor(clamp(f.w, 0, 1) * width) + 'px',
@@ -239,6 +239,7 @@ jQuery(document).ready(
                 .show('fast');
             michaux.iviewer.iviewer('loadImage', url);
             michaux.iviewer_thumbnail = thumbnail;
+            michaux.iviewer_frame = frame;
       }
 
         // Display infopanel about a work
