@@ -180,27 +180,27 @@ jQuery(document).ready(
 
         // Display a custom, basic lightbox component
         function lightbox(url, thumbnail) {
-            // Add a rubber band div
-            $(thumbnail).append($("<div/>")
-                           .addClass('rubber_band')
+            // Add a frame rectangle div
+            var frame = $("<div/>")
+                           .addClass('visible_frame')
                            .css({
                                     position: "absolute",
                                     display: "none",
                                     width: "0px",
                                     height: "0px",
                                     border: "2px solid red"
-                                }));
+                                });
+            $(thumbnail).append(frame);
 
             function clamp(val, min, max) {
                 return val < min ? min : ( val > max ? max : val );
             }
-            function update_rubber() {
-                var rubber = $(michaux.iviewer_thumbnail).find(".rubber_band");
+            function update_frame() {
                 var img = $(michaux.iviewer_thumbnail).find("img");
                 var width = 1.0 * $(img).width();
                 var height = 1.0 * $(img).height();
                 var f = $(michaux.iviewer).iviewer('info', 'frame');
-                rubber.css({
+                frame.css({
                                left: Math.floor(clamp(f.x, 0, 1) * width) + 'px',
                                top: Math.floor(clamp(f.y, 0, 1) * height) + 'px',
                                width: Math.floor(clamp(f.w, 0, 1) * width) + 'px',
@@ -227,10 +227,10 @@ jQuery(document).ready(
                 //insert lightbox HTML into page
                 $('body').append($('<div style="overflow: hidden" id="wrapper">').append($('<div id="lightbox">').append($('<img class="loading">'))));
                 michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 300, zoom_min: 25 })
-                    .bind("ivieweronafterzoom", update_rubber)
-                    .bind("ivieweronstopdrag", update_rubber)
+                    .bind("ivieweronafterzoom", update_frame)
+                    .bind("ivieweronstopdrag", update_frame)
                     .bind("ivieweronstartload", function () { $(".loading").show(); })
-                    .bind("ivieweronfinishload", function () { $(".loading").hide(); update_rubber() });
+                    .bind("ivieweronfinishload", function () { $(".loading").hide(); update_frame(); });
             };
 
             // FIXME: add Loading info, it may take a while to load/update image
