@@ -11,11 +11,15 @@
    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
    <link href="{{ STATIC_URL }}css/michaux/work.css" rel="stylesheet" type="text/css" media="screen" />
    <link href="{{ STATIC_URL }}css/michaux/work-print.css" rel="stylesheet" type="text/css" media="print" />
+    <link href="{{ STATIC_URL }}css/jquery.iviewer.css" rel="stylesheet" type="text/css" media="screen" />
    <!-- FIXME: find the proper way to get admin jquery ref (through -- ModelAdmin.Media) -->
    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.iviewer.js"></script>
    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/work.js"></script>
-   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.wheelzoom.js"></script>
 {{ tagform.media }}
 {% endblock %}
 
@@ -34,9 +38,7 @@
 {% endblock %}
 
 {% block content %}
-      <div id="image">
-        {% with i=work.image %}
-          <img class="display {% if i.width > i.height %}landscape{% else %}portrait{% endif %}" alt="" src="{{ i.url }}">
-        {% endwith %}
+      <div id="image" data-url="{{ work.image.url }}">
+        <div class="loading"></div>
       </div>
 {% endblock %}
