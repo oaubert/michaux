@@ -217,6 +217,7 @@ jQuery(document).ready(
              */
             // If lightbox is visible and already displaying url -> hide it
             if ($('#lightbox:visible').attr('data-url') == url) {
+                    $('.visible_frame').hide();
                     $('#lightbox').hide();
                     return;
                 }
