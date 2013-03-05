@@ -19,7 +19,6 @@ jQuery(document).ready(
                              // Find vignette matching main image
                              $(".image_reference:first")
                                  .each(function () {
-                                           console.log(this);
                                            michaux.iviewer_thumbnail = this;
                                            var frame = $("<div/>")
                                                .addClass('visible_frame')
