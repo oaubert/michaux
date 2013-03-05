@@ -6,35 +6,56 @@ jQuery(document).ready(
         // Make tags clickable
         $(".as-selection-item").contents(':not(a)').click( function () { document.location = "/base/work?f=tags_exact:" + encodeURIComponent($(this).text()); });
 
-        function draw_frame(vignette) {
-            var rubber = $(vignette).find(".rubber_band");
-            var thumbnail = $(vignette).find("img");
-            var width = 1.0 * $(thumbnail).width();
-            var height = 1.0 * $(thumbnail).height();
-            // Generate a callback function to display a zoomed rectangle over the thumbnail
-            return function(x, y, w, h) {
-                rubber.css({
-                               left: Math.floor(x * width) + 'px',
-                               top: Math.floor(y * height) + 'px',
-                               width: Math.floor(w * width) + 'px',
-                               height: Math.floor(h * height) + 'px',
-                               display: 'block'
-                           });
-                return false;
-            };
-        }
+        // Load image as zoomable image
+        $("#image").each(function () {
+                             var url = $(this).attr('data-url');
 
-        // Add wheelzoom to image
-        $("[rel=lightbox]").append($("<div/>")
-                                   .addClass('rubber_band')
-                                   .css({
-                                            position: "absolute",
-                                            display: "none",
-                                            width: "0px",
-                                            height: "0px",
-                                            border: "2px solid red"
-                                        }));
-        $(".display").wheelzoom({callback: draw_frame($("[rel=lightbox]"))});
+                             // Display viewer
+                             michaux.iviewer = $(this).iviewer({ src: url,
+                                                                 zoom: 'fit', zoom_max: 500, zoom_min: 10 })
+                                 .bind("ivieweronstartload", function () { $(".loading").show(); })
+                                 .bind("ivieweronfinishload", function () { $(".loading").hide(); });
+
+                             // Find vignette matching main image
+                             $(".image_reference:first")
+                                 .each(function () {
+                                           console.log(this);
+                                           michaux.iviewer_thumbnail = this;
+                                           var frame = $("<div/>")
+                                               .addClass('visible_frame')
+                                               .css({
+                                                        position: "absolute",
+                                                        display: "none",
+                                                        width: "0px",
+                                                        height: "0px",
+                                                        border: "2px solid red"
+                                                    });
+                                           $(this).append(frame);
+                                           function clamp(val, min, max) {
+                                               return val < min ? min : ( val > max ? max : val );
+                                           }
+                                           function update_frame() {
+                                               var img = $(michaux.iviewer_thumbnail).find("img");
+                                               var width = 1.0 * $(img).width();
+                                               var height = 1.0 * $(img).height();
+                                               var f = $(michaux.iviewer).iviewer('info', 'frame');
+                                               frame.css({
+                                                             left: Math.floor(clamp(f.x, 0, 1) * width) + 'px',
+                                                             top: Math.floor(clamp(f.y, 0, 1) * height) + 'px',
+                                                             width: Math.floor(clamp(f.w, 0, 1) * width) + 'px',
+                                                             height: Math.floor(clamp(f.h, 0, 1) * height) + 'px',
+                                                             display: 'block'
+                                                         });
+                                           }
+                                           $(michaux.iviewer).bind("ivieweronzoom", update_frame)
+                                               .bind("iviewerondrag", update_frame)
+                                               .bind("ivieweronfinishload", update_frame);
+                                       });
+                         });
+        $(".image_reference").click(function (e) {
+                                        e.preventDefault();
+                                        $(michaux.iviewer).iviewer('loadImage', $(this).attr('href'));
+                                    });
 
         michaux.tag_selection = function (tagname) {
             var cote = $(".workinfo").attr('data-cote');
