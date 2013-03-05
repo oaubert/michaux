@@ -233,7 +233,6 @@ jQuery(document).ready(
                     .bind("ivieweronfinishload", function () { $(".loading").hide(); update_frame(); });
             };
 
-            // FIXME: add Loading info, it may take a while to load/update image
             $('#lightbox').css('width', $(window).width() - 225)
                 .attr('data-url', url)
                 .show('fast');
