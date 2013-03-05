@@ -353,8 +353,8 @@ a.active-facet {
 
 #lightbox {
     position: fixed; /* keeps the lightbox window in the current viewport */
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     height: 100%;
     /* width will be overriden at display time to 100%-240px */
     width: 80%;
