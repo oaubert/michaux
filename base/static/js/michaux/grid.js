@@ -225,7 +225,7 @@ jQuery(document).ready(
                 //#lightbox does not exist - create and insert it
                 //create HTML markup for lightbox window
                 //insert lightbox HTML into page
-                $('body').append($('<div id="lightbox">').append($('<img class="loading">')));
+                $('body').append($('<div style="overflow: hidden" id="wrapper">').append($('<div id="lightbox">').append($('<img class="loading">'))));
                 michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 300, zoom_min: 25 })
                     .bind("ivieweronafterzoom", update_rubber)
                     .bind("ivieweronstopdrag", update_rubber)
