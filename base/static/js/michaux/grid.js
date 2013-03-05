@@ -226,7 +226,7 @@ jQuery(document).ready(
                 //create HTML markup for lightbox window
                 //insert lightbox HTML into page
                 $('body').append($('<div style="overflow: hidden" id="wrapper">').append($('<div id="lightbox">').append($('<img class="loading">'))));
-                michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 300, zoom_min: 25 })
+                michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 500, zoom_min: 10 })
                     .bind("ivieweronzoom", update_frame)
                     .bind("iviewerondrag", update_frame)
                     .bind("ivieweronstartload", function () { $(".loading").show(); })
