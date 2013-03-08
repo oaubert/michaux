@@ -48,6 +48,8 @@ jQuery(document).ready(
                                            }
                                            $(michaux.iviewer).bind("ivieweronzoom", update_frame)
                                                .bind("iviewerondrag", update_frame)
+                                               .bind("ivieweronafterzoom", update_frame)
+                                               .bind("ivieweronstopdrag", update_frame)
                                                .bind("ivieweronfinishload", update_frame);
                                        });
                          });

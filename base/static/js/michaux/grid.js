@@ -230,6 +230,8 @@ jQuery(document).ready(
                 michaux.iviewer = $("#lightbox").iviewer({ zoom: 'fit', zoom_max: 500, zoom_min: 10 })
                     .bind("ivieweronzoom", update_frame)
                     .bind("iviewerondrag", update_frame)
+                    .bind("ivieweronafterzoom", update_frame)
+                    .bind("ivieweronstopdrag", update_frame)
                     .bind("ivieweronstartload", function () { $(".loading").show(); })
                     .bind("ivieweronfinishload", function () { $(".loading").hide(); update_frame(); });
             };
