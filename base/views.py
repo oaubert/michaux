@@ -29,16 +29,12 @@ def get_filtered_queryset(request):
         l = options['selectionset'] = sel.split(',')
         basesqs = basesqs.filter(cote__in=l)
 
-    # only works with images. 
-    # FIXME This should go away when the base is complete
-    if request.GET.get('with_image', None):
-        basesqs = basesqs.filter(with_image=True)
-        options['with_image'] = "on"
-
-    # only works with non-empty revision field
-    if request.GET.get('with_revision', None):
-        basesqs = basesqs.filter(with_revision=True)
-        options['with_revision'] = "on"
+    # Boolean option processing
+    for opt in ('with_image', 'with_revision', 'single_technique'):
+        if request.GET.get(opt, None):
+            kw = { opt: True }
+            basesqs = basesqs.filter(**kw)
+            options[opt] = "on"
 
     # Parse query string
     query_string = request.GET.get('q', "").strip()

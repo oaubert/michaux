@@ -146,6 +146,8 @@
 
     <field name="creation_date_end" type="slong" indexed="true" stored="true" multiValued="false" />
 
+    <field name="single_technique" type="boolean" indexed="true" stored="true" multiValued="false" />
+
     <field name="creation_date_start" type="slong" indexed="true" stored="true" multiValued="false" />
 
     <field name="height_exact" type="slong" indexed="true" stored="true" multiValued="false" />

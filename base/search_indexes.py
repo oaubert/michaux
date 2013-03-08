@@ -21,6 +21,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     width = indexes.IntegerField(model_attr='width', faceted=True)
     with_revision = indexes.BooleanField(null=True)
     with_image = indexes.BooleanField(null=True)
+    single_technique = indexes.BooleanField(null=True)
 
     def get_model(self):
         return Work
@@ -40,6 +41,10 @@ class WorkIndex(indexes.RealTimeSearchIndex):
 
     def prepare_with_revision(self, work):
         return not not work.revision
+
+    def prepare_single_technique(self, work):
+        #return (not ',' in work.technique)
+        return len(work.techniques) == 1
 
     def get_updated_field(self):
         return "modified"
