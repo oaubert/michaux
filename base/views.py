@@ -100,6 +100,7 @@ def works(request, *p, **kw):
         'range': range_,
         'page': page,
         'options': options,
+        'request': request,
         }, context_instance=RequestContext(request))
 
 @login_required
@@ -112,7 +113,7 @@ def work(request, cote=None, **kw):
     return render_to_response('work.html', {
             'work': w,
             'meta': Work._meta,
-            'tagform': EditTagsForm(instance=w)
+            'tagform': EditTagsForm(instance=w),
             }, context_instance=RequestContext(request))
 
 @login_required
@@ -142,12 +143,14 @@ def reindex(request, *p, **kw):
 
 def pivot(request, *p, **kw):
     return render_to_response('pivot.html', {
+            'request': request,
             }, context_instance=RequestContext(request))
 
 def pivotcollection(request, *p, **kw):
     sqs, options = get_filtered_queryset(request)
     return render_to_response('collection.xml', {
         'sqs': sqs,
+        'request': request,
         },
                               mimetype = "application/xhtml+xml",
                               context_instance = RequestContext(request))
@@ -156,6 +159,7 @@ def pivotdzimages(request, *p, **kw):
     sqs, options = get_filtered_queryset(request)
     return render_to_response('dzimages.xml', {
         'sqs': sqs,
+        'request': request,
         },
                               mimetype = "application/xhtml+xml",
                               context_instance = RequestContext(request))

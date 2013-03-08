@@ -15,7 +15,7 @@
     <FacetCategory Name="Hauteur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Largeur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
   </FacetCategories>
-  <Items ImgBase="dzimages">
+  <Items ImgBase="dzimages?{{ request.META.QUERY_STRING }}">
     {% for o in sqs %}
     {% with w=o.object %}
     <Item Img="#{{ w.cote }}" Id="{{ w.cote }}" Name="{{ w }}">

@@ -22,7 +22,7 @@
 		var debug = true;
 		$(document).ready(function () {
 			$('#pivotviewer').PivotViewer({
-				Loader: new PivotViewer.Models.Loaders.CXMLLoader("collection")
+				Loader: new PivotViewer.Models.Loaders.CXMLLoader("collection?{{ request.META.QUERY_STRING }}")
 			});
 		});
 	</script>
