@@ -51,7 +51,7 @@ def get_filtered_queryset(request):
         for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
             if value:
-                if field in ('creation_date_start__range', 'height__range', 'width__range'):
+                if field.endswith('__range'):
                     b, e = value.split("-")
                     args = { field: [int(b), int(e)] }
                     sqs = sqs.filter(**args)
