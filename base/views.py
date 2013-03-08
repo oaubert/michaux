@@ -16,25 +16,31 @@ from .forms import EditTagsForm
 def root(request, *p):
     return HttpResponseRedirect(reverse('base.views.works'))
 
-@login_required
-def works(request, *p, **kw):
-    query_string = ""
+def get_filtered_queryset(request):
+    """Return the QuerySet filtered by the request.
+    """
     options = { 'with_image': "", 'with_revision': "" }
     basesqs = SearchQuerySet()
 
+    # selection is specified. First filter against the items.
     sel = request.GET.get('selection', None)
     if sel:
         options['selection'] = sel
         l = options['selectionset'] = sel.split(',')
         basesqs = basesqs.filter(cote__in=l)
 
+    # only works with images. 
+    # FIXME This should go away when the base is complete
     if request.GET.get('with_image', None):
         basesqs = basesqs.filter(with_image=True)
         options['with_image'] = "on"
+
+    # only works with non-empty revision field
     if request.GET.get('with_revision', None):
         basesqs = basesqs.filter(with_revision=True)
         options['with_revision'] = "on"
 
+    # Parse query string
     query_string = request.GET.get('q', "").strip()
     if query_string:
         sqs = basesqs.auto_query(query_string)
@@ -45,6 +51,7 @@ def works(request, *p, **kw):
     else:
         sqs = basesqs
 
+    # Add facets to the result
     sqs = sqs.facet('status').facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('technique').facet('support').facet('width').facet('height')
     if 'f' in request.GET:
         for facet in request.GET.getlist('f'):
@@ -58,6 +65,12 @@ def works(request, *p, **kw):
                     sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
     sqs = sqs.order_by('creation_date_start')
+    return sqs, options
+
+@login_required
+def works(request, *p, **kw):
+    query_string = ""
+    sqs, options = get_filtered_queryset(request)
 
     # FIXME: maybe cache this information?
     range_ = {}
@@ -136,7 +149,7 @@ def pivot(request, *p, **kw):
             }, context_instance=RequestContext(request))
 
 def pivotcollection(request, *p, **kw):
-    sqs = SearchQuerySet()
+    sqs, options = get_filtered_queryset(request)
     return render_to_response('collection.xml', {
         'sqs': sqs,
         },
@@ -144,7 +157,7 @@ def pivotcollection(request, *p, **kw):
                               context_instance = RequestContext(request))
 
 def pivotdzimages(request, *p, **kw):
-    sqs = SearchQuerySet()
+    sqs, options = get_filtered_queryset(request)
     return render_to_response('dzimages.xml', {
         'sqs': sqs,
         },
