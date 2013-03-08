@@ -1,41 +1,72 @@
-* G�n�ration dzi
+* Génération dzi
 for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i:r}.dzi ../cache/images/${i:r}_image.jpg; done
+** à intégrer dans le processus d'import/ajout d'image ?
 
 update_index -> cron
 
+* Modèle
+** Ajouter un champ "Source de l'authentification"
+** Structurer le champ technique (séparés par des ,) -> modif search_indexes
+
 * Grille
-** Facettes: s�lection dynamique des facettes affich�es (� la Refine)
-** Facettes: permettre 2 modes de s�lection: checkbox (facettes multiples) ou clic (simple facette)
-** Formulaire d'ajout de tag + autocompl�tion
+** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette)
+** Facettes: à partir du moment où une facette a une sélection, afficher la croix en face du titre de la facette
+** Formulaire d'ajout de tag + autocomplétion
+** Custom Information overlay over the vignette
+
+*** TODO Custom TagAutoSuggest generates selectionAdded on init
 ** Centrer verticalement les images
 ** Version REST/JSON
-** S�lection d'un sous-ensemble d'oeuvres (checkbox en popup) + action (tag, export, etc)
-** Wheelzoom: add frame in thumbnail display option
+** autolink: split technique before linking
 
 * Fiche oeuvre
-** Export des fiches PDF -> d�finir un format sp�cifique ?
-** Rendre �ditable facilement ?
-** �dition de tags: trouver les hooks pour d�finir selectionAdded/selectionRemoved pour faire une MAJ tout de suite sur le serveur
+** Export des fiches PDF -> définir un format spécifique ?
+** Rendre éditable facilement ?
+** ajout microdata schema.org
+** ajout info semantique format CIDOC-CRM
+- http://books.openedition.org/editionsmsh/319
+- http://explore.clarosnet.org/XDB/ASP/clarosHome/
+- http://www.casparpreserves.eu/index.html
+** édition de tags: trouver les hooks pour définir selectionAdded/selectionRemoved pour faire une MAJ tout de suite sur le serveur
 http://code.drewwilson.com/entry/autosuggest-jquery-plugin
  http://stackoverflow.com/questions/4727983/jquery-autocomplete-need-to-initiate-only-when-a-special-character-is-typed
 
 * Formulaire admin:
-** autocompl�tion
+** autocomplétion
 http://django-haystack.readthedocs.org/en/v1.2.7/autocomplete.html
 https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/KU7aRHzNJaU
 https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/59xiMeUYXNc
 https://github.com/jeffkistler/django-fancy-autocomplete
 
-** utiliser des onglets pour les cat�gories ?
-** Afficher la liste compl�te des tags existants
+** utiliser des onglets pour les catégories ?
+** Afficher la liste complète des tags existants
 
 * Table admin
 ** Action table admin: "ajouter exposition"
+
 * Interaction
 ** Vue canevas 2D pour classification (cf kineticjs)
+** Vue en graphes + clustering pour navigation à travers différents axes
+** Intégrer une recherche de tags par synonymes via un thésaurus ?
 
 * Pivotviewer
 - deepzoom generation: normalize sizes to square + pow(2)
 - pass query string to pivot from navbar
 - integrate into base.html
 - integrate deepzoom generation
+
+
+* Vue wheelzoom:
+** Check firefox support
+** DONE factorize lightbox+zoom feature and use it in work.html
+* DONE S'arranger pour que les curseurs du slider histogramme soient visibles entièrement
+* Mécanisme de sauvegarde de vues: permettre de nommer la vue grille, et offrir un accès via un sous-menu Vues (qui remplace Pivot qui devient une vue).
+* Ajouter une checkbox à côté de Technique (titre facette) pour spécifier si on cherche une technique unique ou une technique parmi l'ensemble des techniques
+
+* Select all/deselect all
+* Entrée tag dans grid ne s'affiche que si une sélection existe
+* Suppression de tags par lot  (+confirmation)
+
+* garder l'info panel actif -> réduire la taille de l'overlay + toute la hauteur pour la lightbox
+* Verifier fonctionnement sous firefox et tactile (touch events) et safari
+
