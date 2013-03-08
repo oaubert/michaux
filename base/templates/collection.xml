@@ -28,9 +28,11 @@
         <Facet Name="Cote">
           <String Value="{{ w.cote }}"/>
         </Facet>
+        {% for t in w.techniques %}
         <Facet Name="Technique">
-          <String Value="{{ w.technique|unaccent }}"/>
+          <String Value="{{ t|unaccent }}"/>
         </Facet>
+        {% endfor %}
         <Facet Name="Support">
           <String Value="{{ w.support|unaccent }}"/>
         </Facet>

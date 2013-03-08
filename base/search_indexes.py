@@ -33,7 +33,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
         return [ unicode(t) for t in work.tags.all() ]
 
     def prepare_technique(self, work):
-        return [ unicode(t) for w in re.split('\s+et\s+', work.technique) for t in re.split('\s*,\s*', w)  ]
+        return [ unicode(t) for t in work.techniques ]
 
     def prepare_with_image(self, work):
         return work.image_set.count() > 0
