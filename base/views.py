@@ -44,10 +44,6 @@ def get_filtered_queryset(request):
     query_string = request.GET.get('q', "").strip()
     if query_string:
         sqs = basesqs.auto_query(query_string)
-    elif request.GET.get('tag', None):
-        # FIXME: replace by a tag:foo syntax in standard query string
-        tag = request.GET.get('tag')
-        sqs = basesqs.filter(tags__name__in=[tag])
     else:
         sqs = basesqs
 
