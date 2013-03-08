@@ -51,8 +51,6 @@ def get_filtered_queryset(request):
     else:
         sqs = basesqs
 
-    # Add facets to the result
-    sqs = sqs.facet('status').facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('technique').facet('support').facet('width').facet('height')
     if 'f' in request.GET:
         for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
@@ -64,6 +62,8 @@ def get_filtered_queryset(request):
                 else:
                     sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
+    # Add facets to the result
+    sqs = sqs.facet('status').facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('technique').facet('support').facet('width').facet('height')
     sqs = sqs.order_by('creation_date_start')
     return sqs, options
 
