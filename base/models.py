@@ -398,7 +398,7 @@ class BibliographyReference(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return u"Réf. bib. %(title)s (%(creator)s)" % self.__dict__
+        return u"Réf. bib. %s " % (self.title or self.abbreviation)
 
 class Exhibition(models.Model):
     class Meta:
