@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import re
 
@@ -44,12 +46,12 @@ class Command(BaseCommand):
             try:
                 w.height = long(data['hauteur'])
             except ValueError:
-                self.stderr.write("Missing height for %s" % data['cote'])
+                self.stderr.write("Missing height for %s\n" % data['cote'])
                 w.height = 0
             try:
                 w.width = long(data['largeur'])
             except ValueError:
-                self.stderr.write("Missing width for %s" % data['cote'])
+                self.stderr.write("Missing width for %s\n" % data['cote'])
                 w.width = 0
             if data[u'annee simple'] != '':
                 w.creation_date_start = long(data[u'annee simple'])
@@ -57,16 +59,16 @@ class Command(BaseCommand):
                 w.note_creation_date = data[u'annee']
             w.comment = "\n".join(data[i] for i in ('notice', 'remarques') if data[i])
             w.save()
-            self.stderr.write("Saved %s %s" % (n, unicode(w).encode('utf-8')))
+            self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
             # FIXME: Improve image name heuristic
             pic = '/home/oaubert/tmp/michaux/%s.jpg' % data['cote'].lower().replace(' / ', '_').replace(' ', '_')
             if os.path.exists(pic.encode('utf-8')):
-                self.stderr.write("   Copying image %s" % pic.encode('utf-8'))
+                self.stderr.write("   Copying image %s\n" % pic.encode('utf-8'))
                 i = Image()
                 i.work = w
                 i.photograph_name = 'Franck Leibovici'
-                i.support = u'numérique'
-                i.nature = u'référence'
+                i.support = u'numÃ©rique'
+                i.nature = u'rÃ©fÃ©rence'
                 with open(pic, 'rb') as f:
                     i.original_image.save(os.path.basename(pic), File(f))
                 i.save()
@@ -84,6 +86,6 @@ class Command(BaseCommand):
                 sig.save()
 
     def handle(self, fname, **options):
-        self.stdout.write("Importing from %s" % fname)
+        self.stdout.write("Importing from %s\n" % fname)
         self._import_data_from_xls(fname)
-        self.stdout.write("Done")
+        self.stdout.write("\nDone.\nDO NOT FORGET TO RUN rebuild_index !!!\n")
