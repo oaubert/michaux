@@ -101,21 +101,21 @@ class WorkAdmin(admin.ModelAdmin):
                settings.STATIC_URL + '/js/michaux/admin.js', )
 
     fieldsets = [
-        (None,               {'fields': [ ('status', 'serie'), 'tags']}),
+        (None,               {'fields': [ ('status', 'authentication_source', 'serie'), 'tags']}),
         (_("Références"),    {'fields': [ ('master', 'certificate'), 'old_references', 'note_references'], 'classes': ['collapse'] }),
         (_("Technique/support"), {'fields': [('technique', 'note_technique'), ('support', 'support_details'), 'note_support', ('height', 'width')]}),
         (_("Création"),      {'fields': [ ('creation_date_start', 'creation_date_end', 'creation_date_uncertainty'), 'note_creation_date', 'creation_date_alternative']}),
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
-    list_display = ( 'status', 'cote', 'work_thumbnail', 'old_references', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
-    list_editable = ( 'status', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
+    list_display = ( 'status', 'authentication_source', 'cote', 'work_thumbnail', 'old_references', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
+    list_editable = ( 'status', 'authentication_source', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
     list_display_links = ( 'cote', 'work_thumbnail' )
     search_fields = [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
-    list_filter = ( 'status', 'serie', 'creation_date_start', 'technique', 'support' )
+    list_filter = ( 'status', 'authentication_source', 'serie', 'creation_date_start', 'technique', 'support' )
     save_on_top = True
     actions = ( export_model_as_csv, )
-    exportable_fields = ( 'cote', 'old_references', 'note_references', 'certificate', 'modified', 'status', 'technique', 'note_technique', 'support', 'support_details', 'note_support', 'serie', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty', 'creation_date_alternative', 'note_creation_date', 'height', 'width', 'comment', 'revision')
+    exportable_fields = ( 'cote', 'authentication_source', 'old_references', 'note_references', 'certificate', 'modified', 'status', 'technique', 'note_technique', 'support', 'support_details', 'note_support', 'serie', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty', 'creation_date_alternative', 'note_creation_date', 'height', 'width', 'comment', 'revision')
 
     formfield_overrides = FORMFIELD_OVERRIDES
 

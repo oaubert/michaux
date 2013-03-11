@@ -58,6 +58,12 @@ class Work(models.Model):
                               default=EDITING_STATUS,
                               editable=True)
 
+    authentication_source = models.CharField(_('source'),
+                                             help_text=_("Source de l'authentification"),
+                                             max_length=64,
+                                             blank=True,
+                                             editable=True)
+
     cote = models.AutoField(_("cote"), primary_key=True, editable=False)
 
     master = models.ForeignKey('self',
