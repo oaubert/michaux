@@ -1,6 +1,12 @@
 * Génération dzi
-for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i:r}.dzi ../cache/images/${i:r}_image.jpg; done
-** à intégrer dans le processus d'import/ajout d'image ?
+
+Images/thumbnails are generated on-demand: find a way to trigger generation?
+
+  cd media/images
+  mkdir ../cache/pivot
+  for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i:r}.dzi ../cache/images/${i:r}_image.jpg; done
+
+** à intégrer dans le processus d'import/ajout d'image
 
 update_index -> cron
 
