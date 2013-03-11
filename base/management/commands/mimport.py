@@ -132,7 +132,7 @@ class Command(BaseCommand):
 
             try:
                 d = datetime.date.fromordinal(long(data['Date a']))
-                if d.year < 100 and d.year > 0:
+                if d.year < 1900 and d.year > 0:
                     # Add 1900
                     d=datetime.date(1900 + d.year, d.month, d.day)
                 e.start_year = d.year
