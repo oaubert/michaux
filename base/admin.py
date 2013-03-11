@@ -108,8 +108,8 @@ class WorkAdmin(admin.ModelAdmin):
         (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
-    list_display = ( 'status', 'authentication_source', 'cote', 'work_thumbnail', 'old_references', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
-    list_editable = ( 'status', 'authentication_source', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
+    list_display = ( 'status', 'cote', 'work_thumbnail', 'old_references', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty' )
+    list_editable = ( 'status', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
     list_display_links = ( 'cote', 'work_thumbnail' )
     search_fields = [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
     list_filter = ( 'status', 'authentication_source', 'serie', 'creation_date_start', 'technique', 'support' )
@@ -145,7 +145,7 @@ class ExhibitionAdmin(admin.ModelAdmin):
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
-    list_display = ('abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator', 'catalogue')
+    list_display = ('abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
     list_editable = ('title', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
     list_display_links = ('abbreviation', )
     search_fields = [ 'abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator' ]
@@ -154,7 +154,6 @@ class ExhibitionAdmin(admin.ModelAdmin):
 
     actions = ( export_model_as_csv, )
     exportable_fields = ('abbreviation', 'title', 'location', 'nature', 'address', 'city', 'country', 'start_year', 'start_month', 'start_day', 'end_year', 'end_month', 'end_day', 'curator', 'catalogue', 'original', 'comment', 'note')
-
 
 admin.site.register(Exhibition, ExhibitionAdmin)
 
