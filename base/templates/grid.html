@@ -161,6 +161,19 @@
           </div>
 
           <div class="facetbox">
+            <p class="facettitle">Exposition <span class="facetcount">{{ facets.fields.exhibition|length }}</span></p>
+            <div class="facetcontent">
+              <ul>
+                {% for exhibition in facets.fields.exhibition %}
+                <li><a class="facetitemlabel" href="{% if exhibition.0 in selected_facets %}{{ current_url|url_remove_facet:exhibition }}{% else %}{{ current_url }}&amp;f=exhibition_exact:{{ exhibition.0|urlencode }}{% endif %}">{{ exhibition.0 }}</a> <span class="facetitemcount">{{ exhibition.1 }}</span>
+                  {% if exhibition.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:exhibition }}" class="active-facet"></a>{% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          <div class="facetbox">
             <p class="facettitle">Tags ({{ facets.fields.tags|length }})</p>
             <div class="facetcontent">
               <ul>

@@ -35,7 +35,7 @@
 {% if work.exhibitioninstance_set.count %}
           <li><strong>Expositions</strong>
             <ul>
-              {% for ex in work.exhibitioninstance_set.all %}<li>{{ ex.title }} : {{ ex.note }}</li> {% endfor %}
+              {% for ex in work.exhibitioninstance_set.all %}<li><a class="facetvalue" href="{{ ex.exhibition.abbreviation|facet_url:"exhibition" }}">{{ ex.exhibition.abbreviation }}</a></li> {% endfor %}
             </ul>
           </li>
 {% endif %}
