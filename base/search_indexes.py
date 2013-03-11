@@ -22,6 +22,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     with_revision = indexes.BooleanField(null=True)
     with_image = indexes.BooleanField(null=True)
     single_technique = indexes.BooleanField(null=True)
+    exhibition = indexes.MultiValueField(faceted=True)
 
     def get_model(self):
         return Work
@@ -35,6 +36,9 @@ class WorkIndex(indexes.RealTimeSearchIndex):
 
     def prepare_technique(self, work):
         return [ unicode(t) for t in work.techniques ]
+
+    def prepare_exhibition(self, work):
+        return [ ei.exhibition.abbreviation for ei in work.exhibitioninstance_set.all() ]
 
     def prepare_with_image(self, work):
         return work.image_set.count() > 0
