@@ -80,7 +80,7 @@ class Command(BaseCommand):
                 pos = re.findall('\((.+)\)', data['signature'])
                 if pos:
                     if ',' in pos[0]:
-                        sig.position, sig.note = re.split('\s*,\s*', pos[0])
+                        sig.position, sig.note = re.split('\s*,\s*', pos[0], 1)
                     else:
                         sig.position = pos[0]
                 sig.work = w
