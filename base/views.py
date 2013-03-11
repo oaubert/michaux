@@ -71,7 +71,7 @@ def works(request, *p, **kw):
     for i in ('creation_date_start', 'width', 'height'):
         range_[i] = Work.objects.all().aggregate(Min(i), Max(i))
 
-    paginator = Paginator(sqs.all(), request.REQUEST.get('per_page', 100))
+    paginator = Paginator(sqs.all(), long(request.REQUEST.get('per_page', 100)))
 
     pagenum = request.GET.get('page', 1)
     try:
