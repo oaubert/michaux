@@ -46,12 +46,12 @@ class Command(BaseCommand):
             try:
                 w.height = long(data['hauteur'])
             except ValueError:
-                self.stderr.write("Missing height for %s\n" % data['cote'])
+                self.stderr.write("Missing height for %s\n" % data['cote'].encode('utf-8'))
                 w.height = 0
             try:
                 w.width = long(data['largeur'])
             except ValueError:
-                self.stderr.write("Missing width for %s\n" % data['cote'])
+                self.stderr.write("Missing width for %s\n" % data['cote'].encode('utf-8'))
                 w.width = 0
             if data[u'annee simple'] != '':
                 w.creation_date_start = long(data[u'annee simple'])
@@ -86,6 +86,6 @@ class Command(BaseCommand):
                 sig.save()
 
     def handle(self, fname, **options):
-        self.stdout.write("Importing from %s\n" % fname)
+        self.stdout.write("Importing from %s\n" % fname.encode('utf-8'))
         self._import_data_from_xls(fname)
         self.stdout.write("\nDone.\nDO NOT FORGET TO RUN rebuild_index !!!\n")
