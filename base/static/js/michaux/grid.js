@@ -267,7 +267,7 @@ jQuery(document).ready(
             function navbar() {
                 var prev = $(work).prev().attr('data-cote');
                 var next = $(work).next().attr('data-cote');
-                return '<div id="infopanel_navbar"><a id="infopanel_prev" class="' + (prev === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + prev + ')"') + '>&nbsp;</a> | <a id="infopanel_next" class="' + (next === undefined ? 'disabled" href="" ' : 'enabled" href="javascript:michaux.display_infopanel(' + next + ')"') + '>&nbsp;</a> <a id="infopanel_close" href="javascript:michaux.hide_infopanel();">&nbsp;</a></div>';
+                return '<div id="infopanel_navbar"><a id="infopanel_prev" class="' + (prev === undefined ? 'disabled" title="Pas d\'oeuvre précédente" href="" ' : 'enabled" data-cote="' + prev + '" title="Oeuvre précédente" href="javascript:michaux.display_infopanel(' + prev + ')"') + '>&nbsp;</a> | <a id="infopanel_next" class="' + (next === undefined ? 'disabled" title="Pas d\'oeuvre suivante" href="" ' : 'enabled" data-cote="' + next + '" title="Oeuvre suivante" href="javascript:michaux.display_infopanel(' + next + ')"') + '>&nbsp;</a> <a id="infopanel_close" href="javascript:michaux.hide_infopanel();">&nbsp;</a></div>';
             }
 
             // FIXME: hardcoded URL. Should fix this.
@@ -341,4 +341,5 @@ jQuery(document).ready(
         michaux.getSelection = function () {
             return $("div.work.selected").map( function () { return $(this).attr('data-cote'); } ).toArray();
         };
+
     });
