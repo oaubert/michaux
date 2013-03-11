@@ -110,6 +110,8 @@
 
     <field name="height" type="slong" indexed="true" stored="true" multiValued="false" />
 
+    <field name="abbreviation" type="text" indexed="true" stored="true" multiValued="false" />
+
     <field name="status_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
     <field name="creation_date_end_exact" type="slong" indexed="true" stored="true" multiValued="false" />
@@ -123,6 +125,8 @@
     <field name="creation_date_start_exact" type="slong" indexed="true" stored="true" multiValued="false" />
 
     <field name="width" type="slong" indexed="true" stored="true" multiValued="false" />
+
+    <field name="exhibition" type="text" indexed="true" stored="true" multiValued="true" />
 
     <field name="technique_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
@@ -146,6 +150,8 @@
 
     <field name="creation_date_end" type="slong" indexed="true" stored="true" multiValued="false" />
 
+    <field name="abbreviation_exact" type="string" indexed="true" stored="true" multiValued="false" />
+
     <field name="single_technique" type="boolean" indexed="true" stored="true" multiValued="false" />
 
     <field name="creation_date_start" type="slong" indexed="true" stored="true" multiValued="false" />
@@ -157,6 +163,8 @@
     <field name="tags_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="with_revision" type="boolean" indexed="true" stored="true" multiValued="false" />
+
+    <field name="exhibition_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="technique_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
