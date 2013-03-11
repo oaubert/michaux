@@ -102,6 +102,7 @@ def works(request, *p, **kw):
         'overlay_fields': (
                 ('', 'Aucun'),
                 ('status', 'Statut'),
+                ('old_references', 'Référence'),
                 ('technique', 'Technique'),
                 ('support', 'Support'),
                 ('creation_date_start', 'Année de création'),
