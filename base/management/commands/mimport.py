@@ -5,9 +5,9 @@ import re
 import datetime
 
 from django.core.files import File
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 
-from base.models import Work, Image, Inscription, Exhibition, BibliographyReference
+from base.models import Work, Image, Inscription, Exhibition, BibliographyReference, ExhibitionInstance
 
 class Command(BaseCommand):
     args = '<xls file>'
@@ -23,7 +23,7 @@ class Command(BaseCommand):
         # cote	simplifiee	certificat	technique	precisions technique	serie	annee	annee simple	dimensions	hauteur	largeur	signature	presence	support	support2	support3	notes_michaux	notice	remarques	expositions	reproductions	inventaire
 
         for n in range(1, s.nrows - 1):
-            #if n < 408:
+            #if n < 80:
             #    continue
             #if n > 600:
             #    break
@@ -85,6 +85,26 @@ class Command(BaseCommand):
                         sig.position = pos[0]
                 sig.work = w
                 sig.save()
+
+            if data['expositions'].strip():
+                notfound = []
+                for ab in data['expositions'].split('\n'):
+                    ab = ab.strip().strip(",")
+                    qs = Exhibition.objects.filter(abbreviation=ab)
+                    if qs.count() == 1:
+                        # Found the exhibition
+                        ei = ExhibitionInstance()
+                        ei.work = w
+                        ei.exhibition = qs[0]
+                        ei.save()
+                        msg = 'ok'
+                    else:
+                        msg = 'NOT FOUND'
+                        notfound.append(ab)
+                    self.stderr.write("   Exhibition %s... %s\n" % (ab.encode('utf-8'), msg))
+                    if notfound:
+                        w.revision = u"Expositions à lier:\n" + u"\n".join(notfound)
+                        w.save()
 
     def dummydate2date(self, data):
         """Parse a dummy date (DDMMYYYY as a number) into its components.
@@ -195,13 +215,17 @@ class Command(BaseCommand):
                     self.stdout.write("   " + unicode(e2).encode('utf-8') + "\n")
 
 
-    def handle(self, fname, **options):
-        self.stdout.write("Importing from %s\n" % fname.encode('utf-8'))
-        # FIXME: add proper option/arg passing instead of the name hack?
-        if 'catalogue' in fname.lower():
-            self._import_data_from_xls(fname)
-        elif 'exposition' in fname.lower():
-            self._import_exhibitions_from_xls(fname)
-        else:
-            self.stderr.write("Cannot determine file type\n")
+    def handle(self, *args, **options):
+        if not args:
+            raise CommandError("Missing parameter")
+        for fname in args:
+            self.stdout.write("* Importing from %s\n" % fname.encode('utf-8'))
+            # FIXME: add proper option/arg passing instead of the name hack?
+            if 'catalogue' in fname.lower():
+                self._import_data_from_xls(fname)
+            elif 'exposition' in fname.lower():
+                self._import_exhibitions_from_xls(fname)
+            else:
+                self.stderr.write("Cannot determine file type\n")
+
         self.stdout.write("\nDone.\nDO NOT FORGET TO RUN rebuild_index !!!\n")
