@@ -1,1 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?><Image TileSize="254" Overlap="1" Format="png" ServerFormat="Default" xmlns="http://schemas.microsoft.com/deepzoom/2009"><Size Width="120" Height="120" /></Image>
+<?xml version="1.0" encoding="utf-8"?><Image TileSize="254" Overlap="1" Format="png" ServerFormat="Default" xmlns="http://schemas.microsoft.com/deepzoom/2009">
+{% if w.image.width > w.image.height %}
+      <Size Width="{{ w.image.width|default:'120' }}" Height="{{ w.image.width|default:'120' }}" />
+{% else %}
+      <Size Width="{{ w.image.height|default:'120' }}" Height="{{ w.image.height|default:'120' }}" />
+{% endif %}
+</Image>
