@@ -22,10 +22,10 @@ class Command(BaseCommand):
         # cote	simplifiee	certificat	technique	precisions technique	serie	annee	annee simple	dimensions	hauteur	largeur	signature	presence	support	support2	support3	notes_michaux	notice	remarques	expositions	reproductions	inventaire
 
         for n in range(1, s.nrows - 1):
-            if n < 408:
-                continue
-            if n > 600:
-                break
+            #if n < 408:
+            #    continue
+            #if n > 600:
+            #    break
             row = s.row_values(n)
             data = dict(zip(header, row))
             w = Work()
