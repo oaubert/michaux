@@ -344,4 +344,25 @@ jQuery(document).ready(
             return $("div.work.selected").map( function () { return $(this).attr('data-cote'); } ).toArray();
         };
 
-    });
+        // Keyboard handling
+        $(document).keypress(function (e) {
+                                 if (e.which == 107 && $("#info_panel:visible").length) {
+                                     // k for previous
+                                     michaux.display_infopanel($("#infopanel_prev").attr('data-cote'));
+                                 } else if (e.which == 106 && $("#info_panel:visible").length) {
+                                     // j for next
+                                     michaux.display_infopanel($("#infopanel_next").attr('data-cote'));
+                                 } else if (event.which == 99 && $("#info_panel:visible").length) {
+                                     // c for "Close"
+                                     michaux.hide_infopanel();
+                                 } else if (event.which == 13 && $("#info_panel:visible").length) {
+                                     // Show/hide lightbox
+                                     if ($("#lightbox:visible").length > 0) {
+                                         $('#lightbox').hide();
+                                     } else {
+                                         // Display the first image
+                                         $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } );
+                                     }
+                                 }
+                             });
+});
