@@ -187,7 +187,7 @@ class Work(models.Model):
     def techniques(self):
         """Split technique field into individual techniques
         """
-        return [ unicode(t) for w in re.split('\s+et\s+', self.technique) for t in re.split('\s*,\s*', w)  ]
+        return [ unicode(t) for t in re.split('\s*,\s*', self.technique) ]
 
     @property
     def printable_year(self):
