@@ -103,6 +103,7 @@ def works(request, *p, **kw):
                 ('', 'Aucun'),
                 ('status', 'Statut'),
                 ('old_references', 'Référence'),
+                ('revision', 'Révisions'),
                 ('technique', 'Technique'),
                 ('support', 'Support'),
                 ('creation_date_start', 'Année de création'),
