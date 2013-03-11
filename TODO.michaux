@@ -55,18 +55,10 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 - integrate into base.html
 - integrate deepzoom generation
 
+* Misc TODO items
+** Mécanisme de sauvegarde de vues: permettre de nommer la vue grille, et offrir un accès via un sous-menu Vues (qui remplace Pivot qui devient une vue).
+** Select all/deselect all
+** Entrée tag dans grid qui ne s'affiche que si une sélection existe
+** Suppression de tags par lot  (+confirmation)
 
-* Vue wheelzoom:
-** Check firefox support
-** DONE factorize lightbox+zoom feature and use it in work.html
-* DONE S'arranger pour que les curseurs du slider histogramme soient visibles entièrement
-* Mécanisme de sauvegarde de vues: permettre de nommer la vue grille, et offrir un accès via un sous-menu Vues (qui remplace Pivot qui devient une vue).
-* Ajouter une checkbox à côté de Technique (titre facette) pour spécifier si on cherche une technique unique ou une technique parmi l'ensemble des techniques
-
-* Select all/deselect all
-* Entrée tag dans grid ne s'affiche que si une sélection existe
-* Suppression de tags par lot  (+confirmation)
-
-* garder l'info panel actif -> réduire la taille de l'overlay + toute la hauteur pour la lightbox
-* Verifier fonctionnement sous firefox et tactile (touch events) et safari
 
