@@ -21,15 +21,33 @@ div.work {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    scale: 1;
 }
 
 div.work a {
     margin: auto;
 }
 
-.work img {
+div.work img {
     max-width: 200px;
     max-height: 200px;
+}
+
+div.work a.selection {
+    background:#fff url(../../icons/unselected.png) no-repeat center center;
+}
+
+div.work.selected a.selection {
+    background:#fff url(../../icons/selected.png) no-repeat center center;
+}
+
+div.work.selected {
+    background-color: #eee;
+}
+
+div.work.current {
+    transform: scale(1.6);
+    zoom: 1.6;
 }
 
 .landscape {
@@ -90,18 +108,6 @@ a.details {
     color: white;
     -webkit-text-stroke: 1px #000;
     text-stroke: 1px #000;
-}
-
-div.work a.selection {
-    background:#fff url(../../icons/unselected.png) no-repeat center center;
-}
-
-div.work.selected a.selection {
-    background:#fff url(../../icons/selected.png) no-repeat center center;
-}
-
-div.work.selected {
-    background-color: #eee;
 }
 
 .pagination {

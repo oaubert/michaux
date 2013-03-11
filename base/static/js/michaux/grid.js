@@ -247,9 +247,11 @@ jQuery(document).ready(
         // Display infopanel about a work
         // It can be given either a .vignette anchor or a div.work element
         function display_infopanel(self) {
+            var cote = undefined;
             var work;
             var vignette;
             if (typeof self === "string" || typeof self === "number") {
+                cote = "" + self;
                 work = $("[data-cote=" + self + "]");
                 vignette = $(work).find(".vignette");
             } else if ($(self).hasClass("work")) {
@@ -259,10 +261,11 @@ jQuery(document).ready(
                 vignette = self;
                 work = $(self).parents("div.work");
             }
+            if (cote === undefined)
+                cote = $(work).attr('data-cote');
 
             //Get clicked link href
             var image_href = $(vignette).attr("href");
-            var cote = $(work).attr('data-cote');
 
             function navbar() {
                 var prev = $(work).prev().attr('data-cote');
@@ -283,9 +286,8 @@ jQuery(document).ready(
 
                           $('#info_panel').show('fast', function () {
                                                     $('#content').css("margin-right", "200px");
-                                                    // Reset zoom for all images
-                                                    $("div.work").css({ zoom: 1, "-moz-transform": "scale(1)" });
-                                                    $('#hm' + cote).animate({zoom: 1.3, "-moz-transform": "scale(1.3)"})[0].scrollIntoView();
+                                                    $("div.work.current").removeClass('current');
+                                                    $('#hm' + cote).addClass('current')[0].scrollIntoView();
                                                 });
 
                           $("[rel=lightbox]").on("click", function (e) {
@@ -328,7 +330,7 @@ jQuery(document).ready(
         michaux.display_infopanel = display_infopanel;
 
         michaux.hide_infopanel = function () {
-            $("div.work").css({zoom: 1, "-moz-transform": "scale(1)"});
+            $("div.work.current").removeClass("current");
             $('#content').css("margin-right", "5px");
             $('#info_panel').hide('fast');
             $('#lightbox').hide();
