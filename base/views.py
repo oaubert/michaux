@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -97,6 +99,14 @@ def works(request, *p, **kw):
         'page': page,
         'options': options,
         'request': request,
+        'overlay_fields': (
+                ('', 'Aucun'),
+                ('status', 'Statut'),
+                ('technique', 'Technique'),
+                ('support', 'Support'),
+                ('creation_date_start', 'Année de création'),
+                ),
+        'info_overlay': request.REQUEST.get('info_overlay', ''),
         }, context_instance=RequestContext(request))
 
 @login_required

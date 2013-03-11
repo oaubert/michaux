@@ -83,6 +83,15 @@ a.details {
     background:#fff url(../../icons/details.png) no-repeat center center;
 }
 
+.workoverlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+    -webkit-text-stroke: 1px #000;
+    text-stroke: 1px #000;
+}
+
 div.work a.selection {
     background:#fff url(../../icons/unselected.png) no-repeat center center;
 }
