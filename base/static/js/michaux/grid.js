@@ -233,8 +233,8 @@ jQuery(document).ready(
                     .bind("iviewerondrag", update_frame)
                     .bind("ivieweronafterzoom", update_frame)
                     .bind("ivieweronstopdrag", update_frame)
-                    .bind("ivieweronstartload", function () { $(".loading").show(); })
-                    .bind("ivieweronfinishload", function () { $(".loading").hide(); update_frame(); });
+                    .bind("ivieweronstartload", function () { $("#lightbox img").hide(); $(".loading").show(); })
+                    .bind("ivieweronfinishload", function () { $("#lightbox img").show(); $(".loading").hide(); update_frame(); });
             };
 
             $('#lightbox').css('width', $(window).width() - 225)
