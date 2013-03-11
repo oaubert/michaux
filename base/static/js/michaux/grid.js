@@ -217,10 +217,11 @@ jQuery(document).ready(
              */
             // If lightbox is visible and already displaying url -> hide it
             if ($('#lightbox:visible').attr('data-url') == url) {
-                    $('.visible_frame').hide();
-                    $('#lightbox').hide();
-                    return;
-                }
+                $('.visible_frame').hide();
+                $('#lightbox').hide();
+                $('#grid').focus();
+                return;
+            }
 
             if (! $('#lightbox').length) {
                 //#lightbox does not exist - create and insert it
@@ -334,6 +335,7 @@ jQuery(document).ready(
             $('#content').css("margin-right", "5px");
             $('#info_panel').hide('fast');
             $('#lightbox').hide();
+            $('#grid').focus();
         };
 
         michaux.resetFilter = function () {
@@ -359,6 +361,7 @@ jQuery(document).ready(
                                      // Show/hide lightbox
                                      if ($("#lightbox:visible").length > 0) {
                                          $('#lightbox').hide();
+                                         $('#grid').focus();
                                      } else {
                                          // Display the first image
                                          $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } );
