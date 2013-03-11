@@ -16,9 +16,11 @@ update_index -> cron
 
 * Grille
 ** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette)
-** Facettes: à partir du moment où une facette a une sélection, afficher la croix en face du titre de la facette
+** Facettes: à partir du moment où une facette a une sélection, afficher la croix en face du titre de la facette (cf barchartfacet)
 ** Formulaire d'ajout de tag + autocomplétion
 ** Custom Information overlay over the vignette
+
+** Handle keyboard navigation <-/->/Esc
 
 *** TODO Custom TagAutoSuggest generates selectionAdded on init
 ** Centrer verticalement les images
