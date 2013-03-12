@@ -1,9 +1,13 @@
 * Génération dzi
 
-Images/thumbnails are generated on-demand: find a way to trigger generation?
+Images/thumbnails are generated on-demand: trigger generation with
+./manage.py ikcachevalidate (generateimages in new versions)
 
   cd media/images
   mkdir ../cache/pivot
+  [bash]
+  for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i%.*}.dzi ../cache/images/${i%.*}_image.jpg; done
+  [zsh]
   for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i:r}.dzi ../cache/images/${i:r}_image.jpg; done
 
 ** à intégrer dans le processus d'import/ajout d'image
@@ -15,17 +19,19 @@ update_index -> cron
 ** Structurer le champ technique (séparés par des ,) -> modif search_indexes
 
 * Grille
-** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette)
+
+** !  Preserve form data when navigating pages or when selecting facets
+-> put nav+facets into <form>
+-> transform template <form> into a Django Form
+
+** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette) (?)
 ** Facettes: à partir du moment où une facette a une sélection, afficher la croix en face du titre de la facette (cf barchartfacet)
 ** Formulaire d'ajout de tag + autocomplétion
-** Custom Information overlay over the vignette
+*** Custom TagAutoSuggest generates selectionAdded on init
 
-** Handle keyboard navigation <-/->/Esc
-
-*** TODO Custom TagAutoSuggest generates selectionAdded on init
+** Autocomplete on generic query widget
 ** Centrer verticalement les images
-** Version REST/JSON
-** autolink: split technique before linking
+** Version REST/JSON (cf rest-framework)
 
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
@@ -35,12 +41,13 @@ update_index -> cron
 - http://books.openedition.org/editionsmsh/319
 - http://explore.clarosnet.org/XDB/ASP/clarosHome/
 - http://www.casparpreserves.eu/index.html
+
 ** édition de tags: trouver les hooks pour définir selectionAdded/selectionRemoved pour faire une MAJ tout de suite sur le serveur
 http://code.drewwilson.com/entry/autosuggest-jquery-plugin
  http://stackoverflow.com/questions/4727983/jquery-autocomplete-need-to-initiate-only-when-a-special-character-is-typed
 
 * Formulaire admin:
-** autocomplétion
+** DONE autocomplétion
 http://django-haystack.readthedocs.org/en/v1.2.7/autocomplete.html
 https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/KU7aRHzNJaU
 https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/59xiMeUYXNc
@@ -53,7 +60,7 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 ** Action table admin: "ajouter exposition"
 
 * Interaction
-** Vue canevas 2D pour classification (cf kineticjs)
+** Vue canevas 2D pour visu+classification (cf kineticjs)
 ** Vue en graphes + clustering pour navigation à travers différents axes
 ** Intégrer une recherche de tags par synonymes via un thésaurus ?
 
@@ -62,11 +69,9 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 - pass query string to pivot from navbar
 - integrate into base.html
 - integrate deepzoom generation
-
+  
 * Misc TODO items
 ** Mécanisme de sauvegarde de vues: permettre de nommer la vue grille, et offrir un accès via un sous-menu Vues (qui remplace Pivot qui devient une vue).
 ** Select all/deselect all
 ** Entrée tag dans grid qui ne s'affiche que si une sélection existe
 ** Suppression de tags par lot  (+confirmation)
-
-
