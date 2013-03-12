@@ -1,3 +1,7 @@
 ul.as-selections li {
     list-style-type: none;
 }
+
+.closed {
+    display: none;
+}
