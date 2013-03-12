@@ -42,9 +42,10 @@
 <form id="form_filter" name="form_filter">
   <div class="pagination">
     <span class="step-links">
-      <a id="previous_page" {% if page.has_previous %}title="Page précédente" href="?page={{ page.previous_page_number }}"{% else %}title="Première page" class="disabled"{% endif %}></a>
-      <span id="current_age">Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
-      <a id="next_page" {% if page.has_next %}title="Page suivante" href="?page={{ page.next_page_number }}"{% else %}title="Dernière page" class="disabled"{% endif %}></a>
+      <input type="hidden" id="current_page" name="page" value=="{{ page.number }}" />
+      <a id="previous_page" {% if page.has_previous %}title="Page précédente" onclick="michaux.goto_page({{ page.previous_page_number }})" {% else %}title="Première page" class="disabled"{% endif %}></a>
+      <span>Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
+      <a id="next_page" {% if page.has_next %}title="Page suivante" onclick="michaux.goto_page({{ page.next_page_number }})" {% else %}title="Dernière page" class="disabled"{% endif %}></a>
     </span>
   </div>
   

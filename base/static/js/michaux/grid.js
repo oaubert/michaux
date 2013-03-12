@@ -346,6 +346,10 @@ jQuery(document).ready(
             return $("div.work.selected").map( function () { return $(this).attr('data-cote'); } ).toArray();
         };
 
+        michaux.goto_page = function (p) {
+            $("#current_page").attr('value', p)[0].form.submit();
+        };
+
         // Keyboard handling
         $(document).keypress(function (e) {
                                  if (e.which == 107 && $("#info_panel:visible").length) {
