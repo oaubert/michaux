@@ -12,14 +12,20 @@ register = template.Library()
 @register.filter
 @stringfilter
 def autolink(source):
-    """Automatically decorate certain strings with links:
-    #NNN -> link to work
-    facet value -> link to facetted search
+    """Automatically decorate certain strings with links.
+
+    * #NNN -> link to work
+    * facet value -> link to facetted search
+    * converts newlines to <br/>
     """
     source = re.sub('#(\d+)', (lambda m: '<a href="%s">%s</a>' % (reverse('base.views.work', kwargs={'cote': m.group(1)}),
                                                                   m.group(0))), source)
     gridbase = reverse('base.views.works')
     source = re.sub('(c?mp|kc|hm)\s*(\d+(?:\s+/\s+\d+)?)', r'<a href="%s?q=%%22\g<1>%%20\g<2>%%22">\g<0></a>' % gridbase, source, flags=re.IGNORECASE)
+    # Replace newlines by <br/>. This is normally done by the
+    # linebreaks filter, but combining both raises the issue of double
+    # html encoding
+    source = re.sub('\n', '<br/>\n', source)
     return mark_safe(source)
 
 @register.filter
