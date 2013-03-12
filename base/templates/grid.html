@@ -39,157 +39,163 @@
 {% endblock %}
 
 {% block margin %}
-        <div class="pagination">
-          <span class="step-links">
-            <a id="previous_page" {% if page.has_previous %}title="Page précédente" href="?page={{ page.previous_page_number }}"{% else %}title="Première page" class="disabled"{% endif %}></a>
-            <span id="current_age">Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
-            <a id="next_page" {% if page.has_next %}title="Page suivante" href="?page={{ page.next_page_number }}"{% else %}title="Dernière page" class="disabled"{% endif %}></a>
-          </span>
+<form id="form_filter" name="form_filter">
+  <div class="pagination">
+    <span class="step-links">
+      <a id="previous_page" {% if page.has_previous %}title="Page précédente" href="?page={{ page.previous_page_number }}"{% else %}title="Première page" class="disabled"{% endif %}></a>
+      <span id="current_age">Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
+      <a id="next_page" {% if page.has_next %}title="Page suivante" href="?page={{ page.next_page_number }}"{% else %}title="Dernière page" class="disabled"{% endif %}></a>
+    </span>
+  </div>
+  
+  <ul>
+    
+    <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ options.query_string }}" />
+      <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
+    <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" />{% with selcount=options.selectionset|length %}<a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>{% endwith %}
+
+      <ul id="selection_popup">
+        <li><a id="selection_compare">Comparer</a></li>
+        <li><a id="selection_open">Afficher</a></li>
+        <!-- <li><a id="selection_tag">Tagguer</a></li> -->
+      </ul>
+    </li>
+
+    <li><label for="checkbox_images">Images</label>
+      <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Uniquement œuvres avec image"/>
+      <label for="checkbox_revision">Révisions</label>
+      <input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Uniquement œuvres avec champ révision non vide" /></li>
+
+    <li><label for="checkbox_single_technique">Technique</label>
+      <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Uniquement œuvres avec une seule technique"/></li>
+
+    <li><label for="info_overlay">Overlay</label>
+      <select id="info_overlay" name="info_overlay" onchange="this.form.submit()">
+        {% for opt in overlay_fields %}
+        <option value="{{ opt.0 }}" {% ifequal info_overlay opt.0 %}selected="1"{% endifequal %}>{{ opt.1 }}</option>
+        {% endfor %}
+      </select>
+    </li>
+  </ul>    
+
+  <div class="facets">
+    
+    <div class="facetbox">
+      <p class="facettitle">Statut <span class="facetcount">{{ facets.fields.status|length }}</span></p>
+      <div class="facetcontent">
+        <ul>
+          {% for status in facets.fields.status %}
+          <li><a class="facetitemlabel" href="{% if status.0 in selected_facets %}{{ current_url|url_remove_facet:status }}{% else %}{{ current_url }}&amp;f=status_exact:{{ status.0|urlencode }}{% endif %}">{{ status.0 }}</a> <span class="facetitemcount">{{ status.1 }}</span>
+            {% if status.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:status }}" class="active-facet"></a>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="facetbox">
+      <p class="facettitle">Technique <span class="facetcount">{{ facets.fields.technique|length }}</span></p>
+      <div class="facetcontent">
+        <ul>
+          {% for technique in facets.fields.technique %}
+          <li><a class="facetitemlabel" href="{% if technique.0 in selected_facets %}{{ current_url|url_remove_facet:technique }}{% else %}{{ current_url }}&amp;f=technique_exact:{{ technique.0|urlencode }}{% endif %}">{{ technique.0 }}</a> <span class="facetitemcount">{{ technique.1 }}</span>
+            {% if technique.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:technique }}" class="active-facet"></a>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="facetbox">
+      <p class="facettitle">Support <span class="facetcount">{{ facets.fields.support|length }}</span></p>
+      <div class="facetcontent">
+        <ul>
+          {% for support in facets.fields.support %}
+          <li><a class="facetitemlabel" href="{% if support.0 in selected_facets %}{{ current_url|url_remove_facet:support }}{% else %}{{ current_url }}&amp;f=support_exact:{{ support.0|urlencode }}{% endif %}">{{ support.0 }}</a> <span class="facetitemcount">{{ support.1 }}</span>
+            {% if support.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:support }}" class="active-facet"></a>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="facetbox">
+      <p class="facettitle">Série <span class="facetcount">{{ facets.fields.serie|length }}</span></p>
+      <div class="facetcontent">
+        <ul>
+          {% for serie in facets.fields.serie %}
+          <li><a class="facetitemlabel" href="{% if serie.0 in selected_facets %}{{ current_url|url_remove_facet:serie }}{% else %}{{ current_url }}&amp;f=serie_exact:{{ serie.0|urlencode }}{% endif %}">{{ serie.0 }}</a> <span class="facetitemcount">{{ serie.1 }}</span>
+            {% if serie.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:serie }}" class="active-facet"></a>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="facetbox barchartbox">
+      <p class="facettitle">Création <span id="histogramRange">{{ range.creation_date_start.creation_date_start__min }} - {{ range.creation_date_start.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span> {% if "creation_date_start__range" in current_url %}<a href="{{ current_url|clear_range:'creation_date_start' }}" class="active-facet"></a>{% endif %}</p>
+      <div class="facetcontent barchart">
+        <div data-min="{{ range.creation_date_start.creation_date_start__min }}" data-max="{{ range.creation_date_start.creation_date_start__max }}" id="creationHistogram">
+          {% for h in facets.fields.creation_date_start %}
+          <span class="facetdata" data-year="{{ h.0 }}" data-count="{{ h.1 }}"></span>
+          {% endfor %}
         </div>
-
-        <form id="form_filter" name="form_filter">
-          <ul>
-
-            <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ options.query_string }}" />
-              <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
-            <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" />{% with selcount=options.selectionset|length %}<a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>{% endwith %}
-              <ul id="selection_popup">
-                <li><a id="selection_compare">Comparer</a></li>
-                <li><a id="selection_open">Afficher</a></li>
-                <!-- <li><a id="selection_tag">Tagguer</a></li> -->
-              </ul>
-            </li>
-            <li><label for="checkbox_images">Images</label>
-              <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Uniquement œuvres avec image"/>
-              <label for="checkbox_revision">Révisions</label>
-              <input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Uniquement œuvres avec champ révision non vide"/></li>
-              <label for="checkbox_single_technique">Technique</label>
-              <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Uniquement œuvres avec une seule technique"/></li>
-              <label for="info_overlay">Overlay</label>
-              <select id="info_overlay" name="info_overlay" onchange="this.form.submit()">
-                {% for opt in overlay_fields %}
-                <option value="{{ opt.0 }}" {% ifequal info_overlay opt.0 %}selected="1"{% endifequal %}>{{ opt.1 }}</option>
-                {% endfor %}
-</select>
-        </form>
-
-        <div class="facets">
-
-          <div class="facetbox">
-            <p class="facettitle">Statut <span class="facetcount">{{ facets.fields.status|length }}</span></p>
-            <div class="facetcontent">
-              <ul>
-                {% for status in facets.fields.status %}
-                <li><a class="facetitemlabel" href="{% if status.0 in selected_facets %}{{ current_url|url_remove_facet:status }}{% else %}{{ current_url }}&amp;f=status_exact:{{ status.0|urlencode }}{% endif %}">{{ status.0 }}</a> <span class="facetitemcount">{{ status.1 }}</span>
-                  {% if status.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:status }}" class="active-facet"></a>{% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-
-          <div class="facetbox">
-            <p class="facettitle">Technique <span class="facetcount">{{ facets.fields.technique|length }}</span></p>
-            <div class="facetcontent">
-              <ul>
-                {% for technique in facets.fields.technique %}
-                <li><a class="facetitemlabel" href="{% if technique.0 in selected_facets %}{{ current_url|url_remove_facet:technique }}{% else %}{{ current_url }}&amp;f=technique_exact:{{ technique.0|urlencode }}{% endif %}">{{ technique.0 }}</a> <span class="facetitemcount">{{ technique.1 }}</span>
-                  {% if technique.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:technique }}" class="active-facet"></a>{% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-
-          <div class="facetbox">
-            <p class="facettitle">Support <span class="facetcount">{{ facets.fields.support|length }}</span></p>
-            <div class="facetcontent">
-              <ul>
-                {% for support in facets.fields.support %}
-                <li><a class="facetitemlabel" href="{% if support.0 in selected_facets %}{{ current_url|url_remove_facet:support }}{% else %}{{ current_url }}&amp;f=support_exact:{{ support.0|urlencode }}{% endif %}">{{ support.0 }}</a> <span class="facetitemcount">{{ support.1 }}</span>
-                  {% if support.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:support }}" class="active-facet"></a>{% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-
-          <div class="facetbox">
-            <p class="facettitle">Série <span class="facetcount">{{ facets.fields.serie|length }}</span></p>
-            <div class="facetcontent">
-              <ul>
-                {% for serie in facets.fields.serie %}
-                <li><a class="facetitemlabel" href="{% if serie.0 in selected_facets %}{{ current_url|url_remove_facet:serie }}{% else %}{{ current_url }}&amp;f=serie_exact:{{ serie.0|urlencode }}{% endif %}">{{ serie.0 }}</a> <span class="facetitemcount">{{ serie.1 }}</span>
-                  {% if serie.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:serie }}" class="active-facet"></a>{% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-
-          <div class="facetbox barchartbox">
-            <p class="facettitle">Création <span id="histogramRange">{{ range.creation_date_start.creation_date_start__min }} - {{ range.creation_date_start.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span> {% if "creation_date_start__range" in current_url %}<a href="{{ current_url|clear_range:'creation_date_start' }}" class="active-facet"></a>{% endif %}</p>
-            <div class="facetcontent barchart">
-              <div data-min="{{ range.creation_date_start.creation_date_start__min }}" data-max="{{ range.creation_date_start.creation_date_start__max }}" id="creationHistogram">
-                {% for h in facets.fields.creation_date_start %}
-                <span class="facetdata" data-year="{{ h.0 }}" data-count="{{ h.1 }}"></span>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-
-          <div class="facetbox barchartbox">
-            <p class="facettitle">Hauteur <span id="heightRange">{{ range.height.height__min }} - {{ range.height.height__max }}</span> <span class="facetcount">{{ facets.fields.height|length }}</span> {% if "height__range" in current_url %}<a href="{{ current_url|clear_range:'height' }}" class="active-facet"></a>{% endif %}</p>
-            <div class="facetcontent barchart">
-              <div data-min="{{ range.height.height__min }}" data-max="{{ range.height.height__max }}" id="heightHistogram">
-                {% for h in facets.fields.height %}
-                <span class="facetdata" data-height="{{ h.0 }}" data-count="{{ h.1 }}"></span>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-
-          <div class="facetbox barchartbox">
-            <p class="facettitle">Largeur <span id="widthRange">{{ range.width.width__min }} - {{ range.width.width__max }}</span> <span class="facetcount">{{ facets.fields.width|length }}</span> {% if "width__range" in current_url %}<a href="{{ current_url|clear_range:'width' }}" class="active-facet"></a>{% endif %}</p>
-            <div class="facetcontent barchart">
-              <div data-min="{{ range.width.width__min }}" data-max="{{ range.width.width__max }}" id="widthHistogram">
-                {% for h in facets.fields.width %}
-                <span class="facetdata" data-width="{{ h.0 }}" data-count="{{ h.1 }}"></span>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-
-          <div class="facetbox">
-            <p class="facettitle">Exposition <span class="facetcount">{{ facets.fields.exhibition|length }}</span></p>
-            <div class="facetcontent">
-              <ul>
-                {% for exhibition in facets.fields.exhibition %}
-                <li><a class="facetitemlabel" href="{% if exhibition.0 in selected_facets %}{{ current_url|url_remove_facet:exhibition }}{% else %}{{ current_url }}&amp;f=exhibition_exact:{{ exhibition.0|urlencode }}{% endif %}">{{ exhibition.0 }}</a> <span class="facetitemcount">{{ exhibition.1 }}</span>
-                  {% if exhibition.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:exhibition }}" class="active-facet"></a>{% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-
-          <div class="facetbox">
-            <p class="facettitle">Tags ({{ facets.fields.tags|length }})</p>
-            <div class="facetcontent">
-              <ul>
-                {% for tag in facets.fields.tags %}
-                <li><a class="facetitemlabel" href="{% if tag.0 in selected_facets %}{{ current_url|url_remove_facet:tag }}{% else %}{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}{% endif %}">{{ tag.0 }}</a> <span class="facetitemcount">{{ tag.1 }}</span>
-                  {% if tag.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:tag }}" class="active-facet"></a>{% endif %}
-                </li>
-              {% endfor %}
-              </ul>
-            </div>
-          </div>
-
+      </div>
+    </div>
+    
+    <div class="facetbox barchartbox">
+      <p class="facettitle">Hauteur <span id="heightRange">{{ range.height.height__min }} - {{ range.height.height__max }}</span> <span class="facetcount">{{ facets.fields.height|length }}</span> {% if "height__range" in current_url %}<a href="{{ current_url|clear_range:'height' }}" class="active-facet"></a>{% endif %}</p>
+      <div class="facetcontent barchart">
+        <div data-min="{{ range.height.height__min }}" data-max="{{ range.height.height__max }}" id="heightHistogram">
+          {% for h in facets.fields.height %}
+          <span class="facetdata" data-height="{{ h.0 }}" data-count="{{ h.1 }}"></span>
+          {% endfor %}
         </div>
-
-        <div id="filler">
+      </div>
+    </div>
+    
+    <div class="facetbox barchartbox">
+      <p class="facettitle">Largeur <span id="widthRange">{{ range.width.width__min }} - {{ range.width.width__max }}</span> <span class="facetcount">{{ facets.fields.width|length }}</span> {% if "width__range" in current_url %}<a href="{{ current_url|clear_range:'width' }}" class="active-facet"></a>{% endif %}</p>
+      <div class="facetcontent barchart">
+        <div data-min="{{ range.width.width__min }}" data-max="{{ range.width.width__max }}" id="widthHistogram">
+          {% for h in facets.fields.width %}
+          <span class="facetdata" data-width="{{ h.0 }}" data-count="{{ h.1 }}"></span>
+          {% endfor %}
         </div>
+      </div>
+    </div>
+    
+    <div class="facetbox">
+      <p class="facettitle">Exposition <span class="facetcount">{{ facets.fields.exhibition|length }}</span></p>
+      <div class="facetcontent">
+        <ul>
+          {% for exhibition in facets.fields.exhibition %}
+          <li><a class="facetitemlabel" href="{% if exhibition.0 in selected_facets %}{{ current_url|url_remove_facet:exhibition }}{% else %}{{ current_url }}&amp;f=exhibition_exact:{{ exhibition.0|urlencode }}{% endif %}">{{ exhibition.0 }}</a> <span class="facetitemcount">{{ exhibition.1 }}</span>
+            {% if exhibition.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:exhibition }}" class="active-facet"></a>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    <div class="facetbox">
+      <p class="facettitle">Tags ({{ facets.fields.tags|length }})</p>
+      <div class="facetcontent">
+        <ul>
+          {% for tag in facets.fields.tags %}
+          <li><a class="facetitemlabel" href="{% if tag.0 in selected_facets %}{{ current_url|url_remove_facet:tag }}{% else %}{{ current_url }}&amp;f=tags_exact:{{ tag.0|urlencode }}{% endif %}">{{ tag.0 }}</a> <span class="facetitemcount">{{ tag.1 }}</span>
+            {% if tag.0 in selected_facets %}<a href="{{ current_url|url_remove_facet:tag }}" class="active-facet"></a>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div id="filler">
+  </div>
+</form>
 
         {% endblock %}
 
