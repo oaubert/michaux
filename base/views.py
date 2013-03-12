@@ -39,9 +39,9 @@ def get_filtered_queryset(request):
             options[opt] = "on"
 
     # Parse query string
-    query_string = request.GET.get('q', "").strip()
-    if query_string:
-        sqs = basesqs.auto_query(query_string)
+    options['query_string'] = request.GET.get('q', "").strip()
+    if options['query_string']:
+        sqs = basesqs.auto_query(options['query_string'])
     else:
         sqs = basesqs
 
@@ -89,11 +89,10 @@ def works(request, *p, **kw):
     if not '?' in current:
         current = current + '?'
     return render_to_response('grid.html', {
-        'query_string': query_string,
         'meta': Work._meta,
         'sqs': sqs,
         'facets': sqs.facet_counts(),
-        'selected_facets': [ f.split(':')[1] for f in  request.GET.getlist('f') ],
+        'selected_facets': [ f.split(':')[1] for f in request.GET.getlist('f') ],
         'current_url': current,
         'range': range_,
         'page': page,

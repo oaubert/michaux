@@ -50,7 +50,7 @@
         <form id="form_filter" name="form_filter">
           <ul>
 
-            <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ query_string }}" />
+            <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ options.query_string }}" />
               <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
             <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" />{% with selcount=options.selectionset|length %}<a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>{% endwith %}
               <ul id="selection_popup">
