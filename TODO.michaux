@@ -20,10 +20,7 @@ update_index -> cron
 
 * Grille
 
-** !  Preserve form data when navigating pages or when selecting facets
--> put nav+facets into <form>
--> transform template <form> into a Django Form
-
+** transform template <form> into a Django Form ?
 ** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette) (?)
 ** Facettes: à partir du moment où une facette a une sélection, afficher la croix en face du titre de la facette (cf barchartfacet)
 ** Formulaire d'ajout de tag + autocomplétion
@@ -65,10 +62,11 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 ** Intégrer une recherche de tags par synonymes via un thésaurus ?
 
 * Pivotviewer
-- deepzoom generation: normalize sizes to square + pow(2)
-- pass query string to pivot from navbar
-- integrate into base.html
+- DONE deepzoom generation: normalize sizes to square + pow(2)
+- DONE pass query string to pivot from navbar
+- DONE integrate into base.html
 - integrate deepzoom generation
+- upgrade (see http://kingsley.idehen.net/c/86Q2Q )
   
 * Misc TODO items
 ** Mécanisme de sauvegarde de vues: permettre de nommer la vue grille, et offrir un accès via un sous-menu Vues (qui remplace Pivot qui devient une vue).
