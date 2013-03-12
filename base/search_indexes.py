@@ -1,4 +1,3 @@
-import re
 from .models import Work
 from haystack import indexes
 from haystack import site
