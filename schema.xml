@@ -124,6 +124,8 @@
 
     <field name="width" type="slong" indexed="true" stored="true" multiValued="false" />
 
+    <field name="exhibition" type="text" indexed="true" stored="true" multiValued="true" />
+
     <field name="technique_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="support_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
@@ -157,6 +159,8 @@
     <field name="tags_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="with_revision" type="boolean" indexed="true" stored="true" multiValued="false" />
+
+    <field name="exhibition_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="technique_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
