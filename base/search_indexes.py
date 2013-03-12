@@ -1,4 +1,5 @@
-from .models import Work, Exhibition
+import re
+from .models import Work
 from haystack import indexes
 from haystack import site
 
@@ -53,9 +54,3 @@ class WorkIndex(indexes.RealTimeSearchIndex):
         return "modified"
 
 site.register(Work, WorkIndex)
-
-class ExhibitionIndex(indexes.RealTimeSearchIndex):
-    text = indexes.CharField(document=True, use_template=True)
-    abbreviation = indexes.CharField(model_attr='abbreviation', null=True, faceted=True)
-
-site.register(Exhibition, ExhibitionIndex)

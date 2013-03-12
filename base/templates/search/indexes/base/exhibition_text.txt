@@ -1,7 +1,0 @@
-{{ object.abbreviation }}
-{{ object.title }}
-{{ object.nature }}
-{{ object.city }}
-{{ object.country }}
-{{ object.comment }}
-{{ object.note }}
