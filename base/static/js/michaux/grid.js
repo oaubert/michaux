@@ -32,21 +32,21 @@ jQuery(document).ready(
                 var y_scale = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
 
                 function select_range(start, end) {
-                    var sep = "&";
-                    var repl = "";
-                    if (start !== undefined && end !== undefined)
-                        repl = "f=" + fieldname + "__range:" + start + "-" + end;
-
-                    if (! document.location.search)
-                        sep = "";
-                    var re = new RegExp("f=" + fieldname + "__range:\\d+-\\d+");
-                    m = document.location.search.match(re);
-                    if (m !== null) {
-                        // There is already a date facet. Replace its value, or cancel it
-                        document.location.search = document.location.search.replace(re, repl);
+                    var val = fieldname + "__range:" + start + "-" + end;
+                    var i = $(selector).siblings("input");
+                    if (i.length) {
+                        // There is already an input field. Simply replace its value.
+                        i.attr("value", val);
                     } else {
-                        document.location.search = document.location.search + sep + repl;
+                        // No input field. Create it.
+                        i = $("<input />").attr({
+                                                    type: "hidden",
+                                                    name: "f",
+                                                    value: val
+                                                });
+                        $(selector).after(i);
                     }
+                    $(i).parents("form").submit();
                 };
 
                 var brush = d3.svg.brush()
@@ -169,7 +169,8 @@ jQuery(document).ready(
 
         $("#selection_open").click( function () {
                                         var selection = michaux.getSelection();
-                                        document.location.search = document.location.search + '&selection=' + selection.join(",");
+                                        $("#selection").attr("value", selection.join(","))
+                                            .parents("form").submit();
                                     } );
         $("#selection_compare").click( function () {
                                            var selection = michaux.getSelection();
@@ -349,6 +350,32 @@ jQuery(document).ready(
         michaux.goto_page = function (p) {
             $("#current_page").attr('value', p)[0].form.submit();
         };
+
+        michaux.select_facet = function (e) {
+            e.preventDefault();
+            var i = $(this).siblings("input");
+            if (i.length) {
+                // There is an input sibling -> the facet was active. Remove the input.
+                i.remove();
+            } else {
+                // There is no input sibling. We want to activate the
+                // facet: its value is the text of the activating
+                // anchor.
+                // The active-facet anchor (which can also call
+                // select_facet) cannot be it in this case, since it
+                // is present only if the facet is defined.
+                var field = $(this).parents(".facetbox").attr("data-field");
+                $(this).after($("<input />").attr({
+                                                      type: "hidden",
+                                                      name: "f",
+                                                      value: field + ":" + $(this).text()
+                                                  }));
+            }
+            // Resubmit form
+            $(this).parents("form").submit();
+        };
+        $(".facetitemlabel").on("click", michaux.select_facet);
+        $(".active-facet").on("click", michaux.select_facet);
 
         // Keyboard handling
         $(document).keypress(function (e) {

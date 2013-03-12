@@ -83,17 +83,15 @@ def works(request, *p, **kw):
         # If page is out of range (e.g. 9999), deliver last page of results.
         page = paginator.page(paginator.num_pages)
 
-    # Add a ? at the end of current_url so that we can simply add
-    # &facet=foo in the template to drill down along facets
-    current = request.get_full_path()
-    if not '?' in current:
-        current = current + '?'
+    selected_facets = {}
+    for k, v in (i.split(':') for i in request.GET.getlist('f')):
+        selected_facets.setdefault(k, []).append(v)
+
     return render_to_response('grid.html', {
         'meta': Work._meta,
         'sqs': sqs,
         'facets': sqs.facet_counts(),
-        'selected_facets': [ f.split(':')[1] for f in request.GET.getlist('f') ],
-        'current_url': current,
+        'selected_facets': selected_facets,
         'range': range_,
         'page': page,
         'options': options,
