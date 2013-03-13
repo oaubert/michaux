@@ -363,29 +363,27 @@ jQuery(document).ready(
 
         michaux.toggle_facet = function (e) {
             e.preventDefault();
-            var i = $(this).siblings("input");
+
+            var i = $(this).find("input");
             if (i.length) {
                 // There is an input sibling -> the facet was active. Remove the input.
                 i.remove();
+                // Provide immediate feedback.
+                $(this).find(".active-facet").remove();
             } else {
                 // There is no input sibling. We want to activate the
-                // facet: its value is the text of the activating
-                // anchor.
-                // The active-facet anchor (which can also call
-                // toggle_facet) cannot be it in this case, since it
-                // is present only if the facet is defined.
+                // facet: its value is the text of the .faceitemlabel element
                 var field = $(this).parents(".facetbox").attr("data-field");
-                $(this).after($("<input />").attr({
-                                                      type: "hidden",
-                                                      name: "f",
-                                                      value: field + "_exact:" + $(this).text()
-                                                  }));
+                $(this).append($("<input />").attr({
+                                                    type: "hidden",
+                                                    name: "f",
+                                                    value: field + "_exact:" + $(this).find(".facetitemlabel").text()
+                                                }));
             }
             // Resubmit form
             $(this).parents("form").submit();
         };
-        $(".facetitemlabel").on("click", michaux.toggle_facet);
-        $(".active-facet").on("click", michaux.toggle_facet);
+        $(".facetitem").on("click", michaux.toggle_facet);
         $(".clear-facet").on("click", michaux.clear_facet);
 
         // Keyboard handling
