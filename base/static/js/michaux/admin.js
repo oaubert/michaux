@@ -1,9 +1,6 @@
-var michaux = {};
-"use strict";
-
 jQuery(document).ready(
     function($) {
-        document.$ = $;
+        "use strict";
         $("[name$=technique]").autocomplete({ source: "/base/complete/technique",
                                               minLength: 2});
         $("[name$=support]").autocomplete({ source: "/base/complete/support",

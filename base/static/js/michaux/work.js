@@ -1,8 +1,8 @@
 var michaux = {};
-"use strict";
 
 jQuery(document).ready(
     function($) {
+        "use strict";
         // Make tags clickable
         $(".as-selection-item").contents(':not(a)').click( function () { document.location = "/base/work?f=tags_exact:" + encodeURIComponent($(this).text()); });
 

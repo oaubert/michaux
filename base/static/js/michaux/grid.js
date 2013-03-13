@@ -1,24 +1,24 @@
 var michaux = {};
-"use strict";
 
 jQuery(document).ready(
     function($) {
+        "use strict";
         // FIXME: Make that a jquery plugin?
         function draw_barchart (element) {
             var fieldname = $(element).attr('data-field');
-            var minValue = parseInt($(element).attr("data-min"));
-            var maxValue = parseInt($(element).attr("data-max"));
+            var minValue = parseInt($(element).attr("data-min"), 10);
+            var maxValue = parseInt($(element).attr("data-max"), 10);
             var title = $(element).parents(".facetbox").find(".facetRange");
             function facet_title(min, max) {
                 if (min === undefined)
                     title.text("N/C");
                 else
                     title.text(min + " - " + max);
-            };
+            }
 
             var data = $(element).find(".facetdata").map(
-                function() { return { "value": parseInt($(this).attr('data-value')),
-                                      "count": parseInt($(this).attr('data-count')) };
+                function() { return { "value": parseInt($(this).attr('data-value'), 10),
+                                      "count": parseInt($(this).attr('data-count'), 10) };
                            });
             var maxCount = d3.max(data, function(d) { return d.count; });
             var currentMin = d3.min(data, function(d) { return d.value; });
@@ -59,7 +59,7 @@ jQuery(document).ready(
                     $(element).after(i);
                 }
                 $(i).parents("form").submit();
-            };
+            }
 
             var brush = d3.svg.brush()
                 .x(x_scale)
@@ -136,7 +136,7 @@ jQuery(document).ready(
                           });
 
             return barchart;
-        };
+        }
         $(".barchartwidget").each( function () {
                                        draw_barchart(this);
                                    });
@@ -160,7 +160,7 @@ jQuery(document).ready(
             $('#selection_menu').text(selection.length + (selection.length > 1 ? " éléments sélectionnés" : " élément sélectionné"));
             $('#selection_popup').toggleClass("emptySelection", ! selection.length);
             $('#selection').attr('value', selection.join(","));
-        };
+        }
 
         $("#selection_all").click( function () {
                                        $("div.work").addClass("selected");
@@ -244,7 +244,7 @@ jQuery(document).ready(
                     .bind("ivieweronstopdrag", update_frame)
                     .bind("ivieweronstartload", function () { $("#lightbox img").hide(); $(".loading").show(); })
                     .bind("ivieweronfinishload", function () { $("#lightbox img").show(); $(".loading").hide(); update_frame(); });
-            };
+            }
 
             $('#lightbox').css('width', $(window).width() - 225)
                 .attr('data-url', url)
@@ -257,7 +257,7 @@ jQuery(document).ready(
         // Display infopanel about a work
         // It can be given either a .vignette anchor or a div.work element
         function display_infopanel(self) {
-            var cote = undefined;
+            var cote;
             var work;
             var vignette;
             if (typeof self === "string" || typeof self === "number") {
@@ -306,12 +306,12 @@ jQuery(document).ready(
                                                  });
                           if ($("#lightbox:visible").length > 0) {
                               // Display first image, if available, in existing lightbox. Else, close inbox.
-                              if ($("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } ).length == 0)
+                              if ($("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } ).length === 0)
                                   $('#lightbox').hide();
                           }
                       }
                   });
-        };
+        }
 
         $('.vignette').click(function(e) {
                                  //prevent default action (hyperlink)
