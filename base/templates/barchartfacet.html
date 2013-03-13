@@ -2,7 +2,7 @@
 
 {% with param=field|add:"__range" values=facets.fields|getattr:field facetRange=range|getattr:field %}
 {% with active=selected_facets|getattr:param %}
-    <div class="facetbox barchartbox" data-field="{{ field }}">
+    <div class="facetbox barchartbox{% if active|length %} active{% endif %}" data-field="{{ field }}">
       <p class="facettitle">{{ name }} <span class="facetRange">{{ rangeMin }} - {{ rangeMax }}</span> <span class="facetcount">{{ values|length }}</span> {% if active|length %}<a title="Supprimer cette facette" class="clear-facet"></a><input type="hidden" name="f" value="{{ param }}:{{ active.0 }}" />{% endif %}
 </p>
       <div class="facetcontent barchart">

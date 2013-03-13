@@ -306,8 +306,8 @@ jQuery(document).ready(
 
         // Hide/show facets
         $(".facetcontent").hide("fast", function () {
-                                    $(".active-facet").parents(".facetcontent").show();
-                                    $(".barchartbox .active-facet").parent().next().show();
+                                    $(".facetbox.active .facetcontent").show();
+
                                 });
         $(".facettitle").click(function() {
                                    $(".facetcontent").hide("fast");
