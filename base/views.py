@@ -21,7 +21,7 @@ def root(request, *p):
 def get_filtered_queryset(request):
     """Return the QuerySet filtered by the request.
     """
-    options = { 'with_image': "", 'with_revision': "" }
+    options = { 'active': False, 'with_image': "", 'with_revision': "" }
     basesqs = SearchQuerySet()
 
     # selection is specified. First filter against the items.
@@ -37,6 +37,7 @@ def get_filtered_queryset(request):
             kw = { opt: True }
             basesqs = basesqs.filter(**kw)
             options[opt] = "on"
+            options['active'] = True
 
     # Parse query string
     options['query_string'] = request.GET.get('q', "").strip()
@@ -99,11 +100,11 @@ def works(request, *p, **kw):
         'overlay_fields': (
                 ('', 'Aucun'),
                 ('status', 'Statut'),
-                ('old_references', 'Référence'),
-                ('revision', 'Révisions'),
+                ('old_references', 'RÃ©fÃ©rence'),
+                ('revision', 'RÃ©visions'),
                 ('technique', 'Technique'),
                 ('support', 'Support'),
-                ('creation_date_start', 'Année de création'),
+                ('creation_date_start', 'AnnÃ©e de crÃ©ation'),
                 ),
         'info_overlay': request.REQUEST.get('info_overlay', ''),
         }, context_instance=RequestContext(request))

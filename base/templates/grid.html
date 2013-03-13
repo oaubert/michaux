@@ -62,24 +62,29 @@
       </ul>
     </li>
 
-    <li><label for="checkbox_images">Images</label>
-      <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Uniquement œuvres avec image"/>
-      <label for="checkbox_revision">Révisions</label>
-      <input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Uniquement œuvres avec champ révision non vide" /></li>
+    <div class="facets">
 
-    <li><label for="checkbox_single_technique">Technique</label>
-      <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Uniquement œuvres avec une seule technique"/></li>
+      <div class="facetbox{% if options.active %} active{% endif %}">
+        <p class="facettitle">Options{% if options.active %}<a title="Supprimer toutes les options" class="clear-facet"></a>{% endif %}</p>
+        <div class="facetcontent">
+          <ul>
+            <li><label for="checkbox_images">Images</label>
+              <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Uniquement œuvres avec image"/></li>
+            <li><label for="checkbox_revision">Révisions</label>
+              <input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Uniquement œuvres avec champ révision non vide" /></li>
 
-    <li><label for="info_overlay">Overlay</label>
-      <select id="info_overlay" name="info_overlay" onchange="this.form.submit()">
-        {% for opt in overlay_fields %}
-        <option value="{{ opt.0 }}" {% ifequal info_overlay opt.0 %}selected="1"{% endifequal %}>{{ opt.1 }}</option>
-        {% endfor %}
-      </select>
-    </li>
-  </ul>
+            <li><label for="checkbox_single_technique">Technique unique</label>
+              <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Ne pas afficher les techniques mixtes"/></li>
 
-  <div class="facets">
+            <li><label for="info_overlay">Overlay</label><select id="info_overlay" name="info_overlay" onchange="this.form.submit()">
+              {% for opt in overlay_fields %}
+              <option value="{{ opt.0 }}" {% ifequal info_overlay opt.0 %}selected="1"{% endifequal %}>{{ opt.1 }}</option>
+              {% endfor %}
+              </select>
+          </li>
+          </ul>
+        </div>
+      </div>
 
     {% include "textfacet.html" with name="Statut" field="status" %}
     {% include "textfacet.html" with name="Technique" field="technique" %}
