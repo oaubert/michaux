@@ -8,7 +8,7 @@ jQuery(document).ready(
             var fieldname = $(element).attr('data-field');
             var minValue = parseInt($(element).attr("data-min"));
             var maxValue = parseInt($(element).attr("data-max"));
-            var title = $(element).find(".facetRange");
+            var title = $(element).parents(".facetbox").find(".facetRange");
             function facet_title(min, max) {
                 if (min === undefined)
                     title.text("N/C");
