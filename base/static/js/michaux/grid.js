@@ -374,7 +374,7 @@ jQuery(document).ready(
                 $(this).after($("<input />").attr({
                                                       type: "hidden",
                                                       name: "f",
-                                                      value: field + ":" + $(this).text()
+                                                      value: field + "_exact:" + $(this).text()
                                                   }));
             }
             // Resubmit form

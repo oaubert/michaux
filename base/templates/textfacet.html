@@ -2,7 +2,7 @@
 
     {% with param=field|add:"_exact" %}
     {% with values=facets.fields|getattr:field active=selected_facets|getattr:param %}
-    <div class="facetbox" data-field="{{ param }}">
+    <div class="facetbox" data-field="{{ field }}">
       <p class="facettitle">{{ name }} <span class="facetcount">{{ values|length }}</span>{% if active|length %}<a title="Supprimer toutes ces facettes" class="clear-facet"></a>{% endif %}</p>
       <div class="facetcontent">
         <ul>
