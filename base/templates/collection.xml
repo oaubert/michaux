@@ -30,26 +30,26 @@
         </Facet>
         {% for t in w.techniques %}
         <Facet Name="Technique">
-          <String Value="{{ t|unaccent }}"/>
+          <String Value="{{ t|unaccent|default:'Vide' }}"/>
         </Facet>
         {% endfor %}
         <Facet Name="Support">
-          <String Value="{{ w.support|unaccent }}"/>
+          <String Value="{{ w.support|unaccent|default:'Vide' }}"/>
         </Facet>
         <Facet Name="Serie">
-          <String Value="{{ w.serie|unaccent }}"/>
+          <String Value="{{ w.serie|unaccent|default:'Vide' }}"/>
         </Facet>
         <Facet Name="Fiche">
           <Link Name="Fiche" Href="/base/work/{{ w.cote }}"/>
         </Facet>
         <Facet Name="Annee">
-          <Number Value="{{ w.creation_date_start }}"/>
+          <Number Value="{{ w.creation_date_start|default:'0' }}"/>
         </Facet>
         <Facet Name="Hauteur">
-          <Number Value="{{ w.height }}"/>
+          <Number Value="{{ w.height|default:'0' }}"/>
         </Facet>
         <Facet Name="Largeur">
-          <Number Value="{{ w.width }}"/>
+          <Number Value="{{ w.width|default:'0' }}"/>
         </Facet>
       </Facets>
     </Item>
