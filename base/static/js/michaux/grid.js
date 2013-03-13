@@ -305,13 +305,11 @@ jQuery(document).ready(
                                });
 
         // Hide/show facets
-        $(".facetcontent").hide("fast", function () {
-                                    $(".facetbox.active .facetcontent").show();
-
-                                });
+        $(".facetbox:not(.active) .facetcontent").hide("fast");
         $(".facettitle").click(function() {
-                                   $(".facetcontent").hide("fast");
-                                   $(this).next().show("fast");
+                                   var f = $(this).siblings(".facetcontent");
+                                   $(".facetcontent").not(f).hide("fast");
+                                   f.show("fast");
                                });
 
         michaux.display_infopanel = display_infopanel;
