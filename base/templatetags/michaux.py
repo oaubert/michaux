@@ -1,6 +1,7 @@
 import re
 import urllib
 import unicodedata
+import __builtin__
 
 from django.template.defaultfilters import stringfilter
 from django import template
@@ -88,10 +89,12 @@ def dzi(url):
     return url.replace('.jpg', '.dzi').replace('images/', 'cache/pivot/')
 
 @register.filter
-def getattr (obj, args):
+def getattr(obj, args):
     """Try to get an attribute from an object.
 
     Example: {% if block|getattr:"editable,True" %}
+
+    If the object is a dictionary, then use the name as a key instead.
 
     Beware that the default is always a string, if you want this
     to return False, pass an empty second argument:
@@ -103,14 +106,14 @@ def getattr (obj, args):
     except ValueError:
         (attribute, default) = args, ''
 
-    try:
-        attr = obj.__getattribute__(attribute)
-    except AttributeError:
-        attr = obj.__dict__.get(attribute, default)
-    except:
-        attr = default
+    val = __builtin__.getattr(obj, attribute, None)
+    if val is None:
+        try:
+            val = obj.get(attribute, default)
+        except AttributeError:
+            val = default
 
-    if hasattr(attr, '__call__'):
-        return attr.__call__()
+    if hasattr(val, '__call__'):
+        return val.__call__()
     else:
-        return attr
+        return val
