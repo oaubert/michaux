@@ -11,7 +11,7 @@
           <li>{% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
             {% if work.creation_date_start %}<a class="facetvalue" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
             {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}</li>
-          <li>{{ work.height }}mm x {{ work.width }}mm</li>
+          <li>{{ work.height }} x {{ work.width }} mm</li>
           {% if work.inscription_set.count %}
           <li><strong>Inscriptions</strong>
             <ul>
