@@ -26,7 +26,7 @@ jQuery(document).ready(
             facet_title(currentMin, currentMax);
 
             // add the canvas to the DOM
-            var width = $(element).width() - 16;
+            var width = $(element).parents(".facetbox").width() - 16;
             // FIXME: determine dynamically
             var height = 120 - 30; // div height - title height - slider height
 

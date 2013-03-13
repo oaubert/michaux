@@ -207,6 +207,10 @@ div.facetbox.barchartbox {
     display: none;
 }
 
+.active .facetcontent {
+    display: block;
+}
+
 .facettitle {
     margin: 0;
     background-color: #fff;
