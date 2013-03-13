@@ -3,17 +3,18 @@
 import unicodecsv as csv
 import datetime
 
-from gettext import gettext as _
-
+from django.utils.translation import ugettext_lazy as _
 from django.forms import TextInput, Textarea
 from django.db import models
-from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 from django.conf import settings
 from django.contrib import admin
-from base.forms import ImageModelForm
 from django.contrib.admin import util as admin_util
 from django.http import HttpResponse
+
 import coop_tag
+
+from base.forms import ImageModelForm
+from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 
 FORMFIELD_OVERRIDES = {
         models.CharField: {'widget': TextInput(attrs={'size': '24'})},
@@ -90,6 +91,40 @@ def export_model_as_csv(modeladmin, request, queryset):
     return response
 export_model_as_csv.short_description = _('Exporter au format CSV')
 
+class WorkSelectionFilter(admin.SimpleListFilter):
+    title = _('Selection')
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'selection'
+
+    def value(self):
+        v = self.used_parameters.get(self.parameter_name, "")
+        if v:
+            return [ int(c) for c in v.split(",") ]
+        else:
+            return []
+
+    def has_output(self):
+        return True
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return []
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        return queryset.filter(cote__in=self.value())
+
 class WorkAdmin(admin.ModelAdmin):
 
     class Media:
@@ -112,7 +147,7 @@ class WorkAdmin(admin.ModelAdmin):
     list_editable = ( 'status', 'technique', 'support', 'certificate', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty')
     list_display_links = ( 'cote', 'work_thumbnail' )
     search_fields = [ 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'revision' ]
-    list_filter = ( 'status', 'authentication_source', 'serie', 'creation_date_start', 'technique', 'support' )
+    list_filter = ( 'status', 'serie', 'technique', 'support', 'creation_date_start', WorkSelectionFilter)
     save_on_top = True
     actions = ( export_model_as_csv, )
     exportable_fields = ( 'cote', 'authentication_source', 'old_references', 'note_references', 'certificate', 'modified', 'status', 'technique', 'note_technique', 'support', 'support_details', 'note_support', 'serie', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty', 'creation_date_alternative', 'note_creation_date', 'height', 'width', 'comment', 'revision')
