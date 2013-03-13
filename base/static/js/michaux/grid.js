@@ -152,6 +152,24 @@ jQuery(document).ready(
                                       }
                                       });
 
+        /*
+         * Selection menu actions
+         */
+        function update_selection_menu () {
+            var selection = michaux.getSelection();
+            $('#selection_menu').text(selection.length + (selection.length > 1 ? " éléments sélectionnés" : " élément sélectionné"));
+            $('#selection_popup').toggleClass("emptySelection", ! selection.length);
+            $('#selection').attr('value', selection.join(","));
+        };
+
+        $("#selection_all").click( function () {
+                                       $("div.work").addClass("selected");
+                                       update_selection_menu();
+                                   } );
+        $("#selection_none").click( function () {
+                                        $("div.work.selected").removeClass("selected");
+                                        update_selection_menu();
+                                    } );
         $("#selection_open").click( function () {
                                         var selection = michaux.getSelection();
                                         $("#selection").attr("value", selection.join(","))
@@ -163,6 +181,11 @@ jQuery(document).ready(
                                                return;
                                            document.location.pathname = document.location.pathname + '../compare/' + selection[0] + '/' + selection[1];
                                        } );
+        $("#selection_edit").click( function () {
+                                        var selection = michaux.getSelection();
+                                        // FIXME: get the admin path from somewhere
+                                        document.location = document.location.pathname + '../../admin/base/work/?selection=' + selection.join(",");
+                                    } );
 
         // Display a custom, basic lightbox component
         function lightbox(url, thumbnail) {
@@ -299,9 +322,7 @@ jQuery(document).ready(
         // Select/unselect items
         $("a.selection").click(function () {
                                    $(this).parents("div.work").toggleClass("selected");
-                                   var selection = michaux.getSelection();
-                                   $('#selection_menu').text(selection.length + (selection.length > 1 ? " éléments sélectionnés" : " élément sélectionné"));
-                                   $('#selection').attr('value', selection.join(","));
+                                   update_selection_menu();
                                });
 
         // Hide/show facets

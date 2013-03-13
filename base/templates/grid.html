@@ -53,14 +53,19 @@
 
     <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ options.query_string }}" />
       <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
-    <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" />{% with selcount=options.selectionset|length %}<a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>{% endwith %}
 
-      <ul id="selection_popup">
-        <li><a id="selection_compare">Comparer</a></li>
-        <li><a id="selection_open">Afficher</a></li>
-        <!-- <li><a id="selection_tag">Tagguer</a></li> -->
+    {% with selcount=options.selectionset|length %}
+    <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" /><a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>
+
+      <ul {% if not selcount %}class="emptySelection"{% endif %} id="selection_popup">
+        <li><a id="selection_all">Tout sélectionner</a></li>
+        <li class="needSelection"><a id="selection_none">Tout déselectionner</a></li>
+        <li class="needSelection"><a id="selection_compare">Comparer</a></li>
+        <li class="needSelection"><a id="selection_open">Afficher</a></li>
+        <li class="needSelection"><a id="selection_edit">Éditer</a></li>
       </ul>
     </li>
+    {% endwith %}
 
     <div class="facets">
 

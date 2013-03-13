@@ -349,7 +349,7 @@ a.clear-facet, .barchartbox .active-facet {
     top: 0;
     right: 0px;
     z-index: 5;
-    width: 5em;
+    width: 10em;
     display: none;
     background-color: #fff;
     opacity: 0.8;
@@ -358,13 +358,16 @@ a.clear-facet, .barchartbox .active-facet {
 
 #selection_popup li {
     list-style: none;
-    display: inline;
-    width: 12em;
+    display: list-item;
 }
 
 #selection_popup li:hover {
     background-color: #ddd;
     color: #444;
+}
+
+#selection_popup.emptySelection li.needSelection {
+    opacity: 0.4;
 }
 
 .image_reference {
