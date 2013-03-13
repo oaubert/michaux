@@ -100,11 +100,11 @@ def works(request, *p, **kw):
         'overlay_fields': (
                 ('', 'Aucun'),
                 ('status', 'Statut'),
-                ('old_references', 'RÃ©fÃ©rence'),
-                ('revision', 'RÃ©visions'),
+                ('old_references', 'Référence'),
+                ('revision', 'Révisions'),
                 ('technique', 'Technique'),
                 ('support', 'Support'),
-                ('creation_date_start', 'AnnÃ©e de crÃ©ation'),
+                ('creation_date_start', 'Année de création'),
                 ),
         'info_overlay': request.REQUEST.get('info_overlay', ''),
         }, context_instance=RequestContext(request))
