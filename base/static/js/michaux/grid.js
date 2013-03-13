@@ -351,7 +351,13 @@ jQuery(document).ready(
             $("#current_page").attr('value', p)[0].form.submit();
         };
 
-        michaux.select_facet = function (e) {
+        michaux.clear_facet = function (e) {
+            e.preventDefault();
+            var i = $(this).parents(".facetbox").find("input").remove();
+            $(this).parents("form").submit();
+        };
+
+        michaux.toggle_facet = function (e) {
             e.preventDefault();
             var i = $(this).siblings("input");
             if (i.length) {
@@ -362,7 +368,7 @@ jQuery(document).ready(
                 // facet: its value is the text of the activating
                 // anchor.
                 // The active-facet anchor (which can also call
-                // select_facet) cannot be it in this case, since it
+                // toggle_facet) cannot be it in this case, since it
                 // is present only if the facet is defined.
                 var field = $(this).parents(".facetbox").attr("data-field");
                 $(this).after($("<input />").attr({
@@ -374,8 +380,9 @@ jQuery(document).ready(
             // Resubmit form
             $(this).parents("form").submit();
         };
-        $(".facetitemlabel").on("click", michaux.select_facet);
-        $(".active-facet").on("click", michaux.select_facet);
+        $(".facetitemlabel").on("click", michaux.toggle_facet);
+        $(".active-facet").on("click", michaux.toggle_facet);
+        $(".clear-facet").on("click", michaux.clear_facet);
 
         // Keyboard handling
         $(document).keypress(function (e) {

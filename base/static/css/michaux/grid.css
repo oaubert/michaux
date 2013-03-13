@@ -252,7 +252,7 @@ div.facetbox li:hover {
     background-color: #dddddd;
 }
 
-a.active-facet {
+a.active-facet, a.clear-facet {
     text-decoration: none;
     padding: 14px 0 0 0;
     background: #fff url(../../icons/close.png) no-repeat center center;
@@ -261,7 +261,7 @@ a.active-facet {
     left: -10px;
 }
 
-.barchartbox .active-facet {
+a.clear-facet, .barchartbox .active-facet {
     left: 166px;
 }
 
