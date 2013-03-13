@@ -86,55 +86,14 @@
     {% include "textfacet.html" with name="Support" field="support" %}
     {% include "textfacet.html" with name="Série" field="serie" %}
 
-    <div class="facetbox barchartbox" data-field="creation_date_start__range">
-      <p class="facettitle">Création <span id="histogramRange">{{ range.creation_date_start.creation_date_start__min }} - {{ range.creation_date_start.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span>{% if "creation_date_start__range" in selected_facets %}<a class="active-facet"></a><input type="hidden" name="f" value="creation_date_start__range:{{ selected_facets.creation_date_start__range.0 }}" />{% endif %}
-</p>
-      <div class="facetcontent barchart">
-        <div data-min="{{ range.creation_date_start.creation_date_start__min }}" data-max="{{ range.creation_date_start.creation_date_start__max }}" id="creationHistogram">
-          {% for h in facets.fields.creation_date_start %}
-          <span class="facetdata" data-year="{{ h.0 }}" data-count="{{ h.1 }}"></span>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+    {% include "barchartfacet.html" with name="Création" field="creation_date_start" rangeMin=range.creation_date_start.creation_date_start__min rangeMax=range.creation_date_start.creation_date_start__max %}
 
-    <div class="facetbox barchartbox" data-field="height__range">
-      <p class="facettitle">Hauteur <span id="heightRange">{{ range.height.height__min }} - {{ range.height.height__max }}</span> <span class="facetcount">{{ facets.fields.height|length }}</span> {% if "height__range" in selected_facets %}<a class="active-facet"></a><input type="hidden" name="f" value="height__range:{{ selected_facets.height__range.0 }}" />{% endif %}
-</p>
-      <div class="facetcontent barchart">
-        <div data-min="{{ range.height.height__min }}" data-max="{{ range.height.height__max }}" id="heightHistogram">
-          {% for h in facets.fields.height %}
-          <span class="facetdata" data-height="{{ h.0 }}" data-count="{{ h.1 }}"></span>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-
-    <div class="facetbox barchartbox" data-field="width__range">
-      <p class="facettitle">Largeur <span id="widthRange">{{ range.width.width__min }} - {{ range.width.width__max }}</span> <span class="facetcount">{{ facets.fields.width|length }}</span> {% if "width__range" in selected_facets %}<a class="active-facet"></a><input type="hidden" name="f" value="width__range:{{ selected_facets.width__range.0 }}" />{% endif %}
-</p>
-      <div class="facetcontent barchart">
-        <div data-min="{{ range.width.width__min }}" data-max="{{ range.width.width__max }}" id="widthHistogram">
-          {% for h in facets.fields.width %}
-          <span class="facetdata" data-width="{{ h.0 }}" data-count="{{ h.1 }}"></span>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+    {% include "barchartfacet.html" with name="Hauteur" field="height" rangeMin=range.height.height__min rangeMax=range.height.height__max %}
+    {% include "barchartfacet.html" with name="Largeur" field="width" rangeMin=range.width.width__min rangeMax=range.width.width__max %}
 
     {% include "textfacet.html" with name="Exposition" field="exhibition" %}
 
-    <div class="facetbox" data-field="tags_exact">
-      <p class="facettitle">Tags <span class="facetcount">{{ facets.fields.tags|length }}</span></p>
-      <div class="facetcontent">
-        <ul>
-          {% for tags in facets.fields.tags %}
-          <li>{% if tags.0 in selected_facets.tags_exact %}<input type="hidden" name="f" value="tags_exact:{{ tags.0 }}" /><a class="active-facet"></a>{% endif %}<a class="facetitemlabel">{{ tags.0 }}</a> <span class="facetitemcount">{{ tags.1 }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+    {% include "textfacet.html" with name="Tags" field="tags" %}
 
   </div>
 

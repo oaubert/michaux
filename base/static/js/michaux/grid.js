@@ -3,158 +3,143 @@ var michaux = {};
 
 jQuery(document).ready(
     function($) {
-            function draw_barchart (selector, fieldname, data, minValue, maxValue, titleselector) {
-                var maxCount = d3.max(data, function(d) { return d.count; });
-                var currentMin = d3.min(data, function(d) { return d.value; });
-                var currentMax = d3.max(data, function(d) { return d.value; });
-                if (currentMin === undefined || currentMax === undefined) {
-                    $(titleselector).text("N/C");
-                } else {
-                    $(titleselector).text(currentMin + " - " + currentMax);
-                }
-
-                // add the canvas to the DOM
-                var width = $(selector).width() - 16;
-                // FIXME: determine dynamically
-                var height = 120 - 30; // div height - title height - slider height
-
-                var barchart = d3.select(selector)
-                    .append("svg:svg")
-                    .attr("width", width)
-                    .attr("height", height);
-
-                var g = barchart.append("g")
-                    .attr("transform", "scale(1, -1) translate(0, -" + height + ")");
-
-                var barWidth = Math.max(width / (maxValue - minValue), 2);
-
-                var x_scale = d3.scale.linear().domain([minValue, maxValue]).range([0, width - barWidth ]).interpolate(d3.interpolateRound).clamp(true);
-                var y_scale = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
-
-                function select_range(start, end) {
-                    var val = fieldname + "__range:" + start + "-" + end;
-                    var i = $(selector).siblings("input");
-                    if (i.length) {
-                        // There is already an input field. Simply replace its value.
-                        i.attr("value", val);
-                    } else {
-                        // No input field. Create it.
-                        i = $("<input />").attr({
-                                                    type: "hidden",
-                                                    name: "f",
-                                                    value: val
-                                                });
-                        $(selector).after(i);
-                    }
-                    $(i).parents("form").submit();
-                };
-
-                var brush = d3.svg.brush()
-                    .x(x_scale)
-                    .on("brush", function () {
-                            var b = brush.empty() ? x_scale.domain() : brush.extent();
-                            $(titleselector).text(Math.floor(b[0]) + " - " + Math.floor(b[1]));
-                    })
-                    .on("brushend", function () {
-                            if (! brush.empty()) {
-                                var b = brush.extent();
-                                select_range(Math.floor(b[0]), Math.floor(b[1]));
-                            } else {
-                                select_range();
-                            }
-                        });
-
-                g.selectAll("line")
-                    .data(y_scale.ticks(5))
-                    .enter().append("line")
-                    .attr("x1", 0)
-                    .attr("x2", width)
-                    .attr("y1", y_scale)
-                    .attr("y2", y_scale)
-                    .style("stroke", "#ccc");
-
-                var g_brush = g.append("g")
-                    .attr("class", "x brush")
-                    .call(brush)
-                    .selectAll("rect")
-                    .attr("y", 0)
-                    .attr("height", height);
-
-                g.selectAll(".bar")
-                    .data(data)
-                    .enter()
-                    .append("svg:rect")
-                    .attr("class", "bar")
-                    .attr("x", function(d, index) { return x_scale(d.value); })
-                    .attr("y", function(d) { return 0; })
-                    .attr("svg:title", function(d) { return d.value + ' (' + d.count + ')'; })
-                    .attr("height", function(d) { return y_scale(d.count); })
-                    .attr("width", barWidth)
-                    .on("mousedown", function (d) {
-                            select_range(d.value, d.value);
-                        });
-
-
-                barchart.x = x_scale;
-                barchart.y = y_scale;
-
-                $('svg rect.bar').tipsy({
-                                            gravity: 'sw',
-                                            html: false
-                                        });
-                d3.rebind(barchart, brush, "on");
-
-                // Add slider
-                var slidername = fieldname + '_range_slider';
-                $(selector).after('<div class="facetslider" id="' + slidername + '"></div>');
-                $('#' + slidername).slider({
-                                range: true,
-                                min: minValue,
-                                max: maxValue,
-                                values: [ currentMin, currentMax ],
-                                slide: function(event, ui) {
-                                    var range = ui.values;
-                                    $(titleselector).text(range[0] + " - " + range[1]);
-                                },
-                                stop: function(event, ui) {
-                                    var range = ui.values;
-                                    select_range(range[0], range[1]);
-                                }
-                            });
-
-                return barchart;
+        // FIXME: Make that a jquery plugin?
+        function draw_barchart (element) {
+            var fieldname = $(element).attr('data-field');
+            var minValue = parseInt($(element).attr("data-min"));
+            var maxValue = parseInt($(element).attr("data-max"));
+            var title = $(element).find(".facetRange");
+            function facet_title(min, max) {
+                if (min === undefined)
+                    title.text("N/C");
+                else
+                    title.text(min + " - " + max);
             };
 
+            var data = $(element).find(".facetdata").map(
+                function() { return { "value": parseInt($(this).attr('data-value')),
+                                      "count": parseInt($(this).attr('data-count')) };
+                           });
+            var maxCount = d3.max(data, function(d) { return d.count; });
+            var currentMin = d3.min(data, function(d) { return d.value; });
+            var currentMax = d3.max(data, function(d) { return d.value; });
+            facet_title(currentMin, currentMax);
 
-        document.datechart = draw_barchart("#creationHistogram",
-                                           "creation_date_start",
-                                           $("#creationHistogram [data-year]").map(
-                                               function() { return { "value": parseInt($(this).attr('data-year')),
-                                                                     "count": parseInt($(this).attr('data-count')) };
-                                                          }),
-                                           parseInt($("#creationHistogram").attr("data-min")),
-                                           parseInt($("#creationHistogram").attr("data-max")),
-                                           "#histogramRange");
+            // add the canvas to the DOM
+            var width = $(element).width() - 16;
+            // FIXME: determine dynamically
+            var height = 120 - 30; // div height - title height - slider height
 
-        document.heightchart = draw_barchart("#heightHistogram",
-                                             "height",
-                                             $("#heightHistogram [data-height]").map(
-                                                 function() { return { "value": parseInt($(this).attr('data-height')),
-                                                                       "count": parseInt($(this).attr('data-count')) };
-                                                            }),
-                                             parseInt($("#heightHistogram").attr("data-min")),
-                                             parseInt($("#heightHistogram").attr("data-max")),
-                                             "#heightRange");
+            var barchart = d3.select(element)
+                .append("svg:svg")
+                .attr("width", width)
+                .attr("height", height);
 
-        document.widthchart = draw_barchart("#widthHistogram",
-                                             "width",
-                                            $("#widthHistogram [data-width]").map(
-                                                function() { return { "value": parseInt($(this).attr('data-width')),
-                                                                      "count": parseInt($(this).attr('data-count')) };
-                                                           }),
-                                            parseInt($("#widthHistogram").attr("data-min")),
-                                            parseInt($("#widthHistogram").attr("data-max")),
-                                            "#widthRange");
+            var g = barchart.append("g")
+                .attr("transform", "scale(1, -1) translate(0, -" + height + ")");
+
+            var barWidth = Math.max(width / (maxValue - minValue), 2);
+
+            var x_scale = d3.scale.linear().domain([minValue, maxValue]).range([0, width - barWidth ]).interpolate(d3.interpolateRound).clamp(true);
+            var y_scale = d3.scale.linear().domain([0, maxCount]).range([0, height - 5]);
+
+            function select_range(start, end) {
+                var val = fieldname + "__range:" + start + "-" + end;
+                var i = $(element).siblings("input");
+                if (i.length) {
+                    // There is already an input field. Simply replace its value.
+                    i.attr("value", val);
+                } else {
+                    // No input field. Create it.
+                    i = $("<input />").attr({
+                                                type: "hidden",
+                                                name: "f",
+                                                value: val
+                                            });
+                    $(element).after(i);
+                }
+                $(i).parents("form").submit();
+            };
+
+            var brush = d3.svg.brush()
+                .x(x_scale)
+                .on("brush", function () {
+                        var b = brush.empty() ? x_scale.domain() : brush.extent();
+                        facet_title(Math.floor(b[0]), Math.floor(b[1]));
+                    })
+                .on("brushend", function () {
+                        if (! brush.empty()) {
+                            var b = brush.extent();
+                            select_range(Math.floor(b[0]), Math.floor(b[1]));
+                        } else {
+                            select_range();
+                            }
+                    });
+
+            g.selectAll("line")
+                .data(y_scale.ticks(5))
+                .enter().append("line")
+                .attr("x1", 0)
+                .attr("x2", width)
+                .attr("y1", y_scale)
+                .attr("y2", y_scale)
+                .style("stroke", "#ccc");
+
+            var g_brush = g.append("g")
+                .attr("class", "x brush")
+                .call(brush)
+                .selectAll("rect")
+                .attr("y", 0)
+                .attr("height", height);
+
+            g.selectAll(".bar")
+                .data(data)
+                .enter()
+                .append("svg:rect")
+                .attr("class", "bar")
+                .attr("x", function(d, index) { return x_scale(d.value); })
+                .attr("y", function(d) { return 0; })
+                .attr("svg:title", function(d) { return d.value + ' (' + d.count + ')'; })
+                .attr("height", function(d) { return y_scale(d.count); })
+                .attr("width", barWidth)
+                .on("mousedown", function (d) {
+                        select_range(d.value, d.value);
+                    });
+
+
+            barchart.x = x_scale;
+            barchart.y = y_scale;
+
+            $('svg rect.bar').tipsy({
+                                        gravity: 'sw',
+                                        html: false
+                                    });
+            d3.rebind(barchart, brush, "on");
+
+            // Add slider
+            var slider = $("<div />").addClass("facetslider").
+                attr("id", fieldname + '_range_slider');
+            $(element).after(slider);
+            slider.slider({
+                              range: true,
+                              min: minValue,
+                              max: maxValue,
+                              values: [ currentMin, currentMax ],
+                              slide: function(event, ui) {
+                                  var range = ui.values;
+                                  facet_title(range[0], range[1]);
+                              },
+                              stop: function(event, ui) {
+                                  var range = ui.values;
+                                  select_range(range[0], range[1]);
+                              }
+                          });
+
+            return barchart;
+        };
+        $(".barchartwidget").each( function () {
+                                       draw_barchart(this);
+                                   });
 
         $( "#zoomslider" ).slider({
                                       range: false,
