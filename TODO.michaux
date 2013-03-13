@@ -1,3 +1,4 @@
+-*- org -*-
 * Génération dzi
 
 Images/thumbnails are generated on-demand: trigger generation with
@@ -14,25 +15,17 @@ Images/thumbnails are generated on-demand: trigger generation with
 
 update_index -> cron
 
-* Modèle
-** Ajouter un champ "Source de l'authentification"
-** Structurer le champ technique (séparés par des ,) -> modif search_indexes
-
 * Grille
-
 ** transform template <form> into a Django Form ?
 ** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette) (?)
-** Facettes: à partir du moment où une facette a une sélection, afficher la croix en face du titre de la facette (cf barchartfacet)
 ** Formulaire d'ajout de tag + autocomplétion
 *** Custom TagAutoSuggest generates selectionAdded on init
-
 ** Autocomplete on generic query widget
-** Centrer verticalement les images
 ** Version REST/JSON (cf rest-framework)
 
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
-** Rendre éditable facilement ?
+** Rendre éditable facilement (XTiger) ?
 ** ajout microdata schema.org
 ** ajout info semantique format CIDOC-CRM
 - http://books.openedition.org/editionsmsh/319
@@ -52,9 +45,6 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 
 ** utiliser des onglets pour les catégories ?
 ** Afficher la liste complète des tags existants
-
-* Table admin
-** Action table admin: "ajouter exposition"
 
 * Interaction
 ** Vue canevas 2D pour visu+classification (cf kineticjs)
