@@ -104,7 +104,7 @@ def works(request, *p, **kw):
                 ('revision', 'Révisions'),
                 ('technique', 'Technique'),
                 ('support', 'Support'),
-                ('creation_date_start', 'Année de création'),
+                ('creation_date_start', 'Année'),
                 ),
         'info_overlay': request.REQUEST.get('info_overlay', ''),
         }, context_instance=RequestContext(request))
