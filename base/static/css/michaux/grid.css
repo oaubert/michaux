@@ -19,6 +19,8 @@ div.work {
     padding: 5px;
     position: relative;
     display: table-cell;
+    display: -webkit-flex;
+    display: flex;
     vertical-align: middle;
     text-align: center;
     scale: 1;
@@ -26,6 +28,7 @@ div.work {
 
 div.work a {
     margin: auto;
+    width: 100%;
 }
 
 div.work img {
