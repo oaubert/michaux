@@ -1,6 +1,6 @@
 ﻿a { font-weight:normal; }
 .pv-wrapper { border: 1px solid #D3D4D4; background:#F5F7F9; font-family: 'Segoe UI', Tahoma, Arial, Helvetica, Sans-Serif; font-size:8pt; font-weight:normal; -webkit-tap-highlight-color: rgba(0,0,0,0); }
-.pv-loading { width:89px; height:66px; font-family: Tahoma, Sans-Serif; position:absolute; }
+.pv-loading { width:89px; height:66px; font-family: Tahoma, Sans-Serif; position:absolute; top:150px !important; }
 .pv-loading span { position: absolute; top:66px; left:23px; }
 .pv-toolbarpanel { height: 22px; width: 100%; border-bottom: 1px solid #D3D4D4; padding: 3px 0px 3px 0px; background: #FDFDFD; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDFDFD', endColorstr='#F4F4F4');  background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#F4F4F4));  background: -moz-linear-gradient(top,  #FDFDFD,  #F4F4F4); }
 .pv-toolbarpanel-brandimage { height: 22px; float:left; }
@@ -17,7 +17,7 @@
 .pv-toolbarpanel-sort { width: 90px; }
 .pv-mainpanel { height:659px; }
 .pv-filterpanel { position:absolute; z-index:30; margin-left:5px; margin-top:5px; width: 183px; padding: 0px 3px 0px 3px; background:#FEFEFE; border: 1px solid #C5C5C5; -moz-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 0 0 2px 2px #D7D9DA; -webkit-box-shadow: 0 0 2px 2px #D7D9DA; box-shadow: 0 0 2px 2px #D7D9DA; }
-.pv-filterpanel-version { width:85px; margin-top: 3px; padding: 4px 4px 4px 4px; float:left; font-style:italic; }
+.pv-filterpanel-version { color:#E2E2E2; font-size: 8pt; float:left; height:24px; width:180px; margin-top: 3px; margin-bottom: 3px; padding: 4px 4px 4px 4px;}
 .pv-filterpanel-clearall { width:56px; margin-top: 3px; padding: 4px 4px 4px 4px; float:right; cursor:pointer; color:#97A8B2; background-image: url('../../icons/pivot/FilterPanelClear.png'); background-position	: right center; background-repeat: no-repeat; visibility::hidden; }
 .pv-filterpanel-clearall:hover { background-color:#CBE4F0; }
 .pv-filterpanel-search { margin-top: 9px; margin-bottom:0px; height:24px; border:1px solid #E2E2E2; }
@@ -35,6 +35,42 @@
 .pv-filterpanel-accordion-heading-clear { width:11px; position:absolute; top:6px; right:5px; background-image: url('../../icons/pivot/FilterPanelClear.png'); background-position: center center; background-repeat: no-repeat; cursor:pointer; visibility:hidden; }
 .pv-filterpanel-accordion-facet-list { margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; list-style:none; }
 .pv-filterpanel-accordion-facet-list-item { clear: both; }
+.pv-modal-dialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+.pv-modal-dialog:target { opacity:1;pointer-events: auto;}
+.pv-modal-dialog > div { width: 300px; position: relative;margin: 10% auto;padding: 5px 20px 13px 20px;border-radius: 10px;background: #fff;background: -moz-linear-gradient(#fff, #999);background: -webkit-linear-gradient(#fff, #999);background: -o-linear-gradient(#fff, #999);}
+.pv-modal-dialog-close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+.pv-modal-dialog-close:hover { background: #00d9ff; }
 .pv-viewpanel { position:absolute; }
 .pv-viewpanel-view { display:none; }
 .pv-viewpanel-unabletodisplay { margin-top:60px; margin-left:60px; }
@@ -46,7 +82,7 @@
 .pv-infopanel-controls-navbar { height: 10px; width: 0px; border-left: 1px solid #C8CFD3; margin-left:8px; float: left; }
 .pv-infopanel-controls-navright { height: 10px; width: 10px; margin-left:8px; background-image: url('../../icons/pivot/InfoPanelRight.png'); float: left; cursor:pointer;}
 .pv-infopanel-controls-navrightdisabled { height: 10px; width: 10px; margin-left:8px; background-image: url('../../icons/pivot/InfoPanelRightDisabled.png'); float: left; cursor:pointer;}
-.pv-infopanel-heading { font-size: 12pt; float:left; clear:both; }
+.pv-infopanel-heading { font-size: 12pt; float:left; clear:both;word-break: break-all;}
 .pv-infopanel-details { margin-top: 15px; float: left; clear:both; width:181px; overflow-y:auto; overflow-x:hidden;}
 .pv-infopanel-detail-description { margin-bottom:5px; overflow:hidden; }
 .pv-infopanel-detail-description-more { background-color: #DCECF4; color: #4F7192; cursor:default; padding:5px 3px 5px 3px; margin-bottom:5px; width:28px; }
@@ -98,12 +134,12 @@
  */
 /* IE/Win - Fix animation bug - #4615 */
 .ui-accordion { width: 100%; }
-.ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; margin-bottom: 0px; zoom: 1; border-top: 1px solid #E2E2E2; }
+.ui-accordion .ui-accordion-header {  outline: none; cursor: pointer; position: relative; margin-top: 1px; margin-bottom: 0px; zoom: 1; border-top: 1px solid #E2E2E2; }
 .ui-accordion .ui-accordion-li-fix { display: inline; }
 .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
-.ui-accordion .ui-accordion-header a {width: 80%;  display: block; font-size: 1em; padding: .5em .5em .5em .7em; overflow: hidden; text-overflow: ellipsis; }
+.ui-accordion .ui-accordion-header a { width: 80%;  display: block; font-size: 1em; padding: .5em .5em .5em .7em; overflow: hidden; text-overflow: ellipsis; }
  .ui-accordion-header.ui-state-default a { width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-.ui-accordion-icons .ui-accordion-header a { text-decoration:none; color: #05314A; }
+.ui-accordion-icons .ui-accordion-header a { outline: none; text-decoration:none; color: #05314A; }
 .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
 .ui-accordion .ui-accordion-content { height: 35%; /*padding: 1em 2.2em;*/ border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow-y: auto !important; overflow-x: hidden !important; display: none; zoom: 1; }
 .ui-accordion .ui-accordion-content-active { display: block; }
