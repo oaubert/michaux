@@ -200,6 +200,10 @@ div.facetbox.barchartbox {
     padding-bottom: 4px;
 }
 
+.facetcontent {
+    display: none;
+}
+
 .facettitle {
     margin: 0;
     background-color: #fff;
