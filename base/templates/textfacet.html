@@ -1,0 +1,17 @@
+{% load michaux %}
+
+    {% with param=field|add:"_exact" %}
+    {% with values=facets.fields|getattr:field active=selected_facets|getattr:param %}
+    <div class="facetbox" data-field="{{ param }}">
+      <p class="facettitle">{{ name }} <span class="facetcount">{{ values|length }}</span>{% if active|length %}<a title="Supprimer toutes ces facettes" class="clear-facet"></a>{% endif %}</p>
+      <div class="facetcontent">
+        <ul>
+          {% for item in values %}
+          <li>{% if item.0 in active %}<input type="hidden" name="f" value="{{ param }}:{{ item.0 }}" /><a title="Supprimer cette facette" class="active-facet"></a>{% endif %}<a class="facetitemlabel">{{ item.0 }}</a> <span class="facetitemcount">{{ item.1 }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endwith %}
+    {% endwith %}

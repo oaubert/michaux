@@ -81,53 +81,10 @@
 
   <div class="facets">
 
-    <div class="facetbox" data-field="status_exact">
-      <p class="facettitle">Statut <span class="facetcount">{{ facets.fields.status|length }}</span></p>
-      <div class="facetcontent">
-        <ul>
-          {% for status in facets.fields.status %}
-          <li>{% if status.0 in selected_facets.status_exact %}<input type="hidden" name="f" value="status_exact:{{ status.0 }}" /><a href="michaux.select_facet()" class="active-facet"></a>{% endif %}<a class="facetitemlabel" onclick="michaux.select_facet()">{{ status.0 }}</a> <span class="facetitemcount">{{ status.1 }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-
-    <div class="facetbox" data-field="technique_exact">
-      <p class="facettitle">Technique <span class="facetcount">{{ facets.fields.technique|length }}</span></p>
-      <div class="facetcontent">
-        <ul>
-          {% for technique in facets.fields.technique %}
-          <li>{% if technique.0 in selected_facets.technique_exact %}<input type="hidden" name="f" value="technique_exact:{{ technique.0 }}" /><a class="active-facet"></a>{% endif %}<a class="facetitemlabel">{{ technique.0 }}</a> <span class="facetitemcount">{{ technique.1 }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-
-    <div class="facetbox" data-field="support_exact">
-      <p class="facettitle">Support <span class="facetcount">{{ facets.fields.support|length }}</span></p>
-      <div class="facetcontent">
-        <ul>
-          {% for support in facets.fields.support %}
-          <li>{% if support.0 in selected_facets.support_exact %}<input type="hidden" name="f" value="support_exact:{{ support.0 }}" /><a class="active-facet"></a>{% endif %}<a class="facetitemlabel">{{ support.0 }}</a> <span class="facetitemcount">{{ support.1 }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-
-    <div class="facetbox" data-field="serie_exact">
-      <p class="facettitle">Série <span class="facetcount">{{ facets.fields.serie|length }}</span></p>
-      <div class="facetcontent">
-        <ul>
-          {% for serie in facets.fields.serie %}
-          <li>{% if serie.0 in selected_facets %}<input type="hidden" name="f" value="serie_exact:{{ serie.0 }}" /><a class="active-facet"></a>{% endif %}<a class="facetitemlabel">{{ serie.0 }}</a> <span class="facetitemcount">{{ serie.1 }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+    {% include "textfacet.html" with name="Statut" field="status" %}
+    {% include "textfacet.html" with name="Technique" field="technique" %}
+    {% include "textfacet.html" with name="Support" field="support" %}
+    {% include "textfacet.html" with name="Série" field="serie" %}
 
     <div class="facetbox barchartbox" data-field="creation_date_start__range">
       <p class="facettitle">Création <span id="histogramRange">{{ range.creation_date_start.creation_date_start__min }} - {{ range.creation_date_start.creation_date_start__max }}</span> <span class="facetcount">{{ facets.fields.creation_date_start|length }}</span>{% if "creation_date_start__range" in selected_facets %}<a class="active-facet"></a><input type="hidden" name="f" value="creation_date_start__range:{{ selected_facets.creation_date_start__range.0 }}" />{% endif %}
@@ -165,17 +122,7 @@
       </div>
     </div>
 
-    <div class="facetbox" data-field="exhibition_exact">
-      <p class="facettitle">Exposition <span class="facetcount">{{ facets.fields.exhibition|length }}</span></p>
-      <div class="facetcontent">
-        <ul>
-          {% for exhibition in facets.fields.exhibition %}
-          <li>{% if exhibition.0 in selected_facets.exhibition_exact %}<input type="hidden" name="f" value="exhibition_exact:{{ exhibition.0 }}" /><a class="active-facet"></a>{% endif %}<a class="facetitemlabel">{{ exhibition.0 }}</a> <span class="facetitemcount">{{ exhibition.1 }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+    {% include "textfacet.html" with name="Exposition" field="exhibition" %}
 
     <div class="facetbox" data-field="tags_exact">
       <p class="facettitle">Tags <span class="facetcount">{{ facets.fields.tags|length }}</span></p>
