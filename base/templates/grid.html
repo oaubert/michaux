@@ -86,7 +86,7 @@
     {% include "textfacet.html" with name="Support" field="support" %}
     {% include "textfacet.html" with name="Série" field="serie" %}
 
-    {% include "barchartfacet.html" with name="Création" field="creation_date_start" rangeMin=range.creation_date_start.creation_date_start__min rangeMax=range.creation_date_start.creation_date_start__max %}
+    {% include "barchartfacet.html" with name="Année" field="creation_date_start" rangeMin=range.creation_date_start.creation_date_start__min rangeMax=range.creation_date_start.creation_date_start__max %}
 
     {% include "barchartfacet.html" with name="Hauteur" field="height" rangeMin=range.height.height__min rangeMax=range.height.height__max %}
     {% include "barchartfacet.html" with name="Largeur" field="width" rangeMin=range.width.width__min rangeMax=range.width.width__max %}
