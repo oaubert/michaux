@@ -11,17 +11,20 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     creation_date_start = indexes.IntegerField(model_attr='creation_date_start', faceted=True, null=True)
     creation_date_end = indexes.IntegerField(model_attr='creation_date_end', faceted=True, null=True)
     serie = indexes.CharField(model_attr='serie', faceted=True, null=True)
-    serie_auto = indexes.EdgeNgramField(model_attr='serie')
     technique = indexes.MultiValueField(faceted=True)
-    technique_auto = indexes.EdgeNgramField(model_attr='technique')
     support = indexes.CharField(model_attr='support', faceted=True)
-    support_auto = indexes.EdgeNgramField(model_attr='support')
     height = indexes.IntegerField(model_attr='height', faceted=True)
     width = indexes.IntegerField(model_attr='width', faceted=True)
     with_revision = indexes.BooleanField(null=True)
     with_image = indexes.BooleanField(null=True)
     single_technique = indexes.BooleanField(null=True)
     exhibition = indexes.MultiValueField(faceted=True)
+
+    # Auto fields for completion
+    serie_auto = indexes.EdgeNgramField(model_attr='serie')
+    support_auto = indexes.EdgeNgramField(model_attr='support')
+    technique_auto = indexes.EdgeNgramField(model_attr='technique')
+    authentication_source_auto = indexes.EdgeNgramField(model_attr='authentication_source')
 
     def get_model(self):
         return Work
