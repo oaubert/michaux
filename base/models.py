@@ -242,7 +242,7 @@ class Work(models.Model):
     def __unicode__(self):
         d = {'printable_year': self.printable_year}
         d.update(self.__dict__)
-        return u"#%(cote)d - %(technique)s sur %(support)s (%(printable_year)s)" % d
+        return u"hm%(cote)d - %(technique)s sur %(support)s (%(printable_year)s)" % d
 
 class Inscription(models.Model):
     class Meta:
