@@ -3,7 +3,7 @@
 import unicodecsv as csv
 import datetime
 
-from django.utils.translation import ugettext_lazy as _
+from gettext import gettext as _
 from django.forms import TextInput, Textarea
 from django.db import models
 from django.conf import settings
