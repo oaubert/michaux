@@ -106,11 +106,10 @@ a.details {
 
 .workoverlay {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    color: white;
-    -webkit-text-stroke: 1px #000;
-    text-stroke: 1px #000;
+    bottom: 1px;
+    right: 1px;
+    color: black;
+    background-color: rgba(255, 255, 255, .4);
 }
 
 .pagination {
