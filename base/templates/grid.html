@@ -71,7 +71,7 @@
 
     <div class="facets">
 
-      <div class="facetbox{% if options.active %} active{% endif %}">
+      <div class="facetbox optionbox{% if options.active %} active{% endif %}">
         <p class="facettitle">Options{% if options.active %}<a title="Supprimer toutes les options" class="clear-facet"></a>{% endif %}</p>
         <div class="facetcontent">
           <ul>
@@ -84,7 +84,7 @@
             <li><label for="checkbox_single_technique">Technique unique</label>
               <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Exclure les techniques mixtes"/></li>
 
-            <li><label for="info_overlay"><em>Overlay</em></label><select id="info_overlay" name="info_overlay" onchange="this.form.submit()">
+            <li><label for="info_overlay">Légende</label><select id="info_overlay" name="info_overlay" onchange="this.form.submit()">
               {% for opt in overlay_fields %}
               <option value="{{ opt.0 }}" {% ifequal info_overlay opt.0 %}selected="1"{% endifequal %}>{{ opt.1 }}</option>
               {% endfor %}

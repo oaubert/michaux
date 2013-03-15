@@ -98,7 +98,7 @@ def works(request, *p, **kw):
         'options': options,
         'request': request,
         'overlay_fields': (
-                ('', 'Aucun'),
+                ('', 'Aucune'),
                 ('status', 'Statut'),
                 ('old_references', 'Référence'),
                 ('revision', 'Révisions'),
