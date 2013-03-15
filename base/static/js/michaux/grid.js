@@ -388,11 +388,11 @@ jQuery(document).ready(
 
         // Keyboard handling
         $(document).keypress(function (e) {
-                                 if (e.which == 107 && $("#info_panel:visible").length) {
-                                     // k for previous
+                                 if (e.which == 106 && $("#info_panel:visible").length) {
+                                     // j for previous
                                      michaux.display_infopanel($("#infopanel_prev").attr('data-cote'));
-                                 } else if (e.which == 106 && $("#info_panel:visible").length) {
-                                     // j for next
+                                 } else if (e.which == 107 && $("#info_panel:visible").length) {
+                                     // k for next
                                      michaux.display_infopanel($("#infopanel_next").attr('data-cote'));
                                  } else if (event.which == 99 && $("#info_panel:visible").length) {
                                      // c for "Close"
