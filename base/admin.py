@@ -123,7 +123,11 @@ class WorkSelectionFilter(admin.SimpleListFilter):
         provided in the query string and retrievable via
         `self.value()`.
         """
-        return queryset.filter(cote__in=self.value())
+        sel = self.value()
+        if sel:
+            return queryset.filter(cote__in=sel)
+        else:
+            return queryset
 
 class WorkAdmin(admin.ModelAdmin):
 
