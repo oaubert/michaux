@@ -152,7 +152,7 @@ class Work(models.Model):
 
     # notes : texte libre
     note_creation_date = models.TextField(_("notes sur la date"),
-                                   help_text=_("Notes (privées) sur le support"),
+                                   help_text=_("Notes (privées) sur la date"),
                                    blank=True)
 
     # date alternative : la source de la date alternative est alors indiquée dans les notes
