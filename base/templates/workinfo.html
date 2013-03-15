@@ -1,6 +1,10 @@
+{% load admin_urls %}
+{% load url from future %}
 {% load michaux %}
+
         <ul class="workinfo" data-cote="{{ work.cote }}">
-          <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span></li>
+          <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">(Éditer)</a>{% endif %}
+          </li>
           <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}({{ work.note_references|autolink }}){% endif %}</li>
           {% if work.serie %}
           <li>Série <a class="facetvalue" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>

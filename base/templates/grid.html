@@ -62,7 +62,9 @@
         <li class="needSelection"><a id="selection_none">Tout déselectionner</a></li>
         <li class="needSelection"><a id="selection_compare">Comparer</a></li>
         <li class="needSelection"><a id="selection_open">Afficher</a></li>
+{% if user.is_active and user.is_staff %}
         <li class="needSelection"><a id="selection_edit">Éditer</a></li>
+{% endif %}
       </ul>
     </li>
     {% endwith %}
@@ -75,9 +77,10 @@
           <ul>
             <li><label for="checkbox_images">Images</label>
               <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Afficher uniquement les œuvres avec image"/></li>
+            {% if user.is_active and user.is_staff %}
             <li><label for="checkbox_revision">Révisions</label>
               <input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Afficher uniquement les œuvres avec un champ révision non vide" /></li>
-
+            {% endif %}
             <li><label for="checkbox_single_technique">Technique unique</label>
               <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Ne pas afficher les techniques mixtes"/></li>
 
