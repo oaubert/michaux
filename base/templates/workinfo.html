@@ -3,18 +3,39 @@
 {% load michaux %}
 
         <ul class="workinfo" data-cote="{{ work.cote }}">
+
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">(Éditer)</a>{% endif %}
           </li>
+
           <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}({{ work.note_references|autolink }}){% endif %}</li>
           {% if work.serie %}
+
           <li>Série <a class="facetvalue" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
           {% endif %}
+
           <li><a class="facetvalue" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique }}</a>
-            sur 
-            <a class="facetvalue" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}</li>
+            sur
+            <a class="facetvalue" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}
+          {% if work.note_technique or work.note_support %}
+          <dl class="private_note">
+            {% if work.note_technique %}
+            <dt>Note technique</dt><dd>{{ work.note_technique|autolink }}</dd>
+            {% endif %}
+            {% if work.note_support %}
+            <dt>Note support</dt><dd>{{ work.note_support|autolink }}</dd>
+            {% endif %}
+          </dl>
+          {% endif %}
+          </li>
+
           <li>{% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
             {% if work.creation_date_start %}<a class="facetvalue" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
-            {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}</li>
+            {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}
+
+            {% if work.note_creation_date %}
+            <dl class="private_note"><dt>Note date</dt><dd>{{ work.note_creation_date }}</dd></dl>
+            {% endif %}
+          </li>
           <li>{{ work.height }} x {{ work.width }} mm</li>
           {% if work.inscription_set.count %}
           <li><strong>Inscriptions</strong>
@@ -31,20 +52,20 @@
           </li>
           {% endif %}
           {% if work.reproduction_set.count %}
-          <li><strong>Reproductions</strong>
+          <li><strong>Références bibliographiques</strong>
             <ul>
               {% for ex in work.reproduction_set.all %}<li>{{ repr }} : {{ repr.comment }}</li> {% endfor %}
             </ul>
           </li>
           {% endif %}
 
-          {% if work.bibliographyreference_set.count %}
-          <li><strong>Références</strong>
-            <ul>
-              {% for bib in work.bibliographyreference_set.all %}<li>{{ bib }}</li>{% endfor %}
-            </ul>
-          </li>
+          {% if work.comment %}
+          <li><strong>Notes</strong></li>
+          <li>{{ work.comment|autolink }}</li>
           {% endif %}
+
+          {# Private fields #}
+          {% if user.is_active and user.is_staff %}
           {% if work.event_set.count %}
           <li><strong>Événements</strong>
             <ul>
@@ -53,12 +74,19 @@
           </li>
           {% endif %}
 
-          <li><strong>Notes</strong></li>
-          <li>{{ work.note_support|autolink }}</li>
-          <li>{{ work.comment|autolink }}</li>
+          <dl class="private_note">
+
+          {% if work.note %}
+          <dt>Notes privées</dt>
+          <dd>{{ work.note|autolink }}</dd>
+          {% endif %}
+
           {% if work.revision %}
-          <li><strong>Révisions</strong></li>
-          <li>{{ work.revision|autolink }}</li>
+          <dt>Révisions</dt>
+          <dd>{{ work.revision|autolink }}</dd>
+          {% endif %}
+
+
           {% endif %}
 
           {% if work.tags.count %}
