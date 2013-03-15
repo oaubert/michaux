@@ -76,13 +76,13 @@
         <div class="facetcontent">
           <ul>
             <li><label for="checkbox_images">Images</label>
-              <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Afficher uniquement les œuvres avec image"/></li>
+              <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Exclure les œuvres sans image"/></li>
             {% if user.is_active and user.is_staff %}
             <li><label for="checkbox_revision">Révisions</label>
               <input id="checkbox_revision" onclick="this.form.submit()" type="checkbox" name="with_revision" {% if options.with_revision %}checked="on"{% endif %} title="Afficher uniquement les œuvres avec un champ révision non vide" /></li>
             {% endif %}
             <li><label for="checkbox_single_technique">Technique unique</label>
-              <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Ne pas afficher les techniques mixtes"/></li>
+              <input id="checkbox_single_technique" onclick="this.form.submit()" type="checkbox" name="single_technique" {% if options.single_technique %}checked="on"{% endif %} title="Exclure les techniques mixtes"/></li>
 
             <li><label for="info_overlay"><em>Overlay</em></label><select id="info_overlay" name="info_overlay" onchange="this.form.submit()">
               {% for opt in overlay_fields %}
