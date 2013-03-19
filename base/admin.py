@@ -185,6 +185,14 @@ class ExhibitionAdmin(admin.ModelAdmin):
     formfield_overrides = FORMFIELD_OVERRIDES
 
     list_display = ('pk', 'abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
+    fieldsets = [
+        (None,               {'fields': [ ('abbreviation', 'original', 'nature'),
+                                          ('location', 'city', 'country'),
+                                          ('curator') ]}),
+        ('Dates',       {'fields': [ ('start_year', 'start_month', 'start_day'),
+                                     ('end_year', 'end_month', 'end_day') ] }),
+        ('Autres',      {'fields': [ ('comment', 'note') ]}),
+        ]
     list_editable = ('abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
     list_display_links = ('pk', )
     search_fields = [ 'abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator' ]
