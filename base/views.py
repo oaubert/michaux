@@ -156,6 +156,7 @@ def pivotcollection(request, *p, **kw):
     sqs, options = get_filtered_queryset(request)
     return render_to_response('collection.xml', {
         'sqs': sqs,
+        'meta': Work._meta,
         'request': request,
         },
                               mimetype = "application/xhtml+xml",
