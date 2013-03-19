@@ -4,7 +4,7 @@
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             Name="Catalogue Michaux" SchemaVersion="1" xmlns:P="http://schemas.microsoft.com/livelabs/pivot/collection/2009" P:BrandImage="/favicon.ico" xmlns="http://schemas.microsoft.com/collection/metadata/2009">
   <FacetCategories>
-    <FacetCategory Name="Cote" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
+    <FacetCategory Name="Cote" Type="String" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="FileName" Type="String" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Fiche" Type="Link" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Technique" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
