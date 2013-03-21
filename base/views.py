@@ -231,16 +231,26 @@ def complete(request, field=None, **kw):
         return HttpResponse(status=412)
     sqs = SearchQuerySet()
     term = request.REQUEST.get('term', "")
-    kw = { field + '_auto':  term }
     if field == 'technique':
-        # We have to filter again here for "term in item" since the
-        # 'technique' field is multivalued, and autocomplete will also
-        # output the other techniques from the same work.
-        # Moreover, the output is a list of items that must be flattened
-        completions = set(item[0][0]
-                          for item in sqs.autocomplete(**kw).values_list(field)
-                          if term in item[0][0])
+        # Multivalued field. Rather than parsing the values at the
+        # javascript level, we handle them here: we assume that we
+        # should complete the last item of the comma-separated list
+        techniques = term.split(",")
+        last = techniques.pop()
+        if not last:
+            # Nothing to complete
+            completions = [ term ]
+        else:
+            kw = { field + '_auto':  last }
+            # We have to filter again here for "term in item" since the
+            # 'technique' field is multivalued, and autocomplete will also
+            # output the other techniques from the same work.
+            # Moreover, the output is a list of items that must be flattened
+            completions = set(",".join(techniques + [ item[0][0] ])
+                              for item in sqs.autocomplete(**kw).values_list(field)
+                              if last in item[0][0])
     else:
+        kw = { field + '_auto':  term }
         completions = set(item[0]
                           for item in sqs.autocomplete(**kw).values_list(field))
 
