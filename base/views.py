@@ -232,7 +232,19 @@ def complete(request, field=None, **kw):
     sqs = SearchQuerySet()
     term = request.REQUEST.get('term', "")
     kw = { field + '_auto':  term }
-    completions = set(item[0] for item in sqs.autocomplete(**kw).values_list(field))
-    s = sorted(i for i in completions if i.startswith(term)) + sorted(i for i in completions if not i.startswith(term))
+    if field == 'technique':
+        # We have to filter again here for "term in item" since the
+        # 'technique' field is multivalued, and autocomplete will also
+        # output the other techniques from the same work.
+        # Moreover, the output is a list of items that must be flattened
+        completions = set(item[0][0]
+                          for item in sqs.autocomplete(**kw).values_list(field)
+                          if term in item[0][0])
+    else:
+        completions = set(item[0]
+                          for item in sqs.autocomplete(**kw).values_list(field))
+
+    s = (sorted(i for i in completions if i.startswith(term)) 
+         + sorted(i for i in completions if not i.startswith(term)))
     return HttpResponse(json.dumps([{'value': item} for item in s]),
                         content_type="application/json")
