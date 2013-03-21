@@ -164,6 +164,8 @@ HAYSTACK_SITECONF = 'catalogue.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'solr'
 HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
 
+GRAPPELLI_ADMIN_TITLE = "Archives Michaux - interface d'administration"
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -177,6 +179,7 @@ INSTALLED_APPS = (
     'coop_tag',
 
     'base',
+    'grappelli',
     'django.contrib.admin',
     'django_requestlogging',
 )

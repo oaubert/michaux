@@ -1,3 +1,4 @@
 coop-tag
 django-imagekit
 django-haystack
+django-grappelli

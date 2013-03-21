@@ -14,4 +14,5 @@ urlpatterns = patterns('',
                        url(r'^search/', include('haystack.urls')),
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
                        url(r'^', include('coop_tag.urls')),
+                       (r'^grappelli/', include('grappelli.urls')),
 )

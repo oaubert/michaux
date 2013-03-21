@@ -1,7 +1,41 @@
-ul.as-selections li {
-    list-style-type: none;
+#branding h1 {
+    color: #ccc;
 }
 
-.closed {
-    display: none;
+#header {
+    height: 6em;
+}
+
+#header a:link, #header a:visited, #header a:hover {
+    text-decoration: none;
+    color: #888;
+}
+
+#content {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#changelist-filter ul {
+    padding-left: 0;
+    margin-left: 10px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+#grp-navigation {
+    background-color: #fff !important;
+    color: #000 !important;
+    background-image: none !important;
+}
+
+ul.navbar {
+    position: fixed;
+    top: 5px;
+    left: 30em;
+}
+
+h1#grp-admin-title {
+    font-size: 130% !important;
+    font-weight: normal;
 }

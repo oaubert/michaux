@@ -3,15 +3,15 @@
 
 {% block title %}{{ title }} | {% trans 'Archives Michaux - admin' %}{% endblock %}
 
-{% block extrahead %}
+{% block extrastyle %}
     <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{ STATIC_URL }}css/admin.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/admin.css" rel="stylesheet" type="text/css" media="screen" />
 {% endblock %}
 
-{% block branding %}
-<h1 id="site-name">Archives Michaux - interface d'administration</h1>
+{% block extrahead %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/admin.js"></script>
 {% endblock %}
 
-{% block nav-global %}
+{% block page-tools %}
 {% include "navbar.html" %}
 {% endblock %}
