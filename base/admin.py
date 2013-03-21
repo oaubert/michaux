@@ -17,8 +17,8 @@ from base.forms import ImageModelForm
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 
 FORMFIELD_OVERRIDES = {
-        models.CharField: {'widget': TextInput(attrs={'size': '24'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+        models.CharField: {'widget': TextInput(attrs={'size': '30'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':30})},
     }
 
 class EventInline(admin.TabularInline):
