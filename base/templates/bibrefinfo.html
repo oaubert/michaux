@@ -1,0 +1,20 @@
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+<ul class="bibliographyinfo" data-id="{{ bib.pk }}">
+  <li>type de référence - {{ bib.nature }}</li>
+  <li>abréviation - {{ bib.abbreviation }}</li>
+  <li>auteur - {{ bib.creator }}</li>
+  <li>titre - {{ bib.title }}</li>
+  <li>titre du contenant - {{ bib.container_title }}</li>
+  <li>auteur du contenant - {{ bib.container_creator }}</li>
+  <li>textes de - {{ bib.container_others }}</li>
+  <li>édition - {{ bib.editor }}</li>
+  <li>ville - {{ bib.city }}</li>
+  <li>numéro - {{ bib.number }}</li>
+  <li>date de publication - {{ bib.publication_date }}</li>
+  <li>numéro de page - {{ bib.page_number }}</li>
+  <li>commentaire - {{ bib.comment }}</li>
+  <li>notes - {{ bib.note }}</li>
+</ul>

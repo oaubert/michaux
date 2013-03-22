@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.query import SearchQuerySet
-from .models import Work, Exhibition, ExhibitionInstance
+from .models import Work, Exhibition, ExhibitionInstance, BibliographyReference, Reproduction
 from .forms import EditTagsForm
 
 @login_required
@@ -149,6 +149,18 @@ def exhibition(request, pk=None, **kw):
             'ex': ex,
             'meta': Exhibition._meta,
             'items': items,
+            }, context_instance=RequestContext(request))
+
+@login_required
+def bibliography(request, pk=None, **kw):
+    bib = get_object_or_404(BibliographyReference, pk=pk)
+    reproductions = Reproduction.objects.filter(reference=bib)
+    exhibitions = Exhibition.objects.filter(catalogue=bib)
+    return render_to_response('bibref.html', {
+            'bib': bib,
+            'meta': BibliographyReference._meta,
+            'reproductions': reproductions,
+            'exhibitions': exhibitions,
             }, context_instance=RequestContext(request))
 
 @login_required
