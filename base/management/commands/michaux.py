@@ -45,7 +45,7 @@ class Command(BaseCommand):
             # Remove whitespaces around commas
             w.serie = data[u'série']
             w.technique = ",".join(re.split('\s*,\s*', data['technique'].strip()))
-            w.note_technique = data['précisions sur la technique']
+            w.note_technique = data[u'précisions sur la technique']
             w.support = data['Support 1']
             w.support_details = data['Support 2 1']
             w.note_support = data['Support 2 2']
@@ -83,10 +83,10 @@ class Command(BaseCommand):
                     i.original_image.save(os.path.basename(pic), File(f))
                 i.save()
 
-            if data['Présence signature'].startswith('oui'):
+            if data[u'Signature'].startswith('oui'):
                 sig = Inscription()
                 sig.nature = 'signature'
-                pos = re.findall('\((.+)\)', data['Présence signature'])
+                pos = re.findall('\((.+)\)', data[u'Signature'])
                 if pos:
                     if ',' in pos[0]:
                         sig.position, sig.note = re.split('\s*,\s*', pos[0], 1)
