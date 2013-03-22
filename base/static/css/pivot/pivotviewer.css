@@ -1,6 +1,6 @@
 ﻿a { font-weight:normal; }
 .pv-wrapper { border: 1px solid #D3D4D4; background:#F5F7F9; font-family: 'Segoe UI', Tahoma, Arial, Helvetica, Sans-Serif; font-size:8pt; font-weight:normal; -webkit-tap-highlight-color: rgba(0,0,0,0); }
-.pv-loading { width:89px; height:66px; font-family: Tahoma, Sans-Serif; position:absolute; top:150px !important; }
+.pv-loading { width:89px; height:66px; font-family: Tahoma, Sans-Serif; position:absolute;  top:150px !important; }
 .pv-loading span { position: absolute; top:66px; left:23px; }
 .pv-toolbarpanel { height: 22px; width: 100%; border-bottom: 1px solid #D3D4D4; padding: 3px 0px 3px 0px; background: #FDFDFD; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDFDFD', endColorstr='#F4F4F4');  background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#F4F4F4));  background: -moz-linear-gradient(top,  #FDFDFD,  #F4F4F4); }
 .pv-toolbarpanel-brandimage { height: 22px; float:left; }
@@ -34,7 +34,7 @@
 .pv-facet-facetitem-count { margin-top:3px; color:#A8A9AA; position:absolute; right:0px; padding-right:5px; padding-left:25px; background-image: url('../../icons/pivot/CountGradient.png'); background-position: 5px 50%; background-repeat:repeat-y;  }
 .pv-filterpanel-accordion-heading-clear { width:11px; position:absolute; top:6px; right:5px; background-image: url('../../icons/pivot/FilterPanelClear.png'); background-position: center center; background-repeat: no-repeat; cursor:pointer; visibility:hidden; }
 .pv-filterpanel-accordion-facet-list { margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; list-style:none; }
-.pv-filterpanel-accordion-facet-list-item { clear: both; }
+.pv-filterpanel-accordion-facet-list-item { clear: both; white-space: nowrap; }
 .pv-modal-dialog {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;

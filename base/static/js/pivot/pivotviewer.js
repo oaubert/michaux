@@ -16,7 +16,7 @@
 
 ///PivotViewer
 var PivotViewer = PivotViewer || {};
-PivotViewer.Version="v0.9.32-eac6898";
+PivotViewer.Version="v0.9.37-d93798a";
 PivotViewer.Models = {};
 PivotViewer.Models.Loaders = {};
 PivotViewer.Utils = {};
@@ -387,13 +387,18 @@ PivotViewer.Models.Loaders.ICollectionLoader = Object.subClass({
 
 //CXML loader
 PivotViewer.Models.Loaders.CXMLLoader = PivotViewer.Models.Loaders.ICollectionLoader.subClass({
-    init: function (CXMLUri) {
-        this.CXMLUri = CXMLUri;
+    init: function (CXMLUri, proxy) {
+        this.CXMLUriNoProxy = CXMLUri;
+        if (proxy)
+            this.CXMLUri = proxy + CXMLUri;
+        else
+            this.CXMLUri = CXMLUri;
     },
     LoadCollection: function (collection) {
         var collection = collection;
         this._super(collection);
 
+        collection.CXMLBaseNoProxy = this.CXMLUriNoProxy;
         collection.CXMLBase = this.CXMLUri;
 
         $.ajax({
@@ -1685,7 +1690,7 @@ this.tiles[j].firstFilterItemDone = true;
 
         if (!found && !dontFilter) {
             var bucketNumber = Math.floor((clickX - that.offsetX) / that.columnWidth);
-            $.publish("/PivotViewer/Views/Item/Filtered", [{ Facet: that.sortFacet, Item: that.buckets[bucketNumber].startRange, MaxRange: that.buckets[bucketNumber].endRange}]);
+            $.publish("/PivotViewer/Views/Item/Filtered", [{ Facet: that.sortFacet, Item: that.buckets[bucketNumber].startRange, MaxRange: that.buckets[bucketNumber].endRange, ClearFacetFilters:true}]);
         }
     }
 });
@@ -3404,68 +3409,19 @@ PivotViewer.Views.TileLocation = Object.subClass({
 			    currentViewerState += "=GE." + _numericFacets[i].selectedMin;
 			    title += "Over " + _numericFacets[i].selectedMin;
 			} else {
-			    currentViewerState += "=GE." + _numericFacets[i].selectedMin + "_LE." + _numericFilters[i].selectedMax;
-			    title += "Between " + _numericFacets[i].selectedMin + " and " + _numericFilters[i].selectedMax;
+			    currentViewerState += "=GE." + _numericFacets[i].selectedMin + "_LE." + _numericFacets[i].selectedMax;
+			    title += "Between " + _numericFacets[i].selectedMin + " and " + _numericFacets[i].selectedMax;
 			}
 			if ( i < _numericFacets.length - 1)
 			    title += " > "
 	        }
 	    }
-            SetBookmark( currentViewerState, title);
+            // Permalink bookmarks can be enabled by implementing a function
+            // SetBookmark(bookmark string, title string)
+            if ( typeof (SetBookmark) != undefined && typeof(SetBookmark) === "function") {
+                SetBookmark( PivotCollection.CXMLBaseNoProxy, currentViewerState, title);
+            }
         }
-
-    SetBookmark = function (bookmark, title) {
-	var query = location.search;
-	// Remove fragment (uri encoded hash)
-	var hashIndex;
-	hashIndex = location.search.indexOf("%23%");
-	if ( hashIndex > 0 )
-		query = location.search.substring( 0, hashIndex );
-	// Remove fragment (non uri encoded hash)
-	if (!query) {
-		hashIndex = location.search.indexOf("#");
-		if ( hashIndex > 0 )
-			query = location.search.substring( 0, hashIndex );
-	}
-
-	var new_bookmark = location.protocol + '//' + location.host + '/HtmlPivotViewer/' + query + encodeURIComponent( bookmark );
-	var edit_bookmark = location.protocol + '//' + location.host + '/HtmlPivotViewer/edit.vsp' + query + encodeURIComponent( bookmark );
-	var el;
-
-	//
-	//  Update AddThis links
-	//
-	el = document.getElementById ("sharelink");
-	if (el) {
-		try {
-			el.setAttribute ('addthis:url', new_bookmark);
-			el.setAttribute ('addthis:title', title);
-
-			addthis.update('share', 'url', new_bookmark);
-			addthis.update('share', 'title', title);
-			addthis.update('config', 'ui_cobrand', 'PivotViewer');
-
-			addthis.toolbox ('#sharelink');		// redraw
-			addthis.init();
-		} catch (e) {}
-	}
-
-	//
-	//  Updated permalink
-	//
-	el = document.getElementById ("permalink");
-	if (el) {
-		el.href = new_bookmark;
-	}
-
-	//
-	//  Updated edit link
-	//
-	el = document.getElementById ("editlink");
-	if (el) {
-		el.href = edit_bookmark;
-	}
-    }
 
     //Events
     //Collection loading complete
@@ -3572,6 +3528,23 @@ PivotViewer.Views.TileLocation = Object.subClass({
     $.subscribe("/PivotViewer/Views/Item/Filtered", function (evt) {
         if (evt == undefined || evt == null)
             return;
+
+        // If the facet used for the sort is the same as the facet that the filter is
+        // changing on then clear all the other values?
+        // This is only the case when comming from drill down in the graph view.
+        if (evt.ClearFacetFilters == true) {
+            for (var i = 0, _iLen = PivotCollection.FacetCategories.length; i < _iLen; i++) {
+                if (PivotCollection.FacetCategories[i].Name == evt.Facet &&
+                    (PivotCollection.FacetCategories[i].Type == PivotViewer.Models.FacetType.String ||
+                    PivotCollection.FacetCategories[i].Type == PivotViewer.Models.FacetType.DateTime)) {
+                    var checkedValues = $('.pv-facet-facetitem[itemfacet="' + evt.Facet + '"]')
+                    for (var j = 0; j < checkedValues.length; j++) {
+                        $(checkedValues[j]).removeAttr('checked');
+                        $(checkedValues[j]).checked = false;
+                    }
+                }
+            }
+        }
 
         for (var i = 0, _iLen = PivotCollection.FacetCategories.length; i < _iLen; i++) {
             if (PivotCollection.FacetCategories[i].Name == evt.Facet &&
@@ -3697,7 +3670,7 @@ PivotViewer.Views.TileLocation = Object.subClass({
         });
         //Info panel
         $('.pv-infopanel-details').on('click', '.detail-item-value-filter', function (e) {
-            $.publish("/PivotViewer/Views/Item/Filtered", [{ Facet: $(this).parent().children().first().text(), Item: $(this).text()}]);
+            $.publish("/PivotViewer/Views/Item/Filtered", [{ Facet: $(this).parent().children().first().text(), Item: $(this).text(), ClearFacetFilters: true }]);
             return false;
         });
         $('.pv-infopanel-details').on('click', '.pv-infopanel-detail-description-more', function (e) {
