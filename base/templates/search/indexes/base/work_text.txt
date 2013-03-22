@@ -15,6 +15,7 @@
 {{ object.note_creation_date }}}
 {{ object.comment }}
 {{ object.revision }}
+{{ object.note }}
 {% for tag in object.tags.all %}{{ tag.name }} {% endfor %}
 {% for insc in object.inscription_set.all %}{{ insc.notes }} {% endfor %}
 {% for img in object.image_set.all %}{{ img.note }} {% endfor %}
