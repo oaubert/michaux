@@ -4,7 +4,7 @@
 {% load url from future %}
 {% load michaux %}
 
-{% block title %}Exposition {{ ex.abbreviation }}{% endblock %}
+{% block title %}Exposition {{ ex.abbreviation }} - {% with total=items|length %}{{ total }} œuvre{{ total|pluralize }}{% endwith %}{% endblock %}
 {% block extra_header %}
     <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
