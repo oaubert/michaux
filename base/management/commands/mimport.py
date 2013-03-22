@@ -107,11 +107,18 @@ class Command(BaseCommand):
                     ab = ab.strip().strip(",")
                     qs = Exhibition.objects.filter(abbreviation=ab)
                     if qs.count() == 1:
+                        ex = qs[0]
                         # Found the exhibition
                         ei = ExhibitionInstance()
                         ei.work = w
-                        ei.exhibition = qs[0]
+                        ei.exhibition = ex
                         ei.save()
+                        # Associate also "reprises"
+                        for reprise in Exhibition.objects.filter(original=ex):
+                            ei = ExhibitionInstance()
+                            ei.work = w
+                            ei.exhibition = reprise
+                            ei.save()
                         msg = 'ok'
                     else:
                         msg = 'NOT FOUND'
