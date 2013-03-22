@@ -11,7 +11,7 @@ from base.models import Work, Image, Inscription, Exhibition, BibliographyRefere
 
 class Command(BaseCommand):
     args = '<xls file>'
-    help = 'Import the Michaux data from an xls file'
+    help = 'Import the Michaux data (catalogue or exhibitions) from an xls file'
 
     def _import_data_from_xls(self, filename):
         """Import from an xls file.
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         book = xlrd.open_workbook(filename)
         s = book.sheet_by_index(0)
         header = s.row_values(0)
-        # cote	simplifiee	certificat	technique	precisions technique	serie	annee	annee simple	dimensions	hauteur	largeur	signature	presence	support	support2	support3	notes_michaux	notice	remarques	expositions	reproductions	inventaire
+        # Cote	Cote simplifiée	Certificat	technique	précisions sur la technique	série	Année	Année simplifiée	Dimension	Hauteur	Largeur	Signature	Présence signature	Support 1	Support 2 1	Support 2 2	Notes de Michaux	Notice	Remarques	Expositions	Reproductions	Numéro d'inventaire
 
         for n in range(1, s.nrows - 1):
             #if n < 80:
@@ -34,35 +34,38 @@ class Command(BaseCommand):
             w.creator_id = 1
             w.contributor_id = 1
             w.status = Work.AUTHENTICATED_STATUS
-            w.old_references = data['cote']
-            if data['certificat'] != '':
-                w.certificate = long(data['certificat'])
+            w.old_references = data['Cote']
+            if data['Certificat'] != '':
+                w.certificate = long(data['Certificat'])
             # Remove whitespaces around commas
-            w.serie = data['serie']
+            w.serie = data[u'série']
             w.technique = ",".join(re.split('\s*,\s*', data['technique'].strip()))
-            w.note_technique = data['precisions technique']
-            w.support = data['support']
-            w.support_details = data['support2']
-            w.note_support = data['support3']
+            w.note_technique = data['précisions sur la technique']
+            w.support = data['Support 1']
+            w.support_details = data['Support 2 1']
+            w.note_support = data['Support 2 2']
             try:
-                w.height = long(data['hauteur'])
+                w.height = long(data['Hauteur'])
             except ValueError:
-                self.stderr.write("Missing height for %s\n" % data['cote'].encode('utf-8'))
+                self.stderr.write("Missing height for %s\n" % data['Cote'].encode('utf-8'))
                 w.height = 0
             try:
-                w.width = long(data['largeur'])
+                w.width = long(data['Largeur'])
             except ValueError:
-                self.stderr.write("Missing width for %s\n" % data['cote'].encode('utf-8'))
+                self.stderr.write("Missing width for %s\n" % data['Cote'].encode('utf-8'))
                 w.width = 0
-            if data[u'annee simple'] != '':
-                w.creation_date_start = long(data[u'annee simple'])
-            if data[u'annee simple'] == '' or (str(long(data[u'annee simple'])) != data[u'annee'].strip()):
-                w.note_creation_date = data[u'annee']
-            w.comment = "\n".join(data[i] for i in ('notice', 'remarques') if data[i])
+            simple = data[u'Année simplifiée']
+            if simple != '':
+                w.creation_date_start = long(simple)
+            if simple == '' or str(simple) != data[u'Année'].strip():
+                w.note_creation_date = data[u'Année']
+            w.comment = "\n".join(data[i] for i in ('Notice', 'Remarques') if data[i])
+            if data[u'Reproductions']:
+                w.revision = 'BIBLIO:' + data[u'Reproductions']
             w.save()
             self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
             # FIXME: Improve image name heuristic
-            pic = '/home/oaubert/tmp/michaux/%s.jpg' % data['cote'].lower().replace(' / ', '_').replace(' ', '_')
+            pic = '/home/oaubert/tmp/michaux/%s.jpg' % data['Cote'].lower().replace(' / ', '_').replace(' ', '_')
             if os.path.exists(pic.encode('utf-8')):
                 self.stderr.write("   Copying image %s\n" % pic.encode('utf-8'))
                 i = Image()
@@ -74,10 +77,10 @@ class Command(BaseCommand):
                     i.original_image.save(os.path.basename(pic), File(f))
                 i.save()
 
-            if data['signature'].startswith('oui'):
+            if data['Présence signature'].startswith('oui'):
                 sig = Inscription()
                 sig.nature = 'signature'
-                pos = re.findall('\((.+)\)', data['signature'])
+                pos = re.findall('\((.+)\)', data['Présence signature'])
                 if pos:
                     if ',' in pos[0]:
                         sig.position, sig.note = re.split('\s*,\s*', pos[0], 1)
@@ -86,9 +89,20 @@ class Command(BaseCommand):
                 sig.work = w
                 sig.save()
 
-            if data['expositions'].strip():
+            note = data['Notes de Michaux']
+            if note:
+                sig = Inscription()
+                sig.nature = 'note'
+                pos = re.findall('\(([hbcgd]{2})\)', note)
+                if pos:
+                    sig.position = pos[0]
+                sig.note = note
+                sig.work = w
+                sig.save()
+
+            if data['Expositions'].strip():
                 notfound = []
-                for ab in data['expositions'].split('\n'):
+                for ab in data['Expositions'].split('\n'):
                     ab = ab.strip().strip(",")
                     qs = Exhibition.objects.filter(abbreviation=ab)
                     if qs.count() == 1:
@@ -103,7 +117,7 @@ class Command(BaseCommand):
                         notfound.append(ab)
                     self.stderr.write("   Exhibition %s... %s\n" % (ab.encode('utf-8'), msg))
                     if notfound:
-                        w.revision = u"Expositions à lier:\n" + u"\n".join(notfound)
+                        w.revision += u"\n".join("EXPO: %s" % e for e in notfound)
                         w.save()
 
     def dummydate2date(self, data):
