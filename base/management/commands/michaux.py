@@ -161,8 +161,18 @@ class Command(BaseCommand):
             row = s.row_values(n)
             data = dict(zip(header, row))
             e = Exhibition()
-            e.title = data[u"titre de l'exposition"]
-            e.location = data[u"lieu de l'exposition"]
+            title = data[u"titre de l'exposition"].strip()
+            # Extract additional info and put it in comment
+            if '(' in title:
+                l = re.findall(r"^(.+)\((.+)\)(.*)$", title)
+                if l:
+                    e.comment = l[1]
+                    title = l[0] + l[2]
+            # Strip quotes/leading-trailing whitespace
+            title = title.strip('«').strip('»').strip()
+            e.title = title
+            e.location =  data[u'Nom']
+            e.location_type = data[u"lieu de l'exposition"]
             e.nature = data['Solo']
             # e.address =
             e.city = data['Ville']
@@ -219,12 +229,13 @@ class Command(BaseCommand):
                 (' (4)', 'Nom 4', "lieu d'exposition 4", 'Ville 4', 'Pays 4', 'Date 4', 'Date g', 'Date h'),
                 ):
                 if data[nom]:
-                    # Second exhibition
+                    # Reprises
                     e2 = Exhibition()
                     e2.original = e
                     e2.abbreviation = e.abbreviation + num
                     e2.title = e.title
-                    e2.location = data[lieu]
+                    e2.location = data[nom]
+                    e2.location_type = data[lieu]
                     e2.city = data[ville]
                     e2.country = data[pays]
                     if data[annee]:
