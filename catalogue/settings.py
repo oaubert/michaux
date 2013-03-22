@@ -178,6 +178,7 @@ INSTALLED_APPS = (
     'imagekit',
     'coop_tag',
 
+    'south',
     'base',
     'grappelli',
     'django.contrib.admin',
