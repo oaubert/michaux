@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import sys
 import os
 import re
 import datetime
@@ -10,12 +11,16 @@ from django.core.management.base import BaseCommand, CommandError
 from base.models import Work, Image, Inscription, Exhibition, BibliographyReference, ExhibitionInstance
 
 class Command(BaseCommand):
-    args = '<xls file>'
-    help = 'Import the Michaux data (catalogue or exhibitions) from an xls file'
-
-    def _import_data_from_xls(self, filename):
+    args = '[command] [param]'
+    help = """Administration commands for Michaux catalogue
+  works <xls file> : import the Michaux catalogue from an xls file
+  exhibitions <xls file> : import the Michaux exhibition list
+  gen_abbreviations : generate standard abbreviations for exhibitions
+"""
+    def _import_works_from_xls(self, filename):
         """Import from an xls file.
         """
+        self.stdout.write("** Importing catalogue\n")
         import xlrd
         book = xlrd.open_workbook(filename)
         s = book.sheet_by_index(0)
@@ -144,8 +149,9 @@ class Command(BaseCommand):
             return (0, 0, 0)
 
     def _import_exhibitions_from_xls(self, filename):
-        """Import from an xls file.
+        """Import exhibitions from an xls file.
         """
+        self.stdout.write("** Importing exhibitions\n")
         import xlrd
         book = xlrd.open_workbook(filename)
         s = book.sheet_by_index(0)
@@ -236,18 +242,51 @@ class Command(BaseCommand):
                     e2.save()
                     self.stdout.write("   " + unicode(e2).encode('utf-8') + "\n")
 
+    def _generate_abbreviations(self, *p):
+        """Generate standard abbreviations for exhibitions.
 
+        This cannot be done during the import phase, since we need the
+        old abbreviations to link them to the imported works.
+        """
+        self.stdout.write("** Generating abbreviations for exhibitions\n")
+        for ex in Exhibition.objects.all():
+            ab = ", ".join((ex.location, str(ex.start_year)))
+
+            other = [ e.abbreviation 
+                      for e in Exhibition.objects.filter(abbreviation__startswith=ab).exclude(pk=ex.pk) ]
+            if other:
+                # Another exhibition has the same abbrev. Add kw
+                for suffix in "abcdefghijklmnopqrstuvwxyz":
+                    new = ab + suffix
+                    if new in other:
+                        # Already existing again
+                        continue
+                    # Not present, we have our new abbreviation
+                    ab = new
+                    break
+                else:
+                    self.stdout.write("PROBLEM: exhausted suffixes for %s" % ab)
+                    return
+
+            self.stdout.write(("  %s -> %s\n" % (ex.abbreviation, ab)).encode('utf-8'))
+            ex.abbreviation = ab
+            ex.save()
+                
     def handle(self, *args, **options):
         if not args:
-            raise CommandError("Missing parameter")
-        for fname in args:
-            self.stdout.write("* Importing from %s\n" % fname.encode('utf-8'))
-            # FIXME: add proper option/arg passing instead of the name hack?
-            if 'catalogue' in fname.lower():
-                self._import_data_from_xls(fname)
-            elif 'exposition' in fname.lower():
-                self._import_exhibitions_from_xls(fname)
-            else:
-                self.stderr.write("Cannot determine file type\n")
+            self.print_help(sys.argv[0], sys.argv[1])
+            return
+        command = args[0]
+        args = args[1:]
+        dispatcher = {
+            'works': self._import_works_from_xls,
+            'exhibitions': self._import_exhibitions_from_xls,
+            'gen_abbreviations': self._generate_abbreviations,
+            }
+        m = dispatcher.get(command)
+        if m is not None:
+            m(args)
+        else:
+            raise CommandError("Unknown command")
 
         self.stdout.write("\nDone.\nDO NOT FORGET TO RUN rebuild_index !!!\n")
