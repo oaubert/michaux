@@ -157,19 +157,25 @@ class Command(BaseCommand):
         s = book.sheet_by_index(0)
         header = s.row_values(0)
 
+        def cleanup(s):
+            if hasattr(s, 'strip'):
+                return s.strip()
+            else:
+                return s
         for n in range(1, s.nrows - 1):
             row = s.row_values(n)
-            data = dict(zip(header, row))
+            data = dict(zip(header, (cleanup(i) for i in row)))
             e = Exhibition()
-            title = data[u"titre de l'exposition"].strip()
+            title = data[u"titre de l'exposition"]
             # Extract additional info and put it in comment
             if '(' in title:
-                l = re.findall(r"^(.+)\((.+)\)(.*)$", title)
-                if l:
+                m = re.match("^(.+?)\((.+?)\)(.*)$", title)
+                if m:
+                    l = m.groups()
                     e.comment = l[1]
                     title = l[0] + l[2]
             # Strip quotes/leading-trailing whitespace
-            title = title.strip('«').strip('»').strip()
+            title = title.strip(u'«').strip(u'»').strip()
             e.title = title
             e.location =  data[u'Nom']
             e.location_type = data[u"lieu de l'exposition"]
