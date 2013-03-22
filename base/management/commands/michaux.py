@@ -71,7 +71,7 @@ class Command(BaseCommand):
             w.save()
             self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
             # FIXME: Improve image name heuristic
-            pic = '/home/oaubert/tmp/michaux/%s.jpg' % data['Cote'].lower().replace(' / ', '_').replace(' ', '_')
+            pic = '/home/oaubert/tmp/michaux/%s.jpg' % data['Cote'].lower().replace(' / ', '_').replace(' ', '_').replace('-', '_')
             if os.path.exists(pic.encode('utf-8')):
                 self.stderr.write("   Copying image %s\n" % pic.encode('utf-8'))
                 i = Image()
