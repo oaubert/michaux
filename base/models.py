@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
-import os
 
 from gettext import gettext as _
-from django.core.files import File
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
@@ -184,6 +182,10 @@ class Work(models.Model):
     comment = models.TextField(_("commentaire"),
                                help_text=_("Texte libre pouvant être affiché au public"),
                                blank=True)
+
+    note = models.TextField(_("note"),
+                            help_text=_("Note (privée) générique"),
+                            blank=True)
 
     revision = models.TextField(_("révisions"),
                                 help_text=_("Révisions à effectuer : texte libre, indiquant les révisions encore à faire sur la fiche. Des conventions de nommage peuvent être adoptées pour catégoriser ces révisions par exemple."),
@@ -417,6 +419,10 @@ class Exhibition(models.Model):
                              help_text=_("Lieu de l'exposition"),
                              max_length=512,
                              blank=True)
+    location_type = models.CharField(_("type de lieu"),
+                                     help_text=_("Type de lieu d'exposition"),
+                                     max_length=128,
+                                     blank=True)
     nature = models.CharField(_("type d'exposition"),
                               help_text=_("Type d'exposition"),
                               max_length=32,

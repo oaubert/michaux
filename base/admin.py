@@ -144,7 +144,7 @@ class WorkAdmin(admin.ModelAdmin):
         (_("Références"),    {'fields': [ ('master', 'certificate'), 'old_references', 'note_references'], 'classes': ['collapse'] }),
         (_("Technique/support"), {'fields': [('technique', 'note_technique'), ('support', 'support_details'), 'note_support', ('height', 'width')]}),
         (_("Création"),      {'fields': [ ('creation_date_start', 'creation_date_end', 'creation_date_uncertainty'), 'note_creation_date', 'creation_date_alternative']}),
-        (_("Notes/commentaires"), {'fields': ['comment', 'revision']}),
+        (_("Notes/commentaires"), {'fields': ['comment', 'note', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
     list_display = ( 'cote', 'work_thumbnail', 'old_references', 'technique', 'support', 'creation_date_start', 'creation_date_end', 'creation_date_uncertainty', 'revision' )
@@ -184,23 +184,23 @@ class ExhibitionAdmin(admin.ModelAdmin):
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
-    list_display = ('pk', 'abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
+    list_display = ('pk', 'abbreviation', 'title', 'location_type', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
     fieldsets = [
         (None,               {'fields': [ ('abbreviation', 'original', 'nature'),
-                                          ('location', 'city', 'country'),
+                                          ('location_type', 'location', 'city', 'country'),
                                           ('curator') ]}),
         ('Dates',       {'fields': [ ('start_year', 'start_month', 'start_day'),
                                      ('end_year', 'end_month', 'end_day') ] }),
         ('Autres',      {'fields': [ ('comment', 'note') ]}),
         ]
-    list_editable = ('abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
+    list_editable = ('abbreviation', 'title', 'location_type', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
     list_display_links = ('pk', )
     search_fields = [ 'abbreviation', 'title', 'location', 'nature', 'city', 'country', 'start_year', 'curator' ]
-    list_filter = ( 'city', 'country', 'start_year', 'curator' )
+    list_filter = ( 'city', 'country', 'start_year', 'location_type', 'curator' )
     save_on_top = True
 
     actions = ( export_model_as_csv, )
-    exportable_fields = ('abbreviation', 'title', 'location', 'nature', 'address', 'city', 'country', 'start_year', 'start_month', 'start_day', 'end_year', 'end_month', 'end_day', 'curator', 'catalogue', 'original', 'comment', 'note')
+    exportable_fields = ('abbreviation', 'title', 'location_type', 'location', 'nature', 'address', 'city', 'country', 'start_year', 'start_month', 'start_day', 'end_year', 'end_month', 'end_day', 'curator', 'catalogue', 'original', 'comment', 'note')
 
 admin.site.register(Exhibition, ExhibitionAdmin)
 

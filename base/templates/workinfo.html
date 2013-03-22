@@ -60,12 +60,13 @@
           {% endif %}
 
           {% if work.comment %}
-          <li><strong>Notes</strong></li>
+          <li><strong>Notes publiques</strong></li>
           <li>{{ work.comment|autolink }}</li>
           {% endif %}
 
           {# Private fields #}
           {% if user.is_active and user.is_staff %}
+
           {% if work.acquisition_set.count %}
           <li><strong>Propriétaires</strong>
             <ul>
