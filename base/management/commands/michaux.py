@@ -296,7 +296,7 @@ class Command(BaseCommand):
             }
         m = dispatcher.get(command)
         if m is not None:
-            m(args)
+            m(*args)
         else:
             raise CommandError("Unknown command")
 
