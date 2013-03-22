@@ -59,7 +59,8 @@ class Command(BaseCommand):
                 w.creation_date_start = long(simple)
             if simple == '' or str(simple) != data[u'Année'].strip():
                 w.note_creation_date = data[u'Année']
-            w.comment = "\n".join(data[i] for i in ('Notice', 'Remarques') if data[i])
+            w.note = data['Notice']
+            w.comment = data['Remarques']
             if data[u'Reproductions']:
                 w.revision = 'BIBLIO:' + data[u'Reproductions']
             w.save()
