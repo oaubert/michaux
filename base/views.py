@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.query import SearchQuerySet
-from .models import Work
+from .models import Work, Exhibition, ExhibitionInstance
 from .forms import EditTagsForm
 
 @login_required
@@ -64,7 +64,6 @@ def get_filtered_queryset(request):
 
 @login_required
 def works(request, *p, **kw):
-    query_string = ""
     sqs, options = get_filtered_queryset(request)
 
     # FIXME: maybe cache this information?
@@ -140,6 +139,16 @@ def workextended(request, cote=None, type_=None, **kw):
             'work': w,
             'meta': Work._meta,
             'tagform': EditTagsForm(instance=w)
+            }, context_instance=RequestContext(request))
+
+@login_required
+def exhibition(request, pk=None, **kw):
+    ex = get_object_or_404(Exhibition, pk=pk)
+    items = ExhibitionInstance.objects.filter(exhibition__pk=pk)
+    return render_to_response('exhibition.html', {
+            'ex': ex,
+            'meta': Exhibition._meta,
+            'items': items,
             }, context_instance=RequestContext(request))
 
 @login_required

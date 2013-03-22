@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+{% block title %}Exposition {{ ex.abbreviation }}{% endblock %}
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery.iviewer.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!-- The admin jquery.js is in the django namespace -->
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.iviewer.js"></script>
+{% endblock %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block margin %}
+    {% include "exhibitioninfo.html" with ex=ex %}
+    {% endblock %}
+
+    {% block content %}
+    <div id="grid">
+      
+      {% for item in items %}
+      {% include "griditem.html" with work=item.work info=item.reference %}
+      {% endfor %}
+      
+    </div>
+    <div id="info_panel">
+    </div>
+    {% endblock %}
+    

@@ -1,0 +1,36 @@
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+<ul class="exhibitioninfo" data-id="{{ ex.pk }}">
+  <li>{{ ex.abbreviation }} ({{ ex.nature }})</li>
+
+  {% if ex.original %}
+  <li>Reprise de {{ ex.original }}</li>
+  {% endif %}
+
+  <li>Titre - {{ ex.title }}</li>
+  {% if ex.curator %}
+  <li>Commissaire - {{ ex.curator }}</li>
+  {% endif %}
+
+  <li>{{ ex.location }} ({{ ex.location_type }})</li>
+  <li>{{ ex.address }}</li>
+  <li>{{ ex.city }} - {{ ex.country }}</li>
+
+  
+  <li>Début - {% if ex.start_day %}{{ ex.start_day }} / {% endif %}{% if ex.start_month %}{{ ex.start_month }} / {% endif %}{{ ex.start_year }}</li>
+  <li>Fin - {% if ex.end_day %}{{ ex.end_day }} / {% endif %}{% if ex.end_month %}{{ ex.end_month }} / {% endif %}{{ ex.end_year }}</li>
+  {% if ex.catalogue %}
+  <li>Catalogue - {{ ex.catalogue }}</li>
+  {% else %}
+  <li>Pas de catalogue.</li>
+  {% endif %}
+
+  {% if ex.comment %}
+  <li>Note publique - {{ ex.comment }}</li>
+  {% endif %}
+  {% if ex.note %}
+  <li>Note privée - {{ ex.note }}</li>
+  {% endif %}  
+</ul>
