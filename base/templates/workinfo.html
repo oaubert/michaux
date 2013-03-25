@@ -7,7 +7,7 @@
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">(Éditer)</a>{% endif %}
           </li>
 
-          <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}({{ work.note_references|autolink }}){% endif %}</li>
+          <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}({{ work.note_references|autolink|linebreaksbr }}){% endif %}</li>
           {% if work.serie %}
 
           <li>Série <a class="facetvalue" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
@@ -19,10 +19,10 @@
           {% if work.note_technique or work.note_support %}
           <dl class="private_note">
             {% if work.note_technique %}
-            <dt>Note technique</dt><dd>{{ work.note_technique|autolink }}</dd>
+            <dt>Note technique</dt><dd>{{ work.note_technique|autolink|linebreaksbr }}</dd>
             {% endif %}
             {% if work.note_support %}
-            <dt>Note support</dt><dd>{{ work.note_support|autolink }}</dd>
+            <dt>Note support</dt><dd>{{ work.note_support|autolink|linebreaksbr }}</dd>
             {% endif %}
           </dl>
           {% endif %}
@@ -54,14 +54,14 @@
           {% if work.reproduction_set.count %}
           <li><strong>Références bibliographiques</strong>
             <ul>
-              {% for ex in work.reproduction_set.all %}<li>{{ repr }} : {{ repr.comment }}</li> {% endfor %}
+              {% for ex in work.reproduction_set.all %}<li>{{ repr }} : {{ repr.comment|linebreaksbr }}</li> {% endfor %}
             </ul>
           </li>
           {% endif %}
 
           {% if work.comment %}
           <li><strong>Notes publiques</strong></li>
-          <li>{{ work.comment|autolink }}</li>
+          <li>{{ work.comment|autolink|linebreaksbr }}</li>
           {% endif %}
 
           {# Private fields #}
@@ -87,12 +87,12 @@
 
           {% if work.note %}
           <dt>Notes privées</dt>
-          <dd>{{ work.note|autolink }}</dd>
+          <dd>{{ work.note|autolink|linebreaksbr }}</dd>
           {% endif %}
 
           {% if work.revision %}
           <dt>Révisions</dt>
-          <dd>{{ work.revision|autolink }}</dd>
+          <dd>{{ work.revision|autolink|linebreaksbr }}</dd>
           {% endif %}
 
 
