@@ -66,7 +66,7 @@ class Work(models.Model):
 
     master = models.ForeignKey('self',
                                verbose_name=_("cote de référence"),
-                               help_text=_("En cas de doublon identifié, indique la cote de la fiche de référence pour l’oeuvre. Les autres champs de cette fiche-ci peuvent être vidés/ignorés."),
+                               help_text=_("En cas de doublon identifié, indique la cote de la fiche de référence pour l'oeuvre. Les autres champs de cette fiche-ci peuvent être vidés/ignorés."),
                                null=True, blank=True)
 
     # ancienne(s) références(s) : (kc000, ou mp000 ou cmp000, etc.) Contenu: [\w\d\s-/]+
@@ -126,7 +126,7 @@ class Work(models.Model):
                                 null=True)
 
     # Date de Création
-    # source de la date : texte libre (Henri Michaux / catalogue / nom de l’expert / etc.)
+    # source de la date : texte libre (Henri Michaux / catalogue / nom de l'expert / etc.)
     creation_date_source = models.CharField(_("source de la date"),
                                            help_text=_("Origine de la datation: Henri Michaux, catalogue, nom de l'expert, etc"),
                                            max_length=255,
@@ -138,14 +138,14 @@ class Work(models.Model):
                                                  max_length=64,
                                                  blank=True)
 
-    # début : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
+    # début : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu'un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
     creation_date_start = models.IntegerField(_("année de début"),
-                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’une oeuvre a été réalisée après une date: on ne remplit alors que le champ début)."),
+                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu'une oeuvre a été réalisée après une date: on ne remplit alors que le champ début)."),
                                              blank=True, null=True)
 
-    # fin : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu’un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
+    # fin : année [entier, du type 1956] - optionnel (pour exprimer par exemple qu'un oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin).
     creation_date_end = models.IntegerField(_("année de fin"),
-                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu’une oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
+                                             help_text=_("Année [entier, du type 1956] - optionnelle (pour exprimer par exemple qu'une oeuvre a été réalisée avant une date: on ne remplit alors que le champ fin)."),
                                              blank=True, null=True)
 
     # notes : texte libre
@@ -163,15 +163,15 @@ class Work(models.Model):
     # Tags: Liste de tags associés (on interdit les : dans les noms
     # des tags de manière à permettre une éventuelle évolution vers
     # les “tags machine” à la Flickr) permettre les tags comprenant un
-    # espace il faut préserver l’information d’origine (auteur) du tag
+    # espace il faut préserver l'information d'origine (auteur) du tag
     # notion de diffusion (privé / public) laisser la possibilité à
     # chaque utilisateur de supprimer ses propres tags Notion de
     # galerie/album : prévoir la possibilité de distinguer des
     # albums/collections par rapport à des tags classiques (en terme
-    # d’affichage/point d’entrée ou de filtrage dans la liste des
-    # tags: on n’afficherait par défaut que les tags qui ne sont pas
+    # d'affichage/point d'entrée ou de filtrage dans la liste des
+    # tags: on n'afficherait par défaut que les tags qui ne sont pas
     # des albums). Ça peut être mis en oeuvre via un tag machine
-    # “album:nom de l’album” par exemple.  groupes “anonyme” : on peut
+    # “album:nom de l'album” par exemple.  groupes “anonyme” : on peut
     # vouloir définir une collection sans la nommer (dans un premier
     # temps). On pourrait proposer un système de tags anonymes
     # automatiques (avec un numéro par exemple anonymous:123) pour
@@ -254,7 +254,7 @@ class Inscription(models.Model):
     work = models.ForeignKey(Work,
                              verbose_name=_("Oeuvre"))
 
-    # type d’inscription : signature / date / dédicace / indications techniques / autre (date, note de michaux)
+    # type d'inscription : signature / date / dédicace / indications techniques / autre (date, note de michaux)
     nature = models.CharField(_("type d'inscription"),
                               help_text=_("signature / date / dédicace / indications techniques / autre (date, note de michaux) / etc"),
                               max_length=255,
@@ -276,7 +276,7 @@ class Image(models.Model):
                                        max_length=255,
                                        blank=True)
     reference = models.CharField(_("référence"),
-                                 help_text=_("Référence de la photo dans l’inventaire du photographe"),
+                                 help_text=_("Référence de la photo dans l'inventaire du photographe"),
                                  max_length=255,
                                  blank=True)
     support = models.CharField(_("support"),
@@ -284,13 +284,13 @@ class Image(models.Model):
                                  max_length=255,
                                  blank=True)
 
-    #nature de l’image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l’oeuvre en situation dans une revue ou une expo, ou une lettre)
+    #nature de l'image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l'oeuvre en situation dans une revue ou une expo, ou une lettre)
     nature = models.CharField(_("nature"),
-                                 help_text=_("nature de l’image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l’oeuvre en situation dans une revue ou une expo, ou une lettre)"),
+                                 help_text=_("nature de l'image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l'oeuvre en situation dans une revue ou une expo, ou une lettre)"),
                                  max_length=255,
                                  blank=True)
 
-    # Lors de l’upload de l’image en  haute résolution, la plate-forme convertira automatiquement l’image en des versions “web” (1600x1200 + vignette + 2048x1536 [ipad3])
+    # Lors de l'upload de l'image en  haute résolution, la plate-forme convertira automatiquement l'image en des versions “web” (1600x1200 + vignette + 2048x1536 [ipad3])
     original_image = models.ImageField(_("image"),
                                        upload_to='images',
                                        max_length=512,
@@ -345,7 +345,7 @@ class BibliographyReference(models.Model):
                               max_length=255,
                               blank=True)
     abbreviation = models.CharField(_("abréviation"),
-                                    help_text=_("nom, titre ou lieu d’exposition, année, (a, b, c quand il y en a plusieurs la même année)"),
+                                    help_text=_("nom, titre ou lieu d'exposition, année, (a, b, c quand il y en a plusieurs la même année)"),
                                     max_length=255,
                                     blank=True)
 
@@ -358,7 +358,7 @@ class BibliographyReference(models.Model):
                               max_length=512,
                               blank=True)
 
-    # Dans le cas d’un article dans le cadre d’une oeuvre plus large (livre, revue, etc):
+    # Dans le cas d'un article dans le cadre d'une oeuvre plus large (livre, revue, etc):
     container_title = models.CharField(_("titre du contenant"),
                                        help_text=_("Titre du livre/revue/etc contenant la référence"),
                                        max_length=512,
@@ -389,7 +389,7 @@ class BibliographyReference(models.Model):
     publication_date = models.DateField(_("date de publication"),
                                         blank=True, null=True)
     page_number = models.IntegerField(_("numéro de page"),
-                                      help_text=_("numéro de page de l’article contenu"),
+                                      help_text=_("numéro de page de l'article contenu"),
                                       blank=True, null=True)
 
     comment = models.TextField(_("commentaire"),
@@ -408,11 +408,11 @@ class Exhibition(models.Model):
         verbose_name = _("exposition")
 
     abbreviation  = models.CharField(_("abréviation"),
-                                     help_text=_("Sous la forme date (nombre entier, année) + nom du lieu d’exposition (texte libre)"),
+                                     help_text=_("Sous la forme date (nombre entier, année) + nom du lieu d'exposition (texte libre)"),
                                      max_length=255,
                                      unique=True, blank=False)
     title = models.CharField(_("titre"),
-                             help_text=_("Titre complet de l’exposition"),
+                             help_text=_("Titre complet de l'exposition"),
                              max_length=512,
                              blank=True)
     location = models.CharField(_("lieu"),
@@ -446,7 +446,7 @@ class Exhibition(models.Model):
                                      help_text=_("Année de début"),
                                      blank=True)
     start_month = models.IntegerField(_("Mois"),
-                                      help_text=_("Mois de début - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu’on ne dispose pas de cette information. On ne prendra alors en compte que l’année - qui sera toujours spécifiée]"),
+                                      help_text=_("Mois de début - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu'on ne dispose pas de cette information. On ne prendra alors en compte que l'année - qui sera toujours spécifiée]"),
                                       blank=True, null=True)
     start_day = models.IntegerField(_("Jour"),
                                     help_text=_("Jour de début"),
@@ -455,7 +455,7 @@ class Exhibition(models.Model):
                                    help_text=_("Année de fin - peut être 0 si inconnu"),
                                    blank=True, null=True)
     end_month = models.IntegerField(_("Mois"),
-                                      help_text=_("Mois de fin - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu’on ne dispose pas de cette information. On ne prendra alors en compte que l’année - qui sera toujours spécifiée]"),
+                                      help_text=_("Mois de fin - [par convention, si on met 0 pour mois et/ou 0 pour jour, ça signifie qu'on ne dispose pas de cette information. On ne prendra alors en compte que l'année - qui sera toujours spécifiée]"),
                                       blank=True, null=True)
     end_day = models.IntegerField(_("Jour"),
                                     help_text=_("Jour de fin"),
@@ -492,12 +492,12 @@ class ExhibitionInstance(models.Model):
                                    help_text=_("Exposition"))
 
     reference = models.CharField(_("référence"),
-                                 help_text=_("Numéro de référence dans l’exposition"),
+                                 help_text=_("Numéro de référence dans l'exposition"),
                                  max_length=255,
                                  blank=True)
 
     illustration = models.BooleanField(_("illustration"),
-                                       help_text=_("Coché si une illustration était disponible dans le catalogue de l’exposition"),
+                                       help_text=_("Coché si une illustration était disponible dans le catalogue de l'exposition"),
                                        blank=True)
 
     illustration_description = models.TextField(_("description de l'illustration"),
@@ -515,7 +515,7 @@ class Event(models.Model):
                              verbose_name=_("oeuvre"))
     date = models.DateField(_("date"))
     nature = models.CharField(_("type d'événement"),
-                              help_text=_("Type d’événement (vente publique, cession privée, restauration...) - énumération extensible"),
+                              help_text=_("Type d'événement (vente publique, cession privée, restauration...) - énumération extensible"),
                               max_length=64,
                               blank=True)
     description = models.TextField(_("description"),
@@ -535,7 +535,7 @@ class Reproduction(models.Model):
     page = models.IntegerField(_("page"),
                                blank=True, null=True)
     number = models.CharField(_("numéro"),
-                              help_text=_("Numéro dans la page - ça sera le plus souvent un nombre, mais on peut avoir besoin d’y ajouter des précisions"),
+                              help_text=_("Numéro dans la page - ça sera le plus souvent un nombre, mais on peut avoir besoin d'y ajouter des précisions"),
                               max_length=16,
                               blank=True)
     comment = models.TextField(_("commentaire"),
