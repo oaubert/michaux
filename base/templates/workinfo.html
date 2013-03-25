@@ -13,7 +13,7 @@
           <li>Série <a class="facetvalue" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
           {% endif %}
 
-          <li><a class="facetvalue" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique }}</a>
+          <li><a class="facetvalue" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique|autocomma }}</a>
             sur
             <a class="facetvalue" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}
           {% if work.note_technique or work.note_support %}

@@ -31,6 +31,13 @@ def autolink(source):
 
 @register.filter
 @stringfilter
+def autocomma(source):
+    """Display comma-separated lists with appropriate spacing.
+    """
+    return re.sub(',(\S)', r', \g<1>', source)
+
+@register.filter
+@stringfilter
 def url_remove_facet(url, facet_value):
     """
     """
