@@ -197,6 +197,7 @@ ul.workinfo, ul.workinfo ul {
 
 .private_note {
     font-style: italic;
+    background-color: #eee;
 }
 
 dl.private_note {
