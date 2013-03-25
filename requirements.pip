@@ -1,4 +1,6 @@
 coop-tag
+# For coop-tag:
+django-extensions
 django-imagekit
 django-haystack
 django-grappelli
