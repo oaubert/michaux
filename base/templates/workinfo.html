@@ -31,9 +31,8 @@
           <li>{% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
             {% if work.creation_date_start %}<a class="facetvalue" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
             {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}
-
             {% if work.note_creation_date %}
-            <dl class="private_note"><dt>Note date</dt><dd>{{ work.note_creation_date }}</dd></dl>
+            <span class="private_note">({{ work.note_creation_date }})</span>
             {% endif %}
           </li>
           <li>{{ work.height }} x {{ work.width }} mm</li>
