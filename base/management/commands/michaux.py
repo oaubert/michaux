@@ -202,7 +202,8 @@ class Command(BaseCommand):
                 if d.year < 1900 and d.year > 0:
                     # Add 1900
                     d=datetime.date(1900 + d.year, d.month, d.day)
-                e.start_year = d.year
+                # Strange: there is a 1-year offset
+                e.start_year = d.year - 1
                 e.start_month = d.month
                 e.start_day = d.day
             except ValueError:
