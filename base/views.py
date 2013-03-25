@@ -269,7 +269,8 @@ def complete(request, field=None, **kw):
             # Moreover, the output is a list of items that must be flattened
             completions = set(",".join(techniques + [ item[0][0] ])
                               for item in sqs.autocomplete(**kw).values_list(field)
-                              if last in item[0][0])
+                              if last in item[0][0]
+                              and not item[0][0] in techniques)
     else:
         kw = { field + '_auto':  term }
         completions = set(item[0]
