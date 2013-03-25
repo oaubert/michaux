@@ -3,13 +3,13 @@
 {% load michaux %}
 
 <ul class="exhibitioninfo" data-id="{{ ex.pk }}">
-  <li>{{ ex.abbreviation }} ({{ ex.nature }})</li>
+  <li><strong>{{ ex.abbreviation|autolink }}</strong> ({{ ex.nature }})</li>
 
   {% if ex.original %}
   <li>Reprise de {{ ex.original }}</li>
   {% endif %}
 
-  <li>Titre - {{ ex.title }}</li>
+  <li><em>{{ ex.title|autolink }}</em></li>
   {% if ex.curator %}
   <li>Commissaire - {{ ex.curator }}</li>
   {% endif %}
@@ -28,9 +28,9 @@
   {% endif %}
 
   {% if ex.comment %}
-  <li>Note publique - {{ ex.comment }}</li>
+  <li>Note publique - {{ ex.comment|autolink }}</li>
   {% endif %}
   {% if ex.note %}
-  <li>Note privée - {{ ex.note }}</li>
+  <li>Note privée - {{ ex.note|autolink }}</li>
   {% endif %}  
 </ul>
