@@ -276,7 +276,7 @@ def complete(request, field=None, **kw):
         completions = set(item[0]
                           for item in sqs.autocomplete(**kw).values_list(field))
 
-    s = (sorted(i for i in completions if i.startswith(term)) 
+    s = (sorted(i for i in completions if i.startswith(term))
          + sorted(i for i in completions if not i.startswith(term)))
     return HttpResponse(json.dumps([{'value': item} for item in s]),
                         content_type="application/json")
