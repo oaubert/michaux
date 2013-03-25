@@ -67,7 +67,7 @@ class Command(BaseCommand):
             w.note = data['Notice']
             w.comment = data['Remarques']
             if data[u'Reproductions']:
-                w.revision = 'BIBLIO:' + data[u'Reproductions']
+                w.revision = u'BIBLIO:%s\n' % data[u'Reproductions']
             w.save()
             self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
             # FIXME: Improve image name heuristic
@@ -95,7 +95,7 @@ class Command(BaseCommand):
                 sig.work = w
                 sig.save()
 
-            note = data['Notes de Michaux']
+            note = data[u'Notes de Michaux']
             if note:
                 sig = Inscription()
                 sig.nature = 'note'
@@ -130,7 +130,7 @@ class Command(BaseCommand):
                         notfound.append(ab)
                     self.stderr.write("   Exhibition %s... %s\n" % (ab.encode('utf-8'), msg))
                     if notfound:
-                        w.revision += u"\n".join("EXPO: %s" % e for e in notfound)
+                        w.revision += u"\n".join(u"EXPO: %s" % e for e in notfound if e)
                         w.save()
 
     def dummydate2date(self, data):
@@ -288,6 +288,7 @@ class Command(BaseCommand):
             self.stdout.write(("  %s -> %s\n" % (ex.abbreviation, ab)).encode('utf-8'))
             ex.abbreviation = ab
             ex.save()
+        # FIXME: migrate abbreviations to BibliographyReference table
                 
     def handle(self, *args, **options):
         if not args:
