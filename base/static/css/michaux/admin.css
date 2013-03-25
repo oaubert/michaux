@@ -30,12 +30,20 @@
 }
 
 ul.navbar {
-    position: fixed;
-    top: 5px;
-    left: 30em;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+}
+
+ul.navbar a {
+    color: #444 !important;
 }
 
 h1#grp-admin-title {
+    position: absolute !important;
+    top: .3em;
+    left: 16em;
     font-size: 130% !important;
-    font-weight: normal;
+    font-weight: bold;
+    color: #444;
 }

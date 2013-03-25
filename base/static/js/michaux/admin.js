@@ -4,6 +4,9 @@ django.jQuery(document).ready(
         document.$ = $;
         var completable_fields = ["technique", "support", "serie", "authentication_source"];
 
+        // Move navbar to header
+        $("ul.navbar").insertBefore("#grp-admin-title");
+
         completable_fields.forEach(function(s) {
                                        $("[name$=" + s + "]").autocomplete({ source: "/base/complete/" + s,
                                                                              minLength: 2});

@@ -268,6 +268,17 @@ class Inscription(models.Model):
                              help_text=_("Note: contenu, détails, etc"),
                              blank=True)
 
+    def __unicode__(self):
+        if self.position:
+            pos = u" (%s)" % self.position
+        else:
+            pos = u""
+        if self.note:
+            note = u" : %s" % self.note
+        else:
+            note = u""
+        return u"".join((self.nature, pos, note))
+
 class Image(models.Model):
     work = models.ForeignKey(Work,
                              verbose_name=_("Oeuvre"))
@@ -506,6 +517,9 @@ class ExhibitionInstance(models.Model):
     note = models.TextField(_("note"),
                             help_text=_("Note (privée)"),
                             blank=True)
+
+    def __unicode__(self):
+        return u"Exposition de %s dans %s" % (unicode(self.work), unicode(self.exhibition))
 
 class Event(models.Model):
     class Meta:
