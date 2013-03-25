@@ -248,7 +248,7 @@ def compare(request, cote1=None, cote2=None, **kw):
 
 @login_required
 def complete(request, field=None, **kw):
-    if not field in ('serie', 'technique', 'support'):
+    if not field in ('serie', 'technique', 'support', "authentication_source"):
         return HttpResponse(status=412)
     sqs = SearchQuerySet()
     term = request.REQUEST.get('term', "")
