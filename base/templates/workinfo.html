@@ -7,35 +7,35 @@
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
           </li>
 
-          <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}({{ work.note_references|autolink|linebreaksbr }}){% endif %}</li>
+          <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}(<span class="editable" data-field="note_references">{{ work.note_references|autolink|linebreaksbr }}</span>){% endif %}</li>
           {% if work.serie %}
 
-          <li>Série <a class="facetvalue" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
+          <li>Série <a class="facetvalue editable" data-field="serie" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
           {% endif %}
 
-          <li><a class="facetvalue" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique|autocomma }}</a>
+          <li><a class="facetvalue editable" data-field="technique" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique|autocomma }}</a>
             sur
-            <a class="facetvalue" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}
+            <a class="facetvalue editable" data-field="support" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}
           {% if work.note_technique or work.note_support %}
           <dl class="private_note">
             {% if work.note_technique %}
-            <dt>Note technique</dt><dd>{{ work.note_technique|autolink|linebreaksbr }}</dd>
+            <dt>Note technique</dt><dd class="editable" data-field="note_technique">{{ work.note_technique|autolink|linebreaksbr }}</dd>
             {% endif %}
             {% if work.note_support %}
-            <dt>Note support</dt><dd>{{ work.note_support|autolink|linebreaksbr }}</dd>
+            <dt>Note support</dt><dd class="editable" data-field="note_support">{{ work.note_support|autolink|linebreaksbr }}</dd>
             {% endif %}
           </dl>
           {% endif %}
           </li>
 
           <li>{% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
-            {% if work.creation_date_start %}<a class="facetvalue" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
-            {% if work.creation_date_end %}- <a class="facetvalue" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}
+            {% if work.creation_date_start %}<a class="facetvalue editable" data-field="creation_date_start" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
+            {% if work.creation_date_end %}- <a class="facetvalue editable" data-field="creation_date_end" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}
             {% if work.note_creation_date %}
-            <span class="private_note">({{ work.note_creation_date }})</span>
+            <span class="private_note editable" data-field="note_creation_date">({{ work.note_creation_date }})</span>
             {% endif %}
           </li>
-          <li>{{ work.height }} x {{ work.width }} mm</li>
+          <li><span class="editable" data-field="height">{{ work.height }}</span> x <span class="editable" data-field="height">{{ work.width }}</span> mm</li>
           {% if work.inscription_set.count %}
           <li><strong>Inscriptions</strong>
             <ul>
@@ -64,7 +64,7 @@
 
           {% if work.comment %}
           <li><strong>Notes publiques</strong></li>
-          <li>{{ work.comment|autolink|linebreaksbr }}</li>
+          <li class="editable" data-field="comment">{{ work.comment|autolink|linebreaksbr }}</li>
           {% endif %}
 
           {# Private fields #}
@@ -90,12 +90,12 @@
 
           {% if work.note %}
           <dt>Notes privées</dt>
-          <dd>{{ work.note|autolink|linebreaksbr }}</dd>
+          <dd class="editable" data-field="note">{{ work.note|autolink|linebreaksbr }}</dd>
           {% endif %}
 
           {% if work.revision %}
           <dt>Révisions</dt>
-          <dd>{{ work.revision|autolink|linebreaksbr }}</dd>
+          <dd class="editable" data-field="revision">{{ work.revision|autolink|linebreaksbr }}</dd>
           {% endif %}
 
 
