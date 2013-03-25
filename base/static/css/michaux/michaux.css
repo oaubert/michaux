@@ -105,3 +105,17 @@ ul.navbar li:hover .submenu {
 ul.navbar .submenu li {
     width: 8em;
 }
+
+a.action-glyph {
+    text-decoration: none;
+    font-size: 1.3em;
+}
+
+.workinfo a {
+    text-decoration: none;
+    color: #228;
+}
+
+.workinfo a:hover {
+    background-color: #ddd;
+}

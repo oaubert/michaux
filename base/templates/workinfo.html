@@ -4,7 +4,7 @@
 
         <ul class="workinfo" data-cote="{{ work.cote }}">
 
-          <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">(Éditer)</a>{% endif %}
+          <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
           </li>
 
           <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}({{ work.note_references|autolink|linebreaksbr }}){% endif %}</li>
@@ -47,7 +47,7 @@
           {% if work.exhibitioninstance_set.count %}
           <li><strong>Expositions</strong>
             <ul>
-              {% for ei in work.exhibitioninstance_set.all %}<li><a class="facetvalue" href="{% url "base.views.exhibition" ei.exhibition.pk %}">{{ ei.exhibition.abbreviation }}</a> (<a class="facetvalue" href="{{ ei.exhibition.abbreviation|facet_url:"exhibition" }}">Filtrer</a>)</li> {% endfor %}
+              {% for ei in work.exhibitioninstance_set.all %}<li><a class="facetvalue" href="{% url "base.views.exhibition" ei.exhibition.pk %}">{{ ei.exhibition.abbreviation }}</a> <a class="facetvalue action-glyph" title="Filtrer la vue grille suivant cette valeur" href="{{ ei.exhibition.abbreviation|facet_url:"exhibition" }}">&#x267b;</a></li> {% endfor %}
             </ul>
           </li>
           {% endif %}
