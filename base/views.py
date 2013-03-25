@@ -134,6 +134,11 @@ def workextended(request, cote=None, type_=None, **kw):
                                   'work': w,
                                   'meta': Work._meta,
                                   }, context_instance=RequestContext(request))
+    elif type_ == 'solr':
+        return render_to_response('search/indexes/base/work_text.txt', {
+                                  'object': w,
+                                  'meta': Work._meta,
+                                  }, context_instance=RequestContext(request))
     else:
         return render_to_response('work.html', {
             'work': w,
