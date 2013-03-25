@@ -21,7 +21,7 @@ FORMFIELD_OVERRIDES = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':30})},
     }
 
-class EventInline(admin.TabularInline):
+class EventInline(admin.StackedInline):
     model = Event
     verbose_name = _("événement")
     verbose_name_plural = _("événements")
@@ -36,26 +36,26 @@ class ImageInline(admin.TabularInline):
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
-class AcquisitionInline(admin.TabularInline):
+class AcquisitionInline(admin.StackedInline):
     model = Acquisition
     verbose_name = _("acquisition")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
-class ExhibitionInline(admin.TabularInline):
+class ExhibitionInline(admin.StackedInline):
     model = ExhibitionInstance
-    verbose_name = _("exposition")
+    verbose_name = _("")
     verbose_name_plural = _("liste des expositions")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
-class InscriptionInline(admin.TabularInline):
+class InscriptionInline(admin.StackedInline):
     model = Inscription
     verbose_name = _("inscription")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
 
-class ReproductionInline(admin.TabularInline):
+class ReproductionInline(admin.StackedInline):
     model = Reproduction
     verbose_name = _("reproduction")
     extra = 1
