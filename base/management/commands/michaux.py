@@ -110,6 +110,9 @@ class Command(BaseCommand):
                 notfound = []
                 for ab in data['Expositions'].split('\n'):
                     ab = ab.strip().strip(",")
+                    if not ab:
+                        # Blank line
+                        continue
                     qs = Exhibition.objects.filter(abbreviation=ab)
                     if qs.count() == 1:
                         ex = qs[0]
