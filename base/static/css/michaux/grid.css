@@ -76,7 +76,7 @@ ul.toolbar{
     opacity: 0.0;
 }
 
-ul.toolbar:hover {
+div.work:hover ul.toolbar {
     opacity: 0.5;
 }
 
