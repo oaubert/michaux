@@ -272,8 +272,10 @@ class Command(BaseCommand):
         for ex in Exhibition.objects.all():
             ab = u", ".join((ex.location, str(ex.start_year)))
 
-            other = [ e.abbreviation 
-                      for e in Exhibition.objects.filter(abbreviation__startswith=ab).exclude(pk=ex.pk) ]
+            # Notice: we use __istartswith here since utf8 collation
+            # rules on MySQL make the key case-insensitive.
+            other = [ e.abbreviation
+                      for e in Exhibition.objects.filter(abbreviation__istartswith=ab).exclude(pk=ex.pk) ]
             if other:
                 # Another exhibition has the same abbrev. Add kw
                 for suffix in u"abcdefghijklmnopqrstuvwxyz":
