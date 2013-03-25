@@ -46,7 +46,11 @@
           {% if work.exhibitioninstance_set.count %}
           <li><strong>Expositions</strong>
             <ul>
-              {% for ei in work.exhibitioninstance_set.all %}<li><a title="{{ ei.exhibition.title }}" class="facetvalue" href="{% url "base.views.exhibition" ei.exhibition.pk %}">{{ ei.exhibition.title }}, {{ ei.exhibition.abbreviation }}</a> <a class="facetvalue action-glyph" title="Filtrer la vue grille suivant cette valeur" href="{{ ei.exhibition.abbreviation|facet_url:"exhibition" }}">&#x267b;</a></li> {% endfor %}
+              {% for ei in work.exhibitioninstance_set.all %}
+              {% with ex=ei.exhibition %}
+              <li><a title="{{ ex.title }}" class="facetvalue" href="{% url "base.views.exhibition" ex.pk %}">{% if ex.title %}{{ ex.title }}, {% endif %}{{ ex.abbreviation }}</a> <a class="facetvalue action-glyph" title="Filtrer la vue grille suivant cette valeur de facette" href="{{ ex.abbreviation|facet_url:"exhibition" }}">&#x267b;</a></li> 
+              {% endwith %}
+              {% endfor %}
             </ul>
           </li>
           {% endif %}
