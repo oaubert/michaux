@@ -62,7 +62,7 @@ class Command(BaseCommand):
             simple = data[u'Année simplifiée']
             if simple != '':
                 w.creation_date_start = long(simple)
-            if simple == '' or str(simple) != data[u'Année'].strip():
+            if simple == '' or unicode(simple).strip() != data[u'Année'].strip():
                 w.note_creation_date = data[u'Année']
             w.note = data['Notice']
             w.comment = data['Remarques']
