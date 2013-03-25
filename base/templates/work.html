@@ -28,7 +28,6 @@
 
 {% block margin %}
         <h2>{{ work }}</h2>
-        <a id="edit-icon" title="Editer la fiche" href="{% url meta|admin_urlname:'change' work.cote %}"><img alt="Edit" src="{{ STATIC_URL }}icons/edit.png" /></a>
 
         {% include "workinfo.html" with work=work %}
 
