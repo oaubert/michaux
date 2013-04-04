@@ -6,7 +6,7 @@
   }
 }
 
-#edit-icon, .navbar, .helptext, #tags, .worktitle {
+#edit-icon, .navbar, .helptext, #tags, .worktitle, .action-glyph {
     display: none;
 }
 
