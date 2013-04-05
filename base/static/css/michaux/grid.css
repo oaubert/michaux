@@ -140,9 +140,9 @@ a.details {
     background: #fff url(../../icons/next.png) no-repeat center center;
 }
 
-#info_panel {
+#infopanel {
     position: fixed;
-    height: 90%;
+    height: 98%;
     top: 20px;
     right: 5px;
     width: 200px;

@@ -285,16 +285,16 @@ jQuery(document).ready(
 
             // FIXME: hardcoded URL. Should fix this.
             $.get(cote + '/info', function (data) {
-                      if ($('#info_panel:visible').attr('data-current') == cote)
+                      if ($('#infopanel:visible').attr('data-current') == cote)
                       {
                           // Already displaying the infopanel
                           // Display the first image
                           $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } );
                       } else {
-                          $('#info_panel').html(navbar() + data)
+                          $('#infopanel').html(navbar() + data)
                               .attr('data-current', cote);
 
-                          $('#info_panel').show('fast', function () {
+                          $('#infopanel').show('fast', function () {
                                                     $('#content').css("margin-right", "200px");
                                                     $("div.work.current").removeClass('current');
                                                     $('#hm' + cote).addClass('current')[0].scrollIntoView();
@@ -338,7 +338,7 @@ jQuery(document).ready(
         michaux.hide_infopanel = function () {
             $("div.work.current").removeClass("current");
             $('#content').css("margin-right", "5px");
-            $('#info_panel').hide('fast');
+            $('#infopanel').hide('fast');
             $('#lightbox').hide();
             $('#grid').focus();
         };
@@ -388,16 +388,16 @@ jQuery(document).ready(
 
         // Keyboard handling
         $(document).keypress(function (e) {
-                                 if (e.which == 106 && $("#info_panel:visible").length) {
+                                 if (e.which == 106 && $("#infopanel:visible").length) {
                                      // j for previous
                                      michaux.display_infopanel($("#infopanel_prev").attr('data-cote'));
-                                 } else if (e.which == 107 && $("#info_panel:visible").length) {
+                                 } else if (e.which == 107 && $("#infopanel:visible").length) {
                                      // k for next
                                      michaux.display_infopanel($("#infopanel_next").attr('data-cote'));
-                                 } else if (event.which == 99 && $("#info_panel:visible").length) {
+                                 } else if (event.which == 99 && $("#infopanel:visible").length) {
                                      // c for "Close"
                                      michaux.hide_infopanel();
-                                 } else if (event.which == 13 && $("#info_panel:visible").length) {
+                                 } else if (event.which == 13 && $("#infopanel:visible").length) {
                                      // Show/hide lightbox
                                      if ($("#lightbox:visible").length > 0) {
                                          $('#lightbox').hide();
