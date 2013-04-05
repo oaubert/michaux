@@ -132,12 +132,8 @@ class WorkSelectionFilter(admin.SimpleListFilter):
 class WorkAdmin(admin.ModelAdmin):
 
     class Media:
-        css = {"all": (settings.STATIC_URL + "/css/jquery-ui.css",
-                       '%s/css/%s' % (coop_tag.settings.TAGGER_STATIC_URL, coop_tag.settings.TAGGER_CSS_FILENAME),
-                       settings.STATIC_URL + "/css/michaux/admin.css",)}
-        js = ( settings.STATIC_URL + '/js/jquery.js',
-               settings.STATIC_URL + '/js/jquery-ui.js',
-               settings.STATIC_URL + '/js/michaux/admin.js', )
+        css = {"all": ('%s/css/%s' % (coop_tag.settings.TAGGER_STATIC_URL, coop_tag.settings.TAGGER_CSS_FILENAME),
+                       )}
 
     fieldsets = [
         (None,               {'fields': [ ('status', 'authentication_source', 'serie'), 'tags']}),
