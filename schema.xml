@@ -108,6 +108,8 @@
 
     <field name="text" type="text" indexed="true" stored="true" multiValued="false" />
 
+    <field name="authentication_source_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
+
     <field name="height" type="slong" indexed="true" stored="true" multiValued="false" />
 
     <field name="status_exact" type="string" indexed="true" stored="true" multiValued="false" />
