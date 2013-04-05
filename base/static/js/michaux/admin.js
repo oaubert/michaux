@@ -18,9 +18,4 @@ django.jQuery(document).ready(
                                                                              minLength: 2});
                                    });
 
-        $("#changelist-filter h2").click( function() { $("#changelist-filter").children("h3,ul").each(
-                                                           function () {
-                                                               $(this).toggleClass("closed");
-                                                           });
-                                                     });
 });
