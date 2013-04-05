@@ -21,6 +21,7 @@
 
 {% block content %}
 <div id="work1" class="work">
+  <span class="worktitle"><a target="_blank" href="{{ work1.get_absolute_url }}">{{ work1 }}</a></span>
   <img src="{{ work1.image.url }}" class="{% if work1.image.width > work1.image.height %}landscape{% else %}portrait{% endif %}"
        rel="lightbox" 
        alt=""
@@ -29,6 +30,7 @@
 </div>
 
 <div id="work2" class="work">
+  <span class="worktitle"><a target="_blank" href="{{ work2.get_absolute_url }}">{{ work2 }}</a></span>
   <img src="{{ work2.image.url }}" class="{% if work2.image.width > work2.image.height %}landscape{% else %}portrait{% endif %}"
        rel="lightbox" 
        alt=""
