@@ -20,7 +20,9 @@
 
   
   <li>Début - {% if ex.start_day %}{{ ex.start_day }} / {% endif %}{% if ex.start_month %}{{ ex.start_month }} / {% endif %}{{ ex.start_year }}</li>
+  {% if ex.end_year %}
   <li>Fin - {% if ex.end_day %}{{ ex.end_day }} / {% endif %}{% if ex.end_month %}{{ ex.end_month }} / {% endif %}{{ ex.end_year }}</li>
+  {% endif %}
   {% if ex.catalogue %}
   <li>Catalogue - <a href="{% url 'base.views.bibliography' ex.catalogue.pk %}">{{ ex.catalogue }}</a></li>
   {% else %}
