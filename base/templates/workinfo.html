@@ -44,7 +44,7 @@
           </li>
           {% endif %}
           {% if work.exhibitioninstance_set.count %}
-          <li><strong>Expositions</strong>
+          <li><strong>Expositions ({{ work.exhibitioninstance_set.count }})</strong>
             <ul>
               {% for ei in work.exhibitioninstance_set.all %}
               {% with ex=ei.exhibition %}
@@ -55,7 +55,7 @@
           </li>
           {% endif %}
           {% if work.reproduction_set.count %}
-          <li><strong>Références bibliographiques</strong>
+          <li><strong>Références bibliographiques ({{ work.reproduction_set.count }})</strong>
             <ul>
               {% for ex in work.reproduction_set.all %}<li>{{ repr }} : {{ repr.comment|linebreaksbr }}</li> {% endfor %}
             </ul>
@@ -122,4 +122,5 @@
             {% for img in work.image_set.all %}<a class="image_reference" rel="lightbox" title="{{ img }}" href="{{ img.original_image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
           </li>
           {% endif %}
+
         </ul>
