@@ -32,7 +32,7 @@ jQuery(document).ready(
                 if (action === 'edit')
                     url = '/admin' + url;
             } else if (type === 'compare')
-                url += '/compare/' + ident[0] + '/' + ident[1];
+                url += 'compare/' + ident[0] + '/' + ident[1];
             return url;
         };
 
