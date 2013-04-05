@@ -4,11 +4,14 @@
 {% block title %}{{ title }} | {% trans 'Archives Michaux - admin' %}{% endblock %}
 
 {% block extrastyle %}
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/michaux/admin.css" rel="stylesheet" type="text/css" media="screen" />
 {% endblock %}
 
 {% block extrahead %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/admin.js"></script>
 {% endblock %}
 
