@@ -6,7 +6,7 @@
   <li><strong>{{ ex.abbreviation|autolink }}</strong> ({{ ex.nature }})</li>
 
   {% if ex.original %}
-  <li>Reprise de {{ ex.original }}</li>
+  <li>Reprise de <a href="{% url 'base.views.exhibition' ex.original.pk %}">{{ ex.original }}</a></li>
   {% endif %}
 
   <li><em>{{ ex.title|autolink }}</em></li>
@@ -17,7 +17,6 @@
   <li>{{ ex.location }} ({{ ex.location_type }})</li>
   <li>{{ ex.address }}</li>
   <li>{{ ex.city }} - {{ ex.country }}</li>
-
   
   <li>Début - {% if ex.start_day %}{{ ex.start_day }} / {% endif %}{% if ex.start_month %}{{ ex.start_month }} / {% endif %}{{ ex.start_year }}</li>
   {% if ex.end_year %}
