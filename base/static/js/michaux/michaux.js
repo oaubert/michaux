@@ -224,6 +224,10 @@ jQuery(document).ready(
 
         // Keyboard handling
         $(document).keypress(function (e) {
+                                 if (e.srcElement.nodeName === 'INPUT' || e.srcElement.nodeName === 'TEXTAREA') {
+                                     return true;
+                                 }
+
                                  if (e.which == 106 && $("#infopanel:visible").length) {
                                      // j for previous
                                      document.michaux.display_infopanel($("#infopanel_prev").attr('data-cote'));
