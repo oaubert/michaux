@@ -200,4 +200,27 @@ jQuery(document).ready(
                                    $(".facetcontent").not(f).hide("fast");
                                    f.show("fast");
                                });
+
+        document.michaux.tag_selection = function (tagname) {
+            var cote = $('#infopanel:visible').attr('data-current');
+            if (cote !== undefined) {
+                console.log("Tagging ", cote, " with ", tagname);
+                // FIXME: add csrf token
+                $.get("/base/selection/tag/",
+                      { 'selection': cote,
+                        'name': tagname });
+            }
+        };
+
+        document.michaux.untag_selection = function (tagname) {
+            var cote = $('#infopanel:visible').attr('data-current');
+            if (cote !== undefined) {
+                console.log("UnTagging ", cote, " with ", tagname);
+                // FIXME: add csrf token
+                $.get("/base/selection/tag/",
+                      { 'selection': cote,
+                        'name': tagname });
+            }
+        };
+
 });
