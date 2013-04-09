@@ -101,10 +101,12 @@ def works(request, *p, **kw):
                 ('', 'Aucune'),
                 ('status', 'Statut'),
                 ('old_references', 'Référence'),
+                # FIXME: do not include revision if ! user.is_staff
                 ('revision', 'Révisions'),
                 ('technique', 'Technique'),
                 ('support', 'Support'),
                 ('creation_date_start', 'Année'),
+                ('taglist', 'Tags'),
                 ),
         'info_overlay': request.REQUEST.get('info_overlay', ''),
         }, context_instance=RequestContext(request))
