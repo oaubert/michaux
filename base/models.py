@@ -198,6 +198,12 @@ class Work(models.Model):
         return [ unicode(t) for t in re.split('\s*,\s*', self.technique) ]
 
     @property
+    def taglist(self):
+        """Comma-separated list of tags.
+        """
+        return ", ".join(t['name'] for t in self.tags.values('name'))
+
+    @property
     def printable_year(self):
         if self.creation_date_start is not None:
             if self.creation_date_end is None:
