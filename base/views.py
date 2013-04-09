@@ -97,7 +97,7 @@ def works(request, *p, **kw):
         'page': page,
         'options': options,
         'request': request,
-        'tagform': EditTagsForm,
+        'tagform': EditTagsForm(Work.objects.all()[0]),
         'overlay_fields': (
                 ('', 'Aucune'),
                 ('status', 'Statut'),
