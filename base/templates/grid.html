@@ -44,16 +44,16 @@
   <div class="pagination">
     <span class="step-links">
       <input type="hidden" id="current_page" name="page" value="{{ page.number }}" />
-      <a id="previous_page" {% if page.has_previous %}title="Page précédente" onclick="michaux.goto_page({{ page.previous_page_number }})" {% else %}title="Première page" class="disabled"{% endif %}></a>
+      <a id="previous_page" {% if page.has_previous %}title="Page précédente" onclick="document.michaux.goto_page({{ page.previous_page_number }})" {% else %}title="Première page" class="disabled"{% endif %}></a>
       <span>Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
-      <a id="next_page" {% if page.has_next %}title="Page suivante" onclick="michaux.goto_page({{ page.next_page_number }})" {% else %}title="Dernière page" class="disabled"{% endif %}></a>
+      <a id="next_page" {% if page.has_next %}title="Page suivante" onclick="document.michaux.goto_page({{ page.next_page_number }})" {% else %}title="Dernière page" class="disabled"{% endif %}></a>
     </span>
   </div>
 
   <ul>
 
     <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ options.query_string }}" />
-      <a href="javascript:michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
+      <a href="javascript:document.michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
 
     {% with selcount=options.selectionset|length %}
     <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" /><a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>
