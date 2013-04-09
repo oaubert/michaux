@@ -11,6 +11,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.query import SearchQuerySet
+from haystack import site
 from .models import Work, Exhibition, ExhibitionInstance, BibliographyReference, Reproduction
 from .forms import EditTagsForm
 
@@ -226,7 +227,7 @@ def selection_tag(request):
     for i in items:
         i.tags.add(name)
         # FIXME: Handle errors ?
-    # FIXME: rebuild haystack index ?
+        site.get_index(Work).update_object(i)
     return HttpResponse(status=204)
 
 def selection_untag(request):
@@ -242,7 +243,7 @@ def selection_untag(request):
     for i in items:
         i.tags.remove(name)
         # FIXME: Handle errors ?
-    # FIXME: rebuild haystack index ?
+        site.get_index(Work).update_object(i)
     return HttpResponse(status=204)
 
 @login_required
