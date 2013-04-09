@@ -59,7 +59,7 @@ jQuery(document).ready(
                                     });
 
         michaux.tag_selection = function (tagname) {
-            var cote = $(".workinfo").attr('data-cote');
+            var cote = $("#workinfo").attr('data-cote');
             console.log("Tagging ", cote, " with ", tagname);
             // FIXME: add csrf token
             $.get("/base/selection/tag/",
@@ -68,7 +68,7 @@ jQuery(document).ready(
         };
 
         michaux.untag_selection = function (tagname) {
-            var cote = $(".workinfo").attr('data-cote');
+            var cote = $("#workinfo").attr('data-cote');
             console.log("UnTagging ", cote, " with ", tagname);
             // FIXME: add csrf token
             $.get("/base/selection/untag/",

@@ -111,11 +111,26 @@ a.action-glyph {
     font-size: 1.3em;
 }
 
-.workinfo a {
+#workinfo a {
     text-decoration: none;
     color: #228;
 }
 
-.workinfo a:hover {
+#workinfo a:hover {
     background-color: #ddd;
+}
+
+#workinfo {
+    height: 90%;
+    overflow-y: auto;
+}
+
+#workinfo ul, #workinfo ul ul {
+    list-style: none;
+    text-align: left;
+}
+
+#elementTagform {
+    position: absolute;
+    bottom: 2px;
 }

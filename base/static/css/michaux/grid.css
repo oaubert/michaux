@@ -142,7 +142,7 @@ a.details {
 
 #infopanel {
     position: fixed;
-    height: 98%;
+    height: 95%;
     top: 20px;
     right: 5px;
     width: 200px;
@@ -188,11 +188,6 @@ a.details {
 span.worktitle {
     font-size: 12px;
     font-weight: bold;
-}
-
-ul.workinfo, ul.workinfo ul {
-    list-style: none;
-    text-align: left;
 }
 
 .private_note {
