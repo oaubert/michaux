@@ -24,6 +24,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     serie_auto = indexes.EdgeNgramField(model_attr='serie')
     support_auto = indexes.EdgeNgramField(model_attr='support')
     technique_auto = indexes.EdgeNgramField(model_attr='technique')
+    tags_auto = indexes.EdgeNgramField()
     authentication_source_auto = indexes.EdgeNgramField(model_attr='authentication_source')
 
     def get_model(self):
@@ -35,6 +36,9 @@ class WorkIndex(indexes.RealTimeSearchIndex):
 
     def prepare_tags(self, work):
         return [ unicode(t) for t in work.tags.all() ]
+
+    def prepare_tags_auto(self, work):
+        return self.prepare_tags(work)
 
     def prepare_technique(self, work):
         return [ unicode(t) for t in work.techniques ]

@@ -258,10 +258,10 @@ def compare(request, cote1=None, cote2=None, **kw):
 
 @login_required
 def complete(request, field=None, **kw):
-    if not field in ('serie', 'technique', 'support', "authentication_source"):
+    if not field in ('serie', 'technique', 'support', 'authentication_source', 'tags', 'query'):
         return HttpResponse(status=412)
     sqs = SearchQuerySet()
-    term = request.REQUEST.get('term', "")
+    term = request.REQUEST.get('q', request.REQUEST.get('term', ""))
     if field == 'technique':
         # Multivalued field. Rather than parsing the values at the
         # javascript level, we handle them here: we assume that we
@@ -281,6 +281,10 @@ def complete(request, field=None, **kw):
                               for item in sqs.autocomplete(**kw).values_list(field)
                               if last in item[0][0]
                               and not item[0][0] in techniques)
+    elif field == 'tags':
+        kw = { field + '_auto':  term }
+        completions = set(item[0]
+                          for item in sqs.autocomplete(**kw).values_list(field + '_auto'))
     else:
         kw = { field + '_auto':  term }
         completions = set(item[0]
