@@ -154,6 +154,42 @@ jQuery(document).ready(
                                       }
                                       });
 
+
+        document.michaux.tag_selection = function (tagname, selection) {
+            if (selection === undefined) {
+                var cote = $('#infopanel:visible').attr('data-current');
+                if (cote !== undefined) {
+                    selection = [ cote ];
+                }
+            }
+            if (selection !== undefined) {
+                selection.forEach(function (cote) {
+                                       console.log("Tagging ", cote, " with ", tagname);
+                                       // FIXME: add csrf token
+                                       $.get("/base/selection/tag/",
+                                             { 'selection': cote,
+                                               'name': tagname });
+                                  });
+            }
+        };
+        document.michaux.untag_selection = function (tagname, selection) {
+            if (selection === undefined) {
+                var cote = $('#infopanel:visible').attr('data-current');
+                if (cote !== undefined) {
+                    selection = [ cote ];
+                }
+            }
+            if (selection !== undefined) {
+                selection.forEach(function (cote) {
+                                       console.log("UnTagging ", cote, " with ", tagname);
+                                       // FIXME: add csrf token
+                                       $.get("/base/selection/untag/",
+                                             { 'selection': cote,
+                                               'name': tagname });
+                                  });
+            }
+        };
+
         document.michaux.resetFilter = function () {
             document.location.search = "";
         };
@@ -190,6 +226,8 @@ jQuery(document).ready(
             // Resubmit form
             $(this).parents("form").submit();
         };
+
+        // Event bindings
         $(".facetitem").on("click", document.michaux.toggle_facet);
         $(".clear-facet").on("click", document.michaux.clear_facet);
 
@@ -201,26 +239,23 @@ jQuery(document).ready(
                                    f.show("fast");
                                });
 
-        document.michaux.tag_selection = function (tagname) {
-            var cote = $('#infopanel:visible').attr('data-current');
-            if (cote !== undefined) {
-                console.log("Tagging ", cote, " with ", tagname);
-                // FIXME: add csrf token
-                $.get("/base/selection/tag/",
-                      { 'selection': cote,
-                        'name': tagname });
-            }
-        };
-
-        document.michaux.untag_selection = function (tagname) {
-            var cote = $('#infopanel:visible').attr('data-current');
-            if (cote !== undefined) {
-                console.log("UnTagging ", cote, " with ", tagname);
-                // FIXME: add csrf token
-                $.get("/base/selection/tag/",
-                      { 'selection': cote,
-                        'name': tagname });
-            }
-        };
-
+        $("#selection_tag").autoSuggest(document.michaux.url('complete', 'tags'), {
+                                            asHtmlID: "selection_tag",
+                                            startText: "Entrez le tag ici",
+                                            emptyText: "Aucun résultat",
+                                            limitText: "Vous ne pouvez pas faire plus de sélection",
+                                            queryParam: 'q',
+                                            retrieveLimit: 20,
+                                            minChars: 1,
+                                            neverSubmit: true,
+                                            selectionAdded: function (element) {
+                                                var tagname = $(element).contents(":not(a)").text();
+                                                document.michaux.tag_selection(tagname.trim(), document.michaux.getSelection());
+                                            },
+                                            selectionRemoved: function (element) {
+                                                var tagname = $(element).contents(":not(a)").text();
+                                                document.michaux.untag_selection(tagname.trim(), document.michaux.getSelection());
+                                                return false;
+                                            }
+                                        });
 });

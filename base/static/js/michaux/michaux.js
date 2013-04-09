@@ -8,7 +8,7 @@ jQuery(document).ready(
         /*
          * Return the appropriate URL.
          *
-         * type is the type of view: 'home' (default), 'work', 'exhibition', 'compare', 'selection', etc
+         * type is the type of view: 'home' (default), 'work', 'exhibition', 'compare', 'selection', 'complete', etc
          * ident is the identifier of the element (primary key) (can be a list for selection or compare)
          * action is the kind of action: 'view' (default), 'info', 'edit', 'compare'
          */
@@ -20,6 +20,9 @@ jQuery(document).ready(
 
             if (type === 'home') {
                 url += '/work/';
+            } else if (type === 'complete') {
+                // FIXME: hardcoded, default coop-tag url for now
+                url = "/list";
             } else if (type === 'work' || type === 'exhibition') {
                 url += type + '/' + ident;
                 if (action === 'info')
@@ -247,5 +250,6 @@ jQuery(document).ready(
                                          $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } );
                                      }
                                  }
+                                 return true;
                              });
 });
