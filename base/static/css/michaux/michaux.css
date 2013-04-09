@@ -131,6 +131,7 @@ a.action-glyph {
 }
 
 #elementTagform {
+    background-color: #fff;
     position: absolute;
     bottom: 2px;
 }
