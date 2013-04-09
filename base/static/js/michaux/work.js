@@ -1,8 +1,10 @@
-var michaux = {};
-
 jQuery(document).ready(
     function($) {
         "use strict";
+
+        if (document.michaux === undefined)
+            document.michaux = {};
+
         // Make tags clickable
         $(".as-selection-item").contents(':not(a)').click( function () { document.location = "/base/work?f=tags_exact:" + encodeURIComponent($(this).text()); });
 
@@ -11,7 +13,7 @@ jQuery(document).ready(
                              var url = $(this).attr('data-url');
 
                              // Display viewer
-                             michaux.iviewer = $(this).iviewer({ src: url,
+                             document.michaux.iviewer = $(this).iviewer({ src: url,
                                                                  zoom: 'fit', zoom_max: 500, zoom_min: 10 })
                                  .bind("ivieweronstartload", function () { $(".loading").show(); })
                                  .bind("ivieweronfinishload", function () { $(".loading").hide(); });
@@ -19,7 +21,7 @@ jQuery(document).ready(
                              // Find vignette matching main image
                              $(".image_reference:first")
                                  .each(function () {
-                                           michaux.iviewer_thumbnail = this;
+                                           document.michaux.iviewer_thumbnail = this;
                                            var frame = $("<div/>")
                                                .addClass('visible_frame')
                                                .css({
@@ -34,10 +36,10 @@ jQuery(document).ready(
                                                return val < min ? min : ( val > max ? max : val );
                                            }
                                            function update_frame() {
-                                               var img = $(michaux.iviewer_thumbnail).find("img");
+                                               var img = $(document.michaux.iviewer_thumbnail).find("img");
                                                var width = 1.0 * $(img).width();
                                                var height = 1.0 * $(img).height();
-                                               var f = $(michaux.iviewer).iviewer('info', 'frame');
+                                               var f = $(document.michaux.iviewer).iviewer('info', 'frame');
                                                frame.css({
                                                              left: Math.floor(clamp(f.x, 0, 1) * width) + 'px',
                                                              top: Math.floor(clamp(f.y, 0, 1) * height) + 'px',
@@ -46,7 +48,7 @@ jQuery(document).ready(
                                                              display: 'block'
                                                          });
                                            }
-                                           $(michaux.iviewer).bind("ivieweronzoom", update_frame)
+                                           $(document.michaux.iviewer).bind("ivieweronzoom", update_frame)
                                                .bind("iviewerondrag", update_frame)
                                                .bind("ivieweronafterzoom", update_frame)
                                                .bind("ivieweronstopdrag", update_frame)
@@ -55,10 +57,10 @@ jQuery(document).ready(
                          });
         $(".image_reference").click(function (e) {
                                         e.preventDefault();
-                                        $(michaux.iviewer).iviewer('loadImage', $(this).attr('href'));
+                                        $(document.michaux.iviewer).iviewer('loadImage', $(this).attr('href'));
                                     });
 
-        michaux.tag_selection = function (tagname) {
+        document.michaux.tag_selection = function (tagname) {
             var cote = $("#workinfo").attr('data-cote');
             console.log("Tagging ", cote, " with ", tagname);
             // FIXME: add csrf token
@@ -67,7 +69,7 @@ jQuery(document).ready(
                     'name': tagname });
         };
 
-        michaux.untag_selection = function (tagname) {
+        document.michaux.untag_selection = function (tagname) {
             var cote = $("#workinfo").attr('data-cote');
             console.log("UnTagging ", cote, " with ", tagname);
             // FIXME: add csrf token
