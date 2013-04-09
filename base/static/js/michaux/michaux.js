@@ -130,7 +130,8 @@ jQuery(document).ready(
                     .bind("ivieweronafterzoom", update_frame)
                     .bind("ivieweronstopdrag", update_frame)
                     .bind("ivieweronstartload", function () { $("#lightbox img").hide(); $(".loading").show(); })
-                    .bind("ivieweronfinishload", function () { $("#lightbox img").show(); $(".loading").hide(); update_frame(); });
+                    .bind("ivieweronfinishload", function () { $("#lightbox img").show(); $(".loading").hide(); update_frame(); })
+                    .bind("dblclick", function () { $(this).hide(); });
             }
 
             $('#lightbox').css('width', $(window).width() - 225)
