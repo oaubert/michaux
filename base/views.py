@@ -96,6 +96,7 @@ def works(request, *p, **kw):
         'page': page,
         'options': options,
         'request': request,
+        'tagform': EditTagsForm,
         'overlay_fields': (
                 ('', 'Aucune'),
                 ('status', 'Statut'),
@@ -133,6 +134,7 @@ def workextended(request, cote=None, type_=None, **kw):
         return render_to_response('workinfo.html', {
                                   'work': w,
                                   'meta': Work._meta,
+                                  'tagform': EditTagsForm(instance=w),
                                   }, context_instance=RequestContext(request))
     elif type_ == 'solr':
         return render_to_response('search/indexes/base/work_text.txt', {
