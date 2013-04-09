@@ -104,8 +104,6 @@
     <dynamicField name="*_dt" type="date"    indexed="true"  stored="true"/>
     
 
-    <field name="tags_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
-
     <field name="creator" type="text" indexed="true" stored="true" multiValued="false" />
 
     <field name="text" type="text" indexed="true" stored="true" multiValued="false" />
