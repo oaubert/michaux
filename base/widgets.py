@@ -74,11 +74,11 @@ class TagAutoSuggest(forms.TextInput):
                         $("#%(result_id)s").val(tags_as_string);
                     });
                 });
-            })(django.jQuery);
+            })(jQuery);
             </script>""" % {
                 'result_id': result_attrs['id'],
                 'widget_id': widget_attrs['id'],
-                'url': reverse('tag-autosuggest-list'),
+                'url': reverse('base.views.complete', args=['tags']),
                 'start_text': _("Enter Tag Here"),
                 'empty_text': _("No Results"),
                 'limit_text': _('No More Selections Are Allowed'),
