@@ -50,6 +50,10 @@ jQuery(document).ready(
             var selection = document.michaux.getSelection();
             $('#selection_menu').text(selection.length + (selection.length > 1 ? " éléments sélectionnés" : " élément sélectionné"));
             $('#selection_popup').toggleClass("emptySelection", ! selection.length);
+            // Remove hidden input fields from selection popup (tag-related)
+            $('#selection_popup input[type=hidden]').remove();
+            $('#selection_popup .as-selection-item').remove();
+
             $('#selection').attr('value', selection.join(","));
         }
 
