@@ -32,11 +32,8 @@
 {% block margin %}
         <h2>{{ work }}</h2>
 
-        {% include "workinfo.html" with work=work %}
+        {% include "workinfo.html" with work=work tagform=tagform %}
 
-        <div id="tags">
-        {{ tagform.as_p }}
-        </div>
 {% endblock %}
 
 {% block content %}
