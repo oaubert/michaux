@@ -1,7 +1,7 @@
 Install instructions
 --------------------
 
-* Install Solr + (jetty or tomcast) ``aptitude install solr``
+* Install Solr + (jetty or tomcast) ``aptitude install solr-jetty``
 * Install ``/etc/solr/conf/schema.xml`` from catalogue (built with ``manage.py build_solr_schema``)
 - Configure Solr: in ``/etc/solr/conf/solrconfig.xml``, add the line::
 
@@ -24,8 +24,9 @@ See https://groups.google.com/forum/#!msg/django-haystack/nQ50mwStsmo/BQ5V3VyJuY
 coop-tag
 django-imagekit
 django-haystack
+python-unicodecsv
 
-* After install: do not forget to ``./manage.py update_index`` to
+* After install: do not forget to ``./manage.py rebuild_index`` to
   index solr database
 
 * Note: when migrating (from sqlite3 to mysql for instance), use
