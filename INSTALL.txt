@@ -1,9 +1,21 @@
 Install instructions
 --------------------
 
-* Install Solr + (jetty or tomcast) ``aptitude install solr-jetty``
-* Install ``/etc/solr/conf/schema.xml`` from catalogue (built with ``manage.py build_solr_schema``)
-- Configure Solr: in ``/etc/solr/conf/solrconfig.xml``, add the line::
+* Python requirements
+
+coop-tag
+django >= 1.4
+django-imagekit
+django-haystack
+python-unicodecsv (for export code)
+
+* SOLR installation/configuration
+
+** Install Solr + (jetty or tomcast) ``aptitude install solr-jetty``
+
+** Install ``/etc/solr/conf/schema.xml`` from catalogue (built with ``manage.py build_solr_schema``, but the last version is in the git tree anyway)
+
+** Configure Solr: in ``/etc/solr/conf/solrconfig.xml``, add the line::
 
        <int name="facet.mincount">1</int>
 
@@ -17,30 +29,27 @@ in default params for search handler::
 
 See https://groups.google.com/forum/#!msg/django-haystack/nQ50mwStsmo/BQ5V3VyJuYIJ for details
 
-* If there is a bug in jetty, check that 
-``/usr/share/jetty/webapps/solr`` is valid (some packages have a wrong link)
+** Check that ``/usr/share/jetty/webapps/solr`` is valid (some packages have a wrong link)
 
-* pip requirements
-coop-tag
-django-imagekit
-django-haystack
-python-unicodecsv
+** Make sure that the jetty port is correctly referenced in the
+  settings.py file (HAYSTACK_SOLR_URL) and fix either the URL or the
+  port configuration.
 
-* After install: do not forget to ``./manage.py rebuild_index`` to
-  index solr database
+** After install: do not forget to ``./manage.py rebuild_index`` to index solr database
 
-* Note: when migrating (from sqlite3 to mysql for instance), use
-  dumpdata/loaddata to move data. 
+* MySQL
+
+** Note: when migrating (from sqlite3 to mysql for instance), use dumpdata/loaddata to move data.
   ./manage.py dumpdata -e contenttypes -e auth.Permission > base.json
   ./manage.py loaddata base.json
 
-* MySQL configuration issues
+** MySQL configuration issues
 
 MySQL must be configured to correctly handle utf8. According to
 http://mathiasbynens.be/notes/mysql-utf8mb4 , utf8mb4 is preferable to
 avoid being bitten by obscure characters.
 
-- configure mysql server with
+- configure mysql server with (on Debian, create a file in in ``/etc/mysql/conf.d/``)
 
   [client]
   default-character-set = utf8mb4
