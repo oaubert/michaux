@@ -109,9 +109,9 @@
             </p>
           </li>
           {% if work.tags.similar_objects %}
-          <li class="similar"><strong>Oeuvres similaires</strong>
+          <li class="similar"><strong>Oeuvres similaires ({{ work.tags.similar_objects.count }})</strong>
             <ul>
-              {% for w in work.tags.similar_objects %}
+              {% for w in work.tags.similar_objects|slice:":5" %}
               <li><a href="/base/work/{{ w.cote }}">{{ w }}</a></li>
               {% endfor %}
             </ul>
