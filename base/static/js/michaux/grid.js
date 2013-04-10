@@ -60,6 +60,7 @@ jQuery(document).ready(
                                             });
                     $(element).after(i);
                 }
+                $('#selection_popup input').remove();
                 $(i).parents("form").submit();
             }
 
@@ -195,12 +196,14 @@ jQuery(document).ready(
         };
 
         document.michaux.goto_page = function (p) {
+            $('#selection_popup input').remove();
             $("#current_page").attr('value', p)[0].form.submit();
         };
 
         document.michaux.clear_facet = function (e) {
             e.preventDefault();
             var i = $(this).parents(".facetbox").find("input").remove();
+            $('#selection_popup input').remove();
             $(this).parents("form").submit();
         };
 
@@ -224,6 +227,7 @@ jQuery(document).ready(
                                                 }));
             }
             // Resubmit form
+            $('#selection_popup input').remove();
             $(this).parents("form").submit();
         };
 
