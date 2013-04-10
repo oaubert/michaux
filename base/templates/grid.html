@@ -71,7 +71,7 @@
 {% if user.is_active and user.is_staff %}
         <li class="needSelection"><a id="selection_edit">Éditer</a></li>
 {% endif %}
-        <li class="needSelection">Tag <input size="16" id="selection_tag" type="text" name="selection_tag" /></li>
+        <li class="needSelection">Tag <input class="transient" size="16" id="selection_tag" type="text" name="selection_tag" /></li>
       </ul>
     </li>
     {% endwith %}
