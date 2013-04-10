@@ -147,7 +147,7 @@ jQuery(document).ready(
 
         // Display infopanel about a work
         // It can be given either a .vignette anchor or a div.work element
-        function display_infopanel(self) {
+        document.michaux.display_infopanel = function (self) {
             var cote;
             var work;
             var vignette;
@@ -201,7 +201,15 @@ jQuery(document).ready(
                           }
                       }
                   });
-        }
+        };
+
+        document.michaux.hide_infopanel = function () {
+            $("div.work.current").removeClass("current");
+            $('#content').css("margin-right", "5px");
+            $('#infopanel').hide('fast');
+            $('#lightbox').hide();
+            $('#grid').focus();
+        };
 
         $('.vignette').click(function(e) {
                                  //prevent default action (hyperlink)
@@ -214,16 +222,6 @@ jQuery(document).ready(
                                    $(this).parents("div.work").toggleClass("selected");
                                    update_selection_menu();
                                });
-
-        document.michaux.display_infopanel = display_infopanel;
-
-        document.michaux.hide_infopanel = function () {
-            $("div.work.current").removeClass("current");
-            $('#content').css("margin-right", "5px");
-            $('#infopanel').hide('fast');
-            $('#lightbox').hide();
-            $('#grid').focus();
-        };
 
         // Keyboard handling
         $(document).keypress(function (e) {
