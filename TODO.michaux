@@ -18,8 +18,6 @@ update_index -> cron
 * Grille
 ** transform template <form> into a Django Form ?
 ** Facettes: permettre 2 modes de sélection: checkbox (facettes multiples) ou clic (simple facette) (?)
-** Formulaire d'ajout de tag + autocomplétion
-*** Custom TagAutoSuggest generates selectionAdded on init
 ** Autocomplete on generic query widget
 ** Version REST/JSON (cf rest-framework)
 
@@ -31,18 +29,15 @@ update_index -> cron
 - http://books.openedition.org/editionsmsh/319
 - http://explore.clarosnet.org/XDB/ASP/clarosHome/
 - http://www.casparpreserves.eu/index.html
+- http://mw2013.museumsandtheweb.com/paper/open-culture-data-opening-glam-data-bottom-up/
+** Interopérabilité:
+- http://docs.collectiveaccess.org/wiki/Category:Setup_and_Configuration
 
-** édition de tags: trouver les hooks pour définir selectionAdded/selectionRemoved pour faire une MAJ tout de suite sur le serveur
-http://code.drewwilson.com/entry/autosuggest-jquery-plugin
- http://stackoverflow.com/questions/4727983/jquery-autocomplete-need-to-initiate-only-when-a-special-character-is-typed
+** Afficher expositions sur une carte?: http://markmarkoh.com/blog/d3-dot-js-animated-map-visualization/
+http://www.d3noob.org/
+ -> add long/lat info to exhibition
 
 * Formulaire admin:
-** DONE autocomplétion
-http://django-haystack.readthedocs.org/en/v1.2.7/autocomplete.html
-https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/KU7aRHzNJaU
-https://groups.google.com/forum/?fromgroups=#!topic/django-haystack/59xiMeUYXNc
-https://github.com/jeffkistler/django-fancy-autocomplete
-
 ** utiliser des onglets pour les catégories ?
 ** Afficher la liste complète des tags existants
 
@@ -56,10 +51,9 @@ https://github.com/jeffkistler/django-fancy-autocomplete
 - DONE pass query string to pivot from navbar
 - DONE integrate into base.html
 - integrate deepzoom generation
+- fix zooming: http://msdn.microsoft.com/en-us/library/cc645077(v=vs.95).aspx
 - upgrade (see http://kingsley.idehen.net/c/86Q2Q )
   
 * Misc TODO items
 ** Mécanisme de sauvegarde de vues: permettre de nommer la vue grille, et offrir un accès via un sous-menu Vues (qui remplace Pivot qui devient une vue).
-** Select all/deselect all
-** Entrée tag dans grid qui ne s'affiche que si une sélection existe
 ** Suppression de tags par lot  (+confirmation)
