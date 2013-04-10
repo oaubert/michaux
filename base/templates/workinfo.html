@@ -2,7 +2,7 @@
 {% load url from future %}
 {% load michaux %}
 
-    <div id="workinfo" data-cote="{{ work.cote }}">
+    <div id="workinfo" data-cote="{{ work.cote }}" itemscope itemtype="http://schema.org/Painting">
         <ul>
 
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
@@ -30,7 +30,7 @@
           </li>
 
           <li>{% if work.creation_date_uncertainty %}{{ work.creation_date_uncertainty }} {% endif %}
-            {% if work.creation_date_start %}<a class="facetvalue editable" data-field="creation_date_start" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
+            {% if work.creation_date_start %}<a itemprop="dateCreated" class="facetvalue editable" data-field="creation_date_start" href="{{ work.creation_date_start|facet_url:"creation_date_start"}}">{{ work.creation_date_start }}</a>{% endif %}
             {% if work.creation_date_end %}- <a class="facetvalue editable" data-field="creation_date_end" href="{{ work.creation_date_end|facet_url:"creation_date_end"}}">{{ work.creation_date_end }}</a>{% endif %}
             {% if work.note_creation_date %}
             <span class="private_note editable" data-field="note_creation_date">({{ work.note_creation_date }})</span>
@@ -65,7 +65,7 @@
 
           {% if work.comment %}
           <li><strong>Notes publiques</strong></li>
-          <li class="editable" data-field="comment">{{ work.comment|autolink|linebreaksbr }}</li>
+          <li itemprop="comment" class="editable" data-field="comment">{{ work.comment|autolink|linebreaksbr }}</li>
           {% endif %}
 
           {# Private fields #}
@@ -104,7 +104,7 @@
 
           {% if work.tags.count %}
           <li class="taglist"><strong>Tags</strong>
-            <p>
+            <p itemprop="keywords">
               {% for tag in work.tags.all %}<a href="/base/work/?f=tags_exact:{{ tag.name|urlencode }}">{{ tag.name }}</a> {% endfor %}
             </p>
           </li>
@@ -120,7 +120,7 @@
           {% endif %}
           {% if work.image_set.count %}
           <li>
-            {% for img in work.image_set.all %}<a class="image_reference" rel="lightbox" title="{{ img }}" href="{{ img.original_image.url }}"><img class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
+            {% for img in work.image_set.all %}<a class="image_reference" rel="lightbox" title="{{ img }}" href="{{ img.original_image.url }}"><img itemprop="associatedMedia" class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
           </li>
           {% endif %}
 
