@@ -60,8 +60,19 @@ class TagAutoSuggest(forms.TextInput):
                         queryParam: 'q',
                         retrieveLimit: %(retrieve_limit)d,
                         minChars: 1,
-                        selectionAdded: function (element) { var tagname = $(element).contents(":not(a)").text(); if (document.michaux.tag_selection !== undefined) document.michaux.tag_selection(tagname.trim()); },
-                        selectionRemoved: function (element) { var tagname = $(element).contents(":not(a)").text(); if (document.michaux.tag_selection !== undefined) document.michaux.untag_selection(tagname.trim()); return false; },
+                        selectionAdded: function (element) {
+                              var tagname = $(element).contents(":not(a)").text();
+                              if (document.michaux.tag_selection !== undefined)
+                                 document.michaux.tag_selection(tagname.trim());
+                            },
+                        selectionRemoved: function (element) {
+                              var tagname = $(element).contents(":not(a)").text();
+                              if (document.michaux.tag_selection !== undefined) {
+                                  document.michaux.untag_selection(tagname.trim());
+                                  $(element).remove();
+                                  return true;
+                              }
+                            },
                         neverSubmit: true
                     });
 
