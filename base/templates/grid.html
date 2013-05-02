@@ -58,7 +58,7 @@
   <ul>
 
     <li><input placeholder="Filtre..." id="filter" type="text" name="q" value="{{ options.query_string }}" />
-      <a href="javascript:document.michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a></li>
+      <a href="javascript:document.michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a><input type="submit" id="form_submit" value="" /></li>
 
     {% with selcount=options.selectionset|length %}
     <li id="selection_menuitem"><input type="hidden" id="selection" name="selection" value="{{ options.selection }}" /><a id="selection_menu">{{ selcount }} {% if selcount > 1 %}éléments sélectionnés{% else %}élément sélectionné{% endif %}</a>
