@@ -186,7 +186,10 @@ class Command(BaseCommand):
             # e.address =
             e.city = data['Ville']
             e.country = data['Pays']
-            e.start_year = long(data['Date'])
+            if data['Date']:
+                e.start_year = long(data['Date'])
+            else:
+                e.start_year = 0
 
             if data[u'abréviation']:
                 ab = data[u'abréviation']
