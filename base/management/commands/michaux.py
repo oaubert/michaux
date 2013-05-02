@@ -231,7 +231,7 @@ class Command(BaseCommand):
             # e.comment =
             e.note = data['Remarques']
             e.save()
-            self.stdout.write(unicode(e).encode('utf-8') + "\n")
+            self.stdout.write(str(n) + ": " + unicode(e).encode('utf-8') + "\n")
 
             for (num, nom, lieu, ville, pays, annee, start, end) in (
                 (' (2)', 'Nom 2', "lieu d'exposition 2", 'Ville 2', 'Pays 2', 'Date 2', 'Date c', 'Date d'),
