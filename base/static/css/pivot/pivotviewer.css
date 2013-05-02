@@ -23,7 +23,7 @@
 .pv-filterpanel-search { margin-top: 9px; margin-bottom:0px; height:24px; border:1px solid #E2E2E2; }
 .pv-filterpanel-search::-webkit-input-placeholder { color:#787676; font-style:italic; font-size:9pt; }
 .pv-filterpanel-search:-moz-placeholder { color:#787676; font-style:italic; font-family: 'Segoe UI', Tahoma, Arial, Helvetica, Sans-Serif; font-size:9pt; }
-.pv-filterpanel-search-autocomplete { position:absolute; z-index:10; background-color: #FFF; border:1px solid #E2E2E2; margin-right:3px; padding: 3px; }
+.pv-filterpanel-search-autocomplete {height: 150px; overflow-y: scroll; overflow-x: hidden; position:absolute; z-index:10; background-color: #FFF; border:1px solid #E2E2E2; margin-right:3px; padding: 3px;}
 .pv-filterpanel-search-autocomplete span { float:left; width:100%; }
 .pv-filterpanel-search-autocomplete span:hover { cursor:pointer; background-color:#CBE4F0; }
 .pv-filterpanel-accordion-facet-sort { background-color: #DCECF4; color: #4F7192; margin-left:4px; padding: 0px 2px 0px 2px; cursor:default; }
@@ -137,8 +137,8 @@
 .ui-accordion .ui-accordion-header {  outline: none; cursor: pointer; position: relative; margin-top: 1px; margin-bottom: 0px; zoom: 1; border-top: 1px solid #E2E2E2; }
 .ui-accordion .ui-accordion-li-fix { display: inline; }
 .ui-accordion .ui-accordion-header-active { border-bottom: 0 !important; }
-.ui-accordion .ui-accordion-header a { width: 80%;  display: block; font-size: 1em; padding: .5em .5em .5em .7em; overflow: hidden; text-overflow: ellipsis; }
- .ui-accordion-header.ui-state-default a { width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.ui-accordion .ui-accordion-header a {text-decoration: none; color: #05314A; width: 80%;  display: block; font-size: 1em; padding: .5em .5em .5em .7em; overflow: hidden; text-overflow: ellipsis; font-weight:normal;}
+ .ui-accordion-header.ui-state-default a { text-decoration: none; color: #05314A; width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 .ui-accordion-icons .ui-accordion-header a { outline: none; text-decoration:none; color: #05314A; }
 .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
 .ui-accordion .ui-accordion-content { height: 35%; /*padding: 1em 2.2em;*/ border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow-y: auto !important; overflow-x: hidden !important; display: none; zoom: 1; }

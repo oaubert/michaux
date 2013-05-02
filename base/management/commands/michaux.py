@@ -67,7 +67,7 @@ class Command(BaseCommand):
             w.note = data['Notice']
             w.comment = data['Remarques']
             if data[u'Reproductions']:
-                w.revision = u'BIBLIO:%s\n' % data[u'Reproductions']
+                w.revision = u"\n".join(u"BIBLIO: %s" % b for b in data[u'Reproductions'].splitlines() if b.strip())
             w.save()
             self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
             # FIXME: Improve image name heuristic
