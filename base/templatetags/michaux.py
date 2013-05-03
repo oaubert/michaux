@@ -70,7 +70,7 @@ def memoize(func):
     return wrap
 
 normalized_re = re.compile(r'LATIN (SMALL|CAPITAL) LETTER (\w)')
-extended_valid_re = re.compile(r'[-a-zA-Z0-9_]')
+extended_valid_re = re.compile(r'[ -a-zA-Z0-9_]')
 
 @memoize
 def unaccent_char(c):
