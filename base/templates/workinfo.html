@@ -58,7 +58,7 @@
           {% if work.reproduction_set.count %}
           <li><strong>Références bibliographiques ({{ work.reproduction_set.count }})</strong>
             <ul>
-              {% for ex in work.reproduction_set.all %}<li>{{ repr }} : {{ repr.comment|linebreaksbr }}</li> {% endfor %}
+              {% for ex in work.reproduction_set.all %}<li>&#x2a9c; {{ repr.title|default:repr.abbreviation }} : {{ repr.comment|linebreaksbr }}</li> {% endfor %}
             </ul>
           </li>
           {% endif %}
