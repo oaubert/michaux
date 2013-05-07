@@ -7,11 +7,11 @@
     <FacetCategory Name="Cote" Type="String" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="FileName" Type="String" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Fiche" Type="Link" P:IsFilterVisible="false" P:IsWordWheelVisible="false" P:IsMetaDataVisible="false"></FacetCategory>
-    <FacetCategory Name="Technique" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true">
+    <FacetCategory Name="Technique" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false">
     </FacetCategory>
-    <FacetCategory Name="Support" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Support" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Serie" Type="String" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
-    <FacetCategory Name="Annee" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="true"></FacetCategory>
+    <FacetCategory Name="Annee" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Hauteur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
     <FacetCategory Name="Largeur" Type="Number" P:IsFilterVisible="true" P:IsWordWheelVisible="true" P:IsMetaDataVisible="false"></FacetCategory>
   </FacetCategories>
