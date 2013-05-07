@@ -49,7 +49,7 @@
             <ul>
               {% for ei in work.exhibitioninstance_set.all %}
               {% with ex=ei.exhibition %}
-              <li><em><a title="{{ ex.title }}" class="facetvalue" href="{% url "base.views.exhibition" ex.pk %}">{% if ex.title %}{{ ex.title }}, {% endif %}{{ ex.abbreviation }}</a></em> <a class="facetvalue action-glyph" title="Filtrer la vue grille suivant cette valeur de facette" href="{{ ex.abbreviation|facet_url:"exhibition" }}">&#x267b;</a>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'exposition" href="{% url "admin:base_exhibition_change" ex.pk %}">&#x270f;</a>{% endif %}</li>
+              <li><em><a title="{{ ex.title }}" class="facetvalue" href="{% url "base.views.exhibition" ex.pk %}">{% if ex.title %}{{ ex.title }}, {% endif %}{{ ex.abbreviation }}</a></em> <a class="facetvalue action-glyph" title="Filtrer la vue grille suivant cette valeur de facette" href="{{ ex.abbreviation|facet_url:"exhibition" }}">&#x2299;</a>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'exposition" href="{% url "admin:base_exhibition_change" ex.pk %}">&#x270f;</a>{% endif %}</li>
               {% endwith %}
               {% endfor %}
             </ul>
