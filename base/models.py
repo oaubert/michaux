@@ -427,7 +427,7 @@ class Exhibition(models.Model):
     abbreviation  = models.CharField(_("abréviation"),
                                      help_text=_("Sous la forme date (nombre entier, année) + nom du lieu d'exposition (texte libre)"),
                                      max_length=255,
-                                     unique=True, blank=False)
+                                     blank=False)
     title = models.CharField(_("titre"),
                              help_text=_("Titre complet de l'exposition"),
                              max_length=512,
