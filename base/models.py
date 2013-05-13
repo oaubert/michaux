@@ -248,9 +248,11 @@ class Work(models.Model):
         return reverse('base.views.work', args=[str(self.cote)])
 
     def __unicode__(self):
-        d = {'printable_year': self.printable_year}
-        d.update(self.__dict__)
-        return u"hm%(cote)d - %(technique)s sur %(support)s (%(printable_year)s)" % d
+        return u"hm%(cote)d - %(techniques)s sur %(support)s (%(printable_year)s)" % {
+            'printable_year': self.printable_year,
+            'techniques': ", ".join(self.techniques),
+            'cote': self.cote,
+            'support': self.support }
 
 class Inscription(models.Model):
     class Meta:
