@@ -135,3 +135,29 @@ a.action-glyph {
     position: absolute;
     bottom: 2px;
 }
+
+.action-glyph {
+    display: none;
+}
+
+li:hover > .action-glyph {
+    display: inline;
+}
+
+span.worktitle {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.private_note {
+    font-style: italic;
+    background-color: #eee;
+}
+
+dl.private_note {
+    margin-left: 10px;
+}
+
+.private_note dt {
+    font-weight: bold;
+}
