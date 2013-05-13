@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 {% load michaux %}
-<Collection MaxLevel="4" TileSize="254" Format="jpg" NextItemId="{{ sqs|length }}" ServerFormat="Default" xmlns="http://schemas.microsoft.com/deepzoom/2009">
+<Collection MaxLevel="9" TileSize="254" Format="jpg" NextItemId="{{ sqs|length }}" ServerFormat="Default" xmlns="http://schemas.microsoft.com/deepzoom/2009">
   <Items>
     {% for o in sqs %}
     {% with w=o.object %}
