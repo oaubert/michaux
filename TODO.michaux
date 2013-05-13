@@ -2,7 +2,7 @@
 * Génération dzi
 
 Images/thumbnails are generated on-demand: trigger generation with
-./manage.py ikcachevalidate (generateimages in new versions)
+./manage.py ikcachevalidate base (generateimages in new versions)
 
   cd media/images
   mkdir ../cache/pivot
