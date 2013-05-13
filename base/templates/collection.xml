@@ -18,7 +18,7 @@
   <Items ImgBase="dzimages?{{ request.META.QUERY_STRING }}">
     {% for o in sqs %}
     {% with w=o.object %}
-    <Item Img="#{{ w.cote }}" Id="{{ w.cote }}" Name="{{ w }}">
+    <Item Img="#{{ w.cote }}" Id="{{ w.cote }}" Name="{{ w }}" Href="{{ w.get_absolute_url }}">
       <Description>
 {% filter force_escape %}
 {% include "workinfo.html" with work=w %}
