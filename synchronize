@@ -10,5 +10,5 @@ BASE=${HOME}/${APPPATH}
 
 $BASE/manage.py collectstatic --noinput
 git stash
-rsync -av -F ${BASE}/ michaux:${APPPATH}/
+rsync --bwlimit=90 -av -F ${BASE}/ michaux:${APPPATH}/
 git stash pop
