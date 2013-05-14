@@ -4,7 +4,6 @@
 
     <div id="workinfo" data-cote="{{ work.cote }}" itemscope itemtype="http://schema.org/Painting">
         <ul>
-
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
           </li>
 
@@ -88,19 +87,20 @@
           {% endif %}
 
           <dl class="private_note">
+            
+            {% if work.note %}
+            <dt>Notes privées</dt>
+            <dd class="editable" data-field="note">{{ work.note|autolink|linebreaksbr }}</dd>
+            {% endif %}
 
-          {% if work.note %}
-          <dt>Notes privées</dt>
-          <dd class="editable" data-field="note">{{ work.note|autolink|linebreaksbr }}</dd>
+            {% if work.revision %}
+            <dt><strong>Révisions</strong></dt>
+            <dd class="editable" data-field="revision">{{ work.revision|autolink|linebreaksbr }}</dd>
+            {% endif %}
+
+          </dl>
           {% endif %}
-
-          {% if work.revision %}
-          <dt><strong>Révisions</strong></dt>
-          <dd class="editable" data-field="revision">{{ work.revision|autolink|linebreaksbr }}</dd>
-          {% endif %}
-
-
-          {% endif %}
+          {# End of private fields #}
 
           {% if work.tags.count %}
           <li class="taglist"><strong>Tags</strong>
