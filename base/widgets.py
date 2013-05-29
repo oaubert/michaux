@@ -40,6 +40,7 @@ class TagAutoSuggest(forms.TextInput):
 
         widget_attrs = copy.copy(attrs)
         widget_attrs['id'] += '__tagautosuggest'
+        widget_attrs['autofocus'] = ''
         widget_html = super(TagAutoSuggest, self).render(name, value,
             widget_attrs)
 
