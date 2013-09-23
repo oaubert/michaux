@@ -12,7 +12,8 @@
    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
    <link href="{{ STATIC_URL }}css/michaux/work.css" rel="stylesheet" type="text/css" media="screen" />
    <link href="{{ STATIC_URL }}css/michaux/work-print.css" rel="stylesheet" type="text/css" media="print" />
-    <link href="{{ STATIC_URL }}css/jquery.iviewer.css" rel="stylesheet" type="text/css" media="screen" />
+   <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+   <link href="{{ STATIC_URL }}css/jquery.iviewer.css" rel="stylesheet" type="text/css" media="screen" />
    <!-- FIXME: find the proper way to get admin jquery ref (through -- ModelAdmin.Media) -->
    <script type="text/javascript">
      if (django === undefined) {
@@ -21,6 +22,7 @@
    </script>
 
    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.iviewer.js"></script>
    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/work.js"></script>
 {{ tagform.media }}
