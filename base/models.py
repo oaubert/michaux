@@ -601,15 +601,25 @@ class Owner(models.Model):
 class Acquisition(models.Model):
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))
-    current_owner = models.BooleanField(_("current owner"))
+    current_owner = models.BooleanField(_("current owner"),
+                                        default=False)
     # FIXME: est-ce que c'est vraiment relatif à l'acquisition ? Un
     # même propriétaire pourrait avoir plusieurs collections de
     # statuts différents
-    private = models.BooleanField(_("private collection"))
+    public = models.BooleanField(_("public collection"),
+                                 default=False)
     owner = models.ForeignKey(Owner,
                               verbose_name=_("propriétaire"))
     date = models.DateField(_("date d'acquisition"),
                             blank=True)
+    reference = models.CharField(_("référence catalogue"),
+                                 max_length=64,
+                                 blank=True)
+    estimation = models.CharField(_("estimation"),
+                                  max_length=50,
+                                  blank=True)
+    price = models.IntegerField(_("prix de vente"),
+                                blank=True)
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
