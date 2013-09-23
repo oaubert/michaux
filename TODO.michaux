@@ -1,4 +1,7 @@
 -*- org -*-
+* Haystack
+http://django-haystack.readthedocs.org/en/latest/migration_from_1_to_2.html
+
 * Génération dzi
 
 Images/thumbnails are generated on-demand: trigger generation with
@@ -7,9 +10,9 @@ Images/thumbnails are generated on-demand: trigger generation with
   cd media/images
   mkdir ../cache/pivot
   [bash]
-  for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i%.*}.dzi ../cache/images/${i%.*}_image.jpg; done
+  for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --tile_size=254 --tile_overlap=1  --square --tile_format=jpg --destination=../cache/pivot/${i%.*}.dzi ../cache/images/${i%.*}_image.jpg; done
   [zsh]
-  for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --square -f jpg -d ../cache/pivot/${i:r}.dzi ../cache/images/${i:r}_image.jpg; done
+  for i in *.jpg; do echo $i ; ~/src/michaux/deepzoom.py/deepzoom.py --tile_size=254 --tile_overlap=1  --square --tile_format=jpg --destination=../cache/pivot/${i:r}.dzi ../cache/images/${i:r}_image.jpg; done
 
 ** à intégrer dans le processus d'import/ajout d'image
 
@@ -52,8 +55,14 @@ http://www.d3noob.org/
 - DONE integrate into base.html
 - integrate deepzoom generation
 - fix zooming: http://msdn.microsoft.com/en-us/library/cc645077(v=vs.95).aspx
+http://www.gasi.ch/blog/inside-deep-zoom-2/
+
+- investigate http://openseadragon.github.io/ for standard zoom into elements
+
+
 - upgrade (see http://kingsley.idehen.net/c/86Q2Q )
   
 * Misc TODO items
 ** Mécanisme de sauvegarde de vues: permettre de nommer la vue grille, et offrir un accès via un sous-menu Vues (qui remplace Pivot qui devient une vue).
 ** Suppression de tags par lot  (+confirmation)
+** http://blog.teamtreehouse.com/organize-your-code-with-requirejs
