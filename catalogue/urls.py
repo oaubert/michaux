@@ -13,6 +13,6 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^search/', include('haystack.urls')),
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-                       url(r'^', include('coop_tag.urls')),
+                       url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
                        (r'^grappelli/', include('grappelli.urls')),
 )

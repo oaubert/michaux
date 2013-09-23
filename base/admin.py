@@ -11,8 +11,6 @@ from django.contrib import admin
 from django.contrib.admin import util as admin_util
 from django.http import HttpResponse
 
-import coop_tag
-
 from base.forms import ImageModelForm
 from base.models import Inscription, Image, BibliographyReference, Exhibition, ExhibitionInstance, Event, Reproduction, Owner, Acquisition, Work
 
@@ -130,10 +128,6 @@ class WorkSelectionFilter(admin.SimpleListFilter):
             return queryset
 
 class WorkAdmin(admin.ModelAdmin):
-
-    class Media:
-        css = {"all": ('%s/css/%s' % (coop_tag.settings.TAGGER_STATIC_URL, coop_tag.settings.TAGGER_CSS_FILENAME),
-                       )}
 
     fieldsets = [
         (None,               {'fields': [ ('status', 'authentication_source', 'serie'), 'tags']}),

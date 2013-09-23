@@ -5,8 +5,8 @@ from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from coop_tag import settings
-from coop_tag.utils import edit_string_for_tags
+from django.conf import settings
+from taggit_autosuggest.utils import edit_string_for_tags
 
 class AdminImageWidget(forms.widgets.ClearableFileInput):
     """A ImageField Widget for admin that shows a thumbnail.
@@ -23,7 +23,7 @@ class AdminImageWidget(forms.widgets.ClearableFileInput):
         output.append(super(AdminImageWidget, self).render(name, value, attrs))
         return mark_safe(u''.join(output))
 
-# Adapted from coop_tag/widgets, so that selectionAdded and
+# Adapted from taggit_autosuggest/widgets, so that selectionAdded and
 # selectionRemoved events can be specified.
 class TagAutoSuggest(forms.TextInput):
     input_type = 'text'
@@ -68,7 +68,7 @@ class TagAutoSuggest(forms.TextInput):
                             },
                         selectionRemoved: function (element) {
                               var tagname = $(element).contents(":not(a)").text();
-                              if (document.michaux.tag_selection !== undefined) {
+                              if (document.michaux.untag_selection !== undefined) {
                                   document.michaux.untag_selection(tagname.trim());
                                   $(element).remove();
                                   return true;
@@ -94,14 +94,16 @@ class TagAutoSuggest(forms.TextInput):
                 'start_text': _("Enter Tag Here"),
                 'empty_text': _("No Results"),
                 'limit_text': _('No More Selections Are Allowed'),
-                'retrieve_limit': settings.TAGGER_MAX_SUGGESTIONS,
+                'retrieve_limit': 20,
             }
         return result_html + widget_html + mark_safe(js)
 
     class Media:
+        base_url = getattr(settings, 'TAGGIT_AUTOSUGGEST_STATIC_BASE_URL',
+                           '%sjquery-autosuggest' % settings.STATIC_URL)
         css = {
-            'all': ('%s/css/%s' % (settings.TAGGER_STATIC_URL, settings.TAGGER_CSS_FILENAME),)
+            'all': ('%s/css/%s' % (base_url, 'autoSuggest.css'),)
         }
         js = (
-            '%s/js/jquery.autoSuggest.minified.js' % settings.TAGGER_STATIC_URL,
+            '%s/js/jquery.autoSuggest.minified.js' % base_url,
         )

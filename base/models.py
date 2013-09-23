@@ -8,7 +8,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
-from coop_tag.managers import TaggableManager
+from taggit_autosuggest.managers import TaggableManager
 
 class Work(models.Model):
     """Representation of a Work

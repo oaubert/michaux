@@ -3,7 +3,8 @@ Install instructions
 
 * Python requirements
 
-coop-tag
+django-taggit
+django-taggit-autosuggest
 django >= 1.4
 django-imagekit
 django-haystack

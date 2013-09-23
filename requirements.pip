@@ -1,6 +1,6 @@
 django
-coop-tag
-# For coop-tag:
+django-taggit
+django-taggit-autosuggest
 django-extensions
 django-imagekit
 django-haystack

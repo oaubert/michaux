@@ -21,7 +21,6 @@ jQuery(document).ready(
             if (type === 'home') {
                 url += '/work/';
             } else if (type === 'complete') {
-                // FIXME: hardcoded, default coop-tag url for now
                 url = "/list";
             } else if (type === 'work' || type === 'exhibition') {
                 url += type + '/' + ident;

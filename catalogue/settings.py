@@ -176,9 +176,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'haystack',
     'imagekit',
-    'coop_tag',
+    'taggit',
+    'taggit_autosuggest',
 
-    'south',
+    #'south',
     'base',
     'grappelli',
     'django.contrib.admin',
