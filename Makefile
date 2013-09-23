@@ -14,3 +14,9 @@ rebuild:
 
 sync:
 	./synchronize
+
+backup:
+	$(MANAGE) dumpdata base taggit | gzip -c > michaux.json.gz
+
+restore:
+	$(MANAGE) loaddata michaux.json.gz
