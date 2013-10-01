@@ -565,7 +565,10 @@ class Reproduction(models.Model):
                                blank=True)
 
     def __unicode__(self):
-        return u"Reproduction de %(work)s" % self.__dict__
+        if 'work' in self.__dict__:
+            return u"Reproduction de %(work)s" % self.__dict_
+        else:
+            return u"Reproduction"
 
 class Owner(models.Model):
     class Meta:
