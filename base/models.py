@@ -503,6 +503,9 @@ class Exhibition(models.Model):
         return u"Exposition %(abbreviation)s" % self.__dict__
 
 class ExhibitionInstance(models.Model):
+    class Meta:
+        ordering = [ 'exhibition__start_year' ]
+
     work = models.ForeignKey(Work,
                              verbose_name=_("Oeuvre"))
 
