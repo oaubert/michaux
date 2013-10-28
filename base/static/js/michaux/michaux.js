@@ -77,7 +77,7 @@ jQuery(document).ready(
                                        } );
         $("#selection_edit").click( function () {
                                         var selection = document.michaux.getSelection();
-                                        document.location = document.michaux.url('selection', selection, 'admin');
+                                        document.location = document.michaux.url('selection', selection, 'edit');
                                     } );
 
         // Display a custom, basic lightbox component
