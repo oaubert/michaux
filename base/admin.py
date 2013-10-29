@@ -176,9 +176,10 @@ class ExhibitionAdmin(admin.ModelAdmin):
 
     list_display = ('pk', 'abbreviation', 'title', 'location_type', 'location', 'nature', 'city', 'country', 'start_year', 'curator')
     fieldsets = [
-        (None,               {'fields': [ ('abbreviation', 'original', 'nature'),
+        (None,               {'fields': [ ('abbreviation', 'title'),
+                                          ('nature', ),
                                           ('location_type', 'location', 'city', 'country'),
-                                          ('curator') ]}),
+                                          ('curator', 'original') ]}),
         ('Dates',       {'fields': [ ('start_year', 'start_month', 'start_day'),
                                      ('end_year', 'end_month', 'end_day') ] }),
         ('Autres',      {'fields': [ ('comment', 'note') ]}),
