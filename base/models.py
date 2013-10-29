@@ -358,6 +358,7 @@ class BibliographyReference(models.Model):
     class Meta:
         verbose_name = _("référence bibliographique")
         verbose_name_plural = _("références bibliographiques")
+        ordering = [ 'publication_date' ]
 
     nature = models.CharField(_("type de référence"),
                               help_text=_("catalogue, article de journal, monographie, livre, chapitre de livre..."),
@@ -425,6 +426,7 @@ class Exhibition(models.Model):
     class Meta:
         verbose_name_plural = _("expositions")
         verbose_name = _("exposition")
+        ordering = [ 'start_year', 'start_month' ]
 
     abbreviation  = models.CharField(_("abréviation"),
                                      help_text=_("Sous la forme date (nombre entier, année) + nom du lieu d'exposition (texte libre)"),
@@ -504,7 +506,7 @@ class Exhibition(models.Model):
 
 class ExhibitionInstance(models.Model):
     class Meta:
-        ordering = [ 'exhibition__start_year' ]
+        ordering = [ 'exhibition__start_year', 'exhibition__start_month' ]
 
     work = models.ForeignKey(Work,
                              verbose_name=_("Oeuvre"))
@@ -535,6 +537,7 @@ class ExhibitionInstance(models.Model):
 class Event(models.Model):
     class Meta:
         verbose_name = _("événement")
+        ordering = [ 'date' ]
 
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))
@@ -552,6 +555,7 @@ class Event(models.Model):
 class Reproduction(models.Model):
     class Meta:
         verbose_name = _("reproduction")
+        ordering = [ 'reference__publication_date' ]
 
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))
@@ -576,6 +580,7 @@ class Reproduction(models.Model):
 class Owner(models.Model):
     class Meta:
         verbose_name = _("propriétaire")
+        ordering = [ 'name', 'firstname' ]
 
     firstname = models.CharField(_("prénom"),
                                  help_text=_("Prénom"),
@@ -605,6 +610,9 @@ class Owner(models.Model):
         return u"%(firstname)s %(name)s (%(city)s %(country)s)" % self.__dict__
 
 class Acquisition(models.Model):
+    class Meta:
+        ordering = [ 'date' ]
+
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))
     current_owner = models.BooleanField(_("current owner"),
