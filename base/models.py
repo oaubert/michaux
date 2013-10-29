@@ -321,7 +321,7 @@ class Image(models.Model):
                            format='JPEG',
                            options={'quality': 90})
 
-    thumbnail = ImageSpecField([ResizeToFit(120, 120)],
+    thumbnail = ImageSpecField([ResizeToFit(240, 240)],
                                image_field='original_image',
                                format='JPEG',
                                options={'quality': 90})
