@@ -586,7 +586,7 @@ class Owner(models.Model):
                             max_length=255,
                             blank=False)
     address = models.CharField(_("adresse"),
-                               help_text=_("Adresse de l'exposition"),
+                               help_text=_("Adresse"),
                                max_length=512,
                                blank=True)
     city = models.CharField(_("ville"),
