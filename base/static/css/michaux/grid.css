@@ -371,8 +371,9 @@ a.clear-facet, .barchartbox .active-facet {
     opacity: 0.4;
 }
 
-.image_reference {
+.imagebox {
     position: relative;
+    min-height: 120px;
 }
 
 .image_reference img {

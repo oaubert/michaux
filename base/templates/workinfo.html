@@ -119,8 +119,9 @@
           {% endif %}
           {% endif %}
           {% if work.image_set.count %}
+          <li><strong>Images associées ({{ work.image_set.count }})</strong></li>
           <li>
-            {% for img in work.image_set.all %}<a class="image_reference" rel="lightbox" title="{{ img }}" href="{{ img.original_image.url }}"><img itemprop="associatedMedia" class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a> {% endfor %}
+            {% for img in work.image_set.all %}<div class="imagebox"><a class="image_reference" rel="lightbox" title="{{ img }}" href="{{ img.original_image.url }}"><img itemprop="associatedMedia" class="vignette" src="{{ img.thumbnail.url }}" title="{{ img.note }}" alt="" /></a></div> {% endfor %}
           </li>
           {% endif %}
 
