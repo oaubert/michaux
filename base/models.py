@@ -633,7 +633,8 @@ class Acquisition(models.Model):
                                   max_length=50,
                                   blank=True)
     price = models.IntegerField(_("prix de vente"),
-                                blank=True)
+                                blank=True,
+                                null=True)
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
