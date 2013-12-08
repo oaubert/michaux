@@ -1,0 +1,15 @@
+#! /bin/bash
+
+MEDIA=$HOME/src/michaux/media
+PIVOT=$MEDIA/cache/pivot
+cd ${MEDIA}/images
+[ ! -d $PIVOT ] && mkdir $PIVOT
+
+for i in *.jpg
+do 
+    base=${i%.*}
+    if [ ! -f $PIVOT/$base.dzi && -f $MEDIA/cache/images/${base}_image.jpg ]
+    then 
+        $HOME/src/michaux/deepzoom.py/deepzoom.py --tile_size=254 --tile_overlap=1 --square --tile_format=jpg --destination=$PIVOT/${i%.*}.dzi  $MEDIA/cache/images/${base}_image.jpg
+    fi
+done
