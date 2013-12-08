@@ -27,6 +27,9 @@ update_index -> cron
 * Fiche oeuvre
 ** Export des fiches PDF -> définir un format spécifique ?
 ** Rendre éditable facilement (XTiger) ?
+- https://code.google.com/p/jquery-in-place-editor/
+- http://josephscott.org/code/javascript/jquery-edit-in-place/
+- http://www.appelsiini.net/projects/jeditable
 ** ajout microdata schema.org
 ** ajout info semantique format CIDOC-CRM
 - http://books.openedition.org/editionsmsh/319
