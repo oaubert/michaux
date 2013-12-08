@@ -127,7 +127,9 @@
         <div id="grid">
 
           {% for res in page %}
+          {% if res.object.cote %}
           {% include "griditem.html" with work=res.object info=res.object|getattr:info_overlay %}
+          {% endif %}
           {% endfor %}
 
         </div>
