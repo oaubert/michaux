@@ -623,7 +623,8 @@ class Acquisition(models.Model):
     public = models.BooleanField(_("public collection"),
                                  default=False)
     owner = models.ForeignKey(Owner,
-                              verbose_name=_("propriétaire"))
+                              verbose_name=_("propriétaire"),
+                              blank=True)
     date = models.DateField(_("date d'acquisition"),
                             blank=True)
     reference = models.CharField(_("référence catalogue"),
