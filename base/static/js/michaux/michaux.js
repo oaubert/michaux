@@ -83,6 +83,8 @@ jQuery(document).ready(
         // Display a custom, basic lightbox component
         function lightbox(url, thumbnail) {
             // Add a frame rectangle div
+            // Remove other possibly existing frames
+            $(".visible_frame").remove();
             var frame = $("<div/>")
                            .addClass('visible_frame')
                            .css({
