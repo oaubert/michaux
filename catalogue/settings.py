@@ -1,25 +1,32 @@
 # Django settings for catalogue project.
 import os
 
+# local_settings should define a 'options' dictionary with
+# configuration values.
+try:
+    from local_settings import options
+except ImportError:
+    options = {}
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 APPROOT = os.path.dirname(os.path.dirname(__file__)) + os.sep
 
 ADMINS = (
- ('Olivier Aubert', 'contact@olivieraubert.net'),
+ (options.get('admin_name', 'Olivier Aubert'), options.get('admin_mail', 'contact@olivieraubert.net')),
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': APPROOT + 'db.sqlite3',  # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': options.get('db_engine', 'django.db.backends.sqlite3'), # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': options.get('db_name', APPROOT + 'db.sqlite3'),  # Or path to database file if using sqlite3.
+        'USER': options.get('db_user', ''),                      # Not used with sqlite3.
+        'PASSWORD': options.get('db_password', ''),                  # Not used with sqlite3.
+        'HOST': options.get('db_host', ''),                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': options.get('db_port', ''),                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -82,7 +89,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'l-lg+hvof(82k972x1@qk#1)splm-jxp)9#hboa4q@3*querw@'
+SECRET_KEY = options.get('secret_key', 'no_secret_at_all_key')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -111,7 +118,6 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    #'/home/oaubert/src/michaux/catalogue/templates',
 )
 
 LOGGING = {
@@ -166,6 +172,10 @@ HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
 
 GRAPPELLI_ADMIN_TITLE = "Archives Michaux - interface d'administration"
 
+RAVEN_CONFIG = {
+    'dsn': options.get('raven_dsn', ''),
+}
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -185,3 +195,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_requestlogging',
 )
+
+if options.get('raven_dsn'):
+    INSTALLED_APPS += ( 'raven.contrib.django.raven_compat', )
