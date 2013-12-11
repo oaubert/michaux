@@ -206,7 +206,7 @@ class BibliographyReferenceAdmin(admin.ModelAdmin):
     list_display = ('abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number', 'comment', 'note')
     list_editable = ('nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number')
     list_display_links = ('abbreviation', )
-    search_fields = [ 'abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number', 'comment', 'note' ]
+    search_fields = [ 'abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'comment', 'note' ]
     list_filter = ( 'nature', 'creator', 'city' )
     save_on_top = True
 
