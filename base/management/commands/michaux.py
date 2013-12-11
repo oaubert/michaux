@@ -159,20 +159,21 @@ class Command(BaseCommand):
             w.creator_id = 1
             w.contributor_id = 1
             w.status = Work.AUTHENTICATED_STATUS
-            w.old_references = data[u'côte']
+            w.old_references = data[u'côte'].strip()
             if data['certificat'] != '':
                 cert = re.findall('(\d+)', data['certificat'])
                 if cert:
                     w.certificate = long(cert[0])
+            w.location = data['lieu'].strip()
+            w.serie = data[u'série'].strip()
             # Remove whitespaces around commas
-            w.serie = data[u'série']
             w.technique = ",".join(re.split('\s*,\s*', data['technique'].strip()))
-            w.note_technique = data[u'précisions sur la technique']
-            w.support = data['support 1']
-            w.support_details = data['support 2']
-            w.note_support = data['support 3']
+            w.note_technique = data[u'précisions sur la technique'].strip()
+            w.support = data['support 1'].strip()
+            w.support_details = data['support 2'].strip()
+            w.note_support = data['support 3'].strip()
             try:
-                (l, h) = re.split('\s*x\s*', data['dimensions'])
+                (l, h) = re.split('\s*x\s*', data['dimensions'].strip())
                 l = int(10 * float(l.replace(',', '.')))
                 h = int(10 * float(h.replace(',', '.')))
                 w.height = h
@@ -186,10 +187,10 @@ class Command(BaseCommand):
             if annee:
                 w.creation_date_start = long(annee[0])
             if annee == [] or unicode(long(annee[0])) != data[u'année'].strip():
-                w.note_creation_date = data[u'année']
+                w.note_creation_date = data[u'année'].strip()
 
-            w.note = data['notice']
-            w.comment = data['remarques']
+            w.note = data['notice'].strip()
+            w.comment = data['remarques'].strip()
             if data[u'reproductions']:
                 w.revision = u"\n".join(u"BIBLIO: %s" % b for b in data[u'reproductions'].splitlines() if b.strip())
             w.save()
