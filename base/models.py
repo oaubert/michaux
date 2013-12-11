@@ -611,7 +611,7 @@ class Owner(models.Model):
 
 class Acquisition(models.Model):
     class Meta:
-        ordering = [ 'date' ]
+        ordering = [ 'year', 'month', 'day' ]
 
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))
@@ -624,9 +624,17 @@ class Acquisition(models.Model):
                                  default=False)
     owner = models.ForeignKey(Owner,
                               verbose_name=_("propriétaire"),
-                              blank=True)
-    date = models.DateField(_("date d'acquisition"),
-                            blank=True)
+                              blank=True,
+                              null=True)
+    year = models.IntegerField(_("année d'acquisition"),
+                               blank=True,
+                               null=True)
+    month = models.IntegerField(_("mois d'acquisition"),
+                               blank=True,
+                               null=True)
+    day = models.IntegerField(_("jour d'acquisition"),
+                              blank=True,
+                              null=True)
     reference = models.CharField(_("référence catalogue"),
                                  max_length=64,
                                  blank=True)
@@ -639,6 +647,15 @@ class Acquisition(models.Model):
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
+
+    def __unicode__(self):
+        return u"Acquisition of %(work)s %(year)s %(reference)s [%(estimation)s -> %(price)s]" % {
+            'work': unicode(self.work),
+            'date': "/".join( getattr(self, n) for n in ('year', 'month', 'day') if getattr(self, n) is not None),
+            'reference': self.reference,
+            'estimation': self.estimation,
+            'price': self.price,
+            }
 
     # FIXME: use django-reversion or https://bitbucket.org/q/django-simple-history/src for history ?
     # date + heure + commentaire sur les modifications: commentaire standard (tels champs modifiés) généré automatiquement + possibilité de corriger/ajouter des informations supplémentaires lors de la validation.
