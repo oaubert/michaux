@@ -7,7 +7,10 @@
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
           </li>
 
+          {% if work.old_references %}
           <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}(<span class="editable" data-field="note_references">{{ work.note_references|autolink|linebreaksbr }}</span>){% endif %}</li>
+          {% endif %}
+
           {% if work.serie %}
 
           <li>Série <a class="facetvalue editable" data-field="serie" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
