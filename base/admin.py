@@ -38,6 +38,13 @@ class AcquisitionInline(admin.StackedInline):
     model = Acquisition
     verbose_name = _("acquisition")
     extra = 1
+    fieldsets = [
+        (None,               {'fields': [ ('location', 'year', 'month', 'day'),
+                                          ('reference', 'public'),
+                                          ('estimation', 'price'),
+                                          ('owner', 'current_owner'),
+                                          ('note',) ]}),
+        ]
     formfield_overrides = FORMFIELD_OVERRIDES
 
 class ExhibitionInline(admin.StackedInline):
@@ -46,18 +53,34 @@ class ExhibitionInline(admin.StackedInline):
     verbose_name_plural = _("liste des expositions")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
+    fieldsets = [
+        (None, {'fields': [ ('exhibition', 'reference', 'illustration' ),
+                            ('illustration_description',),
+                            ('note', )
+                            ]})
+        ]
 
 class InscriptionInline(admin.StackedInline):
     model = Inscription
     verbose_name = _("inscription")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
+    fieldsets = [
+        (None, {'fields': [ ('nature', 'position', ),
+                            ('note',)
+                            ]})
+        ]
 
 class ReproductionInline(admin.StackedInline):
     model = Reproduction
     verbose_name = _("reproduction")
     extra = 1
     formfield_overrides = FORMFIELD_OVERRIDES
+    fieldsets = [
+        (None, {'fields': [ ('reference', 'page', 'number'),
+                            ('comment',)
+                            ]})
+        ]
 
 def export_model_as_csv(modeladmin, request, queryset):
     if hasattr(modeladmin, 'exportable_fields'):
