@@ -37,7 +37,10 @@ class WorkIndex(indexes.RealTimeSearchIndex):
         return [ unicode(t) for t in work.tags.all() ]
 
     def prepare_technique(self, work):
-        return [ unicode(t) for t in work.techniques ]
+        return [ unicode(t) for t in work.techniques ] if work.techniques else [ "[Vide]" ]
+
+    def prepare_support(self, work):
+        return work.support or "[Vide]"
 
     def prepare_exhibition(self, work):
         return [ ei.exhibition.abbreviation for ei in work.exhibitioninstance_set.all() ]
