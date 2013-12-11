@@ -448,7 +448,7 @@ class Exhibition(models.Model):
                               help_text=_("Type d'exposition"),
                               max_length=32,
                               choices=( ("solo", _("Solo")),
-                                        ("groupe", _("En groupe")) ),
+                                        ("groupe", _("Groupe")) ),
                               default="solo")
     address = models.CharField(_("adresse"),
                              help_text=_("Adresse de l'exposition"),
