@@ -652,9 +652,9 @@ class Acquisition(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return u"Acquisition of %(work)s %(year)s %(reference)s [%(estimation)s -> %(price)s]" % {
+        return u"Acquisition of %(work)s %(date)s %(reference)s [%(estimation)s -> %(price)s]" % {
             'work': unicode(self.work),
-            'date': "/".join( getattr(self, n) for n in ('year', 'month', 'day') if getattr(self, n) is not None),
+            'date': "/".join( str(getattr(self, n)) for n in ('year', 'month', 'day') if getattr(self, n)),
             'reference': self.reference,
             'estimation': self.estimation,
             'price': self.price,
