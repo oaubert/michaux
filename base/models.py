@@ -420,7 +420,7 @@ class BibliographyReference(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return u"Référence %s " % (self.title or self.abbreviation)
+        return u"Référence %s " % (self.abbreviation or self.title)
 
 class Exhibition(models.Model):
     class Meta:
