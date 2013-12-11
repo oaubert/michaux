@@ -622,6 +622,9 @@ class Acquisition(models.Model):
     # statuts différents
     public = models.BooleanField(_("public collection"),
                                  default=False)
+    location = models.CharField(_("lieu de vente"),
+                                max_length=255,
+                                blank=True)
     owner = models.ForeignKey(Owner,
                               verbose_name=_("propriétaire"),
                               blank=True,
