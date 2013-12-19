@@ -18,7 +18,7 @@
 
           <li><a class="facetvalue editable" data-field="technique" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique|autocomma }}</a>
             sur
-            <a class="facetvalue editable" data-field="support" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}{{ work.support_details }}{% endif %}
+            <a class="facetvalue editable" data-field="support" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}({{ work.support_details }}){% endif %}
           {% if work.note_technique or work.note_support %}
           <dl class="private_note">
             {% if work.note_technique %}
