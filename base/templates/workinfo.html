@@ -42,7 +42,7 @@
           {% if work.inscription_set.count %}
           <li><strong>Inscriptions</strong>
             <ul>
-              {% for insc in work.inscription_set.all %}<li>{{ insc.nature }} {% if insc.position %}({{ insc.position }}){% endif %} {{ insc.notes|autolink }}</li>{% endfor %}
+              {% for insc in work.inscription_set.all %}<li>{{ insc.nature }} {% if insc.position %}({{ insc.position }}){% endif %} {{ insc.note|autolink }}</li>{% endfor %}
             </ul>
           </li>
           {% endif %}
