@@ -7,8 +7,10 @@
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
           </li>
 
+          {% if user.is_active and user.is_staff %}
           {% if work.old_references %}
           <li>Réf. {{ work.old_references|autolink }} {% if work.note_references %}(<span class="editable" data-field="note_references">{{ work.note_references|autolink|linebreaksbr }}</span>){% endif %}</li>
+          {% endif %}
           {% endif %}
 
           {% if work.serie %}
@@ -76,7 +78,7 @@
           {% if work.acquisition_set.count %}
           <li><strong>Collections</strong>
             <ul>
-              {% for p in work.acquisition_set.all %}<li>{{ p.owner }} ({{ p.date }}) {{ p.note }}</li>{% endfor %}
+              {% for p in work.acquisition_set.all %}<li>{% if p.owner %}{{ p.owner }}{% endif %} ({{ p.date }}) {{ p.note }}</li>{% endfor %}
             </ul>
           </li>
           {% endif %}
