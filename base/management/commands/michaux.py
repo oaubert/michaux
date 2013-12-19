@@ -240,6 +240,7 @@ class Command(BaseCommand):
             # propriétaire	date	lieu	catalogue	estimation	prix de vente
             if data['lieu'].strip():
                 acq = Acquisition()
+                acq.work = w
                 acq.location = data['lieu'].strip()
                 acq.public = True
                 if data['date']:
