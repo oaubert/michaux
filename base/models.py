@@ -550,7 +550,7 @@ class Event(models.Model):
                                    blank=True)
 
     def __unicode__(self):
-        return u"Événement %(nature)s - %(date)s" % self.__dict__
+        return u"%(nature)s %(description)s - %(date)s" % self.__dict__
 
 class Reproduction(models.Model):
     class Meta:
