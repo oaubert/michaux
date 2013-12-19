@@ -178,11 +178,13 @@ def reindex(request, *p, **kw):
     django.core.management.call_command("update_index")
     return HttpResponse(status=204)
 
+@login_required
 def pivot(request, *p, **kw):
     return render_to_response('pivot.html', {
             'request': request,
             }, context_instance=RequestContext(request))
 
+@login_required
 def pivotcollection(request, *p, **kw):
     sqs, options = get_filtered_queryset(request)
     return render_to_response('collection.xml', {
@@ -193,6 +195,7 @@ def pivotcollection(request, *p, **kw):
                               mimetype = "application/xhtml+xml",
                               context_instance = RequestContext(request))
 
+@login_required
 def pivotdzimages(request, *p, **kw):
     sqs, options = get_filtered_queryset(request)
     return render_to_response('dzimages.xml', {
@@ -202,6 +205,7 @@ def pivotdzimages(request, *p, **kw):
                               mimetype = "application/xhtml+xml",
                               context_instance = RequestContext(request))
 
+@login_required
 def pivotimage(request, cote=None, **kw):
     w = get_object_or_404(Work, pk=cote)
     return render_to_response('image.xml', {
@@ -210,10 +214,12 @@ def pivotimage(request, cote=None, **kw):
                               mimetype = "application/xhtml+xml",
                               context_instance = RequestContext(request))
 
+@login_required
 def pivotdzimage(request, cote=None, level=None, name=None, **kw):
     w = get_object_or_404(Work, pk=cote)
     return HttpResponseRedirect(str(w.thumbnail.url) if w.thumbnail else settings.STATIC_URL + 'unknown_thumbnail.png')
 
+@login_required
 def selection_tag(request):
     # Add a tag. The tag name and the selected elements must be
     # passed as 'name' and 'selection' parameters.
@@ -230,6 +236,7 @@ def selection_tag(request):
         site.get_index(Work).update_object(i)
     return HttpResponse(status=204)
 
+@login_required
 def selection_untag(request):
     # Remove a tag. The tag name and the selected elements must be
     # passed as 'name' and 'selection' parameters.
