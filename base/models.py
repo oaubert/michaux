@@ -221,10 +221,17 @@ class Work(models.Model):
 
     @property
     def picture(self):
-        if self.image_set.count():
-            # More than 1 image. We can find a thumbnail
-            # FIXME: use self.image_set.filter(nature__eq='reproduction')
-            return self.image_set.iterator().next()
+        c = self.image_set.count()
+        if c == 1:
+            return self.image_set.only()[0]
+        elif c > 1:
+            # More than 1 image. Discriminate against nature
+            l = self.image_set.filter(nature='ref')
+            if l:
+                return l[0]
+            else:
+                # Pick the first one anyway
+                return self.image_set.only()[0]
         else:
             return None
 
@@ -305,7 +312,7 @@ class Image(models.Model):
 
     #nature de l'image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l'oeuvre en situation dans une revue ou une expo, ou une lettre)
     nature = models.CharField(_("nature"),
-                                 help_text=_("nature de l'image : représentation de référence / représentation pour impression / représentation alternative / image annexe (par exemple image de l'oeuvre en situation dans une revue ou une expo, ou une lettre)"),
+                                 help_text=_("nature de l'image : ref (représentation de référence) / représentation pour impression / représentation alternative / image annexe (par exemple image de l'oeuvre en situation dans une revue ou une expo, ou une lettre)"),
                                  max_length=255,
                                  blank=True)
 
@@ -345,7 +352,7 @@ class Image(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return u"%(nature)s (%(width)sx%(height)s) par %(photograph_name)s - %(note)s" % self.__dict__
+        return u"Image %(nature)s (%(width)sx%(height)s) par %(photograph_name)s - %(note)s" % self.__dict__
 
     @property
     def orientation(self):
