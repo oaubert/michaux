@@ -607,7 +607,7 @@ class Owner(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return u"%(firstname)s %(name)s (%(city)s %(country)s)" % self.__dict__
+        return u"%(firstname)s %(name)s (%(city)s, %(country)s)" % self.__dict__
 
 class Acquisition(models.Model):
     class Meta:
