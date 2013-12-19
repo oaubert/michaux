@@ -620,13 +620,13 @@ class Acquisition(models.Model):
     # FIXME: est-ce que c'est vraiment relatif à l'acquisition ? Un
     # même propriétaire pourrait avoir plusieurs collections de
     # statuts différents
-    public = models.BooleanField(_("public collection"),
+    public = models.BooleanField(_("collection publique"),
                                  default=False)
     location = models.CharField(_("lieu de vente"),
                                 max_length=255,
                                 blank=True)
     owner = models.ForeignKey(Owner,
-                              verbose_name=_("propriétaire"),
+                              verbose_name=_("collection"),
                               blank=True,
                               null=True)
     year = models.IntegerField(_("année d'acquisition"),
