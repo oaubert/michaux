@@ -426,6 +426,10 @@ class BibliographyReference(models.Model):
                             help_text=_("Notes (privées)"),
                             blank=True)
 
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('base.views.bibliography', args=[str(self.id)])
+
     def __unicode__(self):
         return u"%s " % (self.abbreviation or self.title)
 
@@ -508,6 +512,11 @@ class Exhibition(models.Model):
     note = models.TextField(_("notes"),
                             help_text=_("Notes (privées)"),
                             blank=True)
+
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('base.views.exhibition', args=[str(self.id)])
+
     def __unicode__(self):
         return u"Exposition %(abbreviation)s" % self.__dict__
 
