@@ -184,7 +184,7 @@ class Command(BaseCommand):
                 w.height = 0
                 w.width = 0
 
-            annee = re.findall('19(\d\d)', data[u'année'])
+            annee = re.findall('(19\d\d)', data[u'année'])
             if annee:
                 w.creation_date_start = long(annee[0])
             if annee == [] or unicode(long(annee[0])) != data[u'année'].strip():
