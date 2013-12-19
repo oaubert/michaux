@@ -241,7 +241,7 @@ class Command(BaseCommand):
             if data['lieu'].strip():
                 acq = Acquisition()
                 acq.location = data['lieu'].strip()
-
+                acq.public = True
                 if data['date']:
                     try:
                         d = datetime.date.fromordinal(long(data['date']))
@@ -262,6 +262,7 @@ class Command(BaseCommand):
                         acq.price = long(data['prix de vente'])
                     except ValueError:
                         pass
+                acq.save()
 
             if data['expositions'].strip():
                 notfound = []
