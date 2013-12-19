@@ -53,6 +53,23 @@ div.work.current {
     zoom: 1.6;
 }
 
+div.exhibition {
+    width: 200px;
+    height: 80px;
+    float: left;
+    padding: 5px;
+    margin: 5px;
+    position: relative;
+    display: table-cell;
+    display: -webkit-flex;
+    display: flex;
+    vertical-align: middle;
+    text-align: center;
+    scale: 1;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
+
 .landscape {
     width: 100%;
     height: auto;

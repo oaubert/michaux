@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+{% block title %}Expositions{% endblock %}
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!-- The admin jquery.js is in the django namespace -->
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
+{% endblock %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block margin %}
+    {% endblock %}
+
+    {% block content %}
+    <div id="grid">
+      
+      {% for item in items %}
+      <div id="exhibition{{ item.pk }}" class="exhibition" data-year="{{ item.year }}">
+        <a href="{{ item.get_absolute_url }}">{{ item }}</a> ({{ item.start_year }}) - {{ item.exhibition_set.count }} oeuvres.
+      </div>
+      {% endfor %}
+      
+    </div>
+    {% endblock %}
+    

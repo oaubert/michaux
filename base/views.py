@@ -152,6 +152,14 @@ def workextended(request, cote=None, type_=None, **kw):
             }, context_instance=RequestContext(request))
 
 @login_required
+def exhibitions(request, pk=None, **kw):
+    items = Exhibition.objects.all()
+    return render_to_response('exhibitions.html', {
+            'meta': Exhibition._meta,
+            'items': items,
+            }, context_instance=RequestContext(request))
+
+@login_required
 def exhibition(request, pk=None, **kw):
     ex = get_object_or_404(Exhibition, pk=pk)
     items = ExhibitionInstance.objects.filter(exhibition__pk=pk)
