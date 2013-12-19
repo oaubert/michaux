@@ -74,7 +74,7 @@
           {% if user.is_active and user.is_staff %}
 
           {% if work.acquisition_set.count %}
-          <li><strong>Propriétaires</strong>
+          <li><strong>Collections</strong>
             <ul>
               {% for p in work.acquisition_set.all %}<li>{{ p.owner }} ({{ p.date }}) {{ p.note }}</li>{% endfor %}
             </ul>
