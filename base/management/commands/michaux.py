@@ -173,8 +173,8 @@ class Command(BaseCommand):
             w.support_details = data['support 2'].strip()
             w.note_support = data['support 3'].strip()
             try:
-                d = d.strip("cm").strip()
-                (l, h) = re.split('\s*x\s*', data['dimensions'].strip())
+                d = data['dimensions'].strip("cm").strip()
+                (l, h) = re.split('\s*x\s*', d)
                 l = int(10 * float(l.replace(',', '.')))
                 h = int(10 * float(h.replace(',', '.')))
                 w.height = h
