@@ -1,6 +1,6 @@
 #! /bin/bash
 
-MEDIA=$HOME/src/michaux/media
+MEDIA=$HOME/src/michaux/catalogue/media
 PIVOT=$MEDIA/cache/pivot
 cd ${MEDIA}/images
 [ ! -d $PIVOT ] && mkdir $PIVOT
@@ -8,8 +8,9 @@ cd ${MEDIA}/images
 for i in *.jpg
 do 
     base=${i%.*}
-    if [ ! -f $PIVOT/$base.dzi && -f $MEDIA/cache/images/${base}_image.jpg ]
+    if [ ! -f $PIVOT/$base.dzi -a -f $MEDIA/cache/images/${base}_image.jpg ]
     then 
+        echo "Processing $i"
         $HOME/src/michaux/deepzoom.py/deepzoom.py --tile_size=254 --tile_overlap=1 --square --tile_format=jpg --destination=$PIVOT/${i%.*}.dzi  $MEDIA/cache/images/${base}_image.jpg
     fi
 done
