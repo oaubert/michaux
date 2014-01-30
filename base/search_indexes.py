@@ -1,8 +1,7 @@
 from .models import Work
 from haystack import indexes
-from haystack import site
 
-class WorkIndex(indexes.RealTimeSearchIndex):
+class WorkIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     tags = indexes.MultiValueField(null=True, faceted=True)
     status = indexes.CharField(model_attr='status', null=True, faceted=True)
@@ -29,7 +28,7 @@ class WorkIndex(indexes.RealTimeSearchIndex):
     def get_model(self):
         return Work
 
-    def index_queryset(self):
+    def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
         return self.get_model().objects.filter(master__isnull=True)
 
@@ -57,5 +56,3 @@ class WorkIndex(indexes.RealTimeSearchIndex):
 
     def get_updated_field(self):
         return "modified"
-
-site.register(Work, WorkIndex)
