@@ -166,9 +166,12 @@ LOGGING = {
         }
     }
 
-HAYSTACK_SITECONF = 'catalogue.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'solr'
-HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+    },
+}
 
 GRAPPELLI_ADMIN_TITLE = "Archives Michaux - interface d'administration"
 
