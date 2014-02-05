@@ -8,9 +8,11 @@ cd ${MEDIA}/images
 for i in *.jpg
 do 
     base=${i%.*}
-    if [ ! -f $PIVOT/$base.dzi -a -f $MEDIA/cache/images/${base}_image.jpg ]
+    d=$MEDIA/CACHE/images/images/${base}
+    if [ ! -f "$PIVOT/$base.dzi" -a -d "$d" ]
     then 
         echo "Processing $i"
-        $HOME/src/michaux/deepzoom.py/deepzoom.py --tile_size=254 --tile_overlap=1 --square --tile_format=jpg --destination=$PIVOT/${i%.*}.dzi  $MEDIA/cache/images/${base}_image.jpg
+        fname=$(ls -S "$d" | head -1)
+        $HOME/src/michaux/deepzoom.py/deepzoom.py --tile_size=254 --tile_overlap=1 --square --tile_format=jpg --destination=$PIVOT/${i%.*}.dzi  "$d/$fname"
     fi
 done
