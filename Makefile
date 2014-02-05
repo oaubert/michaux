@@ -1,4 +1,5 @@
 MANAGE=python ./manage.py
+DATE:=$(shell date --rfc-3339=date)
 
 all:
 	echo "Specify a target"
@@ -17,6 +18,7 @@ sync:
 
 backup:
 	$(MANAGE) dumpdata base taggit | gzip -c > michaux.json.gz
+	cp michaux.json.gz ../backup/$(DATE)-michaux.json.gz
 
 restore:
 	$(MANAGE) loaddata michaux.json.gz
