@@ -5,6 +5,7 @@ django-extensions
 django-imagekit
 django-haystack
 django-grappelli
+django-requestlogging
 south
 # For custom admin export
-python-unicodecsv
+unicodecsv
