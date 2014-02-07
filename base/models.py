@@ -538,7 +538,7 @@ class ExhibitionInstance(models.Model):
 
     illustration = models.BooleanField(_("illustration"),
                                        help_text=_("Coché si une illustration était disponible dans le catalogue de l'exposition"),
-                                       blank=True)
+                                       blank=True, default=False)
 
     illustration_description = models.TextField(_("description de l'illustration"),
                                                 blank=True)
