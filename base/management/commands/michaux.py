@@ -180,7 +180,7 @@ class Command(BaseCommand):
                 w.height = h
                 w.width = l
             except ValueError:
-                self.stderr.write("Missing height/width for %s\n" % data[u'côte'].encode('utf-8'))
+                self.stderr.write(u"Missing height/width for %s\n" % data[u'côte'])
                 w.height = 0
                 w.width = 0
 
@@ -195,7 +195,7 @@ class Command(BaseCommand):
             if data[u'reproductions']:
                 w.revision = u"\n".join(u"BIBLIO: %s" % b for b in data[u'reproductions'].splitlines() if b.strip())
             w.save()
-            self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
+            self.stderr.write(u"Saved %s %s\n" % (n, unicode(w)))
 
             # FIXME: Improve image name heuristic
             if data[u'image']:
@@ -290,7 +290,7 @@ class Command(BaseCommand):
                     else:
                         msg = 'NOT FOUND'
                         notfound.append(ab)
-                    self.stderr.write("   Exhibition %s... %s\n" % (ab.encode('utf-8'), msg))
+                    self.stderr.write(u"   Exhibition %s... %s\n" % (unicode(ab), unicode(msg)))
                     if notfound:
                         w.revision += u"\n".join(u"EXPO: %s" % e for e in notfound if e)
                         w.save()
