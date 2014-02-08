@@ -113,14 +113,6 @@ ul.toolbar li a:hover{
     opacity: 1.0;
 }
 
-a.edit {
-    background:#fff url(../../icons/edit.png) no-repeat center center;
-}
-
-a.details {
-    background:#fff url(../../icons/details.png) no-repeat center center;
-}
-
 .workoverlay {
     position: absolute;
     bottom: 1px;

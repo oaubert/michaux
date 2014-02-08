@@ -157,3 +157,22 @@ dl.private_note {
 .private_note dt {
     font-weight: bold;
 }
+
+a.action {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+}
+
+a.action:hover {
+    opacity: 1.0;
+}
+
+a.edit {
+    background:#fff url(../../icons/edit.png) no-repeat center center;
+}
+
+a.details {
+    background:#fff url(../../icons/details.png) no-repeat center center;
+}
