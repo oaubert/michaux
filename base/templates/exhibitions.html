@@ -10,6 +10,7 @@
     <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery.dataTables.css" rel="stylesheet" type="text/css" media="screen" />
 
     <!-- The admin jquery.js is in the django namespace -->
     <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
@@ -17,6 +18,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
 {% endblock %}
 
@@ -28,13 +30,45 @@
 
     {% block content %}
     <div id="grid">
-      
-      {% for item in items %}
-      <div id="exhibition{{ item.pk }}" class="exhibition" data-year="{{ item.year }}">
-        <a href="{{ item.get_absolute_url }}">{{ item }}</a> ({{ item.start_year }}) - {{ item.exhibition_set.count }} oeuvres.
-      </div>
-      {% endfor %}
-      
+
+      <table id="exhibitionTable">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Année</th>
+            <th>Lieu</th>
+            <th>Type de lieu</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>Oeuvres</th>
+            <th>Reprise de</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr id="exhibition{{ item.pk }}" class="exhibition">
+            <td><a class="exhibitionName" href="{{ item.get_absolute_url }}">{{ item }}</a> <a class="action edit" target="_blank" href="{% url "admin:base_exhibition_change" item.pk %}"></a></td>
+            <td class="exhibitionYear">{{ item.start_year }}</td>
+            <td class="exhibitionLocation">{{ item.location }}</td>
+            <td class="exhibitionLocationType">{{ item.location_type }}</td>
+            <td class="exhibitionCity">{{ item.city }}</td>
+            <td class="exhibitionCountry">{{ item.country }}</td>
+            <td class="exhibitionWorks">{{ item.exhibition_set.count }}</td>
+            <td class="exhibitionReprise">{% if item.original %}<a href="{{ item.original.get_absolute_url }}">{{ item.original }}</a>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
     </div>
+    <script type="text/javascript">
+      $("#exhibitionTable").dataTable({
+          "bPaginate": false,
+          "bLengthChange": false,
+          "iDisplayLength": 100,
+          "bFilter": true,
+          "bSort": true,
+          "bInfo": true,
+          "bAutoWidth": true });
+    </script>
     {% endblock %}
-    
