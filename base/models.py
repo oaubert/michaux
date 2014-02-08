@@ -623,7 +623,19 @@ class Owner(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return u"%(firstname)s %(name)s (%(city)s, %(country)s)" % self.__dict__
+        l = []
+        if self.firstname:
+            l.append(self.firstname)
+            l.append(u" ")
+        l.append(self.name)
+        if self.country:
+            l.append("(")
+            if self.city:
+                l.append(self.city)
+                l.append(u", ")
+            l.append(self.country)
+            l.append(")")
+        return "".join(l)
 
 class Acquisition(models.Model):
     class Meta:
