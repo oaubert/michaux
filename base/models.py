@@ -251,6 +251,22 @@ class Work(models.Model):
         else:
             return None
 
+    @property
+    def signature(self):
+        c = self.inscription_set.count()
+        if c == 1:
+            return self.inscription_set.only()[0]
+        elif c > 1:
+            # More than 1 image. Discriminate against nature
+            l = self.inscription_set.filter(nature='signature')
+            if l:
+                return l[0]
+            else:
+                # Pick the first one anyway
+                return self.inscription_set.only()[0]
+        else:
+            return None
+        
     def get_absolute_url(self):
         return reverse('base.views.work', args=[str(self.cote)])
 
