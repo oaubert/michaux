@@ -182,3 +182,27 @@ a.details {
     top: 10px;
 }
 
+.imagebox {
+    position: relative;
+    min-height: 120px;
+}
+
+.image_reference img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 120px;
+    max-height: 120px;
+}
+
+#lightbox {
+    position: fixed; /* keeps the lightbox window in the current viewport */
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    /* width will be overriden at display time to 100%-240px */
+    width: 80%;
+    background-color: #fff;
+    text-align: center;
+    z-index: 4;
+}
