@@ -68,8 +68,8 @@
           {% endif %}
 
           {% if work.comment %}
-          <li><strong>notes publiques</strong></li>
-          <li itemprop="comment" class="editable" data-field="comment">{{ work.comment|autolink|linebreaksbr }}</li>
+          <li><strong>notes</strong></li>
+          <li itemprop="comment" class="editable" data-field="comment">{{ work.comment|autolink }}</li>
           {% endif %}
 
           {# Private fields #}
