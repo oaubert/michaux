@@ -6,32 +6,32 @@
   <li><strong>{{ ex.abbreviation|autolink }}</strong> ({{ ex.nature }})</li>
 
   {% if ex.original %}
-  <li>Reprise de <a href="{% url 'base.views.exhibition' ex.original.pk %}">{{ ex.original }}</a></li>
+  <li>reprise de <a href="{% url 'base.views.exhibition' ex.original.pk %}">{{ ex.original }}</a></li>
   {% endif %}
 
   <li><em>{{ ex.title|autolink }}</em></li>
   {% if ex.curator %}
-  <li>Commissaire - {{ ex.curator }}</li>
+  <li>commissaire - {{ ex.curator }}</li>
   {% endif %}
 
   <li>{{ ex.location }} ({{ ex.location_type }})</li>
   <li>{{ ex.address }}</li>
   <li>{{ ex.city }} - {{ ex.country }}</li>
   
-  <li>Début - {% if ex.start_day %}{{ ex.start_day }} / {% endif %}{% if ex.start_month %}{{ ex.start_month }} / {% endif %}{{ ex.start_year }}</li>
+  <li>début - {% if ex.start_day %}{{ ex.start_day }} / {% endif %}{% if ex.start_month %}{{ ex.start_month }} / {% endif %}{{ ex.start_year }}</li>
   {% if ex.end_year %}
-  <li>Fin - {% if ex.end_day %}{{ ex.end_day }} / {% endif %}{% if ex.end_month %}{{ ex.end_month }} / {% endif %}{{ ex.end_year }}</li>
+  <li>fin - {% if ex.end_day %}{{ ex.end_day }} / {% endif %}{% if ex.end_month %}{{ ex.end_month }} / {% endif %}{{ ex.end_year }}</li>
   {% endif %}
   {% if ex.catalogue %}
-  <li>Catalogue - <a title="{{ ex.catalogue }}" href="{% url 'base.views.bibliography' ex.catalogue.pk %}">&#x2a9c; {{ ex.catalogue.title|default:ex.catalogue.abbreviation }} </a></li>
+  <li>catalogue - <a title="{{ ex.catalogue }}" href="{% url 'base.views.bibliography' ex.catalogue.pk %}">&#x2a9c; {{ ex.catalogue.title|default:ex.catalogue.abbreviation }} </a></li>
   {% else %}
-  <li>Pas de catalogue.</li>
+  <li>pas de catalogue.</li>
   {% endif %}
 
   {% if ex.comment %}
-  <li>Note publique - {{ ex.comment|autolink }}</li>
+  <li>note publique - {{ ex.comment|autolink }}</li>
   {% endif %}
   {% if ex.note %}
-  <li>Note privée - {{ ex.note|autolink }}</li>
+  <li>note privée - {{ ex.note|autolink }}</li>
   {% endif %}  
 </ul>
