@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+{% block title %}Références bibliographiques{% endblock %}
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery.dataTables.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!-- The admin jquery.js is in the django namespace -->
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
+{% endblock %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block margin %}
+    {% endblock %}
+
+    {% block content %}
+    <div id="grid">
+
+      <table id="referenceTable">
+        <thead>
+          <tr>
+            <th>Abréviation</th>
+            <th>Date</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Numéro</th>
+            <th>Contenant</th>
+            <th>Édition</th>
+            <th>Ville</th>
+            <th>Numéro de page</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr id="reference{{ item.pk }}" class="reference">
+            <td><a class="referenceName" href="{{ item.get_absolute_url }}">{{ item }}</a> <a class="action edit" target="_blank" href="{% url "admin:base_bibliographyreference_change" item.pk %}"></a></td>
+            <td class="referenceDate">{{ item.publication_date|default:"" }}</td>
+            <td class="referenceTitle">{{ item.title }}</td>
+            <td class="referenceCreator">{{ item.creator }}</td>
+            <td class="referenceNumber">{{ item.number }}</td>
+            <td class="referenceContainter">{{ item.container_title }}</td>
+            <td class="referenceEditor">{{ item.editor }}</td>
+            <td class="referenceCity">{{ item.city }}</td>
+            <td class="referencePageNumber">{{ item.page_number|default:"" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+    <script type="text/javascript">
+      $("#referenceTable").dataTable({
+          "bPaginate": false,
+          "bLengthChange": false,
+          "iDisplayLength": 100,
+          "bFilter": true,
+          "bSort": true,
+          "bInfo": true,
+          "bAutoWidth": true });
+    </script>
+    {% endblock %}

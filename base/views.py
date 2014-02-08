@@ -170,6 +170,14 @@ def exhibition(request, pk=None, **kw):
             }, context_instance=RequestContext(request))
 
 @login_required
+def bibliographies(request, pk=None, **kw):
+    items = BibliographyReference.objects.all()
+    return render_to_response('bibliographies.html', {
+            'meta': BibliographyReference._meta,
+            'items': items,
+            }, context_instance=RequestContext(request))
+
+@login_required
 def bibliography(request, pk=None, **kw):
     bib = get_object_or_404(BibliographyReference, pk=pk)
     reproductions = Reproduction.objects.filter(reference=bib)
