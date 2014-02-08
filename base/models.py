@@ -601,7 +601,7 @@ class Owner(models.Model):
     firstname = models.CharField(_("prénom"),
                                  help_text=_("Prénom"),
                                  max_length=255,
-                                 blank=False)
+                                 blank=True)
     name = models.CharField(_("nom"),
                             help_text=_("Nom"),
                             max_length=255,
