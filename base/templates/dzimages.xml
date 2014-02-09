@@ -6,9 +6,9 @@
     {% with w=o.object %}
     <I Id="{{ w.cote }}" N="{{ w.cote }}" Source="{% if w.picture.original_image %}../../media/{{ w.picture.original_image.name|dzi }}{% else %}/static/unknown.dzi{% endif %}">
       {% if w.image.width > w.image.height %}
-      <Size Width="{{ w.image.width|default:'120' }}" Height="{{ w.image.width|default:'120' }}" />
+      <Size Width="{{ w.image.width|default:240' }}" Height="{{ w.image.width|default:'240' }}" />
 {% else %}
-      <Size Width="{{ w.image.height|default:'120' }}" Height="{{ w.image.height|default:'120' }}" />
+      <Size Width="{{ w.image.height|default:'240' }}" Height="{{ w.image.height|default:'240' }}" />
 {% endif %}
     </I>
     {% endwith %}
