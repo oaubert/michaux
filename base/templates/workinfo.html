@@ -78,7 +78,7 @@
           {% if work.acquisition_set.count %}
           <li><strong>collection</strong>
             <ul>
-              {% for p in work.acquisition_set.all %}<li>{% if p.owner %}{{ p.owner }}{% endif %} ({{ p.date }}) {{ p.note }}</li>{% endfor %}
+              {% for p in work.acquisition_set.all %}<li>{% if p.location %} {{ p.location }}{% endif %} {% if p.date %} ({{ p.date }}) {% endif %}{% if p.owner %} par {{ p.owner }}{% endif %} {{ p.note }}</li>{% endfor %}
             </ul>
           </li>
           {% endif %}
@@ -94,7 +94,7 @@
           <dl class="private_note">
             
             {% if work.note %}
-            <dt>Notes privées</dt>
+            <dt>notes privées</dt>
             <dd class="editable" data-field="note">{{ work.note|autolink|linebreaksbr }}</dd>
             {% endif %}
 
