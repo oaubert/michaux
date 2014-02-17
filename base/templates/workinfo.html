@@ -78,7 +78,7 @@
           {% if work.acquisition_set.count %}
           <li><strong>collection</strong>
             <ul>
-              {% for p in work.acquisition_set.all %}<li>{% if p.location %} {{ p.location }}{% endif %} {% if p.date %} ({{ p.date }}) {% endif %}{% if p.owner %} par {{ p.owner }}{% endif %} {{ p.note }}</li>{% endfor %}
+              {% for p in work.acquisition_set.all %}<li>{% if p.location %} {{ p.location }}{% endif %} {% if p.year %} ({{ p.year }}) {% endif %}{% if p.owner %} par {{ p.owner }}{% endif %} {{ p.note }}</li>{% endfor %}
             </ul>
           </li>
           {% endif %}
