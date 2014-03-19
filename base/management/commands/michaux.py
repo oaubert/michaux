@@ -212,6 +212,9 @@ class Command(BaseCommand):
                     with open(pic, 'rb') as f:
                         i.original_image.save(os.path.basename(pic), File(f))
                     i.save()
+                else:
+                    w.revision += u"\nIMAGE: %s" %  data[u'image']
+                    w.save()
 
             if data[u'signature'].startswith('oui'):
                 sig = Inscription()
