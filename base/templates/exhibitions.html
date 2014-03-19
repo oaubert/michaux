@@ -53,7 +53,7 @@
             <td class="exhibitionLocationType">{{ item.location_type }}</td>
             <td class="exhibitionCity">{{ item.city }}</td>
             <td class="exhibitionCountry">{{ item.country }}</td>
-            <td class="exhibitionWorks">{{ item.exhibition_set.count }}</td>
+            <td class="exhibitionWorks">{{ item.exhibitioninstance_set.count }}</td>
             <td class="exhibitionReprise">{% if item.original %}<a href="{{ item.original.get_absolute_url }}">{{ item.original }}</a>{% endif %}</td>
           </tr>
           {% endfor %}
