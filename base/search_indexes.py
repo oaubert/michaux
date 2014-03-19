@@ -18,6 +18,7 @@ class WorkIndex(indexes.SearchIndex, indexes.Indexable):
     with_image = indexes.BooleanField(null=True)
     single_technique = indexes.BooleanField(null=True)
     exhibition = indexes.MultiValueField(faceted=True)
+    acquisition_location = indexes.MultiValueField(null=True, faceted=True)
 
     # Auto fields for completion
     serie_auto = indexes.EdgeNgramField(model_attr='serie')
@@ -43,6 +44,9 @@ class WorkIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_exhibition(self, work):
         return [ ei.exhibition.abbreviation for ei in work.exhibitioninstance_set.all() ]
+
+    def prepare_acquisition_location(self, work):
+        return [ ac.location for ac in work.acquisition_set.all() ]
 
     def prepare_with_image(self, work):
         return work.image_set.count() > 0

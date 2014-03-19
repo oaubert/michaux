@@ -23,4 +23,6 @@
 {% for ex in object.exhibitioninstance_set.all %}{{ ex.exhibition.abbreviation }} {{ ex.exhibition.title }} {{ ex.note }} {% endfor %}
 {% for ev in object.event_set.all %}{{ ev.description }} {% endfor %}
 {% for repr in object.reproduction_set.all %}{{ repr.comment }} {% endfor %}
-{% for ac in object.acquisition_set.all %}{{ ac. }} {% endfor %}
+{% for ac in object.acquisition_set.all %}{{ ac.location }}
+{{ ac.reference|default:"" }}
+{% endfor %}
