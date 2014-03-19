@@ -8,8 +8,6 @@
 {{ object.support }}
 {{ object.support_details }}
 {{ object.note_support }}
-{{ object.creation_date_source }}
-{{ object.creation_date_uncertainty }}
 {{ object.creation_date_start }}
 {{ object.creation_date_end }}
 {{ object.note_creation_date }}}
