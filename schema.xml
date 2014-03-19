@@ -146,49 +146,25 @@
     <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false"/>
 
 
-    <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="width_exact" type="long" indexed="true" stored="true" multiValued="false" />
-
     <field name="creator" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="serie_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
     <field name="authentication_source_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
     <field name="height" type="long" indexed="true" stored="true" multiValued="false" />
 
-    <field name="serie" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="cote" type="long" indexed="true" stored="true" multiValued="false" />
-
-    <field name="with_image" type="boolean" indexed="true" stored="true" multiValued="false" />
-
     <field name="status_exact" type="string" indexed="true" stored="true" multiValued="false" />
-
-    <field name="creation_date_end" type="long" indexed="true" stored="true" multiValued="false" />
 
     <field name="creation_date_end_exact" type="long" indexed="true" stored="true" multiValued="false" />
 
     <field name="support_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
-    <field name="tags" type="text_en" indexed="true" stored="true" multiValued="true" />
-
-    <field name="single_technique" type="boolean" indexed="true" stored="true" multiValued="false" />
-
-    <field name="creation_date_start" type="long" indexed="true" stored="true" multiValued="false" />
-
-    <field name="technique_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
-
-    <field name="height_exact" type="long" indexed="true" stored="true" multiValued="false" />
+    <field name="acquisition_location_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="support" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="technique" type="text_en" indexed="true" stored="true" multiValued="true" />
-
-    <field name="tags_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="creation_date_start_exact" type="long" indexed="true" stored="true" multiValued="false" />
 
@@ -196,17 +172,45 @@
 
     <field name="exhibition" type="text_en" indexed="true" stored="true" multiValued="true" />
 
-    <field name="technique_exact" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="creator_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
     <field name="support_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
-    <field name="exhibition_exact" type="string" indexed="true" stored="true" multiValued="true" />
-
     <field name="serie_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
-    <field name="creator_exact" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="status" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="tags" type="text_en" indexed="true" stored="true" multiValued="true" />
+
+    <field name="technique_exact" type="string" indexed="true" stored="true" multiValued="true" />
+
+    <field name="serie_exact" type="string" indexed="true" stored="true" multiValued="false" />
+
+    <field name="serie" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="cote" type="long" indexed="true" stored="true" multiValued="false" />
+
+    <field name="with_image" type="boolean" indexed="true" stored="true" multiValued="false" />
+
+    <field name="creation_date_end" type="long" indexed="true" stored="true" multiValued="false" />
+
+    <field name="single_technique" type="boolean" indexed="true" stored="true" multiValued="false" />
+
+    <field name="creation_date_start" type="long" indexed="true" stored="true" multiValued="false" />
+
+    <field name="height_exact" type="long" indexed="true" stored="true" multiValued="false" />
+
+    <field name="width_exact" type="long" indexed="true" stored="true" multiValued="false" />
+
+    <field name="tags_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
     <field name="with_revision" type="boolean" indexed="true" stored="true" multiValued="false" />
+
+    <field name="acquisition_location" type="text_en" indexed="true" stored="true" multiValued="true" />
+
+    <field name="exhibition_exact" type="string" indexed="true" stored="true" multiValued="true" />
+
+    <field name="technique_auto" type="edge_ngram" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 
