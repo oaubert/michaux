@@ -696,7 +696,7 @@ class Acquisition(models.Model):
                             blank=True)
 
     def __unicode__(self):
-        return u"Vente %(year)s, %(locations)s %(collection)s" % {
+        return u"Vente %(year)s, %(location)s %(collection)s" % {
             'cote': self.work.cote,
             'year': str(self.year) or "?",
             'location': self.location or "?",
