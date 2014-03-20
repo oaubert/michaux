@@ -7,8 +7,10 @@
       <div class="facetcontent">
         <ul>
           {% for item in values %}
+          {% if item.0 %}
           <li class="facetitem">{% if item.0 in active %}<input type="hidden" name="f" value="{{ param }}:{{ item.0 }}" /><a title="Supprimer cette facette" class="active-facet"></a>{% endif %}<a class="facetitemlabel">{{ item.0 }}</a> <span class="facetitemcount">{{ item.1 }}</span>
           </li>
+          {% endif %}
           {% endfor %}
         </ul>
       </div>
