@@ -381,7 +381,7 @@ class BibliographyReference(models.Model):
     class Meta:
         verbose_name = _("référence bibliographique")
         verbose_name_plural = _("références bibliographiques")
-        ordering = [ 'publication_date' ]
+        ordering = [ 'publication_year' ]
 
     nature = models.CharField(_("type de référence"),
                               help_text=_("catalogue, article de journal, monographie, livre, chapitre de livre..."),
@@ -429,8 +429,8 @@ class BibliographyReference(models.Model):
                               max_length=255,
                               blank=True)
 
-    publication_date = models.DateField(_("date de publication"),
-                                        blank=True, null=True)
+    publication_year = models.IntegerField(_("année de publication"),
+                                           blank=True, null=True)
     page_number = models.IntegerField(_("numéro de page"),
                                       help_text=_("numéro de page de l'article contenu"),
                                       blank=True, null=True)
@@ -587,7 +587,7 @@ class Event(models.Model):
 class Reproduction(models.Model):
     class Meta:
         verbose_name = _("reproduction")
-        ordering = [ 'reference__publication_date' ]
+        ordering = [ 'reference__publication_year' ]
 
     work = models.ForeignKey(Work,
                              verbose_name=_("oeuvre"))

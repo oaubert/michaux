@@ -226,15 +226,15 @@ class BibliographyReferenceAdmin(admin.ModelAdmin):
     formfield_overrides = FORMFIELD_OVERRIDES
     save_on_top = True
 
-    list_display = ('abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number', 'comment', 'note')
-    list_editable = ('nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number')
+    list_display = ('abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_year', 'page_number', 'comment', 'note')
+    list_editable = ('nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_year', 'page_number')
     list_display_links = ('abbreviation', )
     search_fields = [ 'abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'comment', 'note' ]
     list_filter = ( 'nature', 'creator', 'city' )
     save_on_top = True
 
     actions = ( export_model_as_csv, )
-    exportable_fields = ('abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_date', 'page_number', 'comment', 'note')
+    exportable_fields = ('abbreviation', 'nature', 'creator', 'title', 'container_title', 'container_creator', 'container_others', 'editor', 'city', 'number', 'publication_year', 'page_number', 'comment', 'note')
 
 admin.site.register(BibliographyReference, BibliographyReferenceAdmin)
 
