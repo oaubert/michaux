@@ -59,7 +59,7 @@ def get_filtered_queryset(request):
                     sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
     # Add facets to the result
-    sqs = sqs.facet('status').facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('technique').facet('support').facet('width').facet('height').facet('exhibition')
+    sqs = sqs.facet('status').facet('creator').facet('tags').facet('creation_date_start').facet('creation_date_end').facet('serie').facet('technique').facet('support').facet('width').facet('height').facet('exhibition').facet('acquisition_location')
     sqs = sqs.order_by('creation_date_start')
     return sqs, options
 
