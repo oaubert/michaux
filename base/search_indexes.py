@@ -55,7 +55,6 @@ class WorkIndex(indexes.SearchIndex, indexes.Indexable):
         return not not work.revision
 
     def prepare_single_technique(self, work):
-        #return (not ',' in work.technique)
         return len(work.techniques) == 1
 
     def get_updated_field(self):
