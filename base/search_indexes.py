@@ -46,7 +46,7 @@ class WorkIndex(indexes.SearchIndex, indexes.Indexable):
         return [ ei.exhibition.abbreviation for ei in work.exhibitioninstance_set.all() ]
 
     def prepare_acquisition_location(self, work):
-        return [ ac.location for ac in work.acquisition_set.all() ]
+        return [ ac.abbrev() for ac in work.acquisition_set.all() ]
 
     def prepare_with_image(self, work):
         return work.image_set.count() > 0

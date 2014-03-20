@@ -695,6 +695,12 @@ class Acquisition(models.Model):
                             help_text=_("Notes (privées)"),
                             blank=True)
 
+    def abbrev(self):
+        return u"%(year)s, %(location)s" % {
+            'year': str(self.year) or "?",
+            'location': self.location or "?",
+        }
+
     def __unicode__(self):
         return u"Vente %(year)s, %(location)s %(collection)s" % {
             'cote': self.work.cote,
