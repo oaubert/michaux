@@ -295,7 +295,7 @@ def complete(request, field=None, **kw):
         last = techniques.pop()
         if not last:
             # Nothing to complete
-            completions = [ term ]
+            completions = set([ term ])
         else:
             kw = { field + '_auto':  last }
             # We have to filter again here for "term in item" since the
@@ -311,6 +311,8 @@ def complete(request, field=None, **kw):
         completions = set(item[0]
                           for item in sqs.autocomplete(**kw).values_list(field))
 
+    # there can be some None values in the set (due to an outdated index)
+    completions.discard(None)
     s = (sorted(i for i in completions if i.startswith(term))
          + sorted(i for i in completions if not i.startswith(term)))
     return HttpResponse(json.dumps([{'value': item} for item in s]),
