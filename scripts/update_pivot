@@ -1,11 +1,11 @@
 #! /bin/bash
 
 MEDIA=$HOME/src/michaux/catalogue/media
-PIVOT=$MEDIA/cache/pivot
+PIVOT=$MEDIA/CACHE/pivot
 cd ${MEDIA}/images
 [ ! -d $PIVOT ] && mkdir $PIVOT
 
-for i in *.jpg
+for i in *.*
 do 
     base=${i%.*}
     d=$MEDIA/CACHE/images/images/${base}

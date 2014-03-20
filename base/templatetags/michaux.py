@@ -93,7 +93,7 @@ def unaccent(value):
 @register.filter
 @stringfilter
 def dzi(url):
-    return url.replace('.jpg', '.dzi').replace('images/', 'cache/pivot/')
+    return url.replace('.jpg', '.dzi').replace('.tif', '.dzi').replace('.JPG', '.dzi').replace('.TIF', '.dzi').replace('images/', 'CACHE/pivot/')
 
 @register.filter
 def getattr(obj, args):
