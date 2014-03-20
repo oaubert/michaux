@@ -250,7 +250,7 @@ def selection_tag(request):
     for i in items:
         i.tags.add(name)
         # FIXME: Handle errors ?
-        index.get_index(Work).update_object(i)
+        index.update_object(i)
     return HttpResponse(status=204)
 
 @login_required
@@ -268,7 +268,7 @@ def selection_untag(request):
     for i in items:
         i.tags.remove(name)
         # FIXME: Handle errors ?
-        index.get_index(Work).update_object(i)
+        index.update_object(i)
     return HttpResponse(status=204)
 
 @login_required
