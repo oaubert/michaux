@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 import django.core.management
@@ -11,7 +12,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.query import SearchQuerySet
-from .models import Work, Exhibition, ExhibitionInstance, BibliographyReference, Reproduction
+from .models import Work, Exhibition, ExhibitionInstance, BibliographyReference, Reproduction, Acquisition
 from .search_indexes import WorkIndex
 from .forms import EditTagsForm
 
@@ -175,6 +176,14 @@ def bibliographies(request, pk=None, **kw):
     return render_to_response('bibliographies.html', {
             'meta': BibliographyReference._meta,
             'items': items,
+            }, context_instance=RequestContext(request))
+
+@login_required
+def auctions(request, pk=None, **kw):
+    items = Counter(ac.abbrev() for ac in Acquisition.objects.all())
+    return render_to_response('auctions.html', {
+            'meta': Acquisition._meta,
+            'items': items.items(),
             }, context_instance=RequestContext(request))
 
 @login_required

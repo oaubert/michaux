@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+{% block title %}Expositions{% endblock %}
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery.dataTables.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!-- The admin jquery.js is in the django namespace -->
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
+{% endblock %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block margin %}
+    {% endblock %}
+
+    {% block content %}
+    <div id="grid">
+
+      <table id="auctionTable">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Oeuvres</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for name, count in items %}
+          <tr id="{{ name|iriencode }}" class="auction">
+            <td><a class="auctionName" href="/base/work?f=acquisition_location_exact:{{ name }}">{{ name }}</a></td>
+            <td class="exhibitionWorks">{{ count }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+    <script type="text/javascript">
+      $("#auctionTable").dataTable({
+          "bPaginate": false,
+          "bLengthChange": false,
+          "iDisplayLength": 100,
+          "bFilter": true,
+          "bSort": true,
+          "bInfo": true,
+          "bAutoWidth": true });
+    </script>
+    {% endblock %}
