@@ -187,7 +187,6 @@ INSTALLED_APPS = (
     #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'haystack',
     'imagekit',
     'taggit',
     'taggit_autosuggest',
@@ -197,6 +196,8 @@ INSTALLED_APPS = (
     'grappelli',
     'django.contrib.admin',
     'django_requestlogging',
+    'haystack',
+
 )
 
 if options.get('raven_dsn'):
