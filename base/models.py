@@ -697,7 +697,7 @@ class Acquisition(models.Model):
 
     def abbrev(self):
         return u"%(year)s, %(location)s" % {
-            'year': str(self.year) or "?",
+            'year': str(self.year or "?"),
             'location': self.location or "?",
         }
 
