@@ -49,7 +49,7 @@
           {% for item in items %}
           <tr id="reference{{ item.pk }}" class="reference">
             <td><a class="referenceName" href="{{ item.get_absolute_url }}">{{ item }}</a> <a class="action edit" target="_blank" href="{% url "admin:base_bibliographyreference_change" item.pk %}"></a></td>
-            <td class="referenceDate">{{ item.publication_date|default:"" }}</td>
+            <td class="referenceDate">{{ item.publication_year|default:"?" }}</td>
             <td class="referenceTitle">{{ item.title }}</td>
             <td class="referenceCreator">{{ item.creator }}</td>
             <td class="referenceNumber">{{ item.number }}</td>

@@ -13,7 +13,7 @@
   <li>édition - {{ bib.editor }}</li>
   <li>ville - {{ bib.city }}</li>
   <li>numéro - {{ bib.number }}</li>
-  <li>date de publication - {{ bib.publication_date }}</li>
+  <li>année de publication - {{ bib.publication_year|default:"?" }}</li>
   <li>numéro de page - {{ bib.page_number }}</li>
   <li>commentaire - {{ bib.comment }}</li>
   <li>notes - {{ bib.note }}</li>
