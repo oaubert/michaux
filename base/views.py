@@ -204,6 +204,16 @@ def reindex(request, *p, **kw):
     return HttpResponse(status=204)
 
 @login_required
+def export(request, *p, **kw):
+    sqs, options = get_filtered_queryset(request)
+    return render_to_response('export.html', {
+        'sqs': sqs,
+        'meta': Work._meta,
+        'request': request,
+    },
+                              context_instance = RequestContext(request))
+
+@login_required
 def pivot(request, *p, **kw):
     return render_to_response('pivot.html', {
             'request': request,

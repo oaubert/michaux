@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+{% block title %} Catalogue raisonné Henri Michaux -
+{% with total=sqs|length %}
+{% if query_string %}
+{{ total }} œuvre{{ total|pluralize }} correspondant à "{{ query_string }}"
+{% else %}
+{{ total }} œuvre{{ total|pluralize }}
+{% endif %}
+{% endwith %}
+{% endblock %}
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/grid-print.css" rel="stylesheet" type="text/css" media="print" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery.iviewer.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <!-- The admin jquery.js should be in the django namespace, but
+         grappelli changes it. However, coop_tag references jquery from
+         django.jQuery so let's just proxy it -->
+   <script type="text/javascript">
+     if (django === undefined) {
+         var django = { 'jQuery': jQuery };
+     }
+   </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/d3.v3.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.iviewer.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tinysort.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/grid.js"></script>
+
+{{ tagform.media }}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block margin %}
+        {% endblock %}
+
+        {% block content %}
+        <div id="grid">
+
+          {% for res in sqs %}
+          {% if res.cote %}
+          {% include "cartel.html" with work=res.object %}
+          {% endif %}
+          {% endfor %}
+
+        </div>
+        <div id="infopanel">
+        </div>
+        {% endblock %}
