@@ -202,37 +202,3 @@ a.details {
     text-align: center;
     z-index: 4;
 }
-
-.cartel {
-    width: 500px;
-    height: 300px;
-    float: left;
-    padding: 5px;
-    position: relative;
-    display: flex;
-    vertical-align: middle;
-    text-align: center;
-    scale: 1;
-}
-
-.cartel-thumbnail {
-    width: 48%;
-    position: absolute;
-    left: 0px;
-}
-
-.cartel-thumbnail img {
-    max-width: 100%;
-}
-
-.cartel-info {
-    width: 48%;
-    position: absolute;
-    right: 0px;
-    text-align: left;
-}
-
-.cartel-info ul, .cartel-info ul ul {
-    list-style: none;
-    text-align: left;
-}

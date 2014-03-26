@@ -1,0 +1,52 @@
+#content {
+    margin: 0px;
+}
+
+#margin {
+    display: none;
+}
+
+.cartel {
+    width: 49%;
+    float: left;
+    padding: 5px;
+    position: relative;
+    display: flex;
+    vertical-align: middle;
+    scale: 1;
+    page-break-inside: avoid;
+    margin-top: 5px;
+}
+
+.cartel-thumbnail {
+    width: 48%;
+    max-width: 48%;
+    text-align: right;
+    display: flex;
+    vertical-align: middle;
+    float: left;
+    margin-right: 1%;
+}
+
+.cartel-thumbnail img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.cartel-info {
+    max-width: 48%;
+    text-align: left;
+}
+
+.cartel-info ul, .cartel-info ul ul {
+    list-style: none;
+    text-align: left;
+}
+
+@media print {
+    .cartel {
+        width: 100%;
+    }
+}

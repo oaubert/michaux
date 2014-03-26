@@ -14,29 +14,7 @@
 {% endwith %}
 {% endblock %}
 {% block extra_header %}
-    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{ STATIC_URL }}css/michaux/grid-print.css" rel="stylesheet" type="text/css" media="print" />
-    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{ STATIC_URL }}css/jquery.iviewer.css" rel="stylesheet" type="text/css" media="screen" />
-
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
-    <!-- The admin jquery.js should be in the django namespace, but
-         grappelli changes it. However, coop_tag references jquery from
-         django.jQuery so let's just proxy it -->
-   <script type="text/javascript">
-     if (django === undefined) {
-         var django = { 'jQuery': jQuery };
-     }
-   </script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/d3.v3.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.iviewer.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tinysort.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
-
+    <link href="{{ STATIC_URL }}css/michaux/export.css" rel="stylesheet" type="text/css" />
 {{ tagform.media }}
 {% endblock %}
 
