@@ -68,7 +68,7 @@ class Command(BaseCommand):
             w.note = data['Notice']
             w.comment = data['Remarques']
             if data[u'Reproductions']:
-                w.revision = u"\n".join(u"BIBLIO: %s" % b for b in data[u'Reproductions'].splitlines() if b.strip())
+                w.revision = u"\n".join(u"BIBLIO: %s" % b for b in data[u'Reproductions'].splitlines() if b.strip()) + u"\n"
             w.save()
             self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
             # FIXME: Improve image name heuristic
@@ -134,7 +134,7 @@ class Command(BaseCommand):
                         notfound.append(ab)
                     self.stderr.write("   Exhibition %s... %s\n" % (ab.encode('utf-8'), msg))
                     if notfound:
-                        w.revision += u"\n".join(u"EXPO: %s" % e for e in notfound if e)
+                        w.revision += u"\n".join(u"EXPO: %s" % e for e in notfound if e) + u"\n"
                         w.save()
 
     def _import_ventes_from_xls(self, filename):
@@ -193,7 +193,7 @@ class Command(BaseCommand):
             w.note = data['notice'].strip()
             w.comment = data['remarques'].strip()
             if data[u'reproductions']:
-                w.revision = u"\n".join(u"BIBLIO: %s" % b for b in data[u'reproductions'].splitlines() if b.strip())
+                w.revision = u"\n".join(u"MISSINGBIBLIO: %s" % b for b in data[u'reproductions'].splitlines() if b.strip()) + u"\n"
             w.save()
             self.stderr.write(u"Saved %s %s\n" % (n, unicode(w)))
 
@@ -213,7 +213,7 @@ class Command(BaseCommand):
                         i.original_image.save(os.path.basename(pic), File(f))
                     i.save()
                 else:
-                    w.revision += u"\nIMAGE: %s" %  data[u'image']
+                    w.revision += u"MISSINGIMAGE: %s\n" %  data[u'image']
                     w.save()
 
             if data[u'signature'].startswith('oui'):
@@ -295,7 +295,7 @@ class Command(BaseCommand):
                         notfound.append(ab)
                     self.stderr.write(u"   Exhibition %s... %s\n" % (unicode(ab), unicode(msg)))
                     if notfound:
-                        w.revision += u"\n".join(u"EXPO: %s" % e for e in notfound if e)
+                        w.revision += u"\n".join(u"MISSINGEXPO: %s" % e for e in notfound if e)
                         w.save()
 
     def dummydate2date(self, data):
