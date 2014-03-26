@@ -210,7 +210,7 @@ class Command(BaseCommand):
                     i.support = u'numérique'
                     i.nature = u'référence'
                     with open(pic.encode('utf-8'), 'rb') as f:
-                        i.original_image.save(os.path.basename(pic.encode('utf-8')), File(f))
+                        i.original_image.save(os.path.basename(pic.encode('ascii', 'ignore')), File(f))
                     i.save()
                 else:
                     w.revision += u"MISSINGIMAGE: %s\n" %  data[u'image']
