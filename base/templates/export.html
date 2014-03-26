@@ -14,7 +14,7 @@
 {% endwith %}
 {% endblock %}
 {% block extra_header %}
-    <link href="{{ STATIC_URL }}css/michaux/export.css" rel="stylesheet" type="text/css" />
+<link href="{{ STATIC_URL }}css/michaux/export.css" rel="stylesheet" type="text/css" />
 {{ tagform.media }}
 {% endblock %}
 
@@ -22,16 +22,16 @@
 {% endblock %}
 
 {% block margin %}
-        {% endblock %}
+{% endblock %}
 
-        {% block content %}
-        <div id="grid">
+{% block content %}
+<div id="grid">
 
-          {% for res in sqs %}
-          {% if res.cote %}
-          {% include "cartel.html" with work=res.object %}
-          {% endif %}
-          {% endfor %}
+  {% for res in sqs %}
+  {% if res.cote %}
+  {% include "cartel.html" with work=res.object %}
+  {% endif %}
+  {% endfor %}
 
-        </div>
-        {% endblock %}
+</div>
+{% endblock %}
