@@ -70,11 +70,11 @@ class Command(BaseCommand):
             if data[u'Reproductions']:
                 w.revision = u"\n".join(u"BIBLIO: %s" % b for b in data[u'Reproductions'].splitlines() if b.strip()) + u"\n"
             w.save()
-            self.stderr.write("Saved %s %s\n" % (n, unicode(w).encode('utf-8')))
+            self.stderr.write(u"Saved %s %s\n" % (n, unicode(w)))
             # FIXME: Improve image name heuristic
             pic = '/home/oaubert/tmp/michaux/%s.jpg' % data['Cote'].lower().replace(' / ', '_').replace(' ', '_').replace('-', '_')
             if os.path.exists(pic.encode('utf-8')):
-                self.stderr.write("   Copying image %s\n" % pic.encode('utf-8'))
+                self.stderr.write(u"   Copying image %s\n" % unicode(pic))
                 i = Image()
                 i.work = w
                 i.photograph_name = 'Franck Leibovici'
@@ -203,13 +203,13 @@ class Command(BaseCommand):
                 if pic.endswith(".tif"):
                     pic = pic.replace(".tif", ".jpg")
                 if os.path.exists(pic.encode('utf-8')):
-                    self.stderr.write("   Copying image %s\n" % pic.encode('utf-8'))
+                    self.stderr.write(u"   Copying image %s\n" % unicode(pic))
                     i = Image()
                     i.work = w
                     i.photograph_name = 'Franck Leibovici'
                     i.support = u'numérique'
                     i.nature = u'référence'
-                    with open(pic, 'rb') as f:
+                    with open(pic.encode('utf-8'), 'rb') as f:
                         i.original_image.save(os.path.basename(pic), File(f))
                     i.save()
                 else:
