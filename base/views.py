@@ -212,6 +212,8 @@ def reindex(request, *p, **kw):
 @login_required
 def export(request, *p, **kw):
     sqs, options = get_filtered_queryset(request)
+    if sqs.count() > 500:
+        return HttpResponse(status=413, content="Too many items")
     return render_to_response('export.html', {
         'sqs': sqs,
         'meta': Work._meta,
