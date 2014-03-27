@@ -2,8 +2,8 @@
 {% load url from future %}
 {% load michaux %}
 
-<ul class="bibliographyinfo" data-id="{{ bib.pk }}">
-  <li>type de référence - {{ bib.nature }}</li>
+<ul class="bibliographyinfo iteminfo" data-id="{{ bib.pk }}">
+  <li>{{ bib.nature }}</li>
   <li>abréviation - {{ bib.abbreviation }}</li>
   <li>auteur - {{ bib.creator }}</li>
   <li>titre - {{ bib.title }}</li>

@@ -26,17 +26,17 @@
     {% block content %}
     {% include "bibrefinfo.html" with bib=bib %}
 
+    {% if exhibitions %}
+    <h2>Référencé dans les expositions</h2>
+    {% for ex in exhibitions %}
+    <a href="{% url "base.views.exhibition" ex.id %}">{{ ex }}</a>
+    {% endfor %}
+    {% endif %}
+
     {% if reproductions %}
     <h2>Référencé dans les oeuvres</h2>
     {% for r in reproductions %}
     {% include "griditem.html" with work=r.work info=r.page|add:" "|add:r.number %}
-    {% endfor %}
-    {% endif %}
-
-{% if exhibitions %}
-    <h2>Référencé dans les expositions</h2>
-    {% for ex in exhibitions %}
-    <a href="{% url "base.views.exhibition" ex.id %}">{{ ex }}</a>
     {% endfor %}
     {% endif %}
 

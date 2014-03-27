@@ -106,23 +106,23 @@ ul.navbar .submenu li {
     width: 8em;
 }
 
-#workinfo a {
+.iteminfo a {
     text-decoration: none;
     color: #228;
 }
 
-#workinfo a:hover {
+.iteminfo a:hover {
     background-color: #ddd;
+}
+
+ul.iteminfo, .iteminfo ul, .iteminfo ul ul {
+    list-style: none;
+    text-align: left;
 }
 
 #workinfo {
     height: 90%;
     overflow-y: auto;
-}
-
-#workinfo ul, #workinfo ul ul {
-    list-style: none;
-    text-align: left;
 }
 
 #elementTagform {

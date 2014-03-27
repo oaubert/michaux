@@ -2,7 +2,7 @@
 {% load url from future %}
 {% load michaux %}
 
-    <div id="workinfo" data-cote="{{ work.cote }}" itemscope itemtype="http://schema.org/Painting">
+    <div id="workinfo" class="iteminfo" data-cote="{{ work.cote }}" itemscope itemtype="http://schema.org/Painting">
         <ul>
           <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url workmeta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
           </li>
