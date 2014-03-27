@@ -15,7 +15,9 @@
 {{ object.revision }}
 {{ object.note }}
 {% for tag in object.tags.all %}{{ tag.name }} {% endfor %}
-{% for insc in object.inscription_set.all %}{{ insc.notes }} {% endfor %}
+{% for insc in object.inscription_set.all %}{{ insc.nature }}
+{{ insc.notes }}
+{% endfor %}
 {% for img in object.image_set.all %}{{ img.note }} {% endfor %}
 {% for bib in object.bibliographyreference_set.all %}{{ bib.title }}{{ bib.container_title }} {{ bib.container_creator }} {{ bib.comment }} {{ bib.note }} {% endfor %}
 {% for ex in object.exhibitioninstance_set.all %}{{ ex.exhibition.abbreviation }} {{ ex.exhibition.title }} {{ ex.note }} {% endfor %}
