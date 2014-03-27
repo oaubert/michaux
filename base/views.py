@@ -140,12 +140,14 @@ def workextended(request, cote=None, type_=None, **kw):
         return render_to_response('workinfo.html', {
                                   'work': w,
                                   'meta': Work._meta,
+                                  'workmeta': Work._meta,
                                   'tagform': EditTagsForm(instance=w),
                                   }, context_instance=RequestContext(request))
     elif type_ == 'solr':
         return render_to_response('search/indexes/base/work_text.txt', {
                                   'object': w,
                                   'meta': Work._meta,
+                                  'workmeta': Work._meta,
                                   }, context_instance=RequestContext(request))
     else:
         return render_to_response('work.html', {
@@ -234,6 +236,7 @@ def pivotcollection(request, *p, **kw):
     return render_to_response('collection.xml', {
         'sqs': sqs,
         'meta': Work._meta,
+        'workmeta': Work._meta,
         'request': request,
         },
                               mimetype = "application/xhtml+xml",
@@ -306,6 +309,7 @@ def compare(request, cote1=None, cote2=None, **kw):
     return render_to_response('compare.html', {
             'work1': w1,
             'work2': w2,
+            'workmeta': Work._meta,
             'meta': Work._meta,
             }, context_instance=RequestContext(request))
 
