@@ -199,9 +199,8 @@ class Command(BaseCommand):
 
             # FIXME: Improve image name heuristic
             if data[u'image']:
-                pic = '/home/oaubert/tmp/sdv/%s' % data[u'image'].lower()
-                if pic.endswith(".tif"):
-                    pic = pic.replace(".tif", ".jpg")
+                basename = os.path.splitext(data[u'image'].lower())[0]
+                pic = '/home/oaubert/tmp/sdv/%s.jpg' % basename
                 if os.path.exists(pic.encode('utf-8')):
                     self.stderr.write(u"   Copying image %s\n" % unicode(pic))
                     i = Image()
