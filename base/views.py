@@ -91,6 +91,7 @@ def works(request, *p, **kw):
 
     return render_to_response('grid.html', {
         'meta': Work._meta,
+        'workmeta': Work._meta,
         'sqs': sqs,
         'facets': sqs.facet_counts(),
         'selected_facets': selected_facets,
@@ -123,6 +124,7 @@ def work(request, cote=None, **kw):
     return render_to_response('work.html', {
             'work': w,
             'meta': Work._meta,
+            'workmeta': Work._meta,
             'tagform': EditTagsForm(instance=w),
             }, context_instance=RequestContext(request))
 
@@ -149,6 +151,7 @@ def workextended(request, cote=None, type_=None, **kw):
         return render_to_response('work.html', {
             'work': w,
             'meta': Work._meta,
+            'workmeta': Work._meta,
             'tagform': EditTagsForm(instance=w)
             }, context_instance=RequestContext(request))
 
@@ -167,6 +170,7 @@ def exhibition(request, pk=None, **kw):
     return render_to_response('exhibition.html', {
             'ex': ex,
             'meta': Exhibition._meta,
+            'workmeta': Work._meta,
             'items': items,
             }, context_instance=RequestContext(request))
 
@@ -175,6 +179,7 @@ def bibliographies(request, pk=None, **kw):
     items = BibliographyReference.objects.all()
     return render_to_response('bibliographies.html', {
             'meta': BibliographyReference._meta,
+            'workmeta': Work._meta,
             'items': items,
             }, context_instance=RequestContext(request))
 
@@ -193,6 +198,7 @@ def bibliography(request, pk=None, **kw):
     exhibitions = Exhibition.objects.filter(catalogue=bib)
     return render_to_response('bibref.html', {
             'bib': bib,
+            'workmeta': Work._meta,
             'meta': BibliographyReference._meta,
             'reproductions': reproductions,
             'exhibitions': exhibitions,
@@ -209,6 +215,7 @@ def export(request, *p, **kw):
     return render_to_response('export.html', {
         'sqs': sqs,
         'meta': Work._meta,
+        'workmeta': Work._meta,
         'request': request,
     },
                               context_instance = RequestContext(request))

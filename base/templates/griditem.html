@@ -9,7 +9,7 @@
 {{ work.old_references }}"
                                                        src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
   <ul class="toolbar">{% if user.is_active and user.is_staff %}
-<li><a target="_blank" href="{% url meta|admin_urlname:'change' work.cote %}" class="edit"></a></li>
+<li><a target="_blank" href="{% url workmeta|admin_urlname:'change' work.cote %}" class="edit"></a></li>
 {% endif %}<li><a target="_blank" href="{{ work.get_absolute_url }}" class="details"></a></li><li><a class="selection"></a></li></ul>
   <div class="workoverlay">{{ info }}</div>
 </div>

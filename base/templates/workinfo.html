@@ -4,7 +4,7 @@
 
     <div id="workinfo" data-cote="{{ work.cote }}" itemscope itemtype="http://schema.org/Painting">
         <ul>
-          <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
+          <li><span class="worktitle"><a target="_blank" href="{{ work.get_absolute_url }}">{{ work }}</a></span>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url workmeta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}
           </li>
 
           {% if user.is_active and user.is_staff %}
@@ -117,7 +117,7 @@
           <li class="similar"><strong>oeuvres similaires ({{ work.tags.similar_objects.count }})</strong>
             <ul>
               {% for w in work.tags.similar_objects|slice:":5" %}
-              <li><a class="workref" data-thumbnail-url="{{ w.thumbnail.url }}" href="/base/work/{{ w.cote }}">{{ w }}</a>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url meta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}</li>
+              <li><a class="workref" data-thumbnail-url="{{ w.thumbnail.url }}" href="/base/work/{{ w.cote }}">{{ w }}</a>{% if user.is_active and user.is_staff %} <a class="action-glyph" title="Éditer la fiche de l'oeuvre" href="{% url workmeta|admin_urlname:'change' work.cote %}">&#x270f;</a>{% endif %}</li>
               {% endfor %}
             </ul>
           </li>
