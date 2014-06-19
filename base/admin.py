@@ -163,7 +163,7 @@ class WorkAdmin(admin.ModelAdmin):
     list_display = ( 'cote', 'work_thumbnail', 'old_references', 'technique', 'support', 'creation_date_start', 'comment', 'note', 'revision' )
     list_editable = ( 'old_references', 'technique', 'support', 'creation_date_start', 'revision', 'comment',  'note', 'revision')
     list_display_links = ( 'cote', 'work_thumbnail' )
-    search_fields = [ 'cote', 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'note', 'revision' ]
+    search_fields = [ 'cote', 'creation_date_start', 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'note', 'revision' ]
     list_filter = ( 'status', 'serie', 'technique', 'support', 'creation_date_start', WorkSelectionFilter)
     save_on_top = True
     actions = ( export_model_as_csv, )
