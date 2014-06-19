@@ -486,14 +486,14 @@ class Command(BaseCommand):
             for fname in correspondances.get(nref, []):
                 pic = pics.get(fname.encode('utf-8'), "")
                 if os.path.exists(pic):
-                    self.stderr.write((u"   Copying image %s\n" % unicode(pic)))
+                    self.stderr.write(unicode("   Copying image %s\n" % pic, 'utf-8'))
                     i = Image()
                     i.work = w
                     i.photograph_name = 'Franck Leibovici'
                     i.support = u'numérique'
                     i.nature = u'référence'
                     with open(pic, 'rb') as f:
-                        i.original_image.save(unicode(os.path.basename(pic), 'utf-8'), File(f))
+                        i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
                     i.save()
 
     def handle(self, *args, **options):
