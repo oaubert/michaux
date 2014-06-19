@@ -484,16 +484,16 @@ class Command(BaseCommand):
             ref = w.old_references
             nref = ref.replace(' ', '').lower()
             for fname in correspondances.get(nref, []):
-                pic = pics.get(fname, "")
-                if os.path.exists(pic.encode('utf-8')):
-                    self.stderr.write((u"   Copying image %s\n" % unicode(pic)).encode('utf-8'))
+                pic = pics.get(fname.encode('utf-8'), "")
+                if os.path.exists(pic):
+                    self.stderr.write((u"   Copying image %s\n" % unicode(pic)))
                     i = Image()
                     i.work = w
                     i.photograph_name = 'Franck Leibovici'
                     i.support = u'numérique'
                     i.nature = u'référence'
                     with open(pic, 'rb') as f:
-                        i.original_image.save(os.path.basename(pic), File(f))
+                        i.original_image.save(unicode(os.path.basename(pic), 'utf-8'), File(f))
                     i.save()
 
     def handle(self, *args, **options):
