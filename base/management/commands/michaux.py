@@ -3,6 +3,7 @@
 import sys
 import os
 import re
+import xlrd
 import datetime
 
 from django.core.files import File
@@ -17,12 +18,12 @@ class Command(BaseCommand):
   exhibitions <xls file> : import the Michaux exhibition list
   ventes <xls files> : import the ventes publiques list
   gen_abbreviations : generate standard abbreviations for exhibitions
+  pics <xls file> <dirname> : batch associate images
 """
     def _import_works_from_xls(self, filename):
         """Import from an xls file.
         """
         self.stdout.write("** Importing catalogue\n")
-        import xlrd
         book = xlrd.open_workbook(filename)
         s = book.sheet_by_index(0)
         header = s.row_values(0)
@@ -460,6 +461,41 @@ class Command(BaseCommand):
             ex.save()
         # FIXME: migrate abbreviations to BibliographyReference table
 
+    def _associate_images(self, filename, imgdir, *p):
+        """Associate images from sourcedir.
+        """
+        book = xlrd.open_workbook(filename)
+        s = book.sheet_by_index(0)
+
+        correspondances = {}
+        for n in range(1, s.nrows - 1):
+            row = s.row_values(n)
+            imgs = [ v for v in row[2:9] if v ]
+            if imgs:
+                correspondances[row[0].strip()] = imgs
+
+        pics = {}
+        for root, dirs, files in os.walk(imgdir):
+            for n in files:
+                pics[os.path.splitext(n.replace(" ", "").lower())[0]] = os.path.join(root, n)
+
+        # Check all items
+        for w in Work.objects.filter(image=None):
+            ref = w.old_references
+            nref = ref.replace(' ', '').lower()
+            for fname in correspondances.get(nref, []):
+                pic = pics.get(fname, "")
+                if os.path.exists(pic.encode('utf-8')):
+                    self.stderr.write((u"   Copying image %s\n" % unicode(pic)).encode('utf-8'))
+                    i = Image()
+                    i.work = w
+                    i.photograph_name = 'Franck Leibovici'
+                    i.support = u'numérique'
+                    i.nature = u'référence'
+                    with open(pic, 'rb') as f:
+                        i.original_image.save(os.path.basename(pic), File(f))
+                    i.save()
+
     def handle(self, *args, **options):
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
@@ -471,6 +507,7 @@ class Command(BaseCommand):
             'exhibitions': self._import_exhibitions_from_xls,
             'gen_abbreviations': self._generate_abbreviations,
             'ventes': self._import_ventes_from_xls,
+            'pics': self._associate_images,
             }
         m = dispatcher.get(command)
         if m is not None:
