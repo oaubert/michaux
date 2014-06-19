@@ -23,7 +23,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
     <!-- The admin jquery.js should be in the django namespace, but
-         grappelli changes it. However, coop_tag references jquery from
+         grappelli changes it. However, taggit-autosuggest references jquery from
          django.jQuery so let's just proxy it -->
    <script type="text/javascript">
      if (django === undefined) {
@@ -58,7 +58,7 @@
 
   <ul>
 
-    <li><input autofocus="" placeholder="Filtre..." id="filter" type="text" name="q" value="{{ options.query_string }}" />
+    <li><input autofocus="" placeholder="Filtre..." id="filter" type="search" onsearch="this.form.submit()" name="q" value="{{ options.query_string }}" />
       <a href="javascript:document.michaux.resetFilter()"><img id="filter_reset_icon" alt="Reset" title="Supprimer le filtre" src="{{ STATIC_URL }}icons/reset.png" /></a><input type="submit" id="form_submit" value="" /></li>
 
     {% with selcount=options.selectionset|length %}
