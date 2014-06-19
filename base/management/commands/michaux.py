@@ -482,7 +482,7 @@ class Command(BaseCommand):
         # Check all items
         for w in Work.objects.filter(image=None):
             ref = w.old_references
-            nref = ref.replace(' ', '').lower()
+            nref = ref.replace(' ', '').replace('/', '').lower()
             for fname in correspondances.get(nref, []):
                 pic = pics.get(fname.encode('utf-8'), "")
                 if os.path.exists(pic):
