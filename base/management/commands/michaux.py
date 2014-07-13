@@ -499,25 +499,28 @@ class Command(BaseCommand):
     def _check_images(self, imgdir, *p):
         """Check images from sourcedir.
         """
+        db = {}
+        # Check all items
+        for i in Image.objects.all():
+            name = os.path.splitext(os.path.basename(i.original_image.name))[0].lower()
+            db[name] = i
+
+        print "Database %d Images" % Image.objects.count()
+
+        found = []
+        notfound = []
+        # Check all items
         pics = {}
         for root, dirs, files in os.walk(imgdir):
             for n in files:
-                pics[os.path.splitext(n.replace(" ", "").lower())[0]] = os.path.join(root, n)
-        print "Collection: %d pics" % len(pics)
-        print "Checking %d Images" % Image.objects.count()
+                name = os.path.splitext(n.replace(" ", "").lower())[0]
+                if name in db:
+                    found.append(name)
+                else:
+                    notfound.append(name)
 
-        found = []
-
-        notfound = []
-        # Check all items
-        for i in Image.objects.all():
-            name = os.path.splitext(os.path.basename(i.original_image.name))[0]
-            if name in pics:
-                found.append(name)
-            else:
-                notfound.append(name)
         print "Found %d matching pics" % len(found)
-        print "Not found:\n\n" + "\n".join(notfound)
+        print "%d Not found:\n\n" % len(notfound) + "\n".join(notfound)
         
     def handle(self, *args, **options):
         if not args:
