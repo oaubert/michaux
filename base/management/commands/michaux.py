@@ -510,14 +510,11 @@ class Command(BaseCommand):
         found = []
         notfound = []
         # Check all items
-        pics = {}
         for root, dirs, files in os.walk(imgdir):
             for n in files:
                 for name in (os.path.splitext(n.replace(" ", "").lower())[0].replace('-', '_'),
-                             os.path.splitext(n.replace(" ", "_").lower())[0].replace('-', '_'),
-                             os.path.splitext(n.replace(" ", "_").lower())[0].replace('-', '_') + '_0',
-                             os.path.splitext(n.replace(" ", "_").lower())[0].replace('-', '_') + '_1'):
-                    if name in db:
+                             os.path.splitext(n.replace(" ", "_").lower())[0].replace('-', '_')):
+                    if name in db or (name + '_1') in db:
                         found.append(name)
                         break
                 else:
