@@ -517,7 +517,11 @@ class Command(BaseCommand):
                 if name in db:
                     found.append(name)
                 else:
-                    notfound.append(name)
+                    name = os.path.splitext(n.replace(" ", "_").lower())[0]
+                    if name in db:
+                        found.append(name)
+                    else:
+                        notfound.append(name)
 
         print "Found %d matching pics" % len(found)
         print "%d Not found:\n\n" % len(notfound) + "\n".join(notfound)
