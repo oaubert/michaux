@@ -502,7 +502,7 @@ class Command(BaseCommand):
         db = {}
         # Check all items
         for i in Image.objects.all():
-            name = os.path.splitext(os.path.basename(i.original_image.name))[0].lower()
+            name = os.path.splitext(os.path.basename(i.original_image.name))[0].lower().replace('-', '_')
             db[name] = i
 
         print "Database %d Images" % Image.objects.count()
@@ -513,11 +513,11 @@ class Command(BaseCommand):
         pics = {}
         for root, dirs, files in os.walk(imgdir):
             for n in files:
-                name = os.path.splitext(n.replace(" ", "").lower())[0]
+                name = os.path.splitext(n.replace(" ", "").lower())[0].replace('-', '_')
                 if name in db:
                     found.append(name)
                 else:
-                    name = os.path.splitext(n.replace(" ", "_").lower())[0]
+                    name = os.path.splitext(n.replace(" ", "_").lower())[0].replace('-', '_')
                     if name in db:
                         found.append(name)
                     else:
