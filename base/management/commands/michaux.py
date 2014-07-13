@@ -492,15 +492,16 @@ class Command(BaseCommand):
                         if i.original_image.size == size:
                             # Matching size. Consider that it is a duplicate.
                             break
-                    self.stderr.write(unicode("   Copying image %s\n" % pic, 'utf-8'))
-                    #i = Image()
-                    #i.work = w
-                    #i.photograph_name = 'Franck Leibovici'
-                    #i.support = u'numérique'
-                    #i.nature = u'référence'
-                    #with open(pic, 'rb') as f:
-                    #    i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
-                    #i.save()
+                    else:
+                        self.stderr.write(unicode("   Copying image %s\n" % pic, 'utf-8'))
+                        i = Image()
+                        i.work = w
+                        i.photograph_name = 'Franck Leibovici'
+                        i.support = u'numérique'
+                        i.nature = u'référence'
+                        with open(pic, 'rb') as f:
+                            i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
+                        i.save()
 
     def _check_images(self, imgdir, *p):
         """Check images from sourcedir.
