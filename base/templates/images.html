@@ -45,6 +45,7 @@
 {% endblock %}
 
 {% block margin %}
+<form id="form_filter" name="form_filter">
   <div class="pagination">
     <span class="step-links">
       <input type="hidden" id="current_page" name="page" value="{{ page.number }}" />
@@ -53,6 +54,7 @@
       <a id="next_page" {% if page.has_next %}title="Page suivante" onclick="document.michaux.goto_page({{ page.next_page_number }})" {% else %}title="Dernière page" class="disabled"{% endif %}></a>
     </span>
   </div>
+</form>
 {% endblock %}
 
     {% block content %}
