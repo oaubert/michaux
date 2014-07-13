@@ -202,3 +202,7 @@ a.details {
     text-align: center;
     z-index: 4;
 }
+
+.even {
+    background-color: #ccc;
+}

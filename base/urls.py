@@ -24,4 +24,5 @@ urlpatterns = patterns('',
                        url(r'^pivot/image/(?P<cote>\d+)$', 'base.views.pivotimage'),
                        url(r'^pivot/image/(?P<cote>\d+)_files/(?P<level>\d+)/(?P<name>.+).png$', 'base.views.pivotdzimage'),
                        url(r'^pivot/Content/images/(?P<path>.*)', RedirectView.as_view(url=settings.STATIC_URL + 'icons/pivot/%(path)s', permanent=True)),
+                       url(r'^images/$', 'base.views.images'),
                        )

@@ -115,6 +115,28 @@ def works(request, *p, **kw):
         }, context_instance=RequestContext(request))
 
 @login_required
+def images(request, *p, **kw):
+    sqs, options = get_filtered_queryset(request)
+
+    paginator = Paginator(sqs.all(), long(request.REQUEST.get('per_page', 1000)))
+    pagenum = request.GET.get('page', 1)
+    try:
+        page = paginator.page(pagenum)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        page = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        page = paginator.page(paginator.num_pages)
+
+    return render_to_response('images.html', {
+        'workmeta': Work._meta,
+        'sqs': sqs,
+        'page': page,
+        'request': request,
+        }, context_instance=RequestContext(request))
+
+@login_required
 def work(request, cote=None, **kw):
     w = get_object_or_404(Work, pk=cote)
     if w.master is not None:
