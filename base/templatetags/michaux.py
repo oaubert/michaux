@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re
 import urllib
 import unicodedata
@@ -124,3 +126,25 @@ def getattr(obj, args):
         return val.__call__()
     else:
         return val
+
+position_re = re.compile(r'(?P<before>^|\(|\s)(?P<position>[bch][gcd])(?P<after>\s|\)|$)', re.U)
+position_translate = {
+    u'b': u'en bas',
+    u'c': u'au centre',
+    u'h': u'en haut',
+    u'g': u'à gauche',
+    u'c': u'au centre',
+    u'd': u'à droite',
+}
+
+def pos2text(m):
+    d = m.groupdict()
+    return '%s%s %s%s' % (d['before'],
+                          position_translate.get(d['position'][0], '?'),
+                          position_translate.get(d['position'][1], '?'),
+                          d['after'])
+
+@register.filter
+@stringfilter
+def positionfilter(loc):
+    return position_re.subn(pos2text, unicode(loc))[0]
