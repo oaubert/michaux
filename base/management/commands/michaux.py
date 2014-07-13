@@ -480,21 +480,27 @@ class Command(BaseCommand):
                 pics[os.path.splitext(n.replace(" ", "").lower())[0]] = os.path.join(root, n)
 
         # Check all items
-        for w in Work.objects.filter(image=None):
+        for w in Work.objects.all():
             ref = w.old_references
             nref = ref.replace(' ', '').replace('/', '').lower()
             for fname in correspondances.get(nref, []):
                 pic = pics.get(fname.encode('utf-8'), "")
                 if os.path.exists(pic):
+                    # Found corresponding image. Check that we do not have it already.
+                    size = os.path.getsize(pic)
+                    for i in w.image_set.all():
+                        if i.original_image.size == size:
+                            # Matching size. Consider that it is a duplicate.
+                            break
                     self.stderr.write(unicode("   Copying image %s\n" % pic, 'utf-8'))
-                    i = Image()
-                    i.work = w
-                    i.photograph_name = 'Franck Leibovici'
-                    i.support = u'numérique'
-                    i.nature = u'référence'
-                    with open(pic, 'rb') as f:
-                        i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
-                    i.save()
+                    #i = Image()
+                    #i.work = w
+                    #i.photograph_name = 'Franck Leibovici'
+                    #i.support = u'numérique'
+                    #i.nature = u'référence'
+                    #with open(pic, 'rb') as f:
+                    #    i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
+                    #i.save()
 
     def _check_images(self, imgdir, *p):
         """Check images from sourcedir.
