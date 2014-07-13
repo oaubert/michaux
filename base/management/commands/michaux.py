@@ -503,7 +503,7 @@ class Command(BaseCommand):
         # Check all items
         for i in Image.objects.all():
             name = os.path.splitext(os.path.basename(i.original_image.name))[0].lower().replace('-', '_')
-            db[name] = i
+            db[name.encode('utf-8')] = i
 
         print "Database %d Images" % Image.objects.count()
 
