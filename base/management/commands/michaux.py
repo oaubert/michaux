@@ -496,6 +496,29 @@ class Command(BaseCommand):
                         i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
                     i.save()
 
+    def _check_images(self, imgdir, *p):
+        """Check images from sourcedir.
+        """
+        pics = {}
+        for root, dirs, files in os.walk(imgdir):
+            for n in files:
+                pics[os.path.splitext(n.replace(" ", "").lower())[0]] = os.path.join(root, n)
+        print "Collection: %d pics" % len(pics)
+        print "Checking %d Images" % Image.objects.count()
+
+        found = []
+
+        notfound = []
+        # Check all items
+        for i in Image.objects.all():
+            name = os.path.splitext(os.path.basename(i.original_image.name))[0]
+            if name in pics:
+                found.append(name)
+            else:
+                notfound.append(name)
+        print "Found %d matching pics" % len(found)
+        print "Not found:\n\n" + "\n".join(notfound)
+        
     def handle(self, *args, **options):
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
@@ -508,6 +531,7 @@ class Command(BaseCommand):
             'gen_abbreviations': self._generate_abbreviations,
             'ventes': self._import_ventes_from_xls,
             'pics': self._associate_images,
+            'check': self._check_images,
             }
         m = dispatcher.get(command)
         if m is not None:
