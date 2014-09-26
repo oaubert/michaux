@@ -19,6 +19,8 @@ class Command(BaseCommand):
   ventes <xls files> : import the ventes publiques list
   gen_abbreviations : generate standard abbreviations for exhibitions
   pics <xls file> <dirname> : batch associate images
+  check <imgdir> : check associated images from sourcedir
+  missing <imgdir> : check missing images
 """
     def _import_works_from_xls(self, filename):
         """Import from an xls file.
@@ -529,6 +531,24 @@ class Command(BaseCommand):
 
         print "Found %d matching pics" % len(found)
         print "%d Not found:\n\n" % len(notfound) + "\n".join(notfound)
+
+    def _check_missing(self, imgdir, *p):
+        """Check for missing images
+        """
+
+        db = {}
+        # Check all missing images
+        for w in Work.objects.filter(revision__contains=u'MISSINGIMAGE'):
+            name = w.revision.split(":")[1].strip().lower()
+            db[name.encode('utf-8')] = w.pk
+
+        print "%d missing images" % len(db)
+
+        # Check all items
+        for root, dirs, files in os.walk(imgdir):
+            for n in files:
+                if name.lower() in db:
+                    print db[name.lower()], name
         
     def handle(self, *args, **options):
         if not args:
@@ -543,6 +563,7 @@ class Command(BaseCommand):
             'ventes': self._import_ventes_from_xls,
             'pics': self._associate_images,
             'check': self._check_images,
+            'missing': self._check_missing,
             }
         m = dispatcher.get(command)
         if m is not None:
