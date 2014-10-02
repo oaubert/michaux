@@ -547,7 +547,7 @@ class Command(BaseCommand):
                 try:
                     f = open(os.path.join(imgdir, name), 'rb')
                     # Found the image. Use it.
-                    self.stderr.write(u"   Copying image %s\n" % name)
+                    self.stderr.write((u"   Copying image %s\n" % name).encode('utf-8'))
                     i = Image()
                     i.work = w
                     i.photograph_name = 'Franck Leibovici'
