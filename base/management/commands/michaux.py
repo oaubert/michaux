@@ -541,7 +541,7 @@ class Command(BaseCommand):
         for w in list(Work.objects.filter(revision__contains=u'MISSINGIMAGE')):
             m = reg.search(w.revision)
             if m:
-                name = m.group(1).lower().replace('.tif', '.png')
+                name = m.group(1).strip().lower().replace('.tif', '.png')
                 if name.endswith(".pdf"):
                     continue
                 try:
