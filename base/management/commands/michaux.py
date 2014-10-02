@@ -545,13 +545,13 @@ class Command(BaseCommand):
                 try:
                     f = open(os.path.join(imgdir, name), 'rb')
                     # Found the image. Use it.
-                    self.stderr.write(unicode("   Copying image %s\n" % name, 'utf-8'))
+                    self.stderr.write(u"   Copying image %s\n" % name)
                     i = Image()
                     i.work = w
                     i.photograph_name = 'Franck Leibovici'
                     i.support = u'numérique'
                     i.nature = u'référence'
-                    i.original_image.save(unicode(name, 'ascii', 'ignore'), File(f))
+                    i.original_image.save(name, File(f))
                     i.save()
                     w.revision = "\n".join(l for l in w.revision.splitlines() if not 'MISSINGIMAGE' in l)
                     w.save()
