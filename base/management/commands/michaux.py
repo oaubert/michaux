@@ -559,7 +559,7 @@ class Command(BaseCommand):
                     w.save()
                     f.close()
                 except (OSError, IOError):
-                    print "File not found: ", name.encode('utf-8')
+                    self.stderr.write((u"   File not found: %s\n" % name).encode('utf-8'))
 
     def handle(self, *args, **options):
         if not args:
