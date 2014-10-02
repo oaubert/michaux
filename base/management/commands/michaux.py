@@ -542,6 +542,8 @@ class Command(BaseCommand):
             m = reg.search(w.revision)
             if m:
                 name = m.group(1).lower().replace('.tif', '.png')
+                if name.endswith(".pdf"):
+                    continue
                 try:
                     f = open(os.path.join(imgdir, name), 'rb')
                     # Found the image. Use it.
