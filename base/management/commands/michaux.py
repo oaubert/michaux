@@ -556,7 +556,7 @@ class Command(BaseCommand):
                     w.revision = "\n".join(l for l in w.revision.splitlines() if not 'MISSINGIMAGE' in l)
                     w.save()
                     f.close()
-                except OSError:
+                except (OSError, IOError):
                     print "File not found: ", name
 
     def handle(self, *args, **options):
