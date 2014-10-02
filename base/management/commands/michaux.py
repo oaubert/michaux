@@ -536,7 +536,6 @@ class Command(BaseCommand):
         """Check for missing images
         """
 
-        db = {}
         # Check all missing images
         reg = re.compile('MISSINGIMAGE:\s*(.+?)($|\n)', re.MULTILINE)
         for w in list(Work.objects.filter(revision__contains=u'MISSINGIMAGE')):
@@ -544,15 +543,15 @@ class Command(BaseCommand):
             if m:
                 name = m.group(1).lower().replace('.tif', '.png')
                 try:
-                    f = open(os.path.join(imgdir, n), 'rb')
+                    f = open(os.path.join(imgdir, name), 'rb')
                     # Found the image. Use it.
-                    self.stderr.write(unicode("   Copying image %s\n" % n, 'utf-8'))
+                    self.stderr.write(unicode("   Copying image %s\n" % name, 'utf-8'))
                     i = Image()
                     i.work = w
                     i.photograph_name = 'Franck Leibovici'
                     i.support = u'numérique'
                     i.nature = u'référence'
-                    i.original_image.save(unicode(os.path.basename(n), 'ascii', 'ignore'), File(f))
+                    i.original_image.save(unicode(name, 'ascii', 'ignore'), File(f))
                     i.save()
                     w.revision = "\n".join(l for l in w.revision.splitlines() if not 'MISSINGIMAGE' in l)
                     w.save()
