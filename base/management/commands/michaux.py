@@ -538,18 +538,28 @@ class Command(BaseCommand):
 
         db = {}
         # Check all missing images
-        for w in Work.objects.filter(revision__contains=u'MISSINGIMAGE'):
-            name = w.revision.split(":")[1].strip().lower()
-            db[name.encode('utf-8')] = w.pk
+        reg = re.compile('MISSINGIMAGE:\s*(.+?)($|\n)', re.MULTILINE)
+        for w in list(Work.objects.filter(revision__contains=u'MISSINGIMAGE')):
+            m = reg.search(w.revision)
+            if m:
+                name = m.group(1).lower().replace('.tif', '.png')
+                try:
+                    f = open(os.path.join(imgdir, n), 'rb')
+                    # Found the image. Use it.
+                    self.stderr.write(unicode("   Copying image %s\n" % n, 'utf-8'))
+                    i = Image()
+                    i.work = w
+                    i.photograph_name = 'Franck Leibovici'
+                    i.support = u'numérique'
+                    i.nature = u'référence'
+                    i.original_image.save(unicode(os.path.basename(n), 'ascii', 'ignore'), File(f))
+                    i.save()
+                    w.revision = "\n".join(l for l in w.revision.splitlines() if not 'MISSINGIMAGE' in l)
+                    w.save()
+                    f.close()
+                except OSError:
+                    print "File not found: ", name
 
-        print "%d missing images" % len(db)
-
-        # Check all items
-        for root, dirs, files in os.walk(imgdir):
-            for n in files:
-                if name.lower() in db:
-                    print db[name.lower()], name
-        
     def handle(self, *args, **options):
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
