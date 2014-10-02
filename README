@@ -1,0 +1,24 @@
+* Reset DB:
+
+./manage.py sqlclear | ./manage.py dbshell
+./manage.py syncdb
+
+
+MAJ serveur:
+- synchronize
+- reset db:
+  mysql -u root -p 
+  create database michaux DEFAULT CHARACTER SET utf8mb4;
+- remove media:
+  rm -rf $HOME/src/michaux/catalogue/media/*
+- syncdb:
+  ./manage.py syncdb
+- import expos:
+  ./manage.py michaux exhibitions foo.xls
+- import works:
+  ./manage.py michaux works foo.xls
+- generate standard exhibition abbreviations
+  ./manage.py michaux gen_abbreviations
+- regenerate images:
+  ./manage.py ikcachevalidate
+- generate pivot images
