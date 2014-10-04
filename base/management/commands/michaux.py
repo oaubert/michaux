@@ -569,6 +569,7 @@ class Command(BaseCommand):
             header = r.next()
             for l in r:
                 ref, i, name = l
+                self.stderr.write(u"Checking %s" % ref)
                 try:
                     s = "MISSINGIMAGE: %s.png" % name
                     w = Work.objects.get(old_references=ref)
