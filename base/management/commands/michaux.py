@@ -572,6 +572,8 @@ class Command(BaseCommand):
                 try:
                     s = "MISSINGIMAGE: %s.png" % name
                     w = Work.objects.get(old_references=ref)
+                    if 'MISSINGIMAGE' in w.revision:
+                        continue
                     if w.revision:
                         w.revision = w.revision + "\n" + s
                     else:
