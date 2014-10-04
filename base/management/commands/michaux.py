@@ -4,6 +4,7 @@ import sys
 import os
 import re
 import xlrd
+import csv
 import datetime
 
 from django.core.files import File
@@ -21,6 +22,7 @@ class Command(BaseCommand):
   pics <xls file> <dirname> : batch associate images
   check <imgdir> : check associated images from sourcedir
   missing <imgdir> : check missing images
+  setmissing file.csv : set missing images
 """
     def _import_works_from_xls(self, filename):
         """Import from an xls file.
@@ -561,6 +563,23 @@ class Command(BaseCommand):
                 except (OSError, IOError):
                     self.stderr.write((u"   File not found: %s\n" % name).encode('utf-8'))
 
+    def _set_missing(self, filename):
+        with open(filename, 'r') as f:
+            r = csv.reader(f)
+            header = r.next()
+            for l in r:
+                ref, i, name = l
+                try:
+                    s = "MISSINGIMAGE: %s.png" % name
+                    w = Work.objects.get(old_references=ref)
+                    if w.revision:
+                        w.revision = w.revision + "\n" + s
+                    else:
+                        w.revision = s
+                    w.save()
+                except Work.DoesNotExist:
+                    self.stderr.write(u"** Reference %s not found" % ref)
+                    
     def handle(self, *args, **options):
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
@@ -575,6 +594,7 @@ class Command(BaseCommand):
             'pics': self._associate_images,
             'check': self._check_images,
             'missing': self._check_missing,
+            'setmissing': self._set_missing,
             }
         m = dispatcher.get(command)
         if m is not None:
