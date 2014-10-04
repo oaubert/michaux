@@ -561,6 +561,10 @@ class Command(BaseCommand):
                     w.save()
                     f.close()
                 except (OSError, IOError):
+                    if name == '.png':
+                        # Remove wrong MISSINGIMAGE references
+                        w.revision = "\n".join(l for l in w.revision.splitlines() if not 'MISSINGIMAGE' in l)
+                        w.save()
                     self.stderr.write((u"   File not found: %s\n" % name).encode('utf-8'))
 
     def _set_missing(self, filename):
