@@ -575,7 +575,7 @@ class Command(BaseCommand):
                 ref, i, name = [ unicode(c) for c in l ]
                 if not name.strip():
                     continue
-                self.stderr.write(u"Checking %s" % ref)
+                self.stderr.write((u"Checking %s" % ref).encode('utf-8'))
                 try:
                     s = "MISSINGIMAGE: %s.png" % name
                     w = Work.objects.get(old_references=ref)
@@ -587,7 +587,7 @@ class Command(BaseCommand):
                         w.revision = s
                     w.save()
                 except Work.DoesNotExist:
-                    self.stderr.write(u"** Reference %s not found" % ref)
+                    self.stderr.write((u"** Reference %s not found" % ref).encode('utf-8'))
                     
     def handle(self, *args, **options):
         if not args:
