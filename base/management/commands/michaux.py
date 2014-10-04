@@ -572,7 +572,7 @@ class Command(BaseCommand):
             r = csv.reader(f)
             header = r.next()
             for l in r:
-                ref, i, name = l
+                ref, i, name = [ unicode(c) for c in l ]
                 if not name.strip():
                     continue
                 self.stderr.write(u"Checking %s" % ref)
