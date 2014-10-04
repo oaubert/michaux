@@ -103,7 +103,8 @@ class Work(models.Model):
     # support : choix parmi une énumération extensible (papier, toile, cartoil, papier toilé, japon, etc) - type générique
     support = models.CharField(_("support"),
                                help_text=_("Support utilisé, de type générique: papier, toile, cartoil, papier toilé, etc"),
-                               max_length=255)
+                               max_length=255,
+                               blank=True)
 
     #précisions de support : précisions sur le support (gamme - tramé, chiffon,, ou marque - arches, etc)
     support_details = models.CharField(_("précisions de support"),
