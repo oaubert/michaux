@@ -50,8 +50,7 @@ div.work.selected {
 }
 
 div.work.current {
-    transform: scale(1.6);
-    zoom: 1.6;
+    zoom: 2;
 }
 
 div.exhibition {
