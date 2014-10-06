@@ -50,9 +50,12 @@ div.work.selected {
 }
 
 div.work.current {
-    -moz-transform: scale(2); /* Firefox */
-    -moz-transform-origin: 0 0;
-    zoom: 2;
+    width: 400px;
+    height: 400px;
+}
+div.work.current img {
+    max-width: 400px;
+    max-height: 400px;
 }
 
 div.exhibition {
