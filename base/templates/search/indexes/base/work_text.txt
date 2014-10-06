@@ -1,4 +1,5 @@
 {{ object.cote }}
+hm{{ object.cote }}
 {{ object.old_references }}
 {{ object.certificate }}
 {{ object.note_references }}
