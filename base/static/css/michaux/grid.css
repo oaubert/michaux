@@ -50,6 +50,8 @@ div.work.selected {
 }
 
 div.work.current {
+    -moz-transform: scale(2); /* Firefox */
+    -moz-transform-origin: 0 0;
     zoom: 2;
 }
 
