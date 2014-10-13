@@ -160,8 +160,8 @@ class WorkAdmin(admin.ModelAdmin):
         (_("Notes/commentaires"), {'fields': ['comment', 'note', 'revision']}),
         ]
     inlines = [ ImageInline, InscriptionInline, ExhibitionInline, ReproductionInline, AcquisitionInline, EventInline ]
-    list_display = ( 'cote', 'work_thumbnail', 'old_references', 'technique', 'support', 'creation_date_start', 'comment', 'note', 'revision' )
-    list_editable = ( 'old_references', 'technique', 'support', 'creation_date_start', 'revision', 'comment',  'note', 'revision')
+    list_display = ( 'cote', 'work_thumbnail', 'old_references', 'width', 'height', 'technique', 'support', 'creation_date_start', 'comment', 'note', 'revision' )
+    list_editable = ( 'old_references', 'width', 'height', 'technique', 'support', 'creation_date_start', 'revision', 'comment',  'note', 'revision')
     list_display_links = ( 'cote', 'work_thumbnail' )
     search_fields = [ 'cote', 'creation_date_start', 'serie', 'note_references', 'old_references', 'note_support', 'note_creation_date', 'comment', 'note', 'revision' ]
     list_filter = ( 'status', 'serie', 'technique', 'support', 'creation_date_start', WorkSelectionFilter)
