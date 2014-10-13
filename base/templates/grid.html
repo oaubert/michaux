@@ -85,6 +85,7 @@
           <ul>
             <li><label for="checkbox_images">Images</label>
               <input onclick="this.form.submit()" id="checkbox_images" type="checkbox" name="with_image" {% if options.with_image %}checked="on"{% endif %} title="Exclure les œuvres sans image"/></li>
+            <li><label for="checkbox_no_images">Pas d'image</label>
               <input onclick="this.form.submit()" id="checkbox_no_images" type="checkbox" name="without_image" {% if options.without_image %}checked="on"{% endif %} title="Exclure les œuvres avec image"/></li>
             {% if user.is_active and user.is_staff %}
             <li><label for="checkbox_revision">Révisions</label>
