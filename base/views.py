@@ -23,7 +23,7 @@ def root(request, *p):
 def get_filtered_queryset(request):
     """Return the QuerySet filtered by the request.
     """
-    options = { 'active': False, 'with_image': "", 'with_revision': "" }
+    options = { 'active': False, 'with_image': "", 'without_image': "", 'with_revision': "" }
     basesqs = SearchQuerySet()
 
     # selection is specified. First filter against the items.
@@ -34,9 +34,12 @@ def get_filtered_queryset(request):
         basesqs = basesqs.filter(cote__in=l)
 
     # Boolean option processing
-    for opt in ('with_image', 'with_revision', 'single_technique'):
+    for opt in ('with_image', 'without_image', 'with_revision', 'single_technique'):
         if request.GET.get(opt, None):
-            kw = { opt: True }
+            if opt.startswith('without_'):
+                kw = { opt.replace('without_', 'with_'): False }
+            else:
+                kw = { opt: True }
             basesqs = basesqs.filter(**kw)
             options[opt] = "on"
             options['active'] = True
