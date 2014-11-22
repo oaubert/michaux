@@ -82,7 +82,7 @@ def works(request, *p, **kw):
             if value:
                 if field.endswith('__range') and field in ('creation_date_start', 'width', 'height'):
                     b, e = value.split("-")
-                    range_[field] = [int(b), int(e)]
+                    range_[field] = { field + '__min': int(b), field + '__max': int(e) }
 
     paginator = Paginator(sqs.all(), long(request.REQUEST.get('per_page', 500)))
 
