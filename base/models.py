@@ -636,6 +636,10 @@ class Owner(models.Model):
                             help_text=_("Notes (privées)"),
                             blank=True)
 
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('base.views.owner', args=[str(self.pk)])
+
     def __unicode__(self):
         l = []
         if self.firstname:
