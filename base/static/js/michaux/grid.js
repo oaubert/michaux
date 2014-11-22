@@ -15,7 +15,7 @@ jQuery(document).ready(
                 if (min === undefined)
                     title.text("N/C");
                 else
-                    title.text(min + " - " + max);
+                    title.text(min + "-" + max);
             }
 
             var data = $(element).find(".facetdata").map(
@@ -25,7 +25,6 @@ jQuery(document).ready(
             var maxCount = d3.max(data, function(d) { return d.count; });
             var currentMin = d3.min(data, function(d) { return d.value; });
             var currentMax = d3.max(data, function(d) { return d.value; });
-            facet_title(currentMin, currentMax);
 
             // add the canvas to the DOM
             var width = $(element).parents(".facetbox").width() - 16;
