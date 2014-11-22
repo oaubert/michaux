@@ -79,8 +79,9 @@ def works(request, *p, **kw):
     if 'f' in request.GET:
         for facet in request.GET.getlist('f'):
             field, value = facet.split(":", 1)
-            if value:
-                if field.endswith('__range') and field in ('creation_date_start', 'width', 'height'):
+            if value and field.endswith('__range'):
+                field = field.replace('__range', '')
+                if field in ('creation_date_start', 'width', 'height'):
                     b, e = value.split("-")
                     range_[field] = { field + '__min': int(b), field + '__max': int(e) }
 
