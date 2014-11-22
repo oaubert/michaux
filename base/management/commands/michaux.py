@@ -472,7 +472,7 @@ class Command(BaseCommand):
         s = book.sheet_by_index(0)
 
         correspondances = {}
-        for n in range(1, s.nrows - 1):
+        for n in range(1, s.nrows):
             row = s.row_values(n)
             imgs = [ v for v in row[2:9] if v ]
             if imgs:
