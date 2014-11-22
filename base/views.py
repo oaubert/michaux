@@ -75,6 +75,14 @@ def works(request, *p, **kw):
     range_ = {}
     for i in ('creation_date_start', 'width', 'height'):
         range_[i] = Work.objects.all().aggregate(Min(i), Max(i))
+    # Possibly reset with range issued from filter, so that it does not move.
+    if 'f' in request.GET:
+        for facet in request.GET.getlist('f'):
+            field, value = facet.split(":", 1)
+            if value:
+                if field.endswith('__range') and field in ('creation_date_start', 'width', 'height'):
+                    b, e = value.split("-")
+                    range_[field] = [int(b), int(e)]
 
     paginator = Paginator(sqs.all(), long(request.REQUEST.get('per_page', 500)))
 
