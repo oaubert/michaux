@@ -1,0 +1,13 @@
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+<ul class="ownerinfo" data-id="{{ owner.pk }}">
+  <li><strong>{{ owner }}</strong></li>
+
+  <li>{{ owner.address }}</li>
+  <li>{{ owner.city }} - {{ owner.country }}</li>
+  {% if owner.note %}
+  <li>note privée - {{ owner.note|autolink }}</li>
+  {% endif %}  
+</ul>

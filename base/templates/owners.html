@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+{% block title %}Propriétaires{% endblock %}
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery.dataTables.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!-- The admin jquery.js is in the django namespace -->
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
+{% endblock %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block margin %}
+    {% endblock %}
+
+    {% block content %}
+    <div id="grid">
+
+      <table id="ownerTable">
+        <thead>
+          <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr id="owner{{ item.pk }}" class="owner">
+            <td><a class="ownerFirstname" href="{{ item.get_absolute_url }}">{{ item.firstname }}</a> <a class="action edit" target="_blank" href="{% url "admin:base_owner_change" item.pk %}"></a></td>
+            <td><a class="ownerName" href="{{ item.get_absolute_url }}">{{ item.name }}</a> <a class="action edit" target="_blank" href="{% url "admin:base_owner_change" item.pk %}"></a></td>
+            <td class="ownerAddress">{{ item.address }}</td>
+            <td class="ownerCity">{{ item.city }}</td>
+            <td class="ownerCountry">{{ item.country }}</td>
+            <td class="ownerNote">{{ item.note }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+    <script type="text/javascript">
+      $("#ownerTable").dataTable({
+          "bPaginate": false,
+          "bLengthChange": false,
+          "iDisplayLength": 100,
+          "bFilter": true,
+          "bSort": true,
+          "bInfo": true,
+          "bAutoWidth": true });
+    </script>
+    {% endblock %}

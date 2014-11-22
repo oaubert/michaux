@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.query import SearchQuerySet
-from .models import Work, Exhibition, ExhibitionInstance, BibliographyReference, Reproduction, Acquisition
+from .models import Work, Exhibition, ExhibitionInstance, BibliographyReference, Reproduction, Acquisition, Owner
 from .search_indexes import WorkIndex
 from .forms import EditTagsForm
 
@@ -197,6 +197,25 @@ def exhibition(request, pk=None, **kw):
     return render_to_response('exhibition.html', {
             'ex': ex,
             'meta': Exhibition._meta,
+            'workmeta': Work._meta,
+            'items': items,
+            }, context_instance=RequestContext(request))
+
+@login_required
+def owners(request, pk=None, **kw):
+    items = Owner.objects.all()
+    return render_to_response('owners.html', {
+            'meta': Owner._meta,
+            'items': items,
+            }, context_instance=RequestContext(request))
+
+@login_required
+def owner(request, pk=None, **kw):
+    owner = get_object_or_404(Owner, pk=pk)
+    items = Acquisition.objects.filter(owner__pk=pk)
+    return render_to_response('owner.html', {
+            'owner': owner,
+            'meta': Owner._meta,
             'workmeta': Work._meta,
             'items': items,
             }, context_instance=RequestContext(request))

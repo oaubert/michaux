@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load admin_urls %}
+{% load url from future %}
+{% load michaux %}
+
+{% block title %}Propriétaire {{ owner }} - {% with total=items|length %}{{ total }} œuvre{{ total|pluralize }}{% endwith %}{% endblock %}
+{% block extra_header %}
+    <link href="{{ STATIC_URL }}css/michaux/michaux.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/michaux/grid.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ STATIC_URL }}css/jquery.iviewer.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.js"></script>
+    <!-- The admin jquery.js should be in the django namespace, but
+         grappelli changes it. However, taggit-autosuggest references jquery from
+         django.jQuery so let's just proxy it -->
+   <script type="text/javascript">
+     if (django === undefined) {
+         var django = { 'jQuery': jQuery };
+     }
+   </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.iviewer.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/michaux.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/michaux/grid.js"></script>
+{% endblock %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block margin %}
+    {% include "ownerinfo.html" with owner=owner %}
+    {% endblock %}
+
+    {% block content %}
+    <div id="grid">
+      
+      {% for item in items %}
+      {% include "griditem.html" with work=item.work %}
+      {% endfor %}
+      
+    </div>
+    <div id="infopanel">
+    </div>
+    {% endblock %}
+    
