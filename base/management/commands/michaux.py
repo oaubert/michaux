@@ -487,7 +487,7 @@ class Command(BaseCommand):
         for w in Work.objects.all():
             ref = w.old_references
             nref = ref.replace(' ', '').replace('/', '').lower()
-            for fname in correspondances.get(nref, []):
+            for fname in correspondances.get(nref, []) + correspondances.get('hm' + str(w.pk), []):
                 pic = pics.get(fname.encode('utf-8'), "")
                 if os.path.exists(pic):
                     # Found corresponding image. Check that we do not have it already.
