@@ -20,10 +20,10 @@ hm{{ object.cote }}
 {{ insc.notes }}
 {% endfor %}
 {% for img in object.image_set.all %}{{ img.note }} {% endfor %}
-{% for bib in object.bibliographyreference_set.all %}{{ bib.title }}{{ bib.container_title }} {{ bib.container_creator }} {{ bib.comment }} {{ bib.note }} {% endfor %}
+{% for bib in object.bibliographyreference_set.all %}{{ bib.title }} {{ bib.container_title }} {{ bib.creator }} {{ bib.container_creator }} {{ bib.comment }} {{ bib.note }} {% endfor %}
 {% for ex in object.exhibitioninstance_set.all %}{{ ex.exhibition.abbreviation }} {{ ex.exhibition.title }} {{ ex.note }} {% endfor %}
 {% for ev in object.event_set.all %}{{ ev.description }} {% endfor %}
 {% for repr in object.reproduction_set.all %}{{ repr.comment }} {% endfor %}
-{% for ac in object.acquisition_set.all %}{{ ac.location }}
+{% for ac in object.acquisition_set.all %}{{ ac.location }} {{ ac.owner.firstname }} {{ ac.owner.name }}
 {{ ac.reference|default:"" }}
 {% endfor %}
