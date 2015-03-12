@@ -20,6 +20,7 @@ class Command(BaseCommand):
   ventes <xls files> : import the ventes publiques list
   gen_abbreviations : generate standard abbreviations for exhibitions
   pics <xls file> <dirname> : batch associate images
+  csv <csv file> <dirname> : batch associate images from csv
   check <imgdir> : check associated images from sourcedir
   missing <imgdir> : check missing images
   setmissing file.csv : set missing images
@@ -507,6 +508,41 @@ class Command(BaseCommand):
                             i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
                         i.save()
 
+    def _associate_images_csv(self, filename, imgdir, *p):
+        """Associate images from csv file and sourcedir.
+        """
+        pics = {}
+        for root, dirs, files in os.walk(imgdir):
+            for n in files:
+                pics[os.path.splitext(n.replace(" ", "").lower())[0]] = os.path.join(root, n)
+
+        with open(filename, 'r') as f:
+            r = csv.reader(f)
+            header = r.next()
+            for l in r:
+                i, fname = [ unicode(c, 'utf-8') for c in l ]
+                i = long(i)
+                w = Work.objects.get(pk=i)
+                pic = pics.get(fname.encode('utf-8'), "")
+                if os.path.exists(pic):
+                    # Found corresponding image. Check that we do not have it already.
+                    size = os.path.getsize(pic)
+                    for i in w.image_set.all():
+                        if i.original_image.size == size:
+                            # Matching size. Consider that it is a duplicate.
+                            self.stderr.write("Matching size, possible duplicate")
+                            break
+                    else:
+                        self.stderr.write(unicode("   Copying image %s\n" % pic, 'utf-8'))
+                        i = Image()
+                        i.work = w
+                        i.photograph_name = 'Franck Leibovici'
+                        i.support = u'numérique'
+                        i.nature = u'référence'
+                        with open(pic, 'rb') as f:
+                            i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
+                        i.save()
+                        
     def _check_images(self, imgdir, *p):
         """Check images from sourcedir.
         """
@@ -601,6 +637,7 @@ class Command(BaseCommand):
             'gen_abbreviations': self._generate_abbreviations,
             'ventes': self._import_ventes_from_xls,
             'pics': self._associate_images,
+            'csv': self._associate_images_csv,
             'check': self._check_images,
             'missing': self._check_missing,
             'setmissing': self._set_missing,
