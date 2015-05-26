@@ -46,7 +46,7 @@ jQuery(document).ready(
 
             function select_range(start, end) {
                 var val = fieldname + "__range:" + start + "-" + end;
-                var i = $(element).siblings("input");
+                var i = $(element).parent().parent().find("input");
                 if (i.length) {
                     // There is already an input field. Simply replace its value.
                     i.attr("value", val);
