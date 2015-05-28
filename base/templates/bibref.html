@@ -37,7 +37,18 @@
     {% if reproductions %}
     <h2>Référencé dans les oeuvres</h2>
     {% for r in reproductions %}
-    {% include "griditem.html" with work=r.work info=r.page|add:" "|add:r.number %}
+    {% with work=r.work %}
+    {% with thumb=work.thumbnail %}
+    <div id="hm{{ work.cote }}" class="work {% for t in work.techniques %}technique-{{ t|urlencode }} {% endfor %} support-{{ work.support|default:"unknown"|urlencode }} {% if work.serie %}serie-{{ work.serie|urlencode }} {% endif %} {% for t in work.tags.all %} tag-{{ tag.name|urlencode }}{% endfor %} year-{{ work.creation_date_start|urlencode }}" data-cote="{{ work.cote }}" data-start="{{ work.creation_date_start }}">
+      <a class="vignette" href="{{ work.get_absolute_url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
+                                                           alt=""
+                                                           title="{{ work }}
+                                                                  {{ work.old_references }}"
+                                                           src="{% if thumb %}{{ thumb.url }}{% else %}{{ STATIC_URL }}unknown_thumbnail.png{% endif %}"></a>
+      <div class="workoverlay">p. {{ r.page }} {{ r.number }}</div>
+    </div>
+    {% endwith %}
+    {% endwith %}
     {% endfor %}
     {% endif %}
 
