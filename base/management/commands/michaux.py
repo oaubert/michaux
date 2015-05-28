@@ -534,6 +534,11 @@ class Command(BaseCommand):
                     # Found corresponding image. Check that we do not have it already.
                     size = os.path.getsize(pic)
                     for i in w.image_set.all():
+
+                        # Always break so that we will not reassociate images
+                        # To remove/comment to associate non-duplicated images
+                        break
+                    
                         if i.original_image.size == size:
                             # Matching size. Consider that it is a duplicate.
                             break
