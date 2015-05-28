@@ -24,6 +24,7 @@ class Command(BaseCommand):
   check <imgdir> : check associated images from sourcedir
   missing <imgdir> : check missing images
   setmissing file.csv : set missing images
+  gen_from_pics <file.txt> : generate from pics
 """
     def _import_works_from_xls(self, filename):
         """Import from an xls file.
@@ -142,6 +143,45 @@ class Command(BaseCommand):
                     if notfound:
                         w.revision += u"\n".join(u"EXPO: %s" % e for e in notfound if e) + u"\n"
                         w.save()
+
+    def _generate_work_from_pics(self, filename):
+        """Import from a csv file.
+        """
+        self.stdout.write("** Importing files\n")
+        with open(filename, 'r'):
+            data = [ l.strip() for l in filename.readlines() ]
+        for name in data:
+            w = Work()
+            w.creator_id = 1
+            w.contributor_id = 1
+            w.status = Work.AUTHENTICATED_STATUS
+            w.old_references = "gpc" + name
+            w.serie = ''
+            w.technique = 'A REMPLIR'
+            w.note_technique = ''
+            w.support = 'A REMPLIR'
+            w.support_details = ''
+            w.note_support = ''
+            w.height = 0
+            w.width = 0
+            w.creation_date_start = 2000
+            w.note = ''
+            w.comment = ''
+            w.revision = 'GPC'
+            w.save()
+            self.stderr.write(u"Saved %s %s\n" % (name, unicode(w)))
+            # FIXME: Improve image name heuristic
+            pic = '/home/oaubert/tmp/gpc/%s.jpg' % name
+            if os.path.exists(pic.encode('utf-8')):
+                self.stderr.write(u"   Copying image %s\n" % unicode(pic))
+                i = Image()
+                i.work = w
+                i.photograph_name = 'Franck Leibovici'
+                i.support = u'numérique'
+                i.nature = u'référence'
+                with open(pic, 'rb') as f:
+                    i.original_image.save(os.path.basename(pic), File(f))
+                i.save()
 
     def _import_ventes_from_xls(self, filename):
         """Import from an xls sellings file.
@@ -635,6 +675,7 @@ class Command(BaseCommand):
             'works': self._import_works_from_xls,
             'exhibitions': self._import_exhibitions_from_xls,
             'gen_abbreviations': self._generate_abbreviations,
+            'gen_from_pics': self._generate_work_from_pics,
             'ventes': self._import_ventes_from_xls,
             'pics': self._associate_images,
             'csv': self._associate_images_csv,
