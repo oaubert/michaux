@@ -148,8 +148,8 @@ class Command(BaseCommand):
         """Import from a csv file.
         """
         self.stdout.write("** Importing files\n")
-        with open(filename, 'r'):
-            data = [ l.strip() for l in filename.readlines() ]
+        with open(filename, 'r') as f:
+            data = [ l.strip() for l in f.readlines() ]
         for name in data:
             w = Work()
             w.creator_id = 1
