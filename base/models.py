@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import os
 import re
 
 from gettext import gettext as _
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from imagekit.models import ImageSpecField
@@ -311,6 +313,11 @@ class Inscription(models.Model):
             note = u""
         return u"".join((self.nature, pos, note))
 
+def validate_not_tif(value):
+    ext = os.path.splitext(value.name)[1]
+    if 'tif' in ext.lower():
+        raise ValidationError(u'TIFF files should not be uploaded.')
+
 class Image(models.Model):
     work = models.ForeignKey(Work,
                              verbose_name=_("Oeuvre"))
@@ -338,7 +345,8 @@ class Image(models.Model):
                                        upload_to='images',
                                        max_length=512,
                                        height_field='height',
-                                       width_field='width')
+                                       width_field='width',
+                                       validators=[validate_not_tif])
 
     image = ImageSpecField([ResizeToFit(1600, 1200)],
                            source='original_image',
