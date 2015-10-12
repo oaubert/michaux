@@ -1,30 +1,32 @@
 jQuery(document).ready(
-    function($) {
+    function ($) {
         "use strict";
 
-        if (document.michaux === undefined)
+        if (document.michaux === undefined) {
             document.michaux = {};
-
+        }
         // FIXME: Make that a jquery plugin?
-        function draw_barchart (element) {
+        function draw_barchart(element) {
             var fieldname = $(element).attr('data-field');
             var minValue = parseInt($(element).attr("data-min"), 10);
             var maxValue = parseInt($(element).attr("data-max"), 10);
             var title = $(element).parents(".facetbox").find(".facetRange");
             function facet_title(min, max) {
-                if (min === undefined)
+                if (min === undefined) {
                     title.text("N/C");
-                else
-                    title.text(min + "-" + max);
+                } else {
+                    title.text(min + " - " + max);
+                }
             }
 
-            var data = $(element).find(".facetdata").map(
-                function() { return { "value": parseInt($(this).attr('data-value'), 10),
-                                      "count": parseInt($(this).attr('data-count'), 10) };
-                           });
-            var maxCount = d3.max(data, function(d) { return d.count; });
-            var currentMin = d3.min(data, function(d) { return d.value; });
-            var currentMax = d3.max(data, function(d) { return d.value; });
+            var data = $(element).find(".facetdata").map(function () {
+                return { "value": parseInt($(this).attr('data-value'), 10),
+                         "count": parseInt($(this).attr('data-count'), 10) };
+            });
+            var maxCount = d3.max(data, function (d) { return d.count; });
+            var currentMin = d3.min(data, function (d) { return d.value; });
+            var currentMax = d3.max(data, function (d) { return d.value; });
+            facet_title(currentMin, currentMax);
 
             // add the canvas to the DOM
             var width = $(element).parents(".facetbox").width() - 16;
@@ -46,7 +48,7 @@ jQuery(document).ready(
 
             function select_range(start, end) {
                 var val = fieldname + "__range:" + start + "-" + end;
-                var i = $(element).parent().parent().find("input");
+                var i = $(element).siblings("input");
                 if (i.length) {
                     // There is already an input field. Simply replace its value.
                     i.attr("value", val);
@@ -70,12 +72,12 @@ jQuery(document).ready(
                         facet_title(Math.floor(b[0]), Math.floor(b[1]));
                     })
                 .on("brushend", function () {
-                        if (! brush.empty()) {
+                        if (!brush.empty()) {
                             var b = brush.extent();
                             select_range(Math.floor(b[0]), Math.floor(b[1]));
                         } else {
                             select_range();
-                            }
+                        }
                     });
 
             g.selectAll("line")
@@ -99,10 +101,10 @@ jQuery(document).ready(
                 .enter()
                 .append("svg:rect")
                 .attr("class", "bar")
-                .attr("x", function(d, index) { return x_scale(d.value); })
-                .attr("y", function(d) { return 0; })
-                .attr("svg:title", function(d) { return d.value + ' (' + d.count + ')'; })
-                .attr("height", function(d) { return y_scale(d.count); })
+                .attr("x", function (d, index) { return x_scale(d.value); })
+                .attr("y", function (d) { return 0; })
+                .attr("svg:title", function (d) { return d.value + ' (' + d.count + ')'; })
+                .attr("height", function (d) { return y_scale(d.count); })
                 .attr("width", barWidth)
                 .on("mousedown", function (d) {
                         select_range(d.value, d.value);
@@ -127,11 +129,11 @@ jQuery(document).ready(
                               min: minValue,
                               max: maxValue,
                               values: [ currentMin, currentMax ],
-                              slide: function(event, ui) {
+                              slide: function (event, ui) {
                                   var range = ui.values;
                                   facet_title(range[0], range[1]);
                               },
-                              stop: function(event, ui) {
+                              stop: function (event, ui) {
                                   var range = ui.values;
                                   select_range(range[0], range[1]);
                               }
@@ -139,21 +141,20 @@ jQuery(document).ready(
 
             return barchart;
         }
-        $(".barchartwidget").each( function () {
-                                       draw_barchart(this);
-                                   });
+        $(".barchartwidget").each(function () {
+            draw_barchart(this);
+        });
 
-        $( "#zoomslider" ).slider({
-                                      range: false,
-                                      min: 1,
-                                      max: 200,
-                                      value: 100 * ($("#grid").css('zoom') || 1),
-                                      slide: function(event, ui) {
-                                          var z = ui.value / 100.0;
-                                          $("#grid").css( { zoom: z, "-moz-transform": "scale(" + z + ")" } );
-                                      }
-                                      });
-
+        $("#zoomslider").slider({
+            range: false,
+            min: 1,
+            max: 200,
+            value: 100 * ($("#grid").css('zoom') || 1),
+            slide: function (event, ui) {
+                var z = ui.value / 100.0;
+                $("#grid").css({ zoom: z, "-moz-transform": "scale(" + z + ")" });
+            }
+        });
 
         document.michaux.tag_selection = function (tagname, selection) {
             if (selection === undefined) {
@@ -164,12 +165,12 @@ jQuery(document).ready(
             }
             if (selection !== undefined) {
                 selection.forEach(function (cote) {
-                                       console.log("Tagging ", cote, " with ", tagname);
-                                       // FIXME: add csrf token
-                                       $.get("/base/selection/tag/",
-                                             { 'selection': cote,
-                                               'name': tagname });
-                                  });
+                    console.log("Tagging ", cote, " with ", tagname);
+                    // FIXME: add csrf token
+                    $.get("/base/selection/tag/",
+                          { 'selection': cote,
+                            'name': tagname });
+                });
             }
         };
         document.michaux.untag_selection = function (tagname, selection) {
@@ -181,12 +182,12 @@ jQuery(document).ready(
             }
             if (selection !== undefined) {
                 selection.forEach(function (cote) {
-                                       console.log("UnTagging ", cote, " with ", tagname);
-                                       // FIXME: add csrf token
-                                       $.get("/base/selection/untag/",
-                                             { 'selection': cote,
-                                               'name': tagname });
-                                  });
+                    console.log("UnTagging ", cote, " with ", tagname);
+                    // FIXME: add csrf token
+                    $.get("/base/selection/untag/",
+                          { 'selection': cote,
+                            'name': tagname });
+                });
             }
         };
 
@@ -205,33 +206,6 @@ jQuery(document).ready(
             $('#selection_popup input').remove();
             $(this).parents("form").submit();
         };
-
-        document.michaux.sort_facet = function (e) {
-            var box = $(this).parents(".facetbox");
-            e.preventDefault();
-            var crit = box[0].dataset.sorter || "count";
-            if (crit === "count") {
-                // Sort alphabetically
-                box.find(".facetcontent ul>li").tsort();
-                box[0].dataset.sorter = "label";
-            } else {
-                // Reverse sort by itemcount
-                box.find(".facetcontent ul>li").tsort({data: 'itemcount', order: 'desc', useVal: true});
-                box[0].dataset.sorter = "count";
-            }
-        };
-
-        document.michaux.highlight_facet = function (e) {
-            e.preventDefault();
-            var field = $(this).parents(".facetbox").attr("data-field");
-            var text = $(this).find(".facetitemlabel").text();
-            text = (text === "?" ? "unknown" : text);
-            $("." + field + "-" + text).addClass("highlight");
-        }
-        document.michaux.unhighlight_facet = function (e) {
-            e.preventDefault();
-            $(".highlight").removeClass("highlight");
-        }
 
         document.michaux.toggle_facet = function (e) {
             e.preventDefault();
@@ -259,14 +233,11 @@ jQuery(document).ready(
 
         // Event bindings
         $(".facetitem").on("click", document.michaux.toggle_facet);
-        $(".facetitem").on("mouseenter", document.michaux.highlight_facet);
-        $(".facetitem").on("mouseleave", document.michaux.unhighlight_facet);
         $(".clear-facet").on("click", document.michaux.clear_facet);
-        $(".facetsorter").on("click", document.michaux.sort_facet);
 
         // Hide/show facets
         $(".facetbox:not(.active) .facetcontent").hide("fast");
-        $(".facettitle").click(function() {
+        $(".facettitle").click(function () {
                                    var f = $(this).siblings(".facetcontent");
                                    $(".facetcontent").not(f).hide("fast");
                                    f.show("fast");
@@ -291,4 +262,4 @@ jQuery(document).ready(
                                                 return false;
                                             }
                                         });
-});
+    });

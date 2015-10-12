@@ -1,10 +1,10 @@
 jQuery(document).ready(
-    function($) {
+    function ($) {
         "use strict";
 
-        if (document.michaux === undefined)
+        if (document.michaux === undefined) {
             document.michaux = {};
-
+        }
         /*
          * Return the appropriate URL.
          *
@@ -15,40 +15,43 @@ jQuery(document).ready(
         document.michaux.url = function (type, ident, action) {
             // FIXME: find the appropriate way to determine base url
             var url = "/base/";
-            if (action === undefined)
+            if (action === undefined) {
                 action = 'view';
-
+            }
             if (type === 'home') {
                 url += '/work/';
             } else if (type === 'complete') {
                 url = "/list";
             } else if (type === 'work' || type === 'exhibition') {
                 url += type + '/' + ident;
-                if (action === 'info')
+                if (action === 'info') {
                     url += '/info';
-                else if (action === 'edit')
+                } else if (action === 'edit') {
                     url = '/admin' + url;
+                }
             } else if (type === 'selection') {
                 // We assume that ident is an array here
                 url += 'work?selection=' + ident.join(",");
-                if (action === 'edit')
+                if (action === 'edit') {
                     url = '/admin' + url;
-            } else if (type === 'compare')
+                }
+            } else if (type === 'compare') {
                 url += 'compare/' + ident[0] + '/' + ident[1];
+            }
             return url;
         };
 
         document.michaux.getSelection = function () {
-            return $("div.work.selected").map( function () { return $(this).attr('data-cote'); } ).toArray();
+            return $("div.work.selected").map(function () { return $(this).attr('data-cote'); }).toArray();
         };
 
         /*
          * Selection menu actions
          */
-        function update_selection_menu () {
+        function update_selection_menu() {
             var selection = document.michaux.getSelection();
             $('#selection_menu').text(selection.length + (selection.length > 1 ? " éléments sélectionnés" : " élément sélectionné"));
-            $('#selection_popup').toggleClass("emptySelection", ! selection.length);
+            $('#selection_popup').toggleClass("emptySelection", !selection.length);
             // Remove hidden input fields from selection popup (tag-related)
             $('#selection_popup input[type=hidden]').remove();
             $('#selection_popup .as-selection-item').remove();
@@ -56,29 +59,30 @@ jQuery(document).ready(
             $('#selection').attr('value', selection.join(","));
         }
 
-        $("#selection_all").click( function () {
-                                       $("div.work").addClass("selected");
-                                       update_selection_menu();
-                                   } );
-        $("#selection_none").click( function () {
-                                        $("div.work.selected").removeClass("selected");
-                                        update_selection_menu();
-                                    } );
-        $("#selection_open").click( function () {
-                                        var selection = document.michaux.getSelection();
-                                        $("#selection").attr("value", selection.join(","))
-                                            .parents("form").submit();
-                                    } );
-        $("#selection_compare").click( function () {
-                                           var selection = document.michaux.getSelection();
-                                           if (selection.length < 2)
-                                               return;
-                                           document.location = document.michaux.url('compare', selection);
-                                       } );
-        $("#selection_edit").click( function () {
-                                        var selection = document.michaux.getSelection();
-                                        document.location = document.michaux.url('selection', selection, 'edit');
-                                    } );
+        $("#selection_all").click(function () {
+            $("div.work").addClass("selected");
+            update_selection_menu();
+        });
+        $("#selection_none").click(function () {
+            $("div.work.selected").removeClass("selected");
+            update_selection_menu();
+        });
+        $("#selection_open").click(function () {
+            var selection = document.michaux.getSelection();
+            $("#selection").attr("value", selection.join(","))
+                .parents("form").submit();
+        });
+        $("#selection_compare").click(function () {
+            var selection = document.michaux.getSelection();
+            if (selection.length < 2) {
+                return;
+            }
+            document.location = document.michaux.url('compare', selection);
+        });
+        $("#selection_edit").click(function () {
+            var selection = document.michaux.getSelection();
+            document.location = document.michaux.url('selection', selection, 'edit');
+        });
 
         // Display a custom, basic lightbox component
         function lightbox(url, thumbnail) {
@@ -97,7 +101,7 @@ jQuery(document).ready(
             $(thumbnail).append(frame);
 
             function clamp(val, min, max) {
-                return val < min ? min : ( val > max ? max : val );
+                return val < min ? min : (val > max ? max : val);
             }
             function update_frame() {
                 var img = $(document.michaux.iviewer_thumbnail).find("img");
@@ -127,7 +131,7 @@ jQuery(document).ready(
                 return;
             }
 
-            if (! $('#lightbox').length) {
+            if (!$('#lightbox').length) {
                 //#lightbox does not exist - create and insert it
                 //create HTML markup for lightbox window
                 //insert lightbox HTML into page
@@ -148,7 +152,7 @@ jQuery(document).ready(
             document.michaux.iviewer.iviewer('loadImage', url);
             document.michaux.iviewer_thumbnail = thumbnail;
             document.michaux.iviewer_frame = frame;
-      }
+        }
 
         // Display infopanel about a work
         // It can be given either a .vignette anchor or a div.work element
@@ -167,9 +171,9 @@ jQuery(document).ready(
                 vignette = self;
                 work = $(self).parents("div.work");
             }
-            if (cote === undefined)
+            if (cote === undefined) {
                 cote = $(work).attr('data-cote');
-
+            }
             //Get clicked link href
             var image_href = $(vignette).attr("href");
 
@@ -180,11 +184,10 @@ jQuery(document).ready(
             }
 
             $.get(document.michaux.url('work', cote, 'info'), function (data) {
-                      if ($('#infopanel:visible').attr('data-current') == cote)
-                      {
+                      if ($('#infopanel:visible').attr('data-current') == cote) {
                           // Already displaying the infopanel
                           // Display the first image
-                          $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } );
+                          $("[rel=lightbox]:first").each(function () { lightbox($(this).attr('href'), this); });
                       } else {
                           $('#infopanel').html(navbar() + data)
                               .attr('data-current', cote);
@@ -201,8 +204,10 @@ jQuery(document).ready(
                                                  });
                           if ($("#lightbox:visible").length > 0) {
                               // Display first image, if available, in existing lightbox. Else, close inbox.
-                              if ($("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } ).length === 0)
+                              if ($("[rel=lightbox]:first").each(function () {
+                                  lightbox($(this).attr('href'), this); }).length === 0) {
                                   $('#lightbox').hide();
+                              }
                           }
                       }
                   });
@@ -216,7 +221,7 @@ jQuery(document).ready(
             $('#grid').focus();
         };
 
-        $('.vignette').click(function(e) {
+        $('.vignette').click(function (e) {
                                  //prevent default action (hyperlink)
                                  e.preventDefault();
                                  document.michaux.display_infopanel(this);
@@ -250,9 +255,9 @@ jQuery(document).ready(
                                          $('#grid').focus();
                                      } else {
                                          // Display the first image
-                                         $("[rel=lightbox]:first").each( function () { lightbox($(this).attr('href'), this ); } );
+                                         $("[rel=lightbox]:first").each(function () { lightbox($(this).attr('href'), this); });
                                      }
                                  }
                                  return true;
                              });
-});
+    });

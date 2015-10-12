@@ -1,12 +1,12 @@
 jQuery(document).ready(
-    function($) {
+    function ($) {
         "use strict";
 
-        if (document.michaux === undefined)
+        if (document.michaux === undefined) {
             document.michaux = {};
-
+        }
         // Make tags clickable
-        $(".as-selection-item").contents(':not(a)').click( function () { document.location = "/base/work?f=tags_exact:" + encodeURIComponent($(this).text()); });
+        $(".as-selection-item").contents(':not(a)').click(function () { document.location = "/base/work?f=tags_exact:" + encodeURIComponent($(this).text()); });
 
         // Load image as zoomable image
         $("#image").each(function () {
@@ -33,7 +33,7 @@ jQuery(document).ready(
                                                     });
                                            $(this).append(frame);
                                            function clamp(val, min, max) {
-                                               return val < min ? min : ( val > max ? max : val );
+                                               return val < min ? min : (val > max ? max : val);
                                            }
                                            function update_frame() {
                                                var img = $(document.michaux.iviewer_thumbnail).find("img");
