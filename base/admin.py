@@ -6,7 +6,6 @@ import datetime
 from gettext import gettext as _
 from django.forms import TextInput, Textarea
 from django.db import models
-from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin import util as admin_util
 from django.http import HttpResponse
@@ -202,7 +201,8 @@ class ExhibitionAdmin(admin.ModelAdmin):
         (None,               {'fields': [ ('abbreviation', 'title'),
                                           ('nature', ),
                                           ('location_type', 'location', 'city', 'country'),
-                                          ('curator', 'original') ]}),
+                                          ('curator', 'original'),
+                                          ('catalogue') ]}),
         ('Dates',       {'fields': [ ('start_year', 'start_month', 'start_day'),
                                      ('end_year', 'end_month', 'end_day') ] }),
         ('Autres',      {'fields': [ ('comment', 'note') ]}),
