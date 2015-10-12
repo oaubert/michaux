@@ -538,7 +538,7 @@ class Command(BaseCommand):
                         # Always break so that we will not reassociate images
                         # To remove/comment to associate non-duplicated images
                         break
-                    
+
                         if i.original_image.size == size:
                             # Matching size. Consider that it is a duplicate.
                             break
@@ -587,7 +587,7 @@ class Command(BaseCommand):
                         with open(pic, 'rb') as f:
                             i.original_image.save(unicode(os.path.basename(pic), 'ascii', 'ignore'), File(f))
                         i.save()
-                        
+
     def _check_images(self, imgdir, *p):
         """Check images from sourcedir.
         """
@@ -669,7 +669,7 @@ class Command(BaseCommand):
                     w.save()
                 except Work.DoesNotExist:
                     self.stderr.write((u"** Reference %s not found" % ref).encode('utf-8'))
-                    
+
     def handle(self, *args, **options):
         if not args:
             self.print_help(sys.argv[0], sys.argv[1])
