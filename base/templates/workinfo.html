@@ -9,18 +9,18 @@
 
           {% if user.is_active and user.is_staff %}
           {% if work.old_references %}
-          <li>réf. {{ work.old_references|autolink }} {% if work.note_references %}(<span class="editable" data-field="note_references">{{ work.note_references|autolink|linebreaksbr }}</span>){% endif %}</li>
+          <li class="private_note">réf. {{ work.old_references|autolink }} {% if work.note_references %}(<span class="editable" data-field="note_references">{{ work.note_references|autolink|linebreaksbr }}</span>){% endif %}</li>
           {% endif %}
           {% endif %}
 
           {% if work.serie %}
-
           <li>série <a class="facetvalue editable" data-field="serie" href="{{ work.serie|facet_url:"serie" }}">{{ work.serie }}</a></li>
           {% endif %}
 
           <li><a class="facetvalue editable" data-field="technique" href="{{ work.technique|facet_url:"technique" }}">{{ work.technique|autocomma }}</a>
             sur
             <a class="facetvalue editable" data-field="support" href="{{ work.support|facet_url:"support" }}">{{ work.support }}</a> {% if work.support_details %}({{ work.support_details }}){% endif %}
+          {% if user.is_active and user.is_staff %}
           {% if work.note_technique or work.note_support %}
           <dl class="private_note">
             {% if work.note_technique %}
@@ -30,6 +30,7 @@
             <dt>note support</dt><dd class="editable" data-field="note_support">{{ work.note_support|autolink|linebreaksbr }}</dd>
             {% endif %}
           </dl>
+          {% endif %}
           {% endif %}
           </li>
 
@@ -76,23 +77,23 @@
           {% if user.is_active and user.is_staff %}
 
           {% if work.acquisition_set.count %}
-          <li><strong>ventes</strong>
-            <ul>
+          <li class="private_note"><strong>ventes</strong>
+            <ul class="private_note">
               {% for p in work.acquisition_set.all %}<li>{{ p.abbrev }} <a class="facetvalue action-glyph" title="Filtrer la vue grille suivant cette valeur de facette" href="{{ p.abbrev|facet_url:"acquisition_location" }}">&#x2299;</a> {% if p.owner %} - {{ p.owner }}{% endif %} {{ p.note }}</li>{% endfor %}
             </ul>
           </li>
           {% endif %}
 
           {% if work.event_set.count %}
-          <li><strong>événements</strong>
-            <ul>
+          <li class="private_note"><strong>événements</strong>
+            <ul class="private_note">
               {% for ev in work.event_set.all %}<li>{{ ev }}</li>{% endfor %}
             </ul>
           </li>
           {% endif %}
 
           <dl class="private_note">
-            
+
             {% if work.note %}
             <dt>notes privées</dt>
             <dd class="editable" data-field="note">{{ work.note|autolink|linebreaksbr }}</dd>
