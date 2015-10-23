@@ -189,9 +189,12 @@ jQuery(document).ready(
                           // Display the first image
                           $("[rel=lightbox]:first").each(function () { lightbox($(this).attr('href'), this); });
                       } else {
-                          $('#infopanel').html(navbar() + data)
-                              .attr('data-current', cote);
-
+                          // Note: set data-current attrib first,
+                          // since there is some code
+                          // (incl. autosuggest) that can use this
+                          // information in the loaded data
+                          $('#infopanel').attr('data-current', cote)
+                              .html(navbar() + data);
                           $('#infopanel').show('fast', function () {
                                                     $('#content').css("margin-right", "200px");
                                                     $("div.work.current").removeClass('current');
