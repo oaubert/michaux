@@ -319,13 +319,13 @@ def selection_tag(request):
     selection = request.REQUEST.get('selection', None)
     if name is None or selection is None:
         return HttpResponse(status=412, content="Missing parameters")
-    # FIXME: handle errors:
+    name = name.strip()
     items = [ Work.objects.get(pk=int(cote)) for cote in selection.split(',') ]
     index = WorkIndex()
     for i in items:
-        i.tags.add(name)
-        # FIXME: Handle errors ?
-        index.update_object(i)
+        if not name in i.tags.names():
+            i.tags.add(name)
+            index.update_object(i)
     return HttpResponse(status=204)
 
 @login_required
@@ -337,12 +337,10 @@ def selection_untag(request):
     selection = request.REQUEST.get('selection', None)
     if name is None or selection is None:
         return HttpResponse(status=412, content="Missing parameters")
-    # FIXME: handle errors:
     items = [ Work.objects.get(pk=int(cote)) for cote in selection.split(',') ]
     index = WorkIndex()
     for i in items:
         i.tags.remove(name)
-        # FIXME: Handle errors ?
         index.update_object(i)
     return HttpResponse(status=204)
 
