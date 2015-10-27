@@ -227,7 +227,7 @@ jQuery(document).ready(
             var field = $(this).parents(".facetbox").attr("data-field");
             var text = $(this).find(".facetitemlabel").text();
             text = (text === "?" ? "unknown" : text);
-            $("." + field + "-" + text).addClass("highlight");
+            $("." + field + "-" + encodeURIComponent(text)).addClass("highlight");
         };
 
         document.michaux.unhighlight_facet = function (e) {
