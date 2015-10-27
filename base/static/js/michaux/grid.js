@@ -207,6 +207,34 @@ jQuery(document).ready(
             $(this).parents("form").submit();
         };
 
+        document.michaux.sort_facet = function (e) {
+            var box = $(this).parents(".facetbox");
+            e.preventDefault();
+            var crit = box[0].dataset.sorter || "count";
+            if (crit === "count") {
+                // Sort alphabetically
+                box.find(".facetcontent ul>li").tsort();
+                box[0].dataset.sorter = "label";
+            } else {
+                // Reverse sort by itemcount
+                box.find(".facetcontent ul>li").tsort({data: 'itemcount', order: 'desc', useVal: true});
+                box[0].dataset.sorter = "count";
+            }
+        };
+
+        document.michaux.highlight_facet = function (e) {
+            e.preventDefault();
+            var field = $(this).parents(".facetbox").attr("data-field");
+            var text = $(this).find(".facetitemlabel").text();
+            text = (text === "?" ? "unknown" : text);
+            $("." + field + "-" + text).addClass("highlight");
+        };
+
+        document.michaux.unhighlight_facet = function (e) {
+            e.preventDefault();
+            $(".highlight").removeClass("highlight");
+        };
+
         document.michaux.toggle_facet = function (e) {
             e.preventDefault();
 
@@ -234,6 +262,9 @@ jQuery(document).ready(
         // Event bindings
         $(".facetitem").on("click", document.michaux.toggle_facet);
         $(".clear-facet").on("click", document.michaux.clear_facet);
+        $(".facetitem").on("mouseenter", document.michaux.highlight_facet);
+        $(".facetitem").on("mouseleave", document.michaux.unhighlight_facet);
+        $(".facetsorter").on("click", document.michaux.sort_facet);
 
         // Hide/show facets
         $(".facetbox:not(.active) .facetcontent").hide("fast");
