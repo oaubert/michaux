@@ -1,8 +1,9 @@
 {% load admin_urls %}
+{% load michaux %}
 {% load url from future %}
 
 {% with thumb=work.thumbnail %}
-<div id="hm{{ work.cote }}" class="work {% for t in work.techniques %}technique-{{ t|urlencode }} {% endfor %} support-{{ work.support|default:"unknown"|urlencode }} {% if work.serie %}serie-{{ work.serie|urlencode }} {% endif %} {% for t in work.tags.all %} tag-{{ tag.name|urlencode }}{% endfor %} year-{{ work.creation_date_start|urlencode }}" data-cote="{{ work.cote }}" data-start="{{ work.creation_date_start }}">
+<div id="hm{{ work.cote }}" class="work {% for t in work.techniques %}technique-{{ t|clean_label }} {% endfor %} support-{{ work.support|default:"unknown"|clean_label }} {% if work.serie %}serie-{{ work.serie|clean_label }} {% endif %} {% for t in work.tags.all %} tag-{{ tag.name|clean_label }}{% endfor %} year-{{ work.creation_date_start|clean_label }}" data-cote="{{ work.cote }}" data-start="{{ work.creation_date_start }}">
   <a class="vignette" href="{{ work.image.url }}"><img class="{% if thumb.width > thumb.height %}landscape{% else %}portrait{% endif %}"
                                                        alt=""
                                                        title="{{ work }}

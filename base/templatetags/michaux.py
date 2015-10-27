@@ -148,3 +148,8 @@ def pos2text(m):
 @stringfilter
 def positionfilter(loc):
     return position_re.subn(pos2text, unicode(loc))[0]
+
+@register.filter
+@stringfilter
+def clean_label(label):
+    return re.subn("[^a-zA-Z_]", "_", unaccent(label))[0]
