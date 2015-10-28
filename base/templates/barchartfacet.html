@@ -3,10 +3,13 @@
 {% with param=field|add:"__range" values=facets.fields|getattr:field facetRange=range|getattr:field %}
 {% with active=selected_facets|getattr:param %}
     <div class="facetbox barchartbox{% if active|length %} active{% endif %}" data-field="{{ field }}">
-      <p class="facettitle">{{ name }} <span class="facetRange">{% if active|length %}{{ active.0 }}{% else %}{{ rangeMin }}-{{ rangeMax }}{% endif %}</span> <span class="facetcount">{{ values|length }}</span> {% if active|length %}<a title="Supprimer cette facette" class="clear-facet"></a><input type="hidden" name="f" value="{{ param }}:{{ active.0 }}" />{% endif %}
+      <p class="facettitle">{{ name }} <span class="facetRange">{% if active|length %}{{ active.0 }}{% else %}{{ rangeMin }}-{{ rangeMax }}{% endif %}</span> <span class="facetcount">{{ values|length }}</span> {% if active|length %}<a title="Supprimer cette facette" class="clear-facet"></a>{% endif %}
 </p>
       <div class="facetcontent barchart">
-        <div data-field="{{ field }}" data-min="{{ rangeMin }}" data-max="{{ rangeMax }}" id="{{ field }}Histogram" class="barchartwidget" >
+        {% if active|length %}
+        <input type="hidden" name="f" value="{{ param }}:{{ active.0 }}" />
+        {% endif %}
+        <div data-field="{{ field }}" data-min="{{ rangeMin }}" data-max="{{ rangeMax }}" {% if active|length %}data-filter="{{ active.0 }}"{% endif %} id="{{ field }}Histogram" class="barchartwidget" >
           {% for h in values %}
           <span class="facetdata" data-value="{{ h.0 }}" data-count="{{ h.1 }}"></span>
           {% endfor %}

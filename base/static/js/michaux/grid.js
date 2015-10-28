@@ -8,8 +8,16 @@ jQuery(document).ready(
         // FIXME: Make that a jquery plugin?
         function draw_barchart(element) {
             var fieldname = $(element).attr('data-field');
+            var filter = $(element).attr('data-filter');
             var minValue = parseInt($(element).attr("data-min"), 10);
             var maxValue = parseInt($(element).attr("data-max"), 10);
+            var minFilter = minValue;
+            var maxFilter = maxValue;
+            if (filter !== undefined) {
+                var t = filter.split("-");
+                minFilter = Number(t[0].trim());
+                maxFilter = Number(t[1].trim());
+            }
             var title = $(element).parents(".facetbox").find(".facetRange");
             function facet_title(min, max) {
                 if (min === undefined) {
@@ -24,9 +32,7 @@ jQuery(document).ready(
                          "count": parseInt($(this).attr('data-count'), 10) };
             });
             var maxCount = d3.max(data, function (d) { return d.count; });
-            var currentMin = d3.min(data, function (d) { return d.value; });
-            var currentMax = d3.max(data, function (d) { return d.value; });
-            facet_title(currentMin, currentMax);
+            facet_title(minFilter, maxFilter);
 
             // add the canvas to the DOM
             var width = $(element).parents(".facetbox").width() - 16;
@@ -128,7 +134,7 @@ jQuery(document).ready(
                               range: true,
                               min: minValue,
                               max: maxValue,
-                              values: [ currentMin, currentMax ],
+                              values: [ minFilter, maxFilter ],
                               slide: function (event, ui) {
                                   var range = ui.values;
                                   facet_title(range[0], range[1]);
