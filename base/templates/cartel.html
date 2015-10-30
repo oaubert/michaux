@@ -15,10 +15,10 @@
     <ul>
       <li>hm{{ work.cote }}</li>
 
-      <li>{{ work.technique|autocomma|default:"?" }} sur {{ work.support|default:"?" }} {% if work.support_details %}({{ work.support_details }}){% endif %}</li>
+      <li>{{ work.technique|autocomma|default:"" }} {% if work.support %}sur {{ work.support|default:"?" }}{% endif %} {% if work.support_details %}({{ work.support_details }}){% endif %}</li>
 
-      <li>{{ work.creation_date_start|default:"?" }}</a>
-    
+      <li>{{ work.creation_date_start }}</li>
+
       <li><span class="editable" data-field="height">{{ work.height }}</span> x <span class="editable" data-field="height">{{ work.width }}</span> mm</li>
 
       {% if work.inscription_set.count %}
@@ -34,17 +34,17 @@
             <ul>
               {% for ei in work.exhibitioninstance_set.all %}
               {% with ex=ei.exhibition %}
-              <li><em>{{ ex.abbreviation }}</em></li>
+              <li><em>{{ ex.location_type }} {{ ex.location }} {{ ex.city }} {{ ex.start_year }} {{ ex.title }}</em></li>
               {% endwith %}
               {% endfor %}
             </ul>
           </li>
           {% endif %}
-          
+
           {% if work.reproduction_set.count %}
 <li><strong>références bibliographiques ({{ work.reproduction_set.count }})</strong>
   <ul>
-    {% for repr in work.reproduction_set.all %}<li>{{ repr.reference.title|default:repr.reference.abbreviation }} {% if repr.page %}p. {{ repr.page }}{% endif %} {% if repr.comment %} : {{ repr.comment|linebreaksbr }}{% endif %}</li> {% endfor %}
+    {% for repr in work.reproduction_set.all %}<li>{{ repr.creator }} {{ repr.reference.title|default:repr.reference.abbreviation }} {% if repr.page %}p. {{ repr.page }}{% endif %} {% if repr.comment %} : {{ repr.comment|linebreaksbr }}{% endif %}</li> {% endfor %}
   </ul>
 </li>
 {% endif %}
