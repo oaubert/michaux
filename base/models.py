@@ -706,10 +706,12 @@ class Acquisition(models.Model):
                             blank=True)
 
     def abbrev(self):
-        return u"%(year)s, %(location)s" % {
-            'year': str(self.year or "?"),
-            'location': self.location or "?",
-        }
+        """Return an abbreviated representation.
+        """
+        return (u"%(year)s, %(location)s" % {
+            'year': str(self.year or ""),
+            'location': self.location or "",
+        }).strip(", ")
 
     def __unicode__(self):
         return u"Vente %(year)s, %(location)s %(collection)s" % {
