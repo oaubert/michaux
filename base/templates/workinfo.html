@@ -77,7 +77,7 @@
           {% if user.is_active and user.is_staff %}
 
           {% if work.acquisition_set.count %}
-          <li class="private_note"><strong>ventes</strong>
+          <li class="private_note"><strong>ventes et collections</strong>
             <ul class="private_note">
               {% for p in work.acquisition_set.all %}<li>{{ p.abbrev }} <a class="facetvalue action-glyph" title="Filtrer la vue grille suivant cette valeur de facette" href="{{ p.abbrev|facet_url:"acquisition_location" }}">&#x2299;</a> {% if p.owner %} - {{ p.owner }}{% endif %} {{ p.note }}</li>{% endfor %}
             </ul>
