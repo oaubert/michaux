@@ -44,7 +44,7 @@
           {% if work.reproduction_set.count %}
 <li><strong>références bibliographiques ({{ work.reproduction_set.count }})</strong>
   <ul>
-    {% for repr in work.reproduction_set.all %}<li>{{ repr.creator }} {{ repr.reference.title|default:repr.reference.abbreviation }} {% if repr.page %}p. {{ repr.page }}{% endif %} {% if repr.comment %} : {{ repr.comment|linebreaksbr }}{% endif %}</li> {% endfor %}
+    {% for repr in work.reproduction_set.all %}<li>{{ repr.reference.creator }} - {{ repr.reference.title|default:repr.reference.abbreviation }} {% if repr.page %}p. {{ repr.page }}{% endif %} {% if repr.comment %} : {{ repr.comment|linebreaksbr }}{% endif %}</li> {% endfor %}
   </ul>
 </li>
 {% endif %}
