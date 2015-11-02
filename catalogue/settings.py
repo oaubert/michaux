@@ -202,3 +202,6 @@ INSTALLED_APPS = (
 
 if options.get('raven_dsn'):
     INSTALLED_APPS += ( 'raven.contrib.django.raven_compat', )
+
+if DEBUG:
+    INSTALLED_APPS += ( 'django_extensions', )
