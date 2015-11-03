@@ -205,3 +205,4 @@ if options.get('raven_dsn'):
 
 if DEBUG:
     INSTALLED_APPS += ( 'django_extensions', )
+SHELL_PLUS = "ipython"
