@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import re
 from collections import Counter
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -257,9 +258,27 @@ def reindex(request, *p, **kw):
 
 @login_required
 def export(request, *p, **kw):
-    sqs, options = get_filtered_queryset(request)
-    if sqs.count() > 500:
-        return HttpResponse(status=413, content="Too many items")
+    if not request.GET.get('f') and not request.GET.get('selection'):
+        # No filters. Use referer info to try to infer one.
+        # owner, exhibition, bibliography
+        m = re.search('/base/(owner|exhibition|bibliography)/(\d+)', request.META.get('HTTP_REFERER', ""))
+        if m:
+            elementtype = m.group(1)
+            element = long(m.group(2))
+            if elementtype == 'exhibition':
+                sqs = [ ei.work for ei in ExhibitionInstance.objects.filter(exhibition_id=element) ]
+            elif elementtype == 'owner':
+                sqs = [ a.work for a in Acquisition.objects.filter(owner_id=element) ]
+            elif elementtype == 'bibliography':
+                sqs = [ r.work for r in Reproduction.objects.filter(reference_id=element) ]
+            else:
+                return HttpResponse(status=413, content="Wrong request")
+        else:
+            return HttpResponse(status=413, content="Wrong request")
+    else:
+        sqs, options = get_filtered_queryset(request)
+        if sqs.count() > 500:
+            return HttpResponse(status=413, content="Too many items")
     return render_to_response('export.html', {
         'sqs': sqs,
         'meta': Work._meta,

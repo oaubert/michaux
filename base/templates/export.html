@@ -29,7 +29,7 @@
 
   {% for res in sqs %}
   {% if res.cote %}
-  {% include "cartel.html" with work=res.object %}
+  {% include "cartel.html" with work=res.object|default:res %}
   {% endif %}
   {% endfor %}
 
