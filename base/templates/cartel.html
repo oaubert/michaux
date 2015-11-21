@@ -34,7 +34,7 @@
             <ul>
               {% for ei in work.exhibitioninstance_set.all %}
               {% with ex=ei.exhibition %}
-              <li><em>{{ ex.location_type }} {{ ex.location }} {{ ex.city }} {{ ex.start_year }} {{ ex.title }}</em></li>
+              <li>{{ ex.location_type }} {{ ex.location }}, {{ ex.city }}, {{ ex.start_year }}, <em>{{ ex.title }}</em></li>
               {% endwith %}
               {% endfor %}
             </ul>
@@ -44,7 +44,7 @@
           {% if work.reproduction_set.count %}
 <li><strong>références bibliographiques ({{ work.reproduction_set.count }})</strong>
   <ul>
-    {% for repr in work.reproduction_set.all %}<li>{{ repr.reference.creator }} - {{ repr.reference.title|default:repr.reference.abbreviation }} {% if repr.reference.publication_year %}({{ repr.reference.publication_year }}){% endif %} {% if repr.page %}p. {{ repr.page }}{% endif %} {% if repr.comment %} : {{ repr.comment|linebreaksbr }}{% endif %}</li> {% endfor %}
+    {% for repr in work.reproduction_set.all %}<li>{{ repr.reference.creator }}, <em>{{ repr.reference.title|default:repr.reference.abbreviation }}</em>{% if repr.reference.publication_year %} ({{ repr.reference.publication_year }}){% endif %}, {% if repr.page %}p. {{ repr.page }}{% endif %} {% if repr.comment %} : {{ repr.comment|linebreaksbr }}{% endif %}</li> {% endfor %}
   </ul>
 </li>
 {% endif %}
