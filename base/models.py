@@ -711,7 +711,7 @@ class Acquisition(models.Model):
         return (u"%(year)s, %(location)s" % {
             'year': str(self.year or ""),
             'location': self.location or "",
-        }).strip(", ")
+        }).strip(", ") or self.owner
 
     def __unicode__(self):
         return u"Vente %(year)s, %(location)s %(collection)s" % {
