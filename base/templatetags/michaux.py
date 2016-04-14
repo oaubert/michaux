@@ -24,7 +24,7 @@ def autolink(source):
     source = re.sub('hm(\d+)', (lambda m: '<a href="%s">%s</a>' % (reverse('base.views.work', kwargs={'cote': m.group(1)}),
                                                                   m.group(0))), source)
     gridbase = reverse('base.views.works')
-    source = re.sub('(c?mp|kc|hm)\s*(\d+(?:\s+/\s+\d+)?)', r'<a href="%s?q=%%22\g<1>%%20\g<2>%%22">\g<0></a>' % gridbase, source, flags=re.IGNORECASE)
+    source = re.sub('(c?mp|kc|hm)\s*(\d+(?:\s+/\s+\d+)?)', r'<a href="%s?q=\g<1>\g<2>">\g<0></a>' % gridbase, source, flags=re.IGNORECASE)
     # Replace newlines by <br/>. This is normally done by the
     # linebreaks filter, but combining both raises the issue of double
     # html encoding
