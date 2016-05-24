@@ -1,11 +1,13 @@
-django
+django==1.8
+mysqlclient
 django-taggit
 django-taggit-autosuggest
 django-extensions
+pillow
 django-imagekit
 django-haystack
+pysolr
 django-grappelli
 django-requestlogging
-south
 # For custom admin export
 unicodecsv
