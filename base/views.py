@@ -3,6 +3,8 @@
 import json
 import re
 from collections import Counter
+import logging
+
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 import django.core.management
@@ -13,9 +15,12 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.query import SearchQuerySet
+
 from .models import Work, Exhibition, ExhibitionInstance, BibliographyReference, Reproduction, Acquisition, Owner
 from .search_indexes import WorkIndex
 from .forms import EditTagsForm
+
+logger = logging.getLogger(__name__)
 
 @login_required
 def root(request, *p):
@@ -58,8 +63,11 @@ def get_filtered_queryset(request):
             if value:
                 if field.endswith('__range'):
                     b, e = value.split("-")
-                    args = { field: [int(b), int(e)] }
-                    sqs = sqs.filter(**args)
+                    try:
+                        args = { field: [int(b), int(e)] }
+                        sqs = sqs.filter(**args)
+                    except ValueError:
+                        logger.error("Undefined field passed in range filter: " + options['query_string'])
                 else:
                     sqs = sqs.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
