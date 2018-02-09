@@ -7,7 +7,7 @@ from gettext import gettext as _
 from django.forms import TextInput, Textarea
 from django.db import models
 from django.contrib import admin
-from django.contrib.admin import util as admin_util
+from django.contrib.admin import utils as admin_util
 from django.http import HttpResponse
 
 from base.forms import ImageModelForm
