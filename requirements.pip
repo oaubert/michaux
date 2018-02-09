@@ -1,4 +1,4 @@
-django==1.8
+django==1.8.5
 mysqlclient
 django-taggit
 django-taggit-autosuggest
