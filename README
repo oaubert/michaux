@@ -9,10 +9,12 @@ MAJ serveur:
 - reset db:
   mysql -u root -p 
   create database michaux DEFAULT CHARACTER SET utf8mb4;
+  grant all privileges on michaux.* to USERNAME@localhost identified by 'PASSWORD';
+
 - remove media:
   rm -rf $HOME/src/michaux/catalogue/media/*
 - syncdb:
-  ./manage.py syncdb
+  ./manage.py migrate
 - import expos:
   ./manage.py michaux exhibitions foo.xls
 - import works:

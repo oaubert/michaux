@@ -2,10 +2,10 @@ Install instructions
 --------------------
 
 * Python requirements
-
+ 
 django-taggit
 django-taggit-autosuggest
-django >= 1.4
+django >= 1.8 < 1.9
 django-imagekit
 django-haystack
 python-unicodecsv (for export code)
